@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
   <fixed facet="jst.web"/>
@@ -5,3 +6,12 @@
   <installed facet="jst.web" version="2.5"/>
   <installed facet="jst.java" version="1.6"/>
 </faceted-project>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <fixed facet="jst.web"/>
+  <fixed facet="jst.java"/>
+  <installed facet="jst.web" version="2.5"/>
+  <installed facet="jst.java" version="1.8"/>
+</faceted-project>
+>>>>>>> cbf5822 03.29-1

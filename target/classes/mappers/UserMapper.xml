@@ -252,8 +252,10 @@
 	<!-- 프로필 사진 수정 -->
 	<update id="updatePhoto">
 		UPDATE tbl_user
-		SET
-		profilephoto=#{profilephoto}
+	    <set>
+	      <if test="profilephoto.length == 0 ">profilephoto=null</if>
+	      <if test="profilephoto.length > 0">profilephoto=#{profilephoto}</if>
+	    </set>
 		WHERE id=#{id}
 	</update>
 	
