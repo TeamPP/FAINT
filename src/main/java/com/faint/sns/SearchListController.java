@@ -94,6 +94,7 @@ public class SearchListController {
 		cri.setKeyword(name);
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
+		System.out.println("태그사이즈"+taglist.size());
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);
 			model.addAttribute("jsonList", jsonArray.fromObject(taglist));
