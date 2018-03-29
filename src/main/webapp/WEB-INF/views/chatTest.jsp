@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.11.3.min.js">
-<script type="text/javascript" src="../../resources/js/upload.js"></script>
+<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <script type="text/javascript">
  
