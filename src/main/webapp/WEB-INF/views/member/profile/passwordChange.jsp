@@ -208,7 +208,7 @@ h2{
 			if (!lengthCheck(obj, maxLen)) return;
 			
 			//적어도 소문자 하나, 숫자 하나가 포함되어 있는 문자열(8글자 이상 15글자 이하) 
-			chkStr = /(?=.*\d)(?=.*[a-z]).{8,15}/;
+			chkStr = /(?=.*\d)(?=.*[a-z]).{3,15}/;
 
 			//입력값 형식에 맞는지 비교
 			if (!chkStr.test(obj.value)) {
@@ -242,7 +242,7 @@ h2{
 			var errMsg = "";
 			var color =""
 			maxLen = 15;
-			if($(obj).val().length<8) {
+			if($(obj).val().length<3) {
 				//글자색 빨강
 				errMsg="8자 이상의 비밀번호를 만드세요";
 				$("#chkprevPw").css("color", "red");

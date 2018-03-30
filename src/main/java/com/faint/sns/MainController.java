@@ -46,5 +46,10 @@ public class MainController {
 	public void empty(Model model)throws Exception{
 
 	}
+	
+	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
+	public void chatTest(Model model)throws Exception{
+
+	}
 
 }

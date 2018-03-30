@@ -55,7 +55,6 @@ public class MemberController {
 		dto.setLoginid(vo.getId());
 		dto.setNickname(nickname);
 		UserVO user=(UserVO)service.userRead(dto);
-		System.out.println(user);
 		
 		if(user!=null){
 			model.addAttribute("userVO", user);
