@@ -13,7 +13,7 @@ public interface UserService {
 	//=================읽기=================
 	public List<UserVO> listAll() throws Exception; //사용자 전체목록 + 임시용으로 사용(profile_main에서)
 	
-	public UserVO userRead(FollowDTO dto) throws Exception;//특정 사용자 정보 로그인한 유저의 id값과 해당 페이지 유저의 닉네임값을 이용하여 follow여부까지 추출
+	public UserVO userRead(FollowDTO dto) throws Exception;//특정 사용자 정보 로그인한 유저의 id값과 해당 페이지 유저의 닉네임값을 이용하여 follow여부까지 추출z
 
 	//=================팔로우=================
 	public void flwCreate(FollowDTO dto) throws Exception;

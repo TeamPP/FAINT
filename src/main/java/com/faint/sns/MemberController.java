@@ -56,7 +56,7 @@ public class MemberController {
 		dto.setNickname(nickname);
 		UserVO user=(UserVO)service.userRead(dto);
 		
-		if(user!=null){
+		if(user!=null && user.getIsBlock()==0){
 			model.addAttribute("userVO", user);
 			return "forward:/member/profile";
 		}else{

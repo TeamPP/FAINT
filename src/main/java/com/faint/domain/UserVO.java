@@ -22,6 +22,7 @@ public class UserVO {
 	
 	private Date regdate;
 	private int isFollow; //로그인한 유저가 팔로우할경우 해당 유저의 id값 반환 아닐경우 null(0)반환
+	private int isBlock; //차단여부 확인 차단당하지 않았을 경우 0반환
 	private int postCount;
 	
 	public int getId() {
@@ -32,12 +33,6 @@ public class UserVO {
 	}
 	public String getEmail() {
 		return email;
-	}
-	public int getUserlevel() {
-		return userlevel;
-	}
-	public void setUserlevel(int userlevel) {
-		this.userlevel = userlevel;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -96,6 +91,12 @@ public class UserVO {
 	public void setPrilevel(int prilevel) {
 		this.prilevel = prilevel;
 	}
+	public int getUserlevel() {
+		return userlevel;
+	}
+	public void setUserlevel(int userlevel) {
+		this.userlevel = userlevel;
+	}
 	public String getSessionkey() {
 		return sessionkey;
 	}
@@ -120,6 +121,12 @@ public class UserVO {
 	public void setIsFollow(int isFollow) {
 		this.isFollow = isFollow;
 	}
+	public int getIsBlock() {
+		return isBlock;
+	}
+	public void setIsBlock(int isBlock) {
+		this.isBlock = isBlock;
+	}
 	public int getPostCount() {
 		return postCount;
 	}
@@ -133,15 +140,7 @@ public class UserVO {
 				+ nickname + ", phonenumber=" + phonenumber + ", profilephoto=" + profilephoto + ", sex=" + sex
 				+ ", website=" + website + ", intro=" + intro + ", prilevel=" + prilevel + ", userlevel=" + userlevel
 				+ ", sessionkey=" + sessionkey + ", memberAuthKey=" + memberAuthKey + ", regdate=" + regdate
-				+ ", isFollow=" + isFollow + ", postCount=" + postCount + ", getId()=" + getId() + ", getEmail()="
-				+ getEmail() + ", getUserlevel()=" + getUserlevel() + ", getPassword()=" + getPassword()
-				+ ", getName()=" + getName() + ", getNickname()=" + getNickname() + ", getPhonenumber()="
-				+ getPhonenumber() + ", getProfilephoto()=" + getProfilephoto() + ", getSex()=" + getSex()
-				+ ", getWebsite()=" + getWebsite() + ", getIntro()=" + getIntro() + ", getPrilevel()=" + getPrilevel()
-				+ ", getSessionkey()=" + getSessionkey() + ", getMemberAuthKey()=" + getMemberAuthKey()
-				+ ", getRegdate()=" + getRegdate() + ", getIsFollow()=" + getIsFollow() + ", getPostCount()="
-				+ getPostCount() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", isFollow=" + isFollow + ", isBlock=" + isBlock + ", postCount=" + postCount + "]";
 	}
 
 }

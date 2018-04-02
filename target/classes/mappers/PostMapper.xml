@@ -40,8 +40,8 @@
 	<!-- 로그인한 유저가 저장한 게시글 읽기 -->
 	<select id="storeRead" resultType="com.faint.domain.PostVO">
 		select psa.*, likeCount, replyCount from
-		(select pa.* from
-			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+		(select pa.*, s.regdate from
+			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url
 			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid) pa
 			join
 			tbl_store s
@@ -55,7 +55,11 @@
 			(select p.id, count(*) as replyCount from tbl_post p right join tbl_reply r on p.id=r.postid group by p.id) pr
 		on
 		psa.id=pr.id
-		order by p_regdate desc
+        left join
+		(select userid from tbl_block where blockedid=#{userid}) ub
+		on psa.userid = ub.userid
+		where ub.userid is null
+		order by psa.regdate desc
 	</select>
 	
 	<!-- 메인 피드용 게시글 읽기 (팔로우하는 사람의 게시글 정보 / 최신 등록 순)-->
@@ -251,16 +255,20 @@
 	
 	<select id="postLiker" resultType="com.faint.domain.UserVO">
 		SELECT DISTINCT * from
-		(SELECT u.nickname, r.userid as id
-		FROM tbl_post_like r JOIN tbl_user u
-		ON r.postid=#{id} AND r.userid=u.id
-		ORDER BY r.regdate DESC) pl
+		(SELECT u.id, u.nickname
+		FROM tbl_post_like l JOIN tbl_user u
+		ON l.postid=#{id} AND l.userid=u.id
+		ORDER BY l.regdate DESC) pl
         left join
         (SELECT followedid as isFollow
 		FROM
 		tbl_follow
 		WHERE userid=#{userid}) lf
-        on lf.isFollow=pl.id;
+        on lf.isFollow=pl.id
+        left join
+		(select userid from tbl_block where blockedid=1) ub
+		on pl.id = ub.userid
+		where ub.userid is null
 	</select>
 	
 	<!-- store -->
