@@ -79,7 +79,7 @@
 
 	<!-- 해당 유저가 팔로우하는 사람 리스트 -->
 	<select id="flwnList" resultType="com.faint.domain.UserVO">
-		SELECT DISTINCT uf.*, lf.isFollow, ub.isBlock from
+		SELECT DISTINCT uf.*, lf.isFollow from
 		(SELECT u.id, u.email, u.name, u.nickname, u.profilephoto, u.intro
 		FROM tbl_user u join tbl_follow f
 		ON f.followedid=u.id and f.userid=#{userid}) uf
@@ -90,15 +90,18 @@
 		WHERE userid=#{loginid}) lf
 		on lf.isFollow=uf.id
 		left join
-		(select userid from tbl_block where blockedid=#{loginid}) ub
-		on uf.id = ub.userid
-		where ub.userid is null;
+		(select userid from tbl_block where blockedid=1) bu
+		on uf.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=1) ub
+        on uf.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null;
 	</select>
 
 	<!-- 해당 유저를 팔로우 중인 사람 리스트 -->
 	<select id="flwdList" resultType="com.faint.domain.UserVO">
-		select DISTINCT * from
-		(SELECT DISTINCT u.*
+		select DISTINCT uf.*, lf.isFollow from
+		(SELECT u.id, u.email, u.name, u.nickname, u.profilephoto, u.intro
 		FROM tbl_user u join tbl_follow f
 		ON f.userid=u.id and f.followedid=#{userid}) uf
         left join
@@ -108,9 +111,12 @@
 		WHERE userid=#{loginid}) lf
         on lf.isFollow=uf.id
         left join
-		(select userid from tbl_block where blockedid=#{loginid}) ub
-		on uf.id = ub.userid
-		where ub.userid is null;
+		(select userid from tbl_block where blockedid=1) bu
+		on uf.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=1) ub
+        on uf.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null;
 	</select>
 	
 	<!-- PageRank 필터링을 위한 follow 및 user리스트 추출 -->

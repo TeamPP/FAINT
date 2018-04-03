@@ -56,9 +56,12 @@
 		on
 		psa.id=pr.id
         left join
-		(select userid from tbl_block where blockedid=#{userid}) ub
-		on psa.userid = ub.userid
-		where ub.userid is null
+		(select userid from tbl_block where blockedid=1) bu
+		on psa.userid = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=1) ub
+        on psa.userid = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
 		order by psa.regdate desc
 	</select>
 	
@@ -266,9 +269,12 @@
 		WHERE userid=#{userid}) lf
         on lf.isFollow=pl.id
         left join
-		(select userid from tbl_block where blockedid=1) ub
-		on pl.id = ub.userid
-		where ub.userid is null
+		(select userid from tbl_block where blockedid=1) bu
+		on pl.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=1) ub
+        on pl.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
 	</select>
 	
 	<!-- store -->
