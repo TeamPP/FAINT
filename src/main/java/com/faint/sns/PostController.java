@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.faint.domain.PostVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.service.PostService;
 
 @Controller
@@ -123,18 +124,18 @@ public class PostController {
 	@ResponseBody
 	@RequestMapping(value="/detail", method=RequestMethod.POST)
 	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request){
-		ResponseEntity<FollowinPostDTO> entity=null;
-		
-		System.out.println(postid);
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
+		
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
+		
+		ResponseEntity<FollowinPostDTO> entity=null;
 		
 		try{
-			entity=new ResponseEntity<>(service.detailRead(vo), HttpStatus.OK);
+			entity=new ResponseEntity<>(service.detailRead(dto), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -149,15 +150,12 @@ public class PostController {
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
-		
-		System.out.println(postid);
-		System.out.println(userVO.getId());
-		
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
+				
 		try{
-			service.postStore(vo);
+			service.postStore(dto);
 			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -166,19 +164,19 @@ public class PostController {
 		return entity;
 	}
 
-	//like 삭제 - rest방식
+	//게시물 저장 취소 - rest방식
 	@RequestMapping(value="/{postid}/takeaway", method=RequestMethod.DELETE)
 	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request){
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
 		
 		try{
-			service.postTakeaway(vo);
+			service.postTakeaway(dto);
 			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -194,15 +192,12 @@ public class PostController {
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
-		
-		System.out.println(postid);
-		System.out.println(userVO.getId());
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
 		
 		try{
-			service.postLike(vo);
+			service.postLike(dto);
 			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -218,12 +213,12 @@ public class PostController {
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
 		
 		try{
-			service.postUnlike(vo);
+			service.postUnlike(dto);
 			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -240,12 +235,12 @@ public class PostController {
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
-		PostVO vo = new PostVO();
-		vo.setId(postid);
-		vo.setUserid(userVO.getId());
+		RelationDTO dto = new RelationDTO();
+		dto.setPostid(postid);
+		dto.setLoginid(userVO.getId());
 		
 		try{
-			entity=new ResponseEntity<List<UserVO>>(service.postLiker(vo), HttpStatus.OK);
+			entity=new ResponseEntity<List<UserVO>>(service.postLiker(dto), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);

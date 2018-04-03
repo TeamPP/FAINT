@@ -8,9 +8,10 @@ import javax.inject.Inject;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.faint.domain.UserVO;
-import com.faint.dto.FollowDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.persistence.UserDAO;
 
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	//=================읽기=================
 	
-	//사용자 전체목록 + 임시용으로 사용(profile_main에서)
+	//사용자 전체목록 + pagerank에서 사용
 	@Override
 	public List<UserVO> listAll() throws Exception {
 		return dao.listAll();
@@ -39,28 +40,28 @@ public class UserServiceImpl implements UserService {
 	
 	// 특정 사용자 정보 = 로그인한 유저의 id값과 해당 페이지 유저의 닉네임값을 이용하여 follow여부까지 추출
 	@Override
-	public UserVO userRead(FollowDTO dto) throws Exception{
+	public UserVO userRead(RelationDTO dto) throws Exception{
 		return dao.userRead(dto);
 	}
 	
 	//============================팔로우============================
 	@Override
-	public void flwCreate(FollowDTO dto)throws Exception{
+	public void flwCreate(RelationDTO dto)throws Exception{
 		dao.flwCreate(dto);
 	}
 	
 	@Override
-	public void flwDelete(FollowDTO dto)throws Exception{
+	public void flwDelete(RelationDTO dto)throws Exception{
 		dao.flwDelete(dto);
 	}
 	
 	@Override
-	public List<UserVO> flwnList(FollowDTO dto) throws Exception{
+	public List<UserVO> flwnList(RelationDTO dto) throws Exception{
 		return dao.flwnList(dto);
 	}
 	
 	@Override
-	public List<UserVO> flwdList(FollowDTO dto) throws Exception{
+	public List<UserVO> flwdList(RelationDTO dto) throws Exception{
 		return dao.flwdList(dto);
 	}
 	
@@ -68,6 +69,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<String> rank() throws Exception{
 		return dao.rank();
+	}
+	
+	//=================회원차단=================
+	
+	@Transactional
+	@Override
+	public void userBlock(RelationDTO dto) throws Exception{
+		
+		//내가 팔로우하는 것 삭제
+		dao.flwDelete(dto);
+		
+		//상대가 팔로우하는 것 삭제
+		RelationDTO dto2=new RelationDTO();
+		dto2.setLoginid(dto.getUserid());
+		dto2.setUserid(dto.getLoginid());
+		dao.flwDelete(dto2);
+		
+		//차단
+		dao.userBlock(dto);
+	}
+	
+	//차단 해제
+	@Override
+	public void userUnblock(RelationDTO dto) throws Exception{
+		dao.userUnblock(dto);
 	}
 
 	//=================회원가입 및 정보수정=================

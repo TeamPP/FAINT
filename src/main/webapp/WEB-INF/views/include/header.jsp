@@ -19,7 +19,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<!-- 업로드 관련 스크립트 -->
+<script type="text/javascript" src="../../resources/js/upload.js"></script>
 <!--검색창 부트스트랩  -->
 <link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css">
 <script

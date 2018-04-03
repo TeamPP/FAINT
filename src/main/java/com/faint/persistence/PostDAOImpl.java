@@ -14,6 +14,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.TopPostDTO;
 
 @Repository
@@ -48,8 +49,8 @@ public class PostDAOImpl implements PostDAO {
 	}
 	
 	@Override
-	public FollowinPostDTO detailRead(PostVO vo) throws Exception{
-		return session.selectOne(namespace+".detailRead", vo);
+	public FollowinPostDTO detailRead(RelationDTO dto) throws Exception{
+		return session.selectOne(namespace+".detailRead", dto);
 	}
 	
 	// post전체목록  - 모든 유저에 대해
@@ -145,25 +146,25 @@ public class PostDAOImpl implements PostDAO {
 
 	//==============================좋아요 관련==============================
 	@Override
-	public void postLike(PostVO vo) throws Exception{
-		session.insert(namespace + ".postLike", vo);
+	public void postLike(RelationDTO dto) throws Exception{
+		session.insert(namespace + ".postLike", dto);
 	};
 	@Override
-	public void postUnlike(PostVO vo) throws Exception{
-		session.delete(namespace + ".postUnlike", vo);
+	public void postUnlike(RelationDTO dto) throws Exception{
+		session.delete(namespace + ".postUnlike", dto);
 	};
 	@Override
-	public List<UserVO> postLiker(PostVO vo) throws Exception{
-		return session.selectList(namespace + ".postLiker", vo);
+	public List<UserVO> postLiker(RelationDTO dto) throws Exception{
+		return session.selectList(namespace + ".postLiker", dto);
 	};
 	
 	//==============================store==============================
 	@Override
-	public void postStore(PostVO vo) throws Exception{
-		session.insert(namespace + ".postStore", vo);
+	public void postStore(RelationDTO dto) throws Exception{
+		session.insert(namespace + ".postStore", dto);
 	};
 	@Override
-	public void postTakeaway(PostVO vo) throws Exception{
-		session.delete(namespace + ".postTakeaway", vo);
+	public void postTakeaway(RelationDTO dto) throws Exception{
+		session.delete(namespace + ".postTakeaway", dto);
 	};
 }

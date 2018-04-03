@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.faint.domain.ReplyVO;
+import com.faint.dto.RelationDTO;
 
 @Repository
 public class ReplyDAOImpl implements ReplyDAO{
@@ -23,8 +24,8 @@ public class ReplyDAOImpl implements ReplyDAO{
 	}
 	
 	@Override
-	public List<ReplyVO> read(Integer postid) throws Exception{
-		return session.selectList(namespace+".read", postid);
+	public List<ReplyVO> read(RelationDTO dto) throws Exception{
+		return session.selectList(namespace+".read", dto);
 	}
 	
 	@Override

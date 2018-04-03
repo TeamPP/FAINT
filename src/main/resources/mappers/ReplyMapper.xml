@@ -21,17 +21,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="read" resultType="com.faint.domain.ReplyVO">
-		SELECT *
-		FROM
-			faint.vw_user_reply
-		WHERE postid=#{postid}
-		order by regdate asc
+	    SELECT 
+	        r.ID AS id,
+	        u.ID AS userid,
+	        r.POSTID AS postid,
+	        u.NICKNAME AS username,
+	        r.COMMENT AS comment,
+	        r.REGDATE AS REGDATE
+	    FROM
+	        tbl_reply r
+		JOIN
+			tbl_user u
+		ON
+	    r.USERID = u.ID
+			left join
+		(select userid from tbl_block where blockedid=#{loginid}) bu
+		on u.id = bu.userid
+		left join
+		(select blockedid from tbl_block where userid=#{loginid}) ub
+		on u.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
+	    and r.postid=#{postid};
 	</select>
 	
 	<update id="update">
 		UPDATE faint.tbl_reply
 		SET caption=#{caption},
-		<!-- regdate=now() 넣을 경우 프로필 피드에서 위치변경됨-->
 		WHERE id=#{id}
 	</update>
 	

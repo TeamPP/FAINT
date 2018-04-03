@@ -7,6 +7,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.TopPostDTO;
 
 public interface PostService {
@@ -37,7 +38,7 @@ public interface PostService {
 	public List<PostVO> storeRead(Integer userid) throws Exception;
 	
 	// 특정게시물 세부내용(매개변수:postid, loginid)
-	public FollowinPostDTO detailRead(PostVO vo) throws Exception;
+	public FollowinPostDTO detailRead(RelationDTO dto) throws Exception;
 	
 	// 메인피드 게시물 리스트(매개변수:postid, loginid)
 	public List<FollowinPostDTO> mainRead(Integer id) throws Exception;
@@ -51,17 +52,17 @@ public interface PostService {
 	public TagVO selectTagByName(String name) throws Exception;
 	
 	//====================post와 like ====================
-	public void postLike(PostVO vo) throws Exception;
+	public void postLike(RelationDTO dto) throws Exception;
 	
-	public void postUnlike(PostVO vo) throws Exception;
+	public void postUnlike(RelationDTO dto) throws Exception;
 	
-	public List<UserVO> postLiker(PostVO vo) throws Exception;
+	public List<UserVO> postLiker(RelationDTO dto) throws Exception;
 	
 	//==============store==============
 	
-	public void postStore(PostVO vo) throws Exception;
+	public void postStore(RelationDTO dto) throws Exception;
 	
-	public void postTakeaway(PostVO vo) throws Exception;
+	public void postTakeaway(RelationDTO dto) throws Exception;
 	
 	//====================무한스크롤 ====================
 	

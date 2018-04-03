@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
-import com.faint.dto.FollowDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.LoginDTO;
 
 @Repository
@@ -34,35 +34,46 @@ public class UserDAOImpl implements UserDAO {
 		return session.selectList(namespace + ".listAll");
 	}
 
+	@Override
+	public UserVO userRead(RelationDTO dto) throws Exception {
+		return session.selectOne(namespace + ".userRead", dto);
+	}
+	
 	// 회원키워드목록
 	@Override
 	public List<UserVO> listKeyword(SearchCriteria cri) throws Exception {
 		return session.selectList(namespace + ".listKeyword", cri);
 	}
 
+	//=================회원차단=================
 	@Override
-	public UserVO userRead(FollowDTO dto) throws Exception {
-		return session.selectOne(namespace + ".userRead", dto);
+	public void userBlock(RelationDTO dto) throws Exception{
+		session.insert(namespace + ".userBlock", dto);
+	}
+	
+	@Override
+	public void userUnblock(RelationDTO dto) throws Exception{
+		session.delete(namespace + ".userUnblock", dto);
 	}
 
 	// ======================팔로우====================== 
 	@Override
-	public void flwCreate(FollowDTO dto) throws Exception {
+	public void flwCreate(RelationDTO dto) throws Exception {
 		session.insert(namespace + ".flwCreate", dto);
 	};
 
 	@Override
-	public void flwDelete(FollowDTO dto) throws Exception {
+	public void flwDelete(RelationDTO dto) throws Exception {
 		session.delete(namespace + ".flwDelete", dto);
 	};
 
 	@Override
-	public List<UserVO> flwnList(FollowDTO dto) throws Exception {
+	public List<UserVO> flwnList(RelationDTO dto) throws Exception {
 		return session.selectList(namespace + ".flwnList", dto);
 	};
 
 	@Override
-	public List<UserVO> flwdList(FollowDTO dto) throws Exception {
+	public List<UserVO> flwdList(RelationDTO dto) throws Exception {
 		return session.selectList(namespace + ".flwdList", dto);
 	};
 

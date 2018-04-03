@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
-import com.faint.dto.FollowDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.LoginDTO;
 
 public interface UserDAO {
@@ -15,19 +15,24 @@ public interface UserDAO {
 	// ======================사용자 읽기======================
 	public List<UserVO> listAll() throws Exception;
 	
-	public UserVO userRead(FollowDTO dto) throws Exception;
+	public UserVO userRead(RelationDTO dto) throws Exception;
 
 	// ======================사용자 키워드 목록(String타입의 키워드를 매개변수로 받음)======================
 	public List<UserVO> listKeyword(SearchCriteria cri) throws Exception;
 
+	//=================회원차단=================
+	public void userBlock(RelationDTO dto) throws Exception;
+	
+	public void userUnblock(RelationDTO dto) throws Exception;
+
 	// ======================팔로우====================== 
-	public void flwCreate(FollowDTO dto) throws Exception;
+	public void flwCreate(RelationDTO dto) throws Exception;
 
-	public void flwDelete(FollowDTO dto) throws Exception;
+	public void flwDelete(RelationDTO dto) throws Exception;
 
-	public List<UserVO> flwnList(FollowDTO dto) throws Exception;
+	public List<UserVO> flwnList(RelationDTO dto) throws Exception;
 
-	public List<UserVO> flwdList(FollowDTO dto) throws Exception;
+	public List<UserVO> flwdList(RelationDTO dto) throws Exception;
 	
 	public List<String> rank() throws Exception;
 

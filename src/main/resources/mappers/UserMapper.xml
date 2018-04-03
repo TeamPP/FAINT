@@ -6,7 +6,7 @@
 	
 	<!-- 특정 유저데이터 읽기 -->
 	<select id="userRead" resultType="com.faint.domain.UserVO">
-        select u.id, u.email, u.name, u.nickname, u.website, u.profilephoto, u.intro, p.postCount, lf.isFollow, ub.isBlock from
+        select u.id, u.email, u.name, u.nickname, u.website, u.profilephoto, u.intro, p.postCount, lf.isFollow, ub.Blocked, bu.isBlock from
         (SELECT id, email, name, nickname, website, profilephoto, intro
 		FROM
 		tbl_user
@@ -22,12 +22,19 @@
 		WHERE userid=#{loginid}) lf
         on lf.isFollow=u.id
         left join
-        (select u.id, count(*) as isBlock from
+        (select u.id, count(*) as Blocked from
 			faint.tbl_block b
 			join
 			(select id from faint.tbl_user where nickname=#{nickname}) u
 			on u.id=b.userid and blockedid=#{loginid}) ub
-		on u.id=ub.id;
+		on u.id=ub.id
+		left join
+        (select u.id, count(*) as isBlock from
+			faint.tbl_block b
+			join
+			(select id from faint.tbl_user where nickname=#{nickname}) u
+			on u.id=b.blockedid and userid=#{loginid}) bu
+		on u.id=bu.id;
 	</select>
 
 	<!-- 유저데이터 수정 -->
@@ -59,7 +66,24 @@
 		ORDER BY id ASC
 	]]>
 	</select>
-
+	
+	<!-- block -->
+	<!-- 차단등록 -->
+	<insert id="userBlock">
+		INSERT INTO tbl_block (userid, blockedid)
+		SELECT #{loginid}, #{userid} from DUAL
+        WHERE NOT EXISTS(select * from tbl_block where userid=#{loginid} and blockedid=#{userid});
+	</insert>
+	
+	<!-- 차단해제 -->
+	<delete id="userUnblock">
+		DELETE
+		FROM tbl_block
+		WHERE userid=#{loginid}
+		AND
+		blockedid=#{userid}
+	</delete>
+	
 	<!-- follow -->
 	<!-- 팔로우등록 -->
 	<insert id="flwCreate">
@@ -90,12 +114,12 @@
 		WHERE userid=#{loginid}) lf
 		on lf.isFollow=uf.id
 		left join
-		(select userid from tbl_block where blockedid=1) bu
+		(select userid from tbl_block where blockedid=#{loginid}) bu
 		on uf.id = bu.userid
         left join
-        (select blockedid from tbl_block where userid=1) ub
+        (select blockedid from tbl_block where userid=#{loginid}) ub
         on uf.id = ub.blockedid
-		where bu.userid is null and ub.blockedid is null;
+		where bu.userid is null and ub.blockedid is null
 	</select>
 
 	<!-- 해당 유저를 팔로우 중인 사람 리스트 -->
@@ -111,12 +135,12 @@
 		WHERE userid=#{loginid}) lf
         on lf.isFollow=uf.id
         left join
-		(select userid from tbl_block where blockedid=1) bu
+		(select userid from tbl_block where blockedid=#{loginid}) bu
 		on uf.id = bu.userid
         left join
-        (select blockedid from tbl_block where userid=1) ub
+        (select blockedid from tbl_block where userid=#{loginid}) ub
         on uf.id = ub.blockedid
-		where bu.userid is null and ub.blockedid is null;
+		where bu.userid is null and ub.blockedid is null
 	</select>
 	
 	<!-- PageRank 필터링을 위한 follow 및 user리스트 추출 -->

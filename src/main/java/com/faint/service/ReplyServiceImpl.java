@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.faint.domain.ReplyVO;
+import com.faint.dto.RelationDTO;
 import com.faint.persistence.ReplyDAO;
 
 
@@ -23,8 +24,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 	
 	@Override
-	public List<ReplyVO> read(Integer postid) throws Exception{
-		return dao.read(postid);
+	public List<ReplyVO> read(RelationDTO dto) throws Exception{
+		return dao.read(dto);
 	}
 	
 	@Override

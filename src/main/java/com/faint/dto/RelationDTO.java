@@ -1,9 +1,10 @@
 package com.faint.dto;
 
-public class FollowDTO {
+public class RelationDTO {
 	private String nickname;
 	private int userid;
 	private int loginid;
+	private int postid;
 	
 	public String getNickname() {
 		return nickname;
@@ -23,9 +24,18 @@ public class FollowDTO {
 	public void setLoginid(int loginid) {
 		this.loginid = loginid;
 	}
+	public int getPostid() {
+		return postid;
+	}
+	public void setPostid(int postid) {
+		this.postid = postid;
+	}
+	
 	@Override
 	public String toString() {
-		return "FollowDTO [nickname=" + nickname + ", userid=" + userid + ", loginid=" + loginid + "]";
+		return "RelationDTO [nickname=" + nickname + ", userid=" + userid + ", loginid=" + loginid + ", postid="
+				+ postid + "]";
 	}
+	
 	
 }

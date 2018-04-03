@@ -98,16 +98,16 @@
 			 from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) as pa
 			join
 			(select pl.postid, isLike, isStore from
-				(select distinct(p.id) as postid, l.userid as isLike from tbl_post p left join tbl_post_like l on p.id = l.POSTID and l.userid = #{userid}) pl
+				(select distinct(p.id) as postid, l.userid as isLike from tbl_post p left join tbl_post_like l on p.id = l.POSTID and l.userid = #{loginid}) pl
 				join
-				(select distinct(p.id) as postid, s.userid as isStore from tbl_post p left join tbl_store s on p.id = s.POSTID and s.userid = #{userid}) ps
+				(select distinct(p.id) as postid, s.userid as isStore from tbl_post p left join tbl_store s on p.id = s.POSTID and s.userid = #{loginid}) ps
 				on pl.postid=ps.postid) as pls
 			on
 			pa.postid = pls.postid) plsa
 			
         join
 			(select p.id as pid, u.id, u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
-			from tbl_post p join tbl_user u on p.userid = u.ID and p.id=#{id}) as pu
+			from tbl_post p join tbl_user u on p.userid = u.ID and p.id=#{postid}) as pu
 		on
 		plsa.USERID = pu.id
         and plsa.postid = pu.pid
@@ -244,35 +244,35 @@
 	<!-- post&like -->
 	<insert id="postLike">
 		INSERT INTO tbl_post_like (postid, userid)
-		SELECT #{id}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_post_like where postid=#{id} and userid=#{userid});
+		SELECT #{postid}, #{loginid} from DUAL
+        WHERE NOT EXISTS(select * from tbl_post_like where postid=#{postid} and userid=#{loginid});
 	</insert>
 	
 	<delete id="postUnlike">
 		DELETE
 		FROM tbl_post_like
-		WHERE postid=#{id}
+		WHERE postid=#{postid}
 		AND
-		userid=#{userid}
+		userid=#{loginid}
 	</delete>
 	
 	<select id="postLiker" resultType="com.faint.domain.UserVO">
 		SELECT DISTINCT * from
 		(SELECT u.id, u.nickname
 		FROM tbl_post_like l JOIN tbl_user u
-		ON l.postid=#{id} AND l.userid=u.id
+		ON l.postid=#{postid} AND l.userid=u.id
 		ORDER BY l.regdate DESC) pl
         left join
         (SELECT followedid as isFollow
 		FROM
 		tbl_follow
-		WHERE userid=#{userid}) lf
+		WHERE userid=#{loginid}) lf
         on lf.isFollow=pl.id
         left join
-		(select userid from tbl_block where blockedid=1) bu
+		(select userid from tbl_block where blockedid=#{loginid}) bu
 		on pl.id = bu.userid
         left join
-        (select blockedid from tbl_block where userid=1) ub
+        (select blockedid from tbl_block where userid=#{loginid}) ub
         on pl.id = ub.blockedid
 		where bu.userid is null and ub.blockedid is null
 	</select>
@@ -280,16 +280,16 @@
 	<!-- store -->
 	<insert id="postStore">
 		INSERT INTO tbl_store (postid, userid)
-		SELECT #{id}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_store where postid=#{id} and userid=#{userid});
+		SELECT #{postid}, #{loginid} from DUAL
+        WHERE NOT EXISTS(select * from tbl_store where postid=#{postid} and userid=#{loginid});
 	</insert>
 	
 	<delete id="postTakeaway">
 		DELETE
 		FROM tbl_store
-		WHERE postid=#{id}
+		WHERE postid=#{postid}
 		AND
-		userid=#{userid}
+		userid=#{loginid}
 	</delete>
 	
 		<!--태그 검색 무한스크롤  -->

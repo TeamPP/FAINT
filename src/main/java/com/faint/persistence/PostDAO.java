@@ -7,6 +7,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.TopPostDTO;
 
 public interface PostDAO {
@@ -24,7 +25,7 @@ public interface PostDAO {
 	public List<PostVO> storeRead(Integer userid) throws Exception;
 	
 	//게시물의 세부디테일 정보
-	public FollowinPostDTO detailRead(PostVO vo) throws Exception;
+	public FollowinPostDTO detailRead(RelationDTO dto) throws Exception;
 	
 	//모든 post 전체목록
 	public List<PostVO> listAllPost() throws Exception;
@@ -65,15 +66,15 @@ public interface PostDAO {
 	public List<PostVO> infiniteScrollLocations(SearchCriteria cri, Integer row) throws Exception;
 	
 	//=========================post와 like============================
-	public void postLike(PostVO vo) throws Exception;
+	public void postLike(RelationDTO dto) throws Exception;
 		
-	public void postUnlike(PostVO vo) throws Exception;
+	public void postUnlike(RelationDTO dto) throws Exception;
 		
-	public List<UserVO> postLiker(PostVO vo) throws Exception;
+	public List<UserVO> postLiker(RelationDTO dto) throws Exception;
 	
 	//==============================store==============================
-	public void postStore(PostVO vo) throws Exception;
+	public void postStore(RelationDTO dto) throws Exception;
 	
-	public void postTakeaway(PostVO vo) throws Exception;
+	public void postTakeaway(RelationDTO dto) throws Exception;
 	
 }

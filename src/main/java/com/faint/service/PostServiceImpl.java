@@ -12,6 +12,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.TopPostDTO;
 import com.faint.persistence.PostDAO;
 import com.faint.util.HashTagHelper;
@@ -91,8 +92,8 @@ public class PostServiceImpl implements PostService {
 	
 	// 특정게시물 세부내용(매개변수:postid, loginid)
 	@Override
-	public FollowinPostDTO detailRead(PostVO vo) throws Exception{
-		return dao.detailRead(vo);
+	public FollowinPostDTO detailRead(RelationDTO dto) throws Exception{
+		return dao.detailRead(dto);
 	}
 	
 	// 메인피드 게시물 리스트(매개변수:postid, loginid)
@@ -152,30 +153,30 @@ public class PostServiceImpl implements PostService {
 	//==============like==============
 	
 	@Override
-	public void postLike(PostVO vo) throws Exception{
-		dao.postLike(vo);
+	public void postLike(RelationDTO dto) throws Exception{
+		dao.postLike(dto);
 	}
 	
 	@Override
-	public void postUnlike(PostVO vo) throws Exception{
-		dao.postUnlike(vo);
+	public void postUnlike(RelationDTO dto) throws Exception{
+		dao.postUnlike(dto);
 	}
 	
 	@Override
-	public List<UserVO> postLiker(PostVO vo) throws Exception{
-		return dao.postLiker(vo);
+	public List<UserVO> postLiker(RelationDTO dto) throws Exception{
+		return dao.postLiker(dto);
 	}
 	
 	//==============store==============
 	
 	@Override
-	public void postStore(PostVO vo) throws Exception{
-		dao.postStore(vo);
+	public void postStore(RelationDTO dto) throws Exception{
+		dao.postStore(dto);
 	}
 	
 	@Override
-	public void postTakeaway(PostVO vo) throws Exception{
-		dao.postTakeaway(vo);
+	public void postTakeaway(RelationDTO dto) throws Exception{
+		dao.postTakeaway(dto);
 	}
 	
 }

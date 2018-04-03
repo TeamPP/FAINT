@@ -3,6 +3,7 @@ package com.faint.sns;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.faint.domain.ReplyVO;
+import com.faint.domain.UserVO;
+import com.faint.dto.RelationDTO;
 import com.faint.service.ReplyService;
 
 @Controller
@@ -62,10 +65,17 @@ public class ReplyController {
 	/*게시물에 대한 댓글 조회 - JSON객체(LIST배열에 담아서 던져줌)*/
 	@ResponseBody
 	@RequestMapping(value="/post/{postid}", method=RequestMethod.GET)
-	public ResponseEntity<List<ReplyVO>> rplList(@PathVariable("postid") Integer postid){
+	public ResponseEntity<List<ReplyVO>> rplList(@PathVariable("postid") Integer postid, HttpServletRequest request){
+		
+		//차단or차단당한 유저일경우 빼기위해 로그인값 확인
+		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		RelationDTO dto=new RelationDTO();
+		dto.setLoginid(vo.getId());
+		dto.setPostid(postid);
+	
 		ResponseEntity<List<ReplyVO>> entity=null;
 		try{
-			entity=new ResponseEntity<>(service.read(postid), HttpStatus.OK);
+			entity=new ResponseEntity<>(service.read(dto), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);

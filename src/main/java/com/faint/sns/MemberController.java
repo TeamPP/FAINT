@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.UserVO;
-import com.faint.dto.FollowDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.service.PostService;
 import com.faint.service.UserService;
@@ -39,24 +39,21 @@ public class MemberController {
 	
 	@Inject
 	private PostService postService;
+	
 	// ======================================프로필 페이지 - 유저정보 읽기======================================
-	@RequestMapping(value="/profile_main", method=RequestMethod.GET)
-	public void listAll(Model model) throws Exception{
-		
-		model.addAttribute("list", service.listAll());
-		
-	}
 	
 	@RequestMapping(value="/{nickname}", method=RequestMethod.GET)
 	public String read(@PathVariable("nickname") String nickname, Model model, HttpServletRequest request) throws Exception{
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setNickname(nickname);
 		UserVO user=(UserVO)service.userRead(dto);
 		
-		if(user!=null && user.getIsBlock()==0){
+		System.out.println(user.toString());
+		
+		if(user!=null && user.getBlocked()==0){
 			model.addAttribute("userVO", user);
 			return "forward:/member/profile";
 		}else{
@@ -68,7 +65,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public void profile(Model model, HttpServletRequest request) throws Exception{
-
+		
 	}
 	
 	@RequestMapping(value="/{nickname}/store", method=RequestMethod.GET)
@@ -82,7 +79,7 @@ public class MemberController {
 			return "redirect:/member/nullError";
 		}
 		
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setNickname(nickname);
 		
@@ -99,10 +96,10 @@ public class MemberController {
 	// ======================================팔로우 관련 컨트롤러======================================
 	//follow 등록 - rest방식
 	@RequestMapping(value="/follow/{userid}", method=RequestMethod.POST)
-	public ResponseEntity<String> followStart(@PathVariable("userid") int userid, HttpServletRequest request){
+	public ResponseEntity<String> followStart(@PathVariable("userid") int userid, HttpServletRequest request) throws Exception {
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
@@ -120,10 +117,10 @@ public class MemberController {
 
 	//follow 삭제 - rest방식
 	@RequestMapping(value="/unfollow/{userid}", method=RequestMethod.DELETE)
-	public ResponseEntity<String> unfollow(@PathVariable("userid") int userid, HttpServletRequest request){
+	public ResponseEntity<String> unfollow(@PathVariable("userid") int userid, HttpServletRequest request) throws Exception {
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
@@ -141,10 +138,10 @@ public class MemberController {
 	// 해당 유저가 follow하는 사람 리스트 URI
 	@ResponseBody
 	@RequestMapping(value="/following/{userid}", method=RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> flwnList(@PathVariable("userid") Integer userid, HttpServletRequest request){
+	public ResponseEntity<List<UserVO>> flwnList(@PathVariable("userid") Integer userid, HttpServletRequest request) throws Exception {
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
@@ -161,10 +158,10 @@ public class MemberController {
 	// 해당 유저를 follow하는 사람 리스트 URI
 	@ResponseBody
 	@RequestMapping(value="/followed/{userid}", method=RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> flwdList(@PathVariable("userid") Integer userid, HttpServletRequest request){
+	public ResponseEntity<List<UserVO>> flwdList(@PathVariable("userid") Integer userid, HttpServletRequest request) throws Exception {
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
-		FollowDTO dto=new FollowDTO();
+		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
@@ -273,5 +270,46 @@ public class MemberController {
 		logger.info(rttr.toString());
 		return "redirect:/member/profile/passwordChange";
 	}
+	
+	//======================================회원 차단======================================
+	//회원차단
+	@RequestMapping(value = "/block", method=RequestMethod.POST)
+	public ResponseEntity<String> userBlock (@RequestParam("userid") int userid, HttpServletRequest request) throws Exception {
+		UserVO vo = (UserVO)request.getSession().getAttribute("login");
+		RelationDTO dto = new RelationDTO();
+		dto.setLoginid(vo.getId());
+		dto.setUserid(userid);
+		
+		ResponseEntity<String> entity=null;
+		try{
+			service.userBlock(dto);
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	//회원차단해제
+	@RequestMapping(value = "/unblock/{userid}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> userUnblock (@PathVariable("userid") int userid, HttpServletRequest request) throws Exception {
+		
+		UserVO vo = (UserVO)request.getSession().getAttribute("login");
+		RelationDTO dto = new RelationDTO();
+		dto.setLoginid(vo.getId());
+		dto.setUserid(userid);
+		
+		ResponseEntity<String> entity=null;
+		try{
+			service.userUnblock(dto);
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+
 }
 	
