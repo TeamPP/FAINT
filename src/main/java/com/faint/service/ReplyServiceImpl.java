@@ -33,4 +33,9 @@ public class ReplyServiceImpl implements ReplyService{
 		dao.delete(id);
 	}
 	
+	@Override
+	public Integer writeCount(ReplyVO vo) {
+		return dao.writeCount(vo);
+	}
+	
 }

@@ -59,5 +59,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM faint.tbl_reply
 		WHERE id=#{id}
 	</delete>
+	
+	<select id="count" resultType="Integer">
+		SELECT count(*)
+		from
+		faint.tbl_reply
+		where postid=#{postid}
+		and userid=#{userid}
+	</select>
 
 </mapper>

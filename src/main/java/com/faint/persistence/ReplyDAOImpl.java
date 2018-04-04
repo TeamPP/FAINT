@@ -33,4 +33,13 @@ public class ReplyDAOImpl implements ReplyDAO{
 		session.delete(namespace+".delete", id);
 	}
 	
+	@Override
+	public Integer writeCount(ReplyVO vo) {
+		// TODO Auto-generated method stub
+		System.out.println("ㅋㅏㅇㅜㄴㅅㅡㄷㅏㅇㅗㅏㅇㅗ ");
+		System.out.println(vo.toString());
+		System.out.println("뻒이가요 ");
+		return session.selectOne(namespace+".count", vo);
+	}
+	
 }

@@ -74,6 +74,29 @@
 	left:0;
 	right:0;
 	margin-top:45%;
+   object-fit:cover;
+   cursor:pointer;
+}
+.imageContainer > div{
+	position: absolute;
+	background-color: rgba(0,0,0,0.5);
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	text-align:center;
+	vertical-align:middle;
+	color: white;
+	font-size: 21px;
+	line-height: 100%;
+	cursor:pointer;
+}
+.imageContainer > div > span{
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin-top:45%;
 }
 .multiFile{
 	position: absolute;
@@ -434,6 +457,96 @@ function getPostList(){
                   //modal끄기 메서드-바깥부분
                   $("#myModal").click(function(event){
                      if(event.target==this){
+                     //영상일 경우(upload.js func)
+                 	}else if(checkVideoType(urlList[i])){
+                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
+                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
+                 	
+                 	//이미지나 영상타입이 아닐경우	
+                 	}else{
+                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
+                 	}
+                  }
+				
+				//길이조정
+				$(".popPostImage").each(function(){
+					if(this.naturalWidth <= this.naturalHeight){
+						$(this).css("min-height", "100%");
+					}else{
+						$(this).css("min-width", "100%");
+					}
+				})
+                  
+                  //좋아요버튼 삽입
+                  if(data.isLike=='0'){
+                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>♡</button></span>")
+                  }else{
+                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>♥</button></span>")
+                  }
+                  
+                  //저장하기 버튼 삽입
+                  if(data.isStore=='0'){
+                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>□</button></span>")
+                  }else{
+                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>■</button></span>")
+                  }
+                  
+                  //게시물 수정버튼 삽입
+                  if(data.userid==${login.id}){
+                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
+                  }
+                  
+                  //modal창 보이기
+                  $("#myModal").css("display","block");
+                  
+                  //modal끄기 메서드-바깥부분
+                  $("#myModal").click(function(event){
+                     if(event.target==this){
+                     //영상일 경우(upload.js func)
+                 	}else if(checkVideoType(urlList[i])){
+                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
+                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
+                 	
+                 	//이미지나 영상타입이 아닐경우	
+                 	}else{
+                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
+                 	}
+                  }
+				
+				//길이조정
+				$(".popPostImage").each(function(){
+					if(this.naturalWidth <= this.naturalHeight){
+						$(this).css("min-height", "100%");
+					}else{
+						$(this).css("min-width", "100%");
+					}
+				})
+                  
+                  //좋아요버튼 삽입
+                  if(data.isLike=='0'){
+                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>♡</button></span>")
+                  }else{
+                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>♥</button></span>")
+                  }
+                  
+                  //저장하기 버튼 삽입
+                  if(data.isStore=='0'){
+                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>□</button></span>")
+                  }else{
+                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>■</button></span>")
+                  }
+                  
+                  //게시물 수정버튼 삽입
+                  if(data.userid==${login.id}){
+                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
+                  }
+                  
+                  //modal창 보이기
+                  $("#myModal").css("display","block");
+                  
+                  //modal끄기 메서드-바깥부분
+                  $("#myModal").click(function(event){
+                     if(event.target==this){
                         $("#myModal").css("display","none");
                         $("#myModal").remove();
                      }
@@ -707,6 +820,160 @@ function likerList(){
 			//비디오 재생
 			if(curObj.prev("video").length == 1){
 				prevObj.get(0).play();
+			}
+			
+			//버튼 보이기
+			$("#moveRight").css("display","block");
+			if(curIdx - 1 == 0){
+				$("#moveLeft").css("display","none");
+			}
+
+			//현재 표시 이미지 위치 변경
+			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+			$("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
+		}
+
+
+//css - 모달창 사진이동버튼
+		
+		//오른쪽으로 넘기기
+		function moveRight(){
+			var len = $(".popPostImage").length-1;
+			var curIdx = parseInt($(".popPostImage:visible").index());
+			var curObj = $(".popPostImage:visible");
+			var nextObj = curObj.next();
+			//if(curObj.next("script").length == 1){
+			//	nextObj = curObj.next().next();
+			//}else{
+			//	nextObj = curObj.next();
+			//}
+			
+			////다음객체 비율 조정
+			//nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
+			//console.log(filesArr);
+			//console.log(filesArr[curIdx+1]);
+			
+			//이미지 전환
+			curObj.css("display","none");
+			nextObj.css("display","block");
+			
+			//비디오 재생
+			if(curObj.next("video").length == 1){
+				nextObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
+			}
+			//버튼 보이기
+			$("#moveLeft").css("display","block");
+			if(len == curIdx+1){
+				$("#moveRight").css("display","none");
+			}
+			//현재 표시 이미지 위치 변경
+			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+			$("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
+		}
+
+		//이미지 왼쪽으로 넘기기
+		function moveLeft(){
+			var len = $(".popPostImage").length-1;
+			var curIdx = parseInt($(".popPostImage:visible").index());
+			var curObj = $(".popPostImage:visible");
+			var prevObj = curObj.prev();
+			//if(curObj.prev("script").length == 1){
+			//	prevObj = curObj.prev().prev();
+			//}else{
+			//	prevObj = curObj.prev();
+			//}
+			
+			//이전객체 비율 조정
+			//prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
+			
+			//이미지 전환
+			curObj.css("display","none");
+			prevObj.css("display","block");
+			
+			//비디오 재생
+			if(curObj.prev("video").length == 1){
+				prevObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
+			}
+			
+			//버튼 보이기
+			$("#moveRight").css("display","block");
+			if(curIdx - 1 == 0){
+				$("#moveLeft").css("display","none");
+			}
+
+			//현재 표시 이미지 위치 변경
+			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+			$("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
+		}
+
+
+//css - 모달창 사진이동버튼
+		
+		//오른쪽으로 넘기기
+		function moveRight(){
+			var len = $(".popPostImage").length-1;
+			var curIdx = parseInt($(".popPostImage:visible").index());
+			var curObj = $(".popPostImage:visible");
+			var nextObj = curObj.next();
+			//if(curObj.next("script").length == 1){
+			//	nextObj = curObj.next().next();
+			//}else{
+			//	nextObj = curObj.next();
+			//}
+			
+			////다음객체 비율 조정
+			//nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
+			//console.log(filesArr);
+			//console.log(filesArr[curIdx+1]);
+			
+			//이미지 전환
+			curObj.css("display","none");
+			nextObj.css("display","block");
+			
+			//비디오 재생
+			if(curObj.next("video").length == 1){
+				nextObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
+			}
+			//버튼 보이기
+			$("#moveLeft").css("display","block");
+			if(len == curIdx+1){
+				$("#moveRight").css("display","none");
+			}
+			//현재 표시 이미지 위치 변경
+			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+			$("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
+		}
+
+		//이미지 왼쪽으로 넘기기
+		function moveLeft(){
+			var len = $(".popPostImage").length-1;
+			var curIdx = parseInt($(".popPostImage:visible").index());
+			var curObj = $(".popPostImage:visible");
+			var prevObj = curObj.prev();
+			//if(curObj.prev("script").length == 1){
+			//	prevObj = curObj.prev().prev();
+			//}else{
+			//	prevObj = curObj.prev();
+			//}
+			
+			//이전객체 비율 조정
+			//prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
+			
+			//이미지 전환
+			curObj.css("display","none");
+			prevObj.css("display","block");
+			
+			//비디오 재생
+			if(curObj.prev("video").length == 1){
+				prevObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
 			}
 			
 			//버튼 보이기

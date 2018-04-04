@@ -81,6 +81,40 @@ public class PostController {
 		logger.info(Arrays.toString(files));
 	}
 	
+	// 게시물 수정 get-1
+	@RequestMapping(value = "/{postid}/postEditor", method = RequestMethod.GET)
+	public String modifyGET(@PathVariable("postid") int postid, Model model, HttpServletRequest request) throws Exception {
+		
+		String address=request.getRequestURI();
+		
+		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		RelationDTO dto=new RelationDTO();
+		dto.setLoginid(vo.getId());
+		dto.setPostid(postid);
+
+		FollowinPostDTO post=(FollowinPostDTO)service.detailRead(dto);
+		
+		if(vo.getId()!=post.getUserid()){
+			return "forward:/empty";
+		}else{
+			model.addAttribute("postVO", post);
+			return "forward:/post/modify";
+		}
+
+	}
+	
+	// 게시물 수정 get-2
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	public void profile(Model model, HttpServletRequest request) throws Exception{
+		
+	}
+	
+	// 게시물 수정 post
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public void modifyPOST(Model model, HttpServletRequest request) throws Exception {
+		
+	}
+
 	/*파일 첨부*/
 	@RequestMapping(value = "/uploader", method = RequestMethod.GET)
 	public void uploader() throws Exception {

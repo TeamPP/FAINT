@@ -162,6 +162,19 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("인증 되었으므로 인증키 null 값 반환 ");
 		session.update(namespace+".successAuth",vo);
 	}
+	// ======================ip차단 관련(댓글에 한정)======================
+	
+	// i ip 차단 리스트 뽑
+	@Override
+	public List<String> find_ip_ban_list() throws Exception{
+		return session.selectList(namespace+".find_ip_ban_list");
+	}
+	
+	// ip  -insert
+	@Override
+	public void insert_ip_ban(String ip) throws Exception{
+		session.insert(namespace+".insert_ip_ban",ip);
+	}
 	
 	// ======================유저정보 읽기======================
 	

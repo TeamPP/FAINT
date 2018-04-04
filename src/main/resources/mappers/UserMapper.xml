@@ -313,5 +313,12 @@
 		AND BINARY password=#{password}
 	</select>
 	
-
+	<!-- ====================ip차단==================== -->
+	<insert id="insert_ip_ban" parameterType="String">
+		INSERT INTO IPBANLIST (IP) VALUES(#{param1})
+	</insert>
+	<select id="find_ip_ban_list" resultType="String">
+		SELECT * FROM IPBANLIST WHERE DATE(BANDATE) = CURDATE()
+	</select>
+	
 </mapper>

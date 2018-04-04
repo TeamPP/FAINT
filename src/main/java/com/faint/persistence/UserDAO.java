@@ -65,6 +65,12 @@ public interface UserDAO {
 
 	public void successAuth (UserVO vo) throws Exception;  // 인증완료로 인한인증키 삭제 
 	
+	// ======================ip차단 관련(댓글에 한정)======================
+	
+	public List<String> find_ip_ban_list() throws Exception;  //	 i ip 차단 리스트 뽑
+	
+	public void insert_ip_ban(String ip) throws Exception;   // ip  -insert 
+	
 	// ======================유저정보 읽기======================
 
 	public String getUserProfile(int id) throws Exception;  //유저 프로필 사진 

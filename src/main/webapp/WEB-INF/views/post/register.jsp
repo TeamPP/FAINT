@@ -466,7 +466,10 @@ data={
 			//비디오 재생
 			if(curObj.next("video").length == 1){
 				nextObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
 			}
+			
 			//버튼 보이기
 			$("#moveLeft").css("display","block");
 			if(len == curIdx+1){
@@ -501,6 +504,8 @@ data={
 			//비디오 재생
 			if(curObj.prev("video").length == 1){
 				prevObj.get(0).play();
+			}else if(curObj.is("video")){
+				curObj.get(0).pause();
 			}
 			
 			//버튼 보이기
