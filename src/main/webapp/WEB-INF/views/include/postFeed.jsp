@@ -1,4 +1,4 @@
-<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -11,7 +11,7 @@
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    padding-top: 15vh; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -24,7 +24,6 @@
 .postModal-content {
     background-color: #fefefe;
     margin: auto;
-    border: 1px solid #888;
     width: 940px;
     height: 600px;
 }
@@ -37,26 +36,24 @@
 
 .postContainer{
    display: inline-block;
+   width: 935px;
+   max-width: 935px; !important
 }
 .postLiner{
    display:flex !important; 
    width:100%;
-   max-width:879px;
-   max-height:293px;
    display: inline-block;
 }
 .imageContainer{
    height:100%;
    width:33%;
-   max-width: 293px;
-   max-height: 293px;
-   padding: 3px 3px 3px 3px;
+   margin: 0.5% 0.5% 0.5% 0.5%;
    position: relative;
-   cursor:pointer;
 }
 .imageContainer > img{
    overflow:hidden;
    object-fit:cover;
+   cursor:pointer;
 }
 .imageContainer > div{
 	position: absolute;
@@ -70,6 +67,7 @@
 	color: white;
 	font-size: 21px;
 	line-height: 100%;
+	cursor:pointer;
 }
 .imageContainer > div > span{
 	top:0;
@@ -114,9 +112,33 @@
 ._sideSeparator:eq(2){
    overflow:auto;
 }
+
+.mainBox {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  bottom: 5%;
+  left: 43%;
+  text-align: center;
+  display: none;
+  z-index: 2;
+}
+  .inBox {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    line-height: 70px;
+  }
+  .inBox:hover {
+  background-color: #000;
+  transition: all linear 0.5s;
+  }
 </style>
 
 <body>
+
 <script id="modalPost" type="text/x-handlebars-template">
 <div id="myModal" class="postModal">
    <span class="close">&times;</span>
@@ -163,8 +185,6 @@
                </span>
             </div>
          </div>
-
-            <hr/>
             
          <div class="s2_2">
             <div class="s2_2_1" id="post{{postid}}">
@@ -172,11 +192,8 @@
                <span class="caption">{{caption}}</span>
                <div class="replyContainer" title="{{postid}}" data-limit=0>
                </div>
-               <time datetime=""+{{regdate}}>{{regdate}}</time>
             </div> 
          </div>
-
-            <hr/>
  
          <div class="s2_3">
             <div class="s2_3_1">
@@ -186,8 +203,6 @@
                <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개(링크미구현)</a>
             </div>
          </div>
-
-            <hr/>
 
          <div class="s2_4">
             <div class="s2_4_1" title="{{postid}}">
@@ -199,29 +214,28 @@
    </div>
 </div>
 <style>
-hr{margin: 0;}
 .section1{width: 600px; height: 600px; display: inline-block; float: left; position: relative; background-color: black; }
 #moveLeft > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -40px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; }
 #moveRight > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -72px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; }    
 .popPostImage{ position: absolute; max-width: 100%; max-height: 100%; width: auto; height: auto; margin: auto; top: 0; bottom: 0; left: 0; right: 0; }
-.section2{ width: 335px; height: 600px; display: inline-block; }
-.s2_1{ width: 335px; height: 78px; }
-.s2_1_1{ padding: 10px; }
-.s2_1_1_1{ width: 50px; height: 50px; display: inline-block; float: left; border-radius: 150px;}
-.s2_1_1_2{ width: 235px; height: 50px; margin-left: 10px; display: inline-block; }
+.section2{ width: 335px; height: 100%; display: inline-block; text-align: center; padding-left: 20px; padding-right: 20px; }
+.s2_1{ padding-top: 20px; padding-bottom: 20px; height: 78px; text-align: left; border-bottom: 1.3px solid #efefef; }
+.s2_1_1{ height: 100%; display: inline-block; }
+.s2_1_1_1{ width: 45px; height: 45px; display: inline-block; float: left; border-radius: 50%; }
+.s2_1_1_2{ width: 235px; margin-left: 10px; display: inline-block; }
 .nickname{ font-weight: bold; }
-.s2_2{ width: 335px; height: 372px; }
-.s2_2_1{ width: 315px; height: 352px; overflow-y:scroll; padding: 10px; }
+.s2_2{ width: 100%; height: auto; padding-top: 16px; padding-bottom: 16px; text-align: left; border-bottom: 1.3px solid #efefef; }
+.s2_2_1{ width: 100%; height: 352px; overflow-y: auto; }
 .replyContainer{ margin-top: 20px; bottom: 0; }
 .reply{ margin-bottom: 4px; }
-.s2_3{ width: 335px; height: 88px; }
-.s2_3_1{ padding: 10px; }
-.likeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); border: none; background-color: #fff; margin: 8px 8px 8px 0; font-size: 0;}
-.replyBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -306px -289px; background-color: #fff; margin: 8px; margin-left: 4px; border: none; font-size: 0;}
-.storeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-color: #fff; margin: 8px; margin-left: 190px; border: none; font-size: 0;}
-.s2_4{ width: 335px; height: 56px; }
-.s2_4_1{ padding: 10px; }
-.replyRegist{ font-size: 15px; border: none; width: 261px; height: 23px; }
+.s2_3{ width: 100%; height: 85px; text-align: left; border-bottom: 1.3px solid #efefef; }
+.s2_3_1{ padding: 10px 0 10px 0; height: 100%;}
+.likeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); border: none; background-color: #fff; margin: 0 8px 8px 0; font-size: 0;}
+.replyBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -306px -289px; background-color: #fff; margin: 0 8px 8px 0; border: none; font-size: 0;}
+.storeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-color: #fff; margin-left: 842%; border: none; font-size: 0;}
+.s2_4{ width: 100%; height: auto; }
+.s2_4_1{ padding: 10px 0 10px 0; }
+.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; }
 </style>
 </script>
 
@@ -230,15 +244,20 @@ console.log(jsonList);
 
 //body로딩 후
 $(document).ready(function(){
+
+	//viewport크기 관리
     $(window).resize(function(){
-    	if($(".postContainer").width()<=parseInt($(".postContainer").css("max-width"))){
-        	$(".postContainer").css("width", $(window).width());
-        	$(".postContainer").css("height", "auto");
-    	}else if($(window).width()>=parseInt($(".postContainer").css("max-width"))){
-    		$(".postContainer").css("width", $(window).width()*0.8);
+    	if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
+    		//viewport크기에 따른 컨테이너 가로값 조정
+    		$(".postContainer").css("width", "935px;");
+        //viewport크기에 따른 사진이미지 높이 값 조정
+    	}else if(parseInt($(".postContainer").css("max-width")) >= parseInt($(window).width())){
+    		$(".postContainer").css("width", $(window).width());
+        	$(".postLiner").height($(".postLiner").width()*0.33);
     	}
 	})
    getPostList();
+
 })
 
 //포스트 피드 띄우는 함수
@@ -247,16 +266,9 @@ function getPostList(){
 	$(".postContainerWrp").remove();
 	
    //포스트 피드
-   //$("body").append("<div class='postContainer' style='width:100%; height:auto;'></div>");
-   
    $("body").append("<div class='postContainerWrp' style='width:100%; height:100%;'></div>");
    $(".postContainerWrp").append("<div class='postContainer'></div>");
 
-   //window사이즈의 80%
-   $(".postContainer").css("width", $(window).width()*0.8);
-   $(".postContainer").css("max-width", $(window).width()*0.8);
-
-   
    //데이터 담을 변수
    var data="";
    //태그 or 지역 검색 일때
@@ -313,15 +325,17 @@ function getPostList(){
       }
    }
    
+   $(".postLiner").height($(".postLiner").width()*0.33);
+   
    for (i = 0; i < $(".postLiner").length; i++) {
       for (j = 0; j < 3; j++) {
-         $(".postLiner:eq("+i+")").append("<div class='imageContainer' style='width:100%;'>")
-         $(".imageContainer").css("height", $(".imageContainer").width());
+         $(".postLiner:eq("+i+")").append("<div class='imageContainer' style='width:100%; height:auto;'>")
       }
    }
+   
    $(data).each(function(index){
       var url=this.url.split('|').reverse(); //쿼리문에서 역순으로 붙어오기때문에 reverse사용
-      var img = "<img class='postImage' title='"+this.id+"' style='height:100%; width:100%; object-fit:cover;' src='/displayFile?fileName="+url[0]+"' />";
+      var img = "<img class='postImage' title='"+this.id+"' style='height:100%; width:100%; object-fit:cover;' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+url[0]+"' />";
       
       //이미지 많을때 아이콘
       if(url.length>1){ img += "<i class='multiFile'></i>"; }
@@ -333,10 +347,13 @@ function getPostList(){
       $(".imageContainer:eq("+index+")").append(str);
       
       //이미지에 마우스올릴 때
-      $(".postImage").mouseenter( function(){$(this).siblings("div").css("display", "block")});
+      $(".postImage").mouseenter( function(){
+   	  	 $(".postImage").siblings("div").css("display", "none");
+    	 $(this).siblings("div").css("display", "block")
+    	 });
       
       //이미지에서 벗어날 때
-      $(".postImage").siblings("div").mouseleave(function(event){$(this).css("display", "none")});
+      $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
       
       $(".imageContainer:eq("+index+")").on("click", function(){
          var pid=$(this).children("img").attr("title");
@@ -388,6 +405,15 @@ function getPostList(){
                  		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
                  	}
                   }
+				
+				//길이조정
+				$(".popPostImage").each(function(){
+					if(this.naturalWidth <= this.naturalHeight){
+						$(this).css("min-height", "100%");
+					}else{
+						$(this).css("min-width", "100%");
+					}
+				})
                   
                   //좋아요버튼 삽입
                   if(data.isLike=='0'){
@@ -429,8 +455,8 @@ function getPostList(){
             }
          })
       })
+      
    })
-   
    var height=$(window).scrollTop(height);
 };
 
@@ -461,7 +487,7 @@ function reply(){
                   "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
                
                if(this.userid==${login.id}){
-                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer' >X</a></li>";
+                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' >X</a></li>";
                }else{
                   replystr+="</div>";
                };
@@ -622,73 +648,13 @@ function likerList(){
       }); 
    });
 };
-//searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리
-function searchFilter(){
-   $(".intro, .s2_2_1, .replyContainer").find("span").each(function(){
-      
-      //1. 텍스트 가져오기 & 처리한 새로운 문자
-      var text = $(this).text();
-      
-      //2. split() 함수처리하기
-      text = split(text);
-      
-      //3. 공백으로 나누기
-      var splitArray = text.split(" ");
-      
-      //4. 특수문자 
-      var special = "!$%^&*()-=+<>?_";
-      
-      //5. 링크처리
-      for(var i in splitArray){
-         var word = splitArray[i];
-         
-         //두글자 이상이면서, 첫글자가 #이면서 , 두번째글자가 특수문자가 아니면 링크처리
-         if(splitArray[i].length!=1 && (word.indexOf("#")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
-            var hash=word.substring(word.lastIndexOf("#")+1);
-            splitArray[i] = "<a href='/search/tags?name="+hash+"'>"+splitArray[i]+"</a>";
-         
-         
-         //두글자 이상이면서, 첫글자가 @이면서 , 두번째글자가 특수문자가 아니면 링크처리
-         } else if(splitArray[i].length!=1 && (word.indexOf("@")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
-            var person=word.substring(word.lastIndexOf("@")+1);
-            splitArray[i] = "<a href='/member/"+person+"'>"+splitArray[i]+"</a>";
-         }
-      }
-      
-      //6. 한문장으로 합치기
-      var splitMerge = splitArray.join(" ");
-      
-      $(this).html(splitMerge);
-   });
-}
-//searchFilter메서드의 보조 사용 함수
-function split(text){
-    
-    //1. 공백기준으로 나누기
-    var splitArray = text.split(" ");
-    
-    //2. 처리될 특수문자 
-    var special="!$%^&*()-=+<>?_";
-    
-    //3. 두글자 이상이면서, 2번째 글자가 특수문자가 아님
-    // '#'->' #' : #과 @앞에 공백넣기
-    for(var i in splitArray){
-       if(splitArray[i].length!=1 && special.indexOf(splitArray[i].charAt(1))==-1){
-           splitArray[i]=splitArray[i].replace(/#/g, " #"); 
-           splitArray[i]=splitArray[i].replace(/@/g, " @"); 
-       } //if end
-    } // for end
-    
-    //4. 배열의 각 요소를 한문장으로 합치기
-    var splitMerge = splitArray.join(" ");
-    return splitMerge;
-}
+
 //css - 모달창 사진이동버튼
 		
 		//오른쪽으로 넘기기
 		function moveRight(){
 			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").attr("id").substr(5));
+			var curIdx = parseInt($(".popPostImage:visible").index());
 			var curObj = $(".popPostImage:visible");
 			var nextObj = curObj.next();
 			//if(curObj.next("script").length == 1){
@@ -723,7 +689,7 @@ function split(text){
 		//이미지 왼쪽으로 넘기기
 		function moveLeft(){
 			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").attr("id").substr(5));
+			var curIdx = parseInt($(".popPostImage:visible").index());
 			var curObj = $(".popPostImage:visible");
 			var prevObj = curObj.prev();
 			//if(curObj.prev("script").length == 1){
