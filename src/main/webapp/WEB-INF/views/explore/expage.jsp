@@ -156,7 +156,6 @@ span {
 	        
 	        success : function (data) {
 	            // 변경된 태그 부분을 넘어온 index 값으로 찾은 뒤 on/off를 변경합니다.
-			console.log(">>>>>>>>>>"+JSON.stringify(data));
 	            
 				var str = ' ';
 	            for(var i=1; i<data.length+1; i++) {
@@ -190,54 +189,38 @@ span {
 	
 $(document).ready(function() {
 	
-	setInterval("RTtag()", 30000);
-	// 30초에 한번씩 받아온다.
+	setInterval("RTtag()", 100000);
+	// 30초에 한번씩 받아온다.	
 	
-	$(".fid").each(function() {
-		setInterval(3000);
-		$(this).toggleClass("fadeInDown animated");
-		console.log(this);
-		setInterval(3000);
-		$(this).toggleClass("fadeInDown animated");
-	})
- 	
-	});
+});
 	
 </script>
 
-<div class="top">
-<div class="topUser">
-<br/>
-<ol class="userOL">
-	<c:forEach items="${topUser}" var="userVO">
-		<li class="userList" style="list-style-type:none;">
-			<a class="username" href='/member/${userVO.nickname}'>
-			<span class="keyword">
-			<em class="usernum"></em>
-			<span class="">${userVO.nickname}</span>
-			</span>
-			</a>
-		</li>
-	</c:forEach>
-</ol>
-</div>
-</div>
+<script>
 
+var ii =0;
+var fade = document.getElementsByClassName("fid");
 
-<script type="text/javascript"> 
-
-$(document).ready(function() {
+window.setInterval(function(){
+        if(ii == fade.length) {   //다 보여주면 스탑
+           	 ii=0;
+        }
         
-    var len2 = document.getElementsByClassName("userList").length;
-    var em2 = document.getElementsByClassName("usernum");
-        for(var i=0; i<len2; i++){
-           em2[i].innerText = i+1;
-         }
+        //카드 보여주기
+        $(".fid:eq("+ii+")").toggleClass("fadeInDown animated");
+        
+        //보여준 후 다시 뒤집
+        (function(x){
+            window.setTimeout(function(){
+            	$(".fid:eq("+x+")").toggleClass("fadeInDown animated");
+            },1000);
+        })(ii);
 
-	});
+        ii++;
+        
+    },1000);   
+
 </script>
-
-
 
 <!-- 인기 게시글 -->
 <br/>
@@ -251,7 +234,6 @@ $(document).ready(function() {
 
 <script>
 var jsonList=${jsonList};
-console.log(jsonList);
 
 </script>
 
