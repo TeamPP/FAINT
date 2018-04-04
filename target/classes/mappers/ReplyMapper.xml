@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        r.ID AS id,
 	        u.ID AS userid,
 	        r.POSTID AS postid,
+            p.userid AS postwriter,
 	        u.NICKNAME AS username,
 	        r.COMMENT AS comment,
 	        r.REGDATE AS REGDATE
@@ -40,8 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left join
 		(select blockedid from tbl_block where userid=#{loginid}) ub
 		on u.id = ub.blockedid
+        left join
+			tbl_post p
+        on r.postid = p.id
 		where bu.userid is null and ub.blockedid is null
-	    and r.postid=#{postid};
+	    and r.postid=#{postid}
 	</select>
 	
 	<update id="update">

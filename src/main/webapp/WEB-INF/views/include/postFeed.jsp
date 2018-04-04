@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -480,13 +479,13 @@ function reply(){
      	var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
      	
         $(rpldata).each(function(index){
-            
+            console.log(this);
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
                replystr +="<div class='reply' title='"+this.id+"'>"+
                   "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
                
-               if(this.userid==${login.id}){
+               if(this.userid==${login.id} || this.postwriter==${login.id}){
                   replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' >X</a></li>";
                }else{
                   replystr+="</div>";

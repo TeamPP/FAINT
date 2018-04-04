@@ -6,6 +6,7 @@ public class ReplyVO {
 	
 	private int id;
 	private int postid;
+	private int postwriter;
 	private int userid;
 	private String username;
 	private String comment;
@@ -22,6 +23,12 @@ public class ReplyVO {
 	}
 	public void setPostid(int postid) {
 		this.postid = postid;
+	}
+	public int getPostwriter() {
+		return postwriter;
+	}
+	public void setPostwriter(int postwriter) {
+		this.postwriter = postwriter;
 	}
 	public int getUserid() {
 		return userid;
@@ -47,11 +54,11 @@ public class ReplyVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	
 	@Override
 	public String toString() {
-		return "ReplyVO [id=" + id + ", postid=" + postid + ", userid=" + userid + ", username=" + username
-				+ ", comment=" + comment + ", regdate=" + regdate + "]";
+		return "ReplyVO [id=" + id + ", postid=" + postid + ", postwriter=" + postwriter + ", userid=" + userid
+				+ ", username=" + username + ", comment=" + comment + ", regdate=" + regdate + "]";
 	}
-	
 	
 }
