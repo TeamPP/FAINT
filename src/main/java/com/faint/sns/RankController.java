@@ -62,6 +62,7 @@ public class RankController {
 		
 		Collaborative c = new Collaborative(loginUser);
 		c.nonTargetCalc();
+		System.out.println(1);
 		
 	}
 	
