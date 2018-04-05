@@ -10,37 +10,33 @@
 <title>${userVO.name}(@${userVO.nickname})</title>
 <!-- 프로필 사진 변경 공통 처리 -->
 <style>
-<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
-
-=======
 a {
-	color: black;
+   color: black;
 }
 a:hover {
-	text-decoration: none;
+   text-decoration: none;
 }
 .hashTag{
-	color: hotpink;
+   color: hotpink;
 }
 .isFlw, #admin, #moreAction, .btnUserUnblock{
-	float: right;
-	font-size: 12px;
-	font-weight: 400;
-	cursor: pointer;
-	background: 0 0;
-	border-color: #dbdbdb;
-	color: #262626;
-	border-style: solid;
-	border-width: 1px;
-	line-height: 26px;
-	border-radius: 2px;
+   float: right;
+   font-size: 12px;
+   font-weight: 400;
+   cursor: pointer;
+   background: 0 0;
+   border-color: #dbdbdb;
+   color: #262626;
+   border-style: solid;
+   border-width: 1px;
+   line-height: 26px;
+   border-radius: 2px;
 }
->>>>>>> c15f04c 04.03 block&unblock/follow hidden/reply hidden/liker hidden
 .followModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    padding-top: 15vh; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -51,32 +47,117 @@ a:hover {
 }
 /* Modal Content */
 .followModal-content {
-    background-color: #fefefe;
-    margin: auto;
-    border: 1px solid #888;
-    width: 30%;
-    height: 70%;
-    overflow: auto;
+   background-color: #fefefe;
+   margin: auto;
+   border: 1px solid #888;
+   width: 30%;
+   height: 70%;
+   overflow: auto;
 }
 /* The Close Button */
 .close {
-    color: #fefefe;
-    float: right;
-    font-size: 50px;
-    font-weight: bold;
-    right:1.5%;
-    top:0%;
-    cursor: pointer;
-    
-    background: 0 0;
-    border: 0;
-    cursor: pointer;
-    height: 36px;
-    outline: 0;
-    position: absolute;
-    z-index: 2;
+   color: #fefefe;
+   float: right;
+   font-size: 50px;
+   font-weight: bold;
+   right: 1.5%;
+   top: 0%;
+   cursor: pointer;
+   background: 0 0;
+   border: 0;
+   cursor: pointer;
+   height: 36px;
+   outline: 0;
+   position: absolute;
+   z-index: 2;
+}
+article {
+   text-align: center;
+}
+.photo-profile {
+   display: inline-block;
+   width: 935px;
+   max-width: 935px !important;
+   margin-bottom: 70px;
+   height: 170px;
 }
 
+#proPhoto {
+   display: inline-block;
+   text-align: center;
+   width: 33%;
+   height: 100%;
+   float: left; /* 이거 안하면 위에 공간 뜸 */
+}
+#btnChangePhoto {
+   width: 100%;
+   height: 100%;
+   border-radius: 50%; /*사진 둥글게 */
+   display: inline-block;
+   background-color: gray;
+}
+#proFile {
+   display: inline-block;
+   text-align: left;
+   width: 63%;
+   height: 170px;
+   margin-left: 3%;
+}
+
+/* 첫번째줄 */
+.firstLine {
+   width: 613px;
+   height: 40px;
+   margin-bottom: 20px;
+}
+
+div.firstLine span {
+   margin-right: 10px;
+}
+
+.fL-1 {
+   font-size: 32px;
+   font-weight: 200;
+}
+
+/* 두번째줄 */
+.secondLine {
+   margin-bottom: 20px;
+   font-size:16px;
+}
+
+div.secondLine span {
+   margin-right: 20px;
+}
+
+/* 세번째 줄 */
+.thirdLine {
+   margin-bottom: 20px;
+}
+
+.intro-name {
+   margin-right: 5px;
+   font-weight: bold;
+   float: left;
+}
+
+.mid-line{
+   border-top: 1px solid #efefef;
+   width:935px;
+   text-align:center;
+   display:inline-block;
+   font-size: 16px;
+   font-weight: 200;
+   height:35px;
+}
+.mid-line > span{
+    height: 100%;
+   padding-top:7px;
+}
+.mid-line > span:first-child {
+   margin-right: 30px;
+   border-top: 1.5px solid black;
+}
 </style>
 
 
@@ -88,116 +169,76 @@ console.log("${userVO}");
 </script>
 
 <article>
-<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
-   <header>
-      <div>
-      <c:choose>
-         <c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-            <button id="btnChangePhoto"><img src="/displayFile?fileName=${userVO.profilephoto}" style="width:50px; height:50px;"/></button>
-         </c:when>
-         <c:otherwise>
-            <button id="btnChangePhoto"><img src="/resources/img/emptyProfile.jpg" style="width:50px; height:50px;"/></button>
-         </c:otherwise>
-      </c:choose>
-      </div>
-      <section>
-         <h1>${userVO.nickname}</h1>
+   <div class="photo-profile">
+      <section id="proPhoto">
+         <div style="width:170px; height:100%; margin:auto;">
          <c:choose>
-            <c:when test="${userVO.id==login.id}">
-               <button id='admin'><a href="../member/profile/edit">프로필 편집</a></button>
+            <c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
+               <img id="btnChangePhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
             </c:when>
             <c:otherwise>
-               <c:choose>
-                  <c:when test="${userVO.isFollow > 0}">
-                     <span><button class='isFlw' title="${userVO.id}">팔로잉</button></span>
-                  </c:when>
-                  <c:otherwise>
-                     <span><button class='isFlw' title="${userVO.id}">팔로우</button></span>
-                  </c:otherwise>
-               </c:choose>
-               <span><button>▽</button></span>
-               <div><button>...</button></div>
+               <img id="btnChangePhoto" src="/resources/img/emptyProfile.jpg" />
             </c:otherwise>
          </c:choose>
-         <ul>
-            <li id="postCnt">게시물 ${userVO.postCount}</li>
-            <li id="followed">팔로워 0</li>
-            <li id="following">팔로우 0</li>
-         </ul>
-         <div class="intro">
-            <h1>${userVO.name}</h1>
-            <span>${userVO.intro}</span>
-            <a href='https://${userVO.website}' >${userVO.website}</a>
          </div>
       </section>
-   </header>
-=======
-	<div class="photo-profile">
-		<section id="proPhoto">
-			<div style="width:170px; height:100%; margin:auto;">
-			<c:choose>
-				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-					<img id="btnChangePhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
-				</c:when>
-				<c:otherwise>
-					<img id="btnChangePhoto" src="/resources/img/emptyProfile.jpg" />
-				</c:otherwise>
-			</c:choose>
-			</div>
-		</section>
-	
-		<section id="proFile">
-			<div class="firstLine">
-				<span class="fL-1">${userVO.nickname}</span>
-				<c:choose>
-					<c:when test="${userVO.id==login.id}">
-						<span class="fL-2">
-							<button id='admin'>
-								<a href="/member/profile/edit">프로필 편집</a>
-							</button>
-						</span>
-					</c:when>
-					<c:otherwise>
-						<c:choose>
-							<c:when test="${userVO.isBlock > 0}">
-								<span><button class='btnUserUnblock' onclick="userUnblock()">차단 해제</button></span>
-							</c:when>
-							<c:when test="${userVO.isFollow > 0}">
-								<span><button class='isFlw' title="${userVO.id}">팔로잉</button></span>
-							</c:when>
-							<c:otherwise>
-								<span><button class='isFlw' title="${userVO.id}">팔로우</button></span>
-							</c:otherwise>
-						</c:choose>
-						<span><button id="moreAction">...</button></span>
-					</c:otherwise>
-				</c:choose>
-			</div>
-			
-			<div class="secondLine">
-				<span id="postCnt">게시물 ${userVO.postCount}</span>
-				<span id="followed">팔로워 0</span>
-				<span id="following">팔로우 0</span>
-			</div>
-			
-			<div class="intro">
-				<div class="intro-name">${userVO.name}</div>
-				<span>${userVO.intro}</span> <div><a href='https://${userVO.website}'>${userVO.website}</a></div>
-			</div>
-		</section>
-	</div>
->>>>>>> c15f04c 04.03 block&unblock/follow hidden/reply hidden/liker hidden
+   
+      <section id="proFile">
+         <div class="firstLine">
+            <span class="fL-1">${userVO.nickname}</span>
+            <c:choose>
+               <c:when test="${userVO.id==login.id}">
+                  <span class="fL-2">
+                     <button id='admin'>
+                        <a href="/member/profile/edit">프로필 편집</a>
+                     </button>
+                  </span>
+               </c:when>
+               <c:otherwise>
+                  <c:choose>
+                     <c:when test="${userVO.isBlock > 0}">
+                        <span><button class='btnUserUnblock' onclick="userUnblock()">차단 해제</button></span>
+                     </c:when>
+                     <c:when test="${userVO.isFollow > 0}">
+                        <span><button class='isFlw' title="${userVO.id}">팔로잉</button></span>
+                     </c:when>
+                     <c:otherwise>
+                        <span><button class='isFlw' title="${userVO.id}">팔로우</button></span>
+                     </c:otherwise>
+                  </c:choose>
+                  <span><button id="moreAction">...</button></span>
+               </c:otherwise>
+            </c:choose>
+         </div>
+         
+         <div class="secondLine">
+            <span id="postCnt">게시물 ${userVO.postCount}</span>
+            <span id="followed">팔로워 0</span>
+            <span id="following">팔로우 0</span>
+         </div>
+         
+         <div class="intro">
+            <div class="intro-name">${userVO.name}</div>
+            <span>${userVO.intro}</span> <div><a href='https://${userVO.website}'>${userVO.website}</a></div>
+         </div>
+      </section>
+   </div>
 </article>
 
-   
-<h1>-------------아래부터 피드---------------</h1>
-
+      
 <c:if test="${userVO.id==login.id}">
-   <div>
-      <a href="javascript:;">게시물</a>
-      <a href="/member/${userVO.nickname}/store">저장됨</a>
+<article>
+   <div class="mid-line">
+      <span>
+         <a href="javascript:;">게시물</a>
+      </span>
+      <span>
+         <a href="/member/${userVO.nickname}/store">저장됨</a>
+      </span>
    </div>
+</article>
 </c:if>
+
 
 
 <!-- 프로필 이미지 input -->
@@ -275,6 +316,7 @@ border-radius: 150px;  /* 프사 둥글게 */
 
 </script>
 
+
 <script id="modalTemplate" type="text/x-handlebars-template">
    <div class="_pfyik" role="dialog" onclick="callRemoveDialog(event)">
    <div class="_23gmb"></div>
@@ -310,57 +352,34 @@ border-radius: 150px;  /* 프사 둥글게 */
 </script>
 
 <script>
-<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
-
-//프로필 사진 버튼 클릭
-
-$("#btnChangePhoto").on("click",function(){
-   if(${userVO.id}==${login.id}){
-      if($("#btnChangePhoto").children("img").attr("src") != "../../resources/img/emptyProfile.jpg"){
-         var template = Handlebars.compile($("#modalTemplate").html());
-         $("body").append(template);
-         //$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
-         $("body").attr("aria-hidden","true");
-         
-         $("._hql7s").on("click",function(event){
-              event.stopPropagation();
-         });
-      }else{
-         $("#inputfile").click();
-      }
-   }
-})
-   
-=======
 // ======================프로필 사진 버튼 클릭(자기페이지일 경우에만)==========================
 // 모달팝업
 if(${userVO.id}==${login.id}){
-	$("#btnChangePhoto").css("cursor", "pointer");
-	$("#btnChangePhoto").on("click",function(){	   
-		   if($("#btnChangePhoto").children("img").attr("src") != "../../resources/img/emptyProfile.jpg"){
-	         var template = Handlebars.compile($("#modalTemplate").html());
-	         $("body").append(template);
-	         //$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
-	         $("body").attr("aria-hidden","true");
-	         
-	         var list = '<li class="_hql7s">프로필 사진 바꾸기</li>';
-	         list += '<li class="_o2wxh"><button class="_h74gn" id="btnRemovePhoto" onclick="removePhoto(event)">현재 사진 삭제</button></li>';
-	         list += '<li class="_hql7s"><button class="_h74gn" id="btnPhotoUpload" onclick="callFileUploader(event)">사진 업로드</button></li>';
-	       	 list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
-	         
-	         $("._cepxb").html(list);
-	         
-	         $("._hql7s").on("click",function(event){
-	              event.stopPropagation();
-	         });
-	      }else{
-	         $("#inputfile").click();
-	      }
-	})
+   $("#btnChangePhoto").css("cursor", "pointer");
+   $("#btnChangePhoto").on("click",function(){      
+         if($("#btnChangePhoto").children("img").attr("src") != "../../resources/img/emptyProfile.jpg"){
+            var template = Handlebars.compile($("#modalTemplate").html());
+            $("body").append(template);
+            //$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
+            $("body").attr("aria-hidden","true");
+            
+            var list = '<li class="_hql7s">프로필 사진 바꾸기</li>';
+            list += '<li class="_o2wxh"><button class="_h74gn" id="btnRemovePhoto" onclick="removePhoto(event)">현재 사진 삭제</button></li>';
+            list += '<li class="_hql7s"><button class="_h74gn" id="btnPhotoUpload" onclick="callFileUploader(event)">사진 업로드</button></li>';
+              list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
+            
+            $("._cepxb").html(list);
+            
+            $("._hql7s").on("click",function(event){
+                 event.stopPropagation();
+            });
+         }else{
+            $("#inputfile").click();
+         }
+   })
 }
 
 // 취소버튼 - CSS처리 (유저 더보기 액션에서도 동일 처리)
->>>>>>> c15f04c 04.03 block&unblock/follow hidden/reply hidden/liker hidden
 function callRemoveDialog(event){
    if(typeof event != "undefined"){
       event.stopPropagation();
@@ -383,18 +402,13 @@ $("#inputfile").on("change", function(event) {
 function uploadFiles(files) {
    $(files).each(function() {
       var file = this;
-      if(this.type.indexOf('image') ==-1 ) {
-  		console.log("이상한 파일");
-  		alert("이미지 파일을 다시 선택하세요.");
-  		return false;
-		}
       var formData = new FormData();
       console.log("method");
       if(this.type.indexOf('image') ==-1 ) {
-    		console.log("이상한 파일");
-    		alert("이미지 파일을 다시 선택하세요.");
-    		return false;
-  		}
+          console.log("이상한 파일");
+          alert("이미지 파일을 다시 선택하세요.");
+          return false;
+        }
       formData.append("file", this);
       $.ajax({
          url : '/uploadAjax',   
@@ -467,85 +481,74 @@ function updatePhoto(fullName){
 //======================유저 더보기 버튼 액션==========================
 //모달팝업
 
-$("#moreAction").on("click",function(){	   
-	var template = Handlebars.compile($("#modalTemplate").html());
-	$("body").append(template);
-	//$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
-	$("body").attr("aria-hidden","true");
-	
-	var list = '<li class="_o2wxh"><button class="_h74gn" id="btnUserReport" onclick="userReport(event)">사용자 신고</button></li>';
-	list += '<li class="_hql7s"><button class="_h74gn" id="btnUserBlock" onclick="userBlock(event)">이 사용자 차단하기</button></li>';
-	list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
-	
-	$("._cepxb").html(list);
-	
-	$("._hql7s").on("click",function(event){
-	     event.stopPropagation();
-	});
+$("#moreAction").on("click",function(){      
+   var template = Handlebars.compile($("#modalTemplate").html());
+   $("body").append(template);
+   //$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
+   $("body").attr("aria-hidden","true");
+   
+   var list = '<li class="_o2wxh"><button class="_h74gn" id="btnUserReport" onclick="userReport(event)">사용자 신고</button></li>';
+   list += '<li class="_hql7s"><button class="_h74gn" id="btnUserBlock" onclick="userBlock(event)">이 사용자 차단하기</button></li>';
+   list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
+   
+   $("._cepxb").html(list);
+   
+   $("._hql7s").on("click",function(event){
+        event.stopPropagation();
+   });
 })
 
 //사용자 신고
 function userReport(){
-	//임시 함수
-	$("body").attr("sytle","");
-	$("body").attr("aria-hidden","false");
-	$("div[role='dialog']").remove();
+   //임시 함수
+   $("body").attr("sytle","");
+   $("body").attr("aria-hidden","false");
+   $("div[role='dialog']").remove();
 }
 
 //사용자 차단
 function userBlock(){
-	$.ajax({
-		type: "post",
-		url: "/member/block",
-		headers: "{'X-HTTP-Method-Override' : 'POST'}",
-		dataType: "text",
-		async: false,
-		data: {
-			"userid": ${userVO.id}
-		},
-		success: function(result){
-			if(result=="SUCCESS"){
-				alert("차단되었습니다");
-				history.go(0);
-			}
-		}
-	})
+   $.ajax({
+      type: "post",
+      url: "/member/block",
+      headers: "{'X-HTTP-Method-Override' : 'POST'}",
+      dataType: "text",
+      async: false,
+      data: {
+         "userid": ${userVO.id}
+      },
+      success: function(result){
+         if(result=="SUCCESS"){
+            alert("차단되었습니다");
+            history.go(0);
+         }
+      }
+   })
 }
 
 //사용자 차단해제
 function userUnblock(){
-	$.ajax({
-		type: "delete",
-		url: "/member/unblock/${userVO.id}",
-		headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
-		dataType: "text",
-		async: false,
-		success: function(result){
-			if(result=="SUCCESS"){
-				alert("차단해제되었습니다");
-				history.go(0);
-			}
-		}
-	})
+   $.ajax({
+      type: "delete",
+      url: "/member/unblock/${userVO.id}",
+      headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
+      dataType: "text",
+      async: false,
+      success: function(result){
+         if(result=="SUCCESS"){
+            alert("차단해제되었습니다");
+            history.go(0);
+         }
+      }
+   })
 }
 
 //======================postFeed.jsp관련======================
 var jsonList="profile";
 var uid=${userVO.id};
 
-<<<<<<< Upstream, based on branch 'mh.park' of https://github.com/TeamPP/FAINT.git
-//followList 에 followedList부여 및 팔로워 수 갱신
-$(document).ready(function(){
-   followed();
-   following();
-   follow();
-   //////////////////////////searchFilter();
-})
-
-=======
 
 //======================팔로우 관련 메서드======================
->>>>>>> c15f04c 04.03 block&unblock/follow hidden/reply hidden/liker hidden
 function followed(){
    $.getJSON("/member/followed/" + ${userVO.id}, function(data){
       var data=$(data)
@@ -555,26 +558,26 @@ function followed(){
          $("#flwr").on("click", function(){
             var followedList="";
             data.each(function(){
-				
-            	followedList+="<li class='oneofList'> <img class='followPhoto' ";
+            
+               followedList+="<li class='oneofList'> <img class='followPhoto' ";
                 
-               	// 프로필 사진이 있는경우 | 없는 경우
-				if(this.profilephoto != null){
-					followedList+="src='/displayFile?fileName="+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
-            	}else{
-					followedList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
-            	}
-            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
-            	if(this.isFollow > 0){
-					followedList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
+                  // 프로필 사진이 있는경우 | 없는 경우
+            if(this.profilephoto != null){
+               followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+               }else{
+               followedList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+               }
+               // 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
+               if(this.isFollow > 0){
+               followedList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
                
-				}else if(this.isFollow==0 && this.id!=${login.id}){
-					followedList+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
+            }else if(this.isFollow==0 && this.id!=${login.id}){
+               followedList+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
                
-				}else{
-					followedList+="</li>";
-				}
-            	
+            }else{
+               followedList+="</li>";
+            }
+               
             })
             
             //모달창 불러오기
@@ -621,19 +624,19 @@ function following(){
          $("#following").html("<a href='javascript:;' id='flw'>팔로우 "+data.length+"</a>");
          //following onclick 메서드 적용(follow리스트뜨도록)
          $("#flw").on("click", function(){
-			var followingList="";
+         var followingList="";
             data.each(function(){
-            	
+               
                followingList+="<li class='oneofList'> <img class='followPhoto' ";
                
-               	// 프로필 사진이 있는경우 | 없는 경우
-            	if(this.profilephoto != null){
-            		followingList+="src='/displayFile?fileName="+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
-            	}else{
-            		followingList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
-            	}
-            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
-            	if(this.isFollow > 0){
+                  // 프로필 사진이 있는경우 | 없는 경우
+               if(this.profilephoto != null){
+                  followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+               }else{
+                  followingList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+               }
+               // 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
+               if(this.isFollow > 0){
                   followingList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
                
                }else if(this.isFollow==0 && this.id!=${login.id}){
@@ -703,16 +706,48 @@ function follow(){
          dataType:"text",
          success:function(result){
             if(result=="SUCCESS"){
-               following();
+               followed();
+                following();
             };
-         }      
+         }
       });
    });
 };
 
 
 </script>
+
 <jsp:include page="/WEB-INF/views/include/postFeed.jsp" flush="false" />
+
+<script>
+//followList 에 followedList부여 및 팔로워 수 갱신 & 해쉬태그 필터 등록
+$(document).ready(function(){
+   followed();
+   following();
+   follow();
+   searchFilter();
+})
+
+//body로딩 후
+$(document).ready(function(){
+
+   //viewport크기 관리
+    $(window).resize(function(){
+       if(parseInt($(".photo-profile").css("max-width")) <= parseInt($(window).width())){
+          //viewport크기에 따른 컨테이너 가로값 조정
+          $(".photo-profile").css("width", "935px;");
+          $(".mid-line").css("width", "935px;");
+        //viewport크기에 따른 사진이미지 높이 값 조정
+       }else if(parseInt($(".photo-profile").css("max-width")) >= parseInt($(window).width())){
+          $(".photo-profile").css("width", $(window).width());
+          $(".mid-line").css("width", $(window).width());
+       }
+   })
+
+})
+
+</script>
+
 </body>
 
 </html>
