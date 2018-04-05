@@ -9,7 +9,7 @@ function lengthCheck(obj, limit) {
       return false;
    }
 
-   return true;
+	return true;
 }
 
 //searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리

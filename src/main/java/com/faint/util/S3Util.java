@@ -14,9 +14,8 @@ import java.util.List;
 
 public class S3Util {
 
-    private String accessKey = "k"; // 엑세스 키
-    private String secretKey = ""; // 보안 엑세스 키      
-
+	private String accessKey = "AKIAIETKEHQEGB5OCQQA"; // 엑세스 키
+    private String secretKey = "VAHWdhPvg1oKD6falNJnTZQCkQ9QpjSVs/0EVhoT"; // 보안 엑세스 키   
     private AmazonS3 conn;
 
     public S3Util() {

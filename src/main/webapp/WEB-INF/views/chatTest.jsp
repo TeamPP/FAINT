@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -12,6 +13,14 @@
 <script type="text/javascript">
 	
 	$(document).ready(function() {
+		$("#message").keypress(function(key){
+			var enter=key.keyCode||key.which;
+			 if(enter==13){
+				 sendMessage();
+				 $(this).val("");
+			 }
+		})
+		
 	    $("#sendBtn").click(function() {
 	        sendMessage();
 	    });
@@ -21,10 +30,10 @@
 	
 	//웸소켓을 지정한 url로 연결한다.
 	
-	sock = new SockJS("<c:url value="/echo"/>");
+	sock = new SockJS("/echo");
 	
 	sock.onopen=function(){
-		alert("되라");
+		console.log("연결됨");
 	}
 	
 	//자바스크립트 안에 function을 집어넣을 수 있음.
