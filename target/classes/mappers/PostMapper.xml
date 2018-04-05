@@ -140,7 +140,7 @@
 	</select>
 	
 		<!-- 인기 post 전체목록 -->
-	<select id="topPost" resultType="com.faint.dto.TopPostDTO">
+	<select id="topPost" resultType="com.faint.domain.PostVO">
 	 <![CDATA[
           	select topT.*, (@rank := @rank +1) as rank
         	from

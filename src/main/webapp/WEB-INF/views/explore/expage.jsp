@@ -29,39 +29,39 @@
 <style>
 
 .fadeInDown {
-	/* animation-iteration-count: infinite; */
+   /* animation-iteration-count: infinite; */
 }
 
  .tit {
-	text-overflow: ellipsis;
-	width: 100px;
-	
+   text-overflow: ellipsis;
+   width: 100px;
+   
 }
 
 /* 인기 검색어 스타일 */
 h2 {
-	text-align: center;
+   text-align: center;
 }
 
 .top{
-	display: inline-block;
-	border: 1px solid black;
-	width: 400px;
-	margin: auto;
-	background: white;
+   display: inline-block;
+   border: 1px solid black;
+   width: 400px;
+   margin: auto;
+   background: white;
 }
 
 .tagOL, .userOL { 
-	list-style-type: decimal; 
+   list-style-type: decimal; 
 }
 
 em { 
-	font-style: normal;
-	cursor : pointer;
+   font-style: normal;
+   cursor : pointer;
 }
 
 .tagnum, .usernum {
-	display: block;
+   display: block;
     float: left;
     min-width: 13px;
     _width: 13px;
@@ -76,15 +76,15 @@ em {
 }
 
 .tagList {
-	/* width: 200px; */
-	margin: auto;
+   /* width: 200px; */
+   margin: auto;
     display: list-item;
     text-align: -webkit-match-parent;
 }
 
 .userList {
-	/* width: 200px; */
-	margin: auto;
+   /* width: 200px; */
+   margin: auto;
     display: list-item;
     text-align: -webkit-match-parent;
 }
@@ -112,8 +112,8 @@ em {
 }
 
 span {
-	display : inline-block;
-	margin: 0;
+   display : inline-block;
+   margin: 0;
     padding: 0;
     border: 0;
     font: inherit;
@@ -135,65 +135,65 @@ span {
 <div class="top">
 <div class="topTag">
 <br/>
-	<ol class="tagOL"></ol>
+   <ol class="tagOL"></ol>
 </div>
 </div>
 
 
 <script type="text/javascript">
 
-	RTtag();
-	    
-	function RTtag () {  
-	    $.ajax({
-	        type:"POST",
-	        url: "/explore/getTag",
-	        async: false,
-	        headers:{
-	        	"Content-Type" : "application/json",
-	        	"X-HTTP-Method-Override" : "POST"
-	        },
-	        
-	        success : function (data) {
-	            // 변경된 태그 부분을 넘어온 index 값으로 찾은 뒤 on/off를 변경합니다.
-	            
-				var str = ' ';
-	            for(var i=1; i<data.length+1; i++) {
-	            	str += "<li class='tagList' style='list-style-type:none;'>"
-	            		   + "<a class='tagname' href='/search/tags?name="+data[i-1].name+"'>"
-	            		   + "<span class='keyword'>"
-	            		   + "<em class='tagnum'>"+i+"</em>"
-	            		   + "<span class='fid'>"
-	            		   + "<span class='tit'>"+data[i-1].name+"</span>"
-	            		   + "	</span></span></a></li>";
-	            		   
-	            } /* for문 끝*/
-	            
-			 	$(".tagOL").html(str);
-	            
-	        }, /* success 끝 */
-	        
-	        error: function(e){
-	        	if(e.status==500) {
-	        		console.log("에러로갓니?");
-	        	}
-	        	
-	        	updater.stop();
-	        	console.log("갱신스탑");
-	        }/* error 끝 */
-	        
-	    }); /* ajax 끝 */
-	    
-	} /* RTtag끝  */
+   RTtag();
+       
+   function RTtag () {  
+       $.ajax({
+           type:"POST",
+           url: "/explore/getTag",
+           async: false,
+           headers:{
+              "Content-Type" : "application/json",
+              "X-HTTP-Method-Override" : "POST"
+           },
+           
+           success : function (data) {
+               // 변경된 태그 부분을 넘어온 index 값으로 찾은 뒤 on/off를 변경합니다.
+               
+            var str = ' ';
+               for(var i=1; i<data.length+1; i++) {
+                  str += "<li class='tagList' style='list-style-type:none;'>"
+                        + "<a class='tagname' href='/search/tags?name="+data[i-1].name+"'>"
+                        + "<span class='keyword'>"
+                        + "<em class='tagnum'>"+i+"</em>"
+                        + "<span class='fid'>"
+                        + "<span class='tit'>"+data[i-1].name+"</span>"
+                        + "   </span></span></a></li>";
+                        
+               } /* for문 끝*/
+               
+             $(".tagOL").html(str);
+               
+           }, /* success 끝 */
+           
+           error: function(e){
+              if(e.status==500) {
+                 console.log("에러로갓니?");
+              }
+              
+              updater.stop();
+              console.log("갱신스탑");
+           }/* error 끝 */
+           
+       }); /* ajax 끝 */
+       
+   } /* RTtag끝  */
 
-	
+   
 $(document).ready(function() {
-	
-	setInterval("RTtag()", 100000);
-	// 30초에 한번씩 받아온다.	
-	
+   
+   setInterval("RTtag()", 100000);
+   // 30초에 한번씩 받아온다.   
+   
 });
-	
+   
 </script>
 
 <script>
@@ -203,7 +203,7 @@ var fade = document.getElementsByClassName("fid");
 
 window.setInterval(function(){
         if(ii == fade.length) {   //다 보여주면 스탑
-           	 ii=0;
+               ii=0;
         }
         
         //카드 보여주기
@@ -212,7 +212,7 @@ window.setInterval(function(){
         //보여준 후 다시 뒤집
         (function(x){
             window.setTimeout(function(){
-            	$(".fid:eq("+x+")").toggleClass("fadeInDown animated");
+               $(".fid:eq("+x+")").toggleClass("fadeInDown animated");
             },1000);
         })(ii);
 

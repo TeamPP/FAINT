@@ -67,8 +67,8 @@ public class PostDAOImpl implements PostDAO {
 	
 	// 인기 게시글
 	@Override
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception {
-		return session.selectList(namespace+".topPost", dto);
+	public List<PostVO> topPost() throws Exception {
+		return session.selectList(namespace+".topPost");
 	}
 
 	//==============================tag관련==============================

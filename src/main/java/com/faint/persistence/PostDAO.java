@@ -34,7 +34,7 @@ public interface PostDAO {
 	public List<FollowinPostDTO> mainRead(Integer id) throws Exception;
 	
 	// 인기 게시물
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception;
+	public List<PostVO> topPost() throws Exception;
 	
 
 	//===================tag 관련 =======================

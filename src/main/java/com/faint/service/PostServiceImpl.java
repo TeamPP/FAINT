@@ -116,8 +116,8 @@ public class PostServiceImpl implements PostService {
 	
 	// 인기 게시글
 	@Override
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception {
-		return dao.topPost(dto);
+	public List<PostVO> topPost() throws Exception {
+		return dao.topPost();
 	}
 
 	//==============tag==============
