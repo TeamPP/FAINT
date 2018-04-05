@@ -1,29 +1,38 @@
 package com.faint.util;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.Protocol;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.*;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public class S3Util {
 
-	private String accessKey = ""; // 엑세스 키
-    private String secretKey = ""; // 보안 엑세스 키   
+
+/*    private String accessKey = "this is not accessKey"; // 엑세스 키
+    private String secretKey = "this is not secretKey"; // 보안 엑세스 키      
+*/
     private AmazonS3 conn;
 
     public S3Util() {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+        /*AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTP);
         this.conn = new AmazonS3Client(credentials, clientConfig);
         conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // 엔드포인트 설정 [ 아시아 태평양 서울 ]
+*/        this.conn = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.AP_NORTHEAST_2)
+                .build();
     }
 
     // 버킷 리스트를 가져오는 메서드이다.
@@ -55,8 +64,6 @@ public class S3Util {
 
     // 파일 삭제
     public void fileDelete(String bucketName, String fileName) {
-    	System.out.println("fileName : " + fileName);
-    	
         String imgName = (fileName).replace(File.separatorChar, '/');
         conn.deleteObject(bucketName, imgName);
         System.out.println("삭제성공");
