@@ -6,7 +6,6 @@
 <!--헤더-->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,10 +16,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
    
 <!--검색창 부트스트랩  -->  
 <link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
+
+<!-- expage.css -->
+<link rel="stylesheet" href="/resources//css/expage.css"> 
   
 <title>Insert title here</title>
 <!-- jquery 2.1.4. -->
@@ -32,93 +33,10 @@
    /* animation-iteration-count: infinite; */
 }
 
- .tit {
-   text-overflow: ellipsis;
-   width: 100px;
-   
-}
-
-/* 인기 검색어 스타일 */
 h2 {
-   text-align: center;
+	text-align: center;
 }
 
-.top{
-   display: inline-block;
-   border: 1px solid black;
-   width: 400px;
-   margin: auto;
-   background: white;
-}
-
-.tagOL, .userOL { 
-   list-style-type: decimal; 
-}
-
-em { 
-   font-style: normal;
-   cursor : pointer;
-}
-
-.tagnum, .usernum {
-   display: block;
-    float: left;
-    min-width: 13px;
-    _width: 13px;
-    height: 12px;
-    margin-right: 9px;
-    border: 1px solid #e0e0e0;
-    color: #666;
-    line-height: 12px;
-    font-size: 11px;
-    text-align: center;
-    font-family: tahoma,sans-serif;
-}
-
-.tagList {
-   /* width: 200px; */
-   margin: auto;
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
-.userList {
-   /* width: 200px; */
-   margin: auto;
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
- .tagList .keyword .tit {
-    display: block;
-    overflow: hidden;
-    _width: 210px;
-    font-size: 12px;
-    color: #000;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: normal;
-}
-
- .userList .keyword .tit {
-    display: block;
-    overflow: hidden;
-    _width: 210px;
-    font-size: 12px;
-    color: #000;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: normal;
-}
-
-span {
-   display : inline-block;
-   margin: 0;
-    padding: 0;
-    border: 0;
-    font: inherit;
-    vertical-align: baseline;
-}
 </style>
 
 
@@ -129,18 +47,37 @@ span {
 <br/>
 <br/>
 <h2>실시간 둘러보기</h2>
-<p class="dsc"><time></time></p>
-<br/>
 
-<div class="top">
-<div class="topTag">
-<br/>
+<div class="realtime_keywd">
+    <div class="wrap_last_date">
+        <span class="none">실시간 급상승 키워드 최종 업데이트 시간</span>
+        <span class="last_date"></span><span class="last_time"></span>
+    </div>
+
+    <div class="keywd_control">
+        <button type="button" title="실시간 급상승 키워드 이전 보기" class="btn_keywd_control pre" style="display: none;"><span class="odd_span">이전</span></button>
+        <button type="button" title="실시간 급상승 키워드 재생"  class="btn_keywd_control play" style="display: none;"><span class="odd_span">재생</span></button>
+       <button type="button" title="실시간 급상승 키워드 일시 정지"  class="btn_keywd_control stop" style="display: none;"><span class="odd_span">일시정지</span></button>
+       <button type="button" title="실시간 급상승 키워드 다음 보기" class="btn_keywd_control next" style="display: none;"><span class="odd_span">다음</span></button>
+   </div>
+   
    <ol class="tagOL"></ol>
 </div>
-</div>
-
 
 <script type="text/javascript">
+
+/* var pB = ​document.getElementsByClassName("btn_keywd_control play");
+var sB = ​​document.getElementsByClassName("btn_keywd_control stop");
+
+function playBtn() {
+	pB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');
+	sB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'inline-block');
+}
+
+function stopBtn() {
+	sB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');
+	​pB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'inline-block');
+} */
 
    RTtag();
        
@@ -159,13 +96,24 @@ span {
                
             var str = ' ';
                for(var i=1; i<data.length+1; i++) {
-                  str += "<li class='tagList' style='list-style-type:none;'>"
-                        + "<a class='tagname' href='/search/tags?name="+data[i-1].name+"'>"
-                        + "<span class='keyword'>"
-                        + "<em class='tagnum'>"+i+"</em>"
-                        + "<span class='fid'>"
-                        + "<span class='tit'>"+data[i-1].name+"</span>"
-                        + "   </span></span></a></li>";
+                        
+                  str += "<li class='rank"+i+"'>"
+                  		+ "<div class='realtime_rank'>"
+                  		+ "<span class='no'>"+i+"</span>"
+                  		+ "<span class='none'>위</span>"
+                  		+ "<div class='keywd'>"
+                  		+ "<span class='none'>실시간 급상승 키워드</span>"
+                  		+ "<a class='ellipsis' href='/search/tags?name="+data[i-1].name+"'>"+data[i-1].name+"</a>"
+                  		+ "</div>"
+                  		+ "</div>"
+                  		+ "<div class='cntt_realtime'>"
+                  		+ "<div class='no'>"+i+"위</div>"
+                  		+ "<div class='keywd'>"
+                  		+ "<span class='none'>실시간 급상승 키워드</span>"
+                  		+ "<a class='ellipsis' href='/search/tags?name="+data[i-1].name+"'>"+data[i-1].name+"</a>"
+                  		+ "</div>"
+                  		+ "</div>"
+                  		+ "</li>";
                         
                } /* for문 끝*/
                
@@ -189,36 +137,40 @@ span {
    
 $(document).ready(function() {
    
-   setInterval("RTtag()", 100000);
-   // 30초에 한번씩 받아온다.   
-   
+   setInterval("RTtag()", 1000000);
+   // 30초에 한번씩 받아온다.
 });
    
 </script>
 
 <script>
 
-var ii =0;
-var fade = document.getElementsByClassName("fid");
+var d = new Date();
+$(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+$(".last_time").html(d.getHours()+"시 "+d.getMinutes()+"분 기준");
+
+
+var ii =1;
+var chgname = document.getElementsByClassName("cntt_realtime");
 
 window.setInterval(function(){
-        if(ii == fade.length) {   //다 보여주면 스탑
-               ii=0;
+    
+        if(ii == chgname.length+1) {   //다 보여주면 스탑
+        	ii=1;
         }
         
-        //카드 보여주기
-        $(".fid:eq("+ii+")").toggleClass("fadeInDown animated");
+    	$(".rank"+ii+"").toggleClass("on");
         
-        //보여준 후 다시 뒤집
         (function(x){
             window.setTimeout(function(){
-               $(".fid:eq("+x+")").toggleClass("fadeInDown animated");
-            },1000);
+	               $(".rank"+x+"").toggleClass("on");
+            },1500);
         })(ii);
 
         ii++;
         
-    },1000);   
+    },1500);   
+
 
 </script>
 

@@ -1,0 +1,352 @@
+@CHARSET "UTF-8";
+
+/* 시간, 날짜 css */
+.realtime_keywd {
+	
+    position: relative;
+    width: 1008px;
+    height: 292px;
+    margin-top: 24px;
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_keywd.png) no-repeat 0 0;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    display: block;
+}
+
+.realtime_keywd .wrap_last_date {
+    position: absolute;
+    top: 188px;
+    left: 114px;
+}   
+
+.none {
+    position: absolute;
+    top: -5000em;
+    left: 0;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+
+.realtime_keywd .wrap_last_date .last_date {
+    color: #bbc8cd;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: Arial, "Apple Gothic",sans-serif;
+}
+
+.realtime_keywd .wrap_last_date .last_time {
+    margin-left: 7px;
+    color: #bbc8cd;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: Arial, "Apple Gothic",sans-serif;
+}
+
+/* 버튼 css */
+
+.realtime_keywd .keywd_control {
+    position: absolute;
+    top: 186px;
+    left: 535px;
+}
+
+.btn_keywd_control {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    display: inline-block;
+    zoom: 1;
+    padding: 0;
+    background: none;
+    border: none;
+    text-decoration: none !important;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.btn_keywd_control .odd_span {
+    width: 20px;
+    height: 20px;
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_btn_trend_baner.png) no-repeat left top;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+
+.btn_keywd_control.pre .odd_span {
+    background-position: 0 0;
+}
+
+.btn_keywd_control.pre:hover .odd_span {
+    background-position: 0 -30px;
+}
+
+.btn_keywd_control.play .odd_span {
+    background-position: -66px 0;
+}
+
+.btn_keywd_control.play:hover .odd_span {
+    background-position: -66px -30px;
+}
+
+.btn_keywd_control.stop .odd_span {
+    background-position: -22px 0;
+}
+
+.btn_keywd_control.stop:hover .odd_span {
+    background-position: -22px -30px;
+}
+
+.btn_keywd_control.next .odd_span {
+    background-position: -44px 0;
+}
+
+.btn_keywd_control.next:hover .odd_span {
+    background-position: -44px -30px;
+}
+
+/* 리스트 css */
+
+ol, ul, li {
+    list-style: none;
+    font-weight: normal;
+}
+
+ol,li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+ol {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+/* rank css */
+
+.realtime_keywd .realtime_rank {
+    position: absolute;
+    left: 714px;
+    width: 278px;
+    height: 22px;
+    padding: 5px 0 0;
+}
+
+.realtime_keywd .realtime_rank .no {
+    float: left;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0 8px;
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_sprite_realtime.png) no-repeat 0 0;
+    color: #a5b1b6;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 18px;
+    font-family: Arial, "Apple Gothic",sans-serif;
+    text-align: center;
+}
+
+.realtime_keywd .realtime_rank .keywd {
+    float: left;
+    width: 198px;
+}
+
+.realtime_keywd .realtime_rank .keywd .ellipsis {
+    display: block;
+    width: 90%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #bbc8cd;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: Dotum, "Apple Gothic", sans-serif;
+}
+
+a:visited {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+a:link {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+a {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* rank 01~10 css */
+.realtime_keywd li.rank1 .realtime_rank {
+    top: 15px;
+}
+
+.realtime_keywd li.rank2 .realtime_rank {
+    top: 41px;
+}
+
+.realtime_keywd li.rank3 .realtime_rank {
+    top: 67px;
+}
+
+.realtime_keywd li.rank4 .realtime_rank {
+    top: 93px;
+}
+
+.realtime_keywd li.rank5 .realtime_rank {
+    top: 119px;
+}
+
+.realtime_keywd li.rank6 .realtime_rank {
+    top: 145px;
+}
+
+.realtime_keywd li.rank7 .realtime_rank {
+    top: 171px;
+}
+
+.realtime_keywd li.rank8 .realtime_rank {
+    top: 197px;
+}
+
+.realtime_keywd li.rank9 .realtime_rank {
+    top: 223px;
+}
+
+.realtime_keywd li.rank10 .realtime_rank {
+    top: 249px;
+}
+
+/* 확대 검색어 css */
+
+.realtime_keywd .cntt_realtime {
+    display: none;
+    position: absolute;
+    top: 91px;
+    left: 96px;
+    height: 88px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.realtime_keywd li.on .cntt_realtime {
+    display: block;
+}
+
+.realtime_keywd .cntt_realtime .no {
+    float: left;
+    display: inline-block;
+    width: 46px;
+    height: 88px;
+    margin: 0 24px 0 0;
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/realtime_rank_no.png) no-repeat 0 0;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+    overflow: hidden;
+}   
+
+.realtime_keywd li.rank1 .cntt_realtime .no {
+    background-position: 0 50%;
+}
+
+.realtime_keywd li.rank2 .cntt_realtime .no {
+    background-position: -66px 50%;
+}
+
+.realtime_keywd li.rank3 .cntt_realtime .no {
+    background-position: -132px 50%;
+}
+
+.realtime_keywd li.rank4 .cntt_realtime .no {
+    background-position: -198px 50%;
+}
+
+.realtime_keywd li.rank5 .cntt_realtime .no {
+    background-position: -264px 50%;
+}
+
+.realtime_keywd li.rank6 .cntt_realtime .no {
+    background-position: -330px 50%;
+}
+
+.realtime_keywd li.rank7 .cntt_realtime .no {
+    background-position: -396px 50%;
+}
+
+.realtime_keywd li.rank8 .cntt_realtime .no {
+    background-position: -462px 50%;
+}
+
+.realtime_keywd li.rank9 .cntt_realtime .no {
+    background-position: -528px 50%;
+}
+
+.realtime_keywd li.rank10 .cntt_realtime .no {
+    background-position: -594px 50%;
+}
+
+.realtime_keywd .cntt_realtime .keywd {
+    float: left;
+    width: 383px;
+    height: 88px;
+}
+
+.realtime_keywd .cntt_realtime .keywd .ellipsis {
+    display: inline-block;
+    width: auto;
+    max-width: 90%;
+    height: 88px;
+    margin-top: -5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #1a1a1a;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 88px;
+    font-family: "맑은 고딕","Malgun Gothic","Apple Gothic", sans-serif;
+    letter-spacing: -1px;
+}
+
+/* 마우스 오버 */
+.realtime_keywd li.on .realtime_rank {
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) no-repeat 0 0;
+}
