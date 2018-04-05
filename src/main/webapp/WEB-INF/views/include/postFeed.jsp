@@ -55,108 +55,50 @@
    cursor:pointer;
 }
 .imageContainer > div{
-	position: absolute;
-	background-color: rgba(0,0,0,0.5);
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	text-align:center;
-	vertical-align:middle;
-	color: white;
-	font-size: 21px;
-	line-height: 100%;
-	cursor:pointer;
-}
-.imageContainer > div > span{
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	margin-top:45%;
-   object-fit:cover;
+   position: absolute;
+   background-color: rgba(0,0,0,0.5);
+   top:0;
+   bottom:0;
+   left:0;
+   right:0;
+   text-align:center;
+   vertical-align:middle;
+   color: white;
+   font-size: 21px;
+   line-height: 100%;
    cursor:pointer;
 }
-.imageContainer > div{
-	position: absolute;
-	background-color: rgba(0,0,0,0.5);
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	text-align:center;
-	vertical-align:middle;
-	color: white;
-	font-size: 21px;
-	line-height: 100%;
-	cursor:pointer;
-}
 .imageContainer > div > span{
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	margin-top:45%;
+   top:0;
+   bottom:0;
+   left:0;
+   right:0;
+   margin-top:45%;
+   display: inline-block;
 }
 .multiFile{
-	position: absolute;
-	height: 39px;
-	width: 39px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -360px -104px;
-	right: 8px;
-	top: 8px; 
+   position: absolute;
+   height: 39px;
+   width: 39px;
+   background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
+   background-position: -360px -104px;
+   right: 8px;
+   top: 8px; 
 }
 .likeIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -156px;
-	color: rgba(0,0,0,0);
+   height: 21px;
+   width: 21px;
+   background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
+   background-position: -404px -156px;
+   color: rgba(0,0,0,0);
 }
 .replyIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -115px;
-	color: rgba(0,0,0,0);
+   height: 21px;
+   width: 21px;
+   background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
+   background-position: -404px -115px;
+   color: rgba(0,0,0,0);
 }
-._header > div{
-   display: inline-block;
-}
-._sideSeparator{
-   display: inline-block;
-   vertical-align: middle;
-}
-._sideSeparator:eq(0){
-   max-height:100%
-}
-._sideSeparator:eq(2){
-   overflow:auto;
-}
-
-.mainBox {
-  width: 100%;
-  height: auto;
-  position: fixed;
-  bottom: 5%;
-  left: 43%;
-  text-align: center;
-  display: none;
-  z-index: 2;
-}
-  .inBox {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    background-color: #f1f1f1;
-    border-radius: 50%;
-    line-height: 70px;
-  }
-  .inBox:hover {
-  background-color: #000;
-  transition: all linear 0.5s;
-  }
 </style>
 
 <body>
@@ -167,29 +109,29 @@
    <div class="postModal-content">
       
       <!--사진 및 동영상 -->    
-		<section class="section1">
-			<div class="popImageContainer">
-			</div>
-			<!-- 왼쪽 이미지 이동 버튼 -->
-			<a class="_5wmqs _pak6p coreSpriteLeftChevron" role="button" id="moveLeft" style ="display: none" onclick="moveLeft()">
-				<i class="fa fa-chevron-circle-left" style="font-size: 30px; color: lightgray;"></i>
-			</a>
+      <section class="section1">
+         <div class="popImageContainer">
+         </div>
+         <!-- 왼쪽 이미지 이동 버튼 -->
+         <a class="_5wmqs _pak6p coreSpriteLeftChevron" role="button" id="moveLeft" style ="display: none" onclick="moveLeft()">
+            <i class="fa fa-chevron-circle-left" style="font-size: 30px; color: lightgray;"></i>
+         </a>
 
-			<!-- 오른쪽 이미지 이동 버튼 -->
-			<a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
-				<i class="fa fa-chevron-circle-right" style="font-size: 30px; color: lightgray;"></i>
-			</a>
+         <!-- 오른쪽 이미지 이동 버튼 -->
+         <a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
+            <i class="fa fa-chevron-circle-right" style="font-size: 30px; color: lightgray;"></i>
+         </a>
 
-			<!-- 사진 몇개인지 표시 -->
-			<div class=" _g5463"> 
-				<table class="positionDot">
-					<tbody>
-						<tr>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</section>
+         <!-- 사진 몇개인지 표시 -->
+         <div class=" _g5463"> 
+            <table class="positionDot">
+               <tbody>
+                  <tr>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </section>
 
       <section class="section2">
          <div class="s2_1">
@@ -267,17 +209,17 @@ console.log(jsonList);
 //body로딩 후
 $(document).ready(function(){
 
-	//viewport크기 관리
+   //viewport크기 관리
     $(window).resize(function(){
-    	if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
-    		//viewport크기에 따른 컨테이너 가로값 조정
-    		$(".postContainer").css("width", "935px;");
+       if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
+          //viewport크기에 따른 컨테이너 가로값 조정
+          $(".postContainer").css("width", "935px;");
         //viewport크기에 따른 사진이미지 높이 값 조정
-    	}else if(parseInt($(".postContainer").css("max-width")) >= parseInt($(window).width())){
-    		$(".postContainer").css("width", $(window).width());
-        	$(".postLiner").height($(".postLiner").width()*0.33);
-    	}
-	})
+       }else if(parseInt($(".postContainer").css("max-width")) >= parseInt($(window).width())){
+          $(".postContainer").css("width", $(window).width());
+           $(".postLiner").height($(".postLiner").width()*0.33);
+       }
+   })
    getPostList();
 
 })
@@ -285,8 +227,8 @@ $(document).ready(function(){
 //포스트 피드 띄우는 함수
 function getPostList(){
    var height=$(window).scrollTop();
-	$(".postContainerWrp").remove();
-	
+   $(".postContainerWrp").remove();
+   
    //포스트 피드
    $("body").append("<div class='postContainerWrp' style='width:100%; height:100%;'></div>");
    $(".postContainerWrp").append("<div class='postContainer'></div>");
@@ -326,7 +268,7 @@ function getPostList(){
          data = elseList;
          throw new SyntaxError();
       }catch(e){
-     	 //syntaxError메세지 던지기
+         //syntaxError메세지 던지기
       }
    }
    
@@ -334,11 +276,10 @@ function getPostList(){
    
    //게시물이 있을 때
    if(data.length%3==0){
- 	 lenn = 100/(data.length/3);
- 	 console.log(lenn);
- 	 
-      for (i = 0; i < data.length/3; i++) {
-     	 console.log("aaaaaaaaaaa");
+     lenn = 100/(data.length/3);
+     console.log(lenn);
+     
+   for (i = 0; i < data.length/3; i++) {
          $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
       }
    }else{
@@ -370,9 +311,9 @@ function getPostList(){
       
       //이미지에 마우스올릴 때
       $(".postImage").mouseenter( function(){
-   	  	 $(".postImage").siblings("div").css("display", "none");
-    	 $(this).siblings("div").css("display", "block")
-    	 });
+            $(".postImage").siblings("div").css("display", "none");
+        $(this).siblings("div").css("display", "block")
+        });
       
       //이미지에서 벗어날 때
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
@@ -397,85 +338,45 @@ function getPostList(){
                   
                   //프로필 사진 삽입
                   if(data.profilephoto!=null){
-                 	 $(".s2_1_1_1").attr("src", "http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+data.profilephoto)
+                     $(".s2_1_1_1").attr("src", "http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+data.profilephoto)
                   }else{
-                 	 $(".s2_1_1_1").attr("src", "/resources/img/emptyProfile.jpg")
+                     $(".s2_1_1_1").attr("src", "/resources/img/emptyProfile.jpg")
                   }
                   
               //이미지 배열화
               var urlList=data.url.split('|');
-              	//첨부 이미지or영상 수
+                 //첨부 이미지or영상 수
                  var len = urlList.length;
-              	if(len == 1){
-              		$("#moveRight").css("display", "none");
-              	}
-				//이미지 잘라서 삽입
+                 if(len == 1){
+                    $("#moveRight").css("display", "none");
+                 }
+            //이미지 잘라서 삽입
                  for (var i in urlList) {
-                 	
-                 	//이미지일 경우(upload.js func)
-                 	if(checkImageType(urlList[i])){
+                    
+                    //이미지일 경우(upload.js func)
+                    if(checkImageType(urlList[i])){
                          $(".popImageContainer").append("<img class='popPostImage' id='image"+i+"' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
                          if(i!=0){$("#image"+i).css("display", "none");}
                      
                      //영상일 경우(upload.js func)
-                 	}else if(checkVideoType(urlList[i])){
-                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
-                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
-                 	
-                 	//이미지나 영상타입이 아닐경우	
-                 	}else{
-                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
-                 	}
+                    }else if(checkVideoType(urlList[i])){
+                       $(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
+                       if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
+                    
+                    //이미지나 영상타입이 아닐경우   
+                    }else{
+                       alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
+                    }
                   }
-				
-				//길이조정
-				$(".popPostImage").each(function(){
-					if(this.naturalWidth <= this.naturalHeight){
-						$(this).css("min-height", "100%");
-					}else{
-						$(this).css("min-width", "100%");
-					}
-				})
-                  
-                  //좋아요버튼 삽입
-                  if(data.isLike=='0'){
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>♡</button></span>")
-                  }else{
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>♥</button></span>")
-                  }
-                  
-                  //저장하기 버튼 삽입
-                  if(data.isStore=='0'){
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>□</button></span>")
-                  }else{
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>■</button></span>")
-                  }
-                  
-                  //modal창 보이기
-                  $("#myModal").css("display","block");
-                  
-                  //modal끄기 메서드-바깥부분
-                  $("#myModal").click(function(event){
-                     if(event.target==this){
-                     //영상일 경우(upload.js func)
-                 	}else if(checkVideoType(urlList[i])){
-                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
-                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
-                 	
-                 	//이미지나 영상타입이 아닐경우	
-                 	}else{
-                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
-                 	}
-                  }
-				
-				//길이조정
-				$(".popPostImage").each(function(){
-					if(this.naturalWidth <= this.naturalHeight){
-						$(this).css("min-height", "100%");
-					}else{
-						$(this).css("min-width", "100%");
-					}
-				})
+            
+            //길이조정
+            $(".popPostImage").each(function(){
+               if(this.naturalWidth <= this.naturalHeight){
+                  $(this).css("min-height", "100%");
+               }else{
+                  $(this).css("min-width", "100%");
+               }
+            })
                   
                   //좋아요버튼 삽입
                   if(data.isLike=='0'){
@@ -493,52 +394,7 @@ function getPostList(){
                   
                   //게시물 수정버튼 삽입
                   if(data.userid==${login.id}){
-                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
-                  }
-                  
-                  //modal창 보이기
-                  $("#myModal").css("display","block");
-                  
-                  //modal끄기 메서드-바깥부분
-                  $("#myModal").click(function(event){
-                     if(event.target==this){
-                     //영상일 경우(upload.js func)
-                 	}else if(checkVideoType(urlList[i])){
-                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
-                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
-                 	
-                 	//이미지나 영상타입이 아닐경우	
-                 	}else{
-                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
-                 	}
-                  }
-				
-				//길이조정
-				$(".popPostImage").each(function(){
-					if(this.naturalWidth <= this.naturalHeight){
-						$(this).css("min-height", "100%");
-					}else{
-						$(this).css("min-width", "100%");
-					}
-				})
-                  
-                  //좋아요버튼 삽입
-                  if(data.isLike=='0'){
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>♡</button></span>")
-                  }else{
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>♥</button></span>")
-                  }
-                  
-                  //저장하기 버튼 삽입
-                  if(data.isStore=='0'){
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>□</button></span>")
-                  }else{
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>■</button></span>")
-                  }
-                  
-                  //게시물 수정버튼 삽입
-                  if(data.userid==${login.id}){
-                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
+                     $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
                   }
                   
                   //modal창 보이기
@@ -589,11 +445,11 @@ function reply(){
         
         //댓글더보기 관련
         var replyLimit = 4; //최초댓글 표시 수
-     	var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
-     	
+        var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
+        
         $(rpldata).each(function(index){
             console.log(this);
-        	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
+           //댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
                replystr +="<div class='reply' title='"+this.id+"'>"+
                   "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
@@ -762,230 +618,80 @@ function likerList(){
 };
 
 //css - 모달창 사진이동버튼
-		
-		//오른쪽으로 넘기기
-		function moveRight(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var nextObj = curObj.next();
-			//if(curObj.next("script").length == 1){
-			//	nextObj = curObj.next().next();
-			//}else{
-			//	nextObj = curObj.next();
-			//}
-			
-			////다음객체 비율 조정
-			//nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
-			//console.log(filesArr);
-			//console.log(filesArr[curIdx+1]);
-			
-			//이미지 전환
-			curObj.css("display","none");
-			nextObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.next("video").length == 1){
-				nextObj.get(0).play();
-			}
-			//버튼 보이기
-			$("#moveLeft").css("display","block");
-			if(len == curIdx+1){
-				$("#moveRight").css("display","none");
-			}
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
-		}
+      
+      //오른쪽으로 넘기기
+      function moveRight(){
+         var len = $(".popPostImage").length-1;
+         var curIdx = parseInt($(".popPostImage:visible").index());
+         var curObj = $(".popPostImage:visible");
+         var nextObj = curObj.next();
+         //if(curObj.next("script").length == 1){
+         //   nextObj = curObj.next().next();
+         //}else{
+         //   nextObj = curObj.next();
+         //}
+         
+         ////다음객체 비율 조정
+         //nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
+         //console.log(filesArr);
+         //console.log(filesArr[curIdx+1]);
+         
+         //이미지 전환
+         curObj.css("display","none");
+         nextObj.css("display","block");
+         
+         //비디오 재생
+         if(curObj.next("video").length == 1){
+            nextObj.get(0).play();
+         }else if(curObj.is("video")){
+            curObj.get(0).pause();
+         }
+         //버튼 보이기
+         $("#moveLeft").css("display","block");
+         if(len == curIdx+1){
+            $("#moveRight").css("display","none");
+         }
+         //현재 표시 이미지 위치 변경
+         $("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+         $("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
+      }
 
-		//이미지 왼쪽으로 넘기기
-		function moveLeft(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var prevObj = curObj.prev();
-			//if(curObj.prev("script").length == 1){
-			//	prevObj = curObj.prev().prev();
-			//}else{
-			//	prevObj = curObj.prev();
-			//}
-			
-			//이전객체 비율 조정
-			//prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
-			
-			//이미지 전환
-			curObj.css("display","none");
-			prevObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.prev("video").length == 1){
-				prevObj.get(0).play();
-			}
-			
-			//버튼 보이기
-			$("#moveRight").css("display","block");
-			if(curIdx - 1 == 0){
-				$("#moveLeft").css("display","none");
-			}
+      //이미지 왼쪽으로 넘기기
+      function moveLeft(){
+         var len = $(".popPostImage").length-1;
+         var curIdx = parseInt($(".popPostImage:visible").index());
+         var curObj = $(".popPostImage:visible");
+         var prevObj = curObj.prev();
+         //if(curObj.prev("script").length == 1){
+         //   prevObj = curObj.prev().prev();
+         //}else{
+         //   prevObj = curObj.prev();
+         //}
+         
+         //이전객체 비율 조정
+         //prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
+         
+         //이미지 전환
+         curObj.css("display","none");
+         prevObj.css("display","block");
+         
+         //비디오 재생
+         if(curObj.prev("video").length == 1){
+            prevObj.get(0).play();
+         }else if(curObj.is("video")){
+            curObj.get(0).pause();
+         }
+         
+         //버튼 보이기
+         $("#moveRight").css("display","block");
+         if(curIdx - 1 == 0){
+            $("#moveLeft").css("display","none");
+         }
 
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
-		}
-
-
-//css - 모달창 사진이동버튼
-		
-		//오른쪽으로 넘기기
-		function moveRight(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var nextObj = curObj.next();
-			//if(curObj.next("script").length == 1){
-			//	nextObj = curObj.next().next();
-			//}else{
-			//	nextObj = curObj.next();
-			//}
-			
-			////다음객체 비율 조정
-			//nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
-			//console.log(filesArr);
-			//console.log(filesArr[curIdx+1]);
-			
-			//이미지 전환
-			curObj.css("display","none");
-			nextObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.next("video").length == 1){
-				nextObj.get(0).play();
-			}else if(curObj.is("video")){
-				curObj.get(0).pause();
-			}
-			//버튼 보이기
-			$("#moveLeft").css("display","block");
-			if(len == curIdx+1){
-				$("#moveRight").css("display","none");
-			}
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
-		}
-
-		//이미지 왼쪽으로 넘기기
-		function moveLeft(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var prevObj = curObj.prev();
-			//if(curObj.prev("script").length == 1){
-			//	prevObj = curObj.prev().prev();
-			//}else{
-			//	prevObj = curObj.prev();
-			//}
-			
-			//이전객체 비율 조정
-			//prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
-			
-			//이미지 전환
-			curObj.css("display","none");
-			prevObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.prev("video").length == 1){
-				prevObj.get(0).play();
-			}else if(curObj.is("video")){
-				curObj.get(0).pause();
-			}
-			
-			//버튼 보이기
-			$("#moveRight").css("display","block");
-			if(curIdx - 1 == 0){
-				$("#moveLeft").css("display","none");
-			}
-
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
-		}
-
-
-//css - 모달창 사진이동버튼
-		
-		//오른쪽으로 넘기기
-		function moveRight(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var nextObj = curObj.next();
-			//if(curObj.next("script").length == 1){
-			//	nextObj = curObj.next().next();
-			//}else{
-			//	nextObj = curObj.next();
-			//}
-			
-			////다음객체 비율 조정
-			//nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
-			//console.log(filesArr);
-			//console.log(filesArr[curIdx+1]);
-			
-			//이미지 전환
-			curObj.css("display","none");
-			nextObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.next("video").length == 1){
-				nextObj.get(0).play();
-			}else if(curObj.is("video")){
-				curObj.get(0).pause();
-			}
-			//버튼 보이기
-			$("#moveLeft").css("display","block");
-			if(len == curIdx+1){
-				$("#moveRight").css("display","none");
-			}
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx+1)+")").addClass(" _c0g09");
-		}
-
-		//이미지 왼쪽으로 넘기기
-		function moveLeft(){
-			var len = $(".popPostImage").length-1;
-			var curIdx = parseInt($(".popPostImage:visible").index());
-			var curObj = $(".popPostImage:visible");
-			var prevObj = curObj.prev();
-			//if(curObj.prev("script").length == 1){
-			//	prevObj = curObj.prev().prev();
-			//}else{
-			//	prevObj = curObj.prev();
-			//}
-			
-			//이전객체 비율 조정
-			//prevObj.parent("div").css("padding-bottom", prevObj.height()/6+"%");
-			
-			//이미지 전환
-			curObj.css("display","none");
-			prevObj.css("display","block");
-			
-			//비디오 재생
-			if(curObj.prev("video").length == 1){
-				prevObj.get(0).play();
-			}else if(curObj.is("video")){
-				curObj.get(0).pause();
-			}
-			
-			//버튼 보이기
-			$("#moveRight").css("display","block");
-			if(curIdx - 1 == 0){
-				$("#moveLeft").css("display","none");
-			}
-
-			//현재 표시 이미지 위치 변경
-			$("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
-			$("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
-		}
+         //현재 표시 이미지 위치 변경
+         $("._5zbvx:eq("+curIdx+")").removeClass(" _c0g09");
+         $("._5zbvx:eq("+(curIdx-1)+")").addClass(" _c0g09");
+      }
 
 //css - 카테고리별 게시물 필터링
 $("#categoryList li a").click(function(){
