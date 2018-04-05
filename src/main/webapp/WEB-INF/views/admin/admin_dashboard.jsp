@@ -697,5 +697,4 @@
 	<script src="${pageContext.request.contextPath}/resources/pixit/admin/assets/js/application.js?v=2"></script>
 
 </body>
-
 </html>

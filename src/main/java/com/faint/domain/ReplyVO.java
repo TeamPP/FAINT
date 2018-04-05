@@ -60,5 +60,4 @@ public class ReplyVO {
 		return "ReplyVO [id=" + id + ", postid=" + postid + ", postwriter=" + postwriter + ", userid=" + userid
 				+ ", username=" + username + ", comment=" + comment + ", regdate=" + regdate + "]";
 	}
-	
 }

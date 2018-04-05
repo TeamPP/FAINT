@@ -28,29 +28,39 @@
 
 <style>
 
-/* .tit {
+.fadeInDown {
+	/* animation-iteration-count: infinite; */
+}
+
+ .tit {
 	text-overflow: ellipsis;
-} */
+	width: 100px;
+	
+}
 
 /* 인기 검색어 스타일 */
 h2 {
 	text-align: center;
 }
-.topTag {
+
+.top{
+	display: inline-block;
 	border: 1px solid black;
-	width: 50%;
+	width: 400px;
 	margin: auto;
+	background: white;
 }
 
-ol  { list-style-type: decimal; }
+.tagOL, .userOL { 
+	list-style-type: decimal; 
+}
 
 em { 
 	font-style: normal;
 	cursor : pointer;
 }
 
-
-.num {
+.tagnum, .usernum {
 	display: block;
     float: left;
     min-width: 13px;
@@ -65,14 +75,32 @@ em {
     font-family: tahoma,sans-serif;
 }
 
-li {
-	width: 30%;
+.tagList {
+	/* width: 200px; */
 	margin: auto;
     display: list-item;
     text-align: -webkit-match-parent;
 }
 
- li .keyword .tit {
+.userList {
+	/* width: 200px; */
+	margin: auto;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+ .tagList .keyword .tit {
+    display: block;
+    overflow: hidden;
+    _width: 210px;
+    font-size: 12px;
+    color: #000;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+}
+
+ .userList .keyword .tit {
     display: block;
     overflow: hidden;
     _width: 210px;
@@ -97,44 +125,102 @@ span {
 </head>
 <body>
 
-<!-- 인기 검색어 -->
+<!-- 실시간 -->
 <br/>
 <br/>
-<h2>인기 태그 검색어</h2>
+<h2>실시간 둘러보기</h2>
+<p class="dsc"><time></time></p>
 <br/>
 
+<div class="top">
 <div class="topTag">
 <br/>
-<c:forEach items="${toptag}" var="tagVO">
-<ol>
-<li style="list-style-type:none;">
-	<a class="tagname" href='/search/tags?name=${tagVO.name}'>
-	<span class="keyword">
-	<em class="num"></em>
-	<span class="tit">${tagVO.name}</span>
-	</span>
-	</a>
-</li>
-</ol>
-</c:forEach>
+	<ol class="tagOL"></ol>
+</div>
 </div>
 
 
+<script type="text/javascript">
 
-<script type="text/javascript"> 
+	RTtag();
+	    
+	function RTtag () {  
+	    $.ajax({
+	        type:"POST",
+	        url: "/explore/getTag",
+	        async: false,
+	        headers:{
+	        	"Content-Type" : "application/json",
+	        	"X-HTTP-Method-Override" : "POST"
+	        },
+	        
+	        success : function (data) {
+	            // 변경된 태그 부분을 넘어온 index 값으로 찾은 뒤 on/off를 변경합니다.
+	            
+				var str = ' ';
+	            for(var i=1; i<data.length+1; i++) {
+	            	str += "<li class='tagList' style='list-style-type:none;'>"
+	            		   + "<a class='tagname' href='/search/tags?name="+data[i-1].name+"'>"
+	            		   + "<span class='keyword'>"
+	            		   + "<em class='tagnum'>"+i+"</em>"
+	            		   + "<span class='fid'>"
+	            		   + "<span class='tit'>"+data[i-1].name+"</span>"
+	            		   + "	</span></span></a></li>";
+	            		   
+	            } /* for문 끝*/
+	            
+			 	$(".tagOL").html(str);
+	            
+	        }, /* success 끝 */
+	        
+	        error: function(e){
+	        	if(e.status==500) {
+	        		console.log("에러로갓니?");
+	        	}
+	        	
+	        	updater.stop();
+	        	console.log("갱신스탑");
+	        }/* error 끝 */
+	        
+	    }); /* ajax 끝 */
+	    
+	} /* RTtag끝  */
 
+	
 $(document).ready(function() {
 	
-    var len = document.getElementsByTagName("li").length;
-    var em = document.getElementsByTagName("em");
-        for(var i=0; i<len; i++){
-        	em[i].innerText = i+1;
-        }
-    });
-
+	setInterval("RTtag()", 100000);
+	// 30초에 한번씩 받아온다.	
+	
+});
+	
 </script>
 
+<script>
 
+var ii =0;
+var fade = document.getElementsByClassName("fid");
+
+window.setInterval(function(){
+        if(ii == fade.length) {   //다 보여주면 스탑
+           	 ii=0;
+        }
+        
+        //카드 보여주기
+        $(".fid:eq("+ii+")").toggleClass("fadeInDown animated");
+        
+        //보여준 후 다시 뒤집
+        (function(x){
+            window.setTimeout(function(){
+            	$(".fid:eq("+x+")").toggleClass("fadeInDown animated");
+            },1000);
+        })(ii);
+
+        ii++;
+        
+    },1000);   
+
+</script>
 
 <!-- 인기 게시글 -->
 <br/>
@@ -148,7 +234,6 @@ $(document).ready(function() {
 
 <script>
 var jsonList=${jsonList};
-console.log(jsonList);
 
 </script>
 

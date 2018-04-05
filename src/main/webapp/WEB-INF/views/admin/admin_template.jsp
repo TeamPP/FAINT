@@ -1051,5 +1051,4 @@
 	<!-- END  PAGE LEVEL SCRIPTS -->
 	<script src="${pageContext.request.contextPath}/resources/pixit/admin/assets/js/application.js"></script>
 </body>
-
 </html>

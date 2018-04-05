@@ -41,4 +41,5 @@ h1, h5 {
 <jsp:include page="/WEB-INF/views/include/postFeed.jsp" flush="false" />
 
 </body>
+
 </html>
