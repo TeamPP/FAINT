@@ -20,6 +20,15 @@ public class PostVO {
 	private int row;				//row추가(table에 없는 변수)
 
 	private String[] files;
+	private String[] filters;
+
+	public String[] getFilters() {
+		return filters;
+	}
+
+	public void setFilters(String[] filters) {
+		this.filters = filters;
+	}
 
 	public int getId() {
 		return id;
@@ -122,7 +131,7 @@ public class PostVO {
 		return "PostVO [id=" + id + ", userid=" + userid + ", cateid=" + cateid + ", caption=" + caption + ", regdate="
 				+ regdate + ", moddate=" + moddate + ", location=" + location + ", replyCount=" + replyCount
 				+ ", likeCount=" + likeCount + ", url=" + url + ", row=" + row + ", files=" + Arrays.toString(files)
-				+ "]";
+				+ ", filters=" + Arrays.toString(filters) + "]";
 	}
 
 }

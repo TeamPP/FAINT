@@ -17,7 +17,7 @@
 	<!-- 	첨부파일 추가 -->
 	<!-- 게시글에 이미지,동영상추가 -->
 	<insert id="addAttach">
-		insert into tbl_attach (postid, url) values (LAST_INSERT_ID(), #{url})
+		insert into tbl_attach (postid, url, filter) values (LAST_INSERT_ID(), #{url}, #{filter})
 	</insert>
 	
 	<!-- 유저 게시글 읽기 -->

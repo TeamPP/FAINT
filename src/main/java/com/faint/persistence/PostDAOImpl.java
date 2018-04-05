@@ -31,8 +31,11 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	@Override
-	public void addAttach(String url) throws Exception {
-		session.insert(namespace + ".addAttach", url);
+	public void addAttach(String url,String filter) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("url", url);
+		paramMap.put("filter", filter);
+		session.insert(namespace + ".addAttach", paramMap);
 	}
 	
 	//==============================게시물 읽기==============================

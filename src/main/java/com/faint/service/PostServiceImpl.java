@@ -29,14 +29,14 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void regist(PostVO post) throws Exception {
 		dao.create(post);
-		// 첨부파일 목록 불러들임
+		// 첨부파일 목록, filter 불러들임
 		String[] files = post.getFiles();
+		String[] filters = post.getFilters();
 
 		// 파일 목록 없으면 아무것도 안함
-		if (files != null) {
-			for (String url : files) {
-				dao.addAttach(url);
-			}
+		for(int i =0; i< files.length; i++){
+			dao.addAttach(files[i], filters[i]);
+			
 		}
 		List<String> hashTags = HashTagHelper.getAllHashTags(post.getCaption());
 		if (!hashTags.isEmpty()) { // exist hash tag
