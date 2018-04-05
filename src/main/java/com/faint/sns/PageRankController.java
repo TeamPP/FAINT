@@ -21,7 +21,7 @@ public class PageRankController {
 	@Inject
 	private UserService service;
 	
-	@RequestMapping(value = "/rank", method = RequestMethod.GET)
+	@RequestMapping(value = "/pagerank", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model)throws Exception{
 		
 		

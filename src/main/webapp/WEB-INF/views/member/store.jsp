@@ -166,7 +166,7 @@ div.secondLine span {
 </head>
 <body>
 
-<article>
+<article style = "margin-top: 60px;">
 	<div class="photo-profile">
 		<section id="proPhoto">
 			<div style="width:170px; height:100%; margin:auto;">

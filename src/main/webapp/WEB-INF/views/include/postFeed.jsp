@@ -6,6 +6,9 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </header>
 <style>
+span{
+	display: inline-block;
+}
 .postModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -98,42 +101,6 @@
 	background-position: -404px -115px;
 	color: rgba(0,0,0,0);
 }
-._header > div{
-   display: inline-block;
-}
-._sideSeparator{
-   display: inline-block;
-   vertical-align: middle;
-}
-._sideSeparator:eq(0){
-   max-height:100%
-}
-._sideSeparator:eq(2){
-   overflow:auto;
-}
-
-.mainBox {
-  width: 100%;
-  height: auto;
-  position: fixed;
-  bottom: 5%;
-  left: 43%;
-  text-align: center;
-  display: none;
-  z-index: 2;
-}
-  .inBox {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    background-color: #f1f1f1;
-    border-radius: 50%;
-    line-height: 70px;
-  }
-  .inBox:hover {
-  background-color: #000;
-  transition: all linear 0.5s;
-  }
 </style>
 
 <body>
@@ -314,8 +281,7 @@ function getPostList(){
  	 lenn = 100/(data.length/3);
  	 console.log(lenn);
  	 
-      for (i = 0; i < data.length/3; i++) {
-     	 console.log("aaaaaaaaaaa");
+   for (i = 0; i < data.length/3; i++) {
          $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
       }
    }else{
