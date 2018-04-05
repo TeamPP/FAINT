@@ -91,5 +91,4 @@ public class FollowinPostDTO {
 				+ ", profilephoto=" + profilephoto + ", regdate=" + regdate + ", isLike=" + isLike + ", isStore="
 				+ isStore + "]";
 	}
-	
 }

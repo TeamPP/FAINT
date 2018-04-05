@@ -26,3 +26,4 @@ public interface TagDAO {
 	public List<TagVO> topTag() throws Exception;
 	
 }
+

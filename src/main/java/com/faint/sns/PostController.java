@@ -91,12 +91,13 @@ public class PostController {
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setPostid(postid);
-
-		FollowinPostDTO post=(FollowinPostDTO)service.detailRead(dto);
 		
+		FollowinPostDTO post=(FollowinPostDTO)service.detailRead(dto);
 		if(vo.getId()!=post.getUserid()){
 			return "forward:/empty";
 		}else{
+			String[] url = post.getUrl().split("\\|");
+			
 			model.addAttribute("postVO", post);
 			return "forward:/post/modify";
 		}
@@ -129,7 +130,7 @@ public class PostController {
 		logger.info(post.toString());
 		
 		HttpSession session = request.getSession();
-		
+		System.out.println(Arrays.toString(post.getFilters()));
 		UserVO user = (UserVO)session.getAttribute("login");
 		post.setUserid(user.getId());
 		

@@ -44,7 +44,7 @@ public interface PostService {
 	public List<FollowinPostDTO> mainRead(Integer id) throws Exception;
 	
 	// 인기 게시글
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception;
+	public List<PostVO> topPost() throws Exception;
 
 	//====================post와 tag 관계 ===================
 	

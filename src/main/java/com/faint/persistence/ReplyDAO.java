@@ -15,4 +15,5 @@ public interface ReplyDAO {
 	
 	//개인 하루 글 작성 개수 계산
 	public Integer writeCount(ReplyVO vo);
+
 }

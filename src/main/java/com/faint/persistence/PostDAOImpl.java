@@ -1,5 +1,4 @@
 package com.faint.persistence;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +30,11 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	@Override
-	public void addAttach(String url) throws Exception {
-		session.insert(namespace + ".addAttach", url);
+	public void addAttach(String url,String filter) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("url", url);
+		paramMap.put("filter", filter);
+		session.insert(namespace + ".addAttach", paramMap);
 	}
 	
 	//==============================게시물 읽기==============================
@@ -67,8 +69,8 @@ public class PostDAOImpl implements PostDAO {
 	
 	// 인기 게시글
 	@Override
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception {
-		return session.selectList(namespace+".topPost", dto);
+	public List<PostVO> topPost() throws Exception {
+		return session.selectList(namespace+".topPost");
 	}
 
 	//==============================tag관련==============================

@@ -308,6 +308,5 @@ public class MemberController {
 		}
 		return entity;
 	}
-
 }
 	

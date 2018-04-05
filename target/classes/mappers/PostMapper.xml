@@ -17,7 +17,7 @@
 	<!-- 	첨부파일 추가 -->
 	<!-- 게시글에 이미지,동영상추가 -->
 	<insert id="addAttach">
-		insert into tbl_attach (postid, url) values (LAST_INSERT_ID(), #{url})
+		insert into tbl_attach (postid, url, filter) values (LAST_INSERT_ID(), #{url}, #{filter})
 	</insert>
 	
 	<!-- 유저 게시글 읽기 -->
@@ -140,7 +140,7 @@
 	</select>
 	
 		<!-- 인기 post 전체목록 -->
-	<select id="topPost" resultType="com.faint.dto.TopPostDTO">
+	<select id="topPost" resultType="com.faint.domain.PostVO">
 	 <![CDATA[
           	select topT.*, (@rank := @rank +1) as rank
         	from

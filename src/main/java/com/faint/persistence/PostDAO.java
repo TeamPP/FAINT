@@ -15,7 +15,7 @@ public interface PostDAO {
 	public void create(PostVO vo)throws Exception;
 
 	//파일첨부
-	public void addAttach(String fullName) throws Exception;
+	public void addAttach(String fullName, String filter) throws Exception;
 	
 	//==================post read관련======================
 	//특정유저의 전체 포스트
@@ -34,7 +34,7 @@ public interface PostDAO {
 	public List<FollowinPostDTO> mainRead(Integer id) throws Exception;
 	
 	// 인기 게시물
-	public List<PostVO> topPost(TopPostDTO dto) throws Exception;
+	public List<PostVO> topPost() throws Exception;
 	
 
 	//===================tag 관련 =======================

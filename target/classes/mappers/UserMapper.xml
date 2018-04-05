@@ -320,5 +320,4 @@
 	<select id="find_ip_ban_list" resultType="String">
 		SELECT * FROM IPBANLIST WHERE DATE(BANDATE) = CURDATE()
 	</select>
-	
 </mapper>

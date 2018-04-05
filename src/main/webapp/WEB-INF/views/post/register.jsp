@@ -379,6 +379,15 @@ data={
 				str += "<input type='hidden' name='files[" + index
 				+ "]' value='" + this.fileUrl
 				+ "'> ";
+				var filter ="";
+				if(typeof this.filter == "undefined" || this.filter == null) {
+					filter = "";
+				}else{
+					filter = this.filter;
+				}
+				
+				str += "<input type='hidden' name='filters' value='" + filter
+				+ "'> ";
 			}); 
 							
 			//첨부파일 추가
