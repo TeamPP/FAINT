@@ -27,7 +27,6 @@ public class RankController {
 	@RequestMapping(value = "/pagerank", method = RequestMethod.GET)
 	public void pagerank(HttpServletRequest request, Model model)throws Exception{
 		
-		
 		List<String> follow = service.rank();
 		List<UserVO> allUser = service.listAll();
 		String[][] userid=new String[allUser.size()][allUser.size()];
@@ -59,6 +58,32 @@ public class RankController {
 		//로그인 유저
 		UserVO vo=(UserVO)session.getAttribute("login");
 		int loginUser = vo.getId();
+		
+		//전체유저
+		List<String> follow = service.rank();
+		List<UserVO> allUser = service.listAll();
+		
+		//전체유저 팔로우 관계 매핑
+		HashMap<Integer, HashMap> userMap=new HashMap<Integer, HashMap>();
+		
+		for (int i = 0; i < allUser.size(); i++) {
+			
+			System.out.println(i+" 유저?"+allUser.get(i).getName());
+			HashMap<Integer, Integer> individual=new HashMap<Integer, Integer>();
+			
+			for (int j = 0; j < allUser.size(); j++) {
+				if(follow.contains(allUser.get(i).getId()+"-"+allUser.get(j).getId())){
+					individual.put(allUser.get(j).getId(), 1);
+				}else if(i==j){
+					individual.put(allUser.get(j).getId(), 0);
+				}else{
+					individual.put(allUser.get(j).getId(), 0);
+				}
+			}
+			
+			userMap.put(allUser.get(i).getId(), individual);
+			System.out.println( allUser.get(i).getId()+""+allUser.get(i).getName()+":  "+userMap.get(allUser.get(i).getId()) );
+		}
 		
 		Collaborative c = new Collaborative(loginUser);
 		c.nonTargetCalc();

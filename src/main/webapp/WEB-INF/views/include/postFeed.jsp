@@ -278,17 +278,16 @@ function getPostList(){
    
    //게시물이 있을 때
    if(data.length%3==0){
- 	 lenn = 100/(data.length/3);
- 	 console.log(lenn);
+	 	
  	 
-   for (i = 0; i < data.length/3; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
-      }
-   }else{
-      for (i = 0; i < parseInt(data.length/3)+1; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
-      }
-   }
+	   for (i = 0; i < data.length/3; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
+	      }
+	   }else{
+	      for (i = 0; i < parseInt(data.length/3)+1; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
+	      }
+	   }
    
    $(".postLiner").height($(".postLiner").width()*0.33);
    
@@ -396,7 +395,7 @@ function getPostList(){
                   
                   //게시물 수정버튼 삽입
                   if(data.userid==${login.id}){
-                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'><i class='glyphicon glyphicon-option-horizontal'></i></a></span>")
+                	  $(".s2_4_1").append("<span><a href='/post/"+data.postid+"/postEditor'><i class='glyphicon glyphicon-option-horizontal'></i></a></span>")
                   }
                   
                   //modal창 보이기

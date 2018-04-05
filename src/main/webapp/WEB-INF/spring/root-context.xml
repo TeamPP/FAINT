@@ -43,8 +43,6 @@
 	
 	<context:component-scan base-package="com.faint.persistence"></context:component-scan>
 	<context:component-scan base-package="com.faint.service"></context:component-scan>
-	<!-- 임시 -->
-	<context:component-scan base-package="com.faint.util"></context:component-scan>
 	
 	<!-- 자동으로 AspectJ 라이브러리 이용해서 Proxy 생성 -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
