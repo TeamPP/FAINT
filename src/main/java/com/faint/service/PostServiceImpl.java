@@ -178,5 +178,12 @@ public class PostServiceImpl implements PostService {
 	public void postTakeaway(RelationDTO dto) throws Exception{
 		dao.postTakeaway(dto);
 	}
+
+	//게시글 수정
+	@Override
+	public void modify(PostVO post) throws Exception {
+		dao.modify(post);
+	}
+	
 	
 }

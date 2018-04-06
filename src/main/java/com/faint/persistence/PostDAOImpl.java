@@ -28,6 +28,11 @@ public class PostDAOImpl implements PostDAO {
 	public void create(PostVO vo) throws Exception {
 		session.insert(namespace + ".create", vo);
 	}
+	
+	@Override
+	public void modify(PostVO vo) throws Exception {
+		session.update(namespace + ".modify", vo);
+	}
 
 	@Override
 	public void addAttach(String url,String filter) throws Exception {
