@@ -13,13 +13,21 @@
 			select last_insert_id() as id
 		</selectKey> 
 	</insert>
-
+	
 	<!-- 	첨부파일 추가 -->
 	<!-- 게시글에 이미지,동영상추가 -->
 	<insert id="addAttach">
 		insert into tbl_attach (postid, url, filter) values (LAST_INSERT_ID(), #{url}, #{filter})
 	</insert>
 	
+	<!-- 게시글 수정 -->
+	<update id="modify">
+	UPDATE tbl_post SET cateid=#{cateid}
+		, caption=#{caption}
+		, location=#{location}
+		, moddate=NOW()
+		WHERE id=#{id}
+	</update>
 	<!-- 유저 게시글 읽기 -->
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from

@@ -162,7 +162,7 @@
 					</div>
 				</div>
 				<div class="_60iqg">
-					<a class="_q8ysx _6y8ij" id="address" title="" href=""></a>
+					<a class="_q8ysx _6y8ij" id="address" title="" href="#">${postVO.location }</a>
 				</div>
 			</div>
 		</header>
@@ -172,7 +172,6 @@
 					<div>
 						<div class="_e3il2 _gxii9">
 							<div class="_4rbun " id="imgdiv" >
-							<c:set var="files" value="${fn:split(postDTO.url, '[|]')}"/>
 							<c:forEach var="file" items='${files}' varStatus='status'>
 							
 								<c:if test="${file.fileType eq 'image'}">
@@ -263,8 +262,13 @@
 	          		<i class="fa fa-pencil"></i>
 	    		</label>
 	        </div>
-	        
 	      </div>
+	      	<!-- 읽어들인 정보로 카테고리 선택 -->
+      		<script>
+      			var idx = parseInt(${postVO.cateid})-1 ;
+      			console.log(idx);
+      			$(':radio[name="categorys"]:eq('+idx +')').click();
+			</script>
 	        <div style="display: inline-block; position:  absolute;top:5px;right:0;">
 		        <!-- 위치 추가 -->
 		        <label class="btn btn-default btn-circle" id="addLocation" >
@@ -276,6 +280,9 @@
 	  		<section class="_km7ip _ti7l3" style="display:inline-block">
                <div class="_b6i0l" >
                		<textarea aria-label="설명 입력..." placeholder="설명 입력..." class="_bilrf" name="caption" autocomplete="off" autocorrect="off" style="height:36px; width:100%" maxlength="250"></textarea>
+               		<script>
+               		$("._bilrf").val("${postVO.caption}")
+               		</script>
                </div>
                <button type="button" class="btn btn-default btn-circle" id="btnSubmit" style="position:  absolute;top: 10px;right:  0;">
 	       			<i class="glyphicon glyphicon-floppy-disk"></i>
@@ -286,6 +293,7 @@
 		<input type="hidden" id='cateid' name='cateid'>
 		<input type="hidden" id='location' name='location'>
 		<input type="hidden" id='userid' name='userid' value="${postVO.userid }">
+		<input type="hidden" id='postid' name='id' value="${postVO.postid }"><!-- 게시글아이디 -->
 		 
 		</form> 
 	</article>
@@ -320,10 +328,6 @@
 	        </label>
  <label class="btn btn-default btn-circle" id="confirm_button" >
 	       			<i class="glyphicon glyphicon-ok"></i>
-data={
-"hi":1234,
-"adsf":123234
-}
 	        </label>
 </div>
 		<div id="map" style="width:500px; height:500px; display: block;"></div>
@@ -394,7 +398,7 @@ data={
 			$("#cateid").val($(':radio[name="categorys"]:checked').val());
 			//위치 추가
 			$("#location").val($("#address").text());
-			form.attr("action", "/post/register/submit");
+			form.attr("action", "/post/modify");
 			form.submit(); 
 		});
 		
@@ -533,22 +537,7 @@ data={
 	function unloadCheck(){
 		var result = confirm("작성을 중지하고 나가시겠습니까?");
 		   console.log(result);
-		   if(result){
-			   var files = ${files};
-			   
-			   $(files).each(function(){
-				   $.ajax({
-						url : "/deleteFile",
-						type : "post",
-						data : {
-							fileName : this.fileUrl
-						},
-						dataType : "text",
-						success : function(result) {
-						}
-					}); 
-			   });
-		   }else{
+		   if(!result){   
 			   event.preventDefault();
 		   } 
 	}
