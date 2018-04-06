@@ -71,8 +71,7 @@
 	<!-- 차단등록 -->
 	<insert id="userBlock">
 		INSERT INTO tbl_block (userid, blockedid)
-		SELECT #{loginid}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_block where userid=#{loginid} and blockedid=#{userid});
+		SELECT #{loginid}, #{userid}
 	</insert>
 	
 	<!-- 차단해제 -->
@@ -88,8 +87,7 @@
 	<!-- 팔로우등록 -->
 	<insert id="flwCreate">
 		INSERT INTO tbl_follow (userid, followedid)
-		SELECT #{loginid}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_follow where userid=#{loginid} and followedid=#{userid});
+		SELECT #{loginid}, #{userid}
 	</insert>
 
 	<!-- 팔로우해제 -->

@@ -30,7 +30,7 @@
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 
 <!-- 웹소켓 -->
-<script type="text/javascript" src="../../resources/js/scokjs.js"></script>
+<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <style>
 .navbar-default .explore {
@@ -85,7 +85,7 @@
 </head>
 <body>
 
-   <nav class="navbar navbar-default">
+   <nav class="navbar navbar-default" style="z-index: 1;">
    <div class="nav-wrap" style="display: block;">
       <a class="logo pull-left" href="/main"></a>
       <form class="search-form" action="/search/search" method="get">

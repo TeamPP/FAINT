@@ -251,8 +251,7 @@
 	<!-- post&like -->
 	<insert id="postLike">
 		INSERT INTO tbl_post_like (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_post_like where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postUnlike">
@@ -287,8 +286,7 @@
 	<!-- store -->
 	<insert id="postStore">
 		INSERT INTO tbl_store (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_store where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postTakeaway">
