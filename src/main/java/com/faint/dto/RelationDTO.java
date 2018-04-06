@@ -6,6 +6,7 @@ public class RelationDTO {
 	private int loginid;
 	private int postid;
 	
+	
 	public String getNickname() {
 		return nickname;
 	}
