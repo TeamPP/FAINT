@@ -66,22 +66,12 @@ h2 {
 
 <script type="text/javascript">
 
-/* var pB = ​document.getElementsByClassName("btn_keywd_control play");
-var sB = ​​document.getElementsByClassName("btn_keywd_control stop");
 
-function playBtn() {
-	pB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');
-	sB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'inline-block');
-}
-
-function stopBtn() {
-	sB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');
-	​pB.css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'inline-block');
-} */
-
-   RTtag();
+  	RTtag();
        
    function RTtag () {  
+	   flag = false;
+	   console.log(">>"+flag);
        $.ajax({
            type:"POST",
            url: "/explore/getTag",
@@ -126,52 +116,84 @@ function stopBtn() {
                  console.log("에러로갓니?");
               }
               
-              updater.stop();
               console.log("갱신스탑");
            }/* error 끝 */
            
        }); /* ajax 끝 */
        
+       flag = true;
+       console.log(">>>"+flag);
    } /* RTtag끝  */
 
    
 $(document).ready(function() {
+	
+	// 실시간 검색어  flag가 false일 때 ajax로 데이터 가져옴
+	var flag = true;
+	console.log(">"+flag);
+	
+	//처음에 expage 들어간 시간 적용
+ 	 var d = new Date();
+	 $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+	 if(d.getHours()>12) {
+		 $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
+	   } else {
+		   $(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
+		   }
    
-   setInterval("RTtag()", 1000000);
-   // 30초에 한번씩 받아온다.
+	var ii =1;
+	var jj =1;
+	
+	// 인기 검색어 1위~10위 className
+	var chgname = document.getElementsByClassName("cntt_realtime"); 
+
+	if(flag) {
+		setInterval(function(){
+		    
+	        if(ii == chgname.length+1) {
+	        	ii=1;
+	        	console.log(ii);
+	        	
+	        	// 대략 1분 단위로 데이터 갱신
+	        	if(jj==31){
+	        		console.log("갱신하잣");
+	        		RTtag();
+	        		
+	     	   	   var d = new Date();
+	    	   	   $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+	    	   	   if(d.getHours()>12) {
+	    	   		   $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
+	    	   	   } else {
+	    	   			$(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
+	    	   	   }
+	        		jj=1;
+	        		
+	        	} /* jj if문 끝 */
+	        	
+	        } /* ii if문 끝 */
+	        
+	        	// 1위부터 10위까지 순차적으로 효과주기
+		    	$(".rank"+ii+"").toggleClass("on");
+		    	d = new Date();
+		        
+		    	// 효과 해제하기
+		        (function(x){
+		            window.setTimeout(function(){
+			               $(".rank"+x+"").toggleClass("on");
+		            },2000);
+		        })(ii);
+
+		        ii++;
+		        jj++;
+	        
+	    },2200); // 2.2초마다 실행
+		
+	} else {
+	   	   console.log("실시간 검색어 에러다 에러에러 삐뽀삐뽀");
+	}
+	
 });
    
-</script>
-
-<script>
-
-var d = new Date();
-$(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
-$(".last_time").html(d.getHours()+"시 "+d.getMinutes()+"분 기준");
-
-
-var ii =1;
-var chgname = document.getElementsByClassName("cntt_realtime");
-
-window.setInterval(function(){
-    
-        if(ii == chgname.length+1) {   //다 보여주면 스탑
-        	ii=1;
-        }
-        
-    	$(".rank"+ii+"").toggleClass("on");
-        
-        (function(x){
-            window.setTimeout(function(){
-	               $(".rank"+x+"").toggleClass("on");
-            },1500);
-        })(ii);
-
-        ii++;
-        
-    },1500);   
-
-
 </script>
 
 <!-- 인기 게시글 -->
