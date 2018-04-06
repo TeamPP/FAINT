@@ -68,7 +68,7 @@ public class RankController {
 		
 		for (int i = 0; i < allUser.size(); i++) {
 			
-			System.out.println(i+" 유저?"+allUser.get(i).getName());
+			System.out.println(i+" 유저?"+allUser.get(i).getNickname());
 			HashMap<Integer, Integer> individual=new HashMap<Integer, Integer>();
 			
 			for (int j = 0; j < allUser.size(); j++) {
@@ -82,13 +82,18 @@ public class RankController {
 			}
 			
 			userMap.put(allUser.get(i).getId(), individual);
-			System.out.println( allUser.get(i).getId()+""+allUser.get(i).getName()+":  "+userMap.get(allUser.get(i).getId()) );
+			System.out.println( allUser.get(i).getId()+""+allUser.get(i).getNickname()+":  "+userMap.get(allUser.get(i).getId()) );
 		}
+		
+		System.out.println(sim(1,3));
 		
 		Collaborative c = new Collaborative(loginUser);
 		c.nonTargetCalc();
-		System.out.println(1);
 		
+	}
+	
+	public double sim(double i, double j){
+		return Math.sqrt(Math.pow(i, 2)+Math.pow(j, 2));
 	}
 	
 	@RequestMapping(value = "/target", method = RequestMethod.GET)
@@ -103,6 +108,7 @@ public class RankController {
 		
 		Collaborative c = new Collaborative(loginUser, targetUser);
 		c.targetCalc();
+		
 		
 	}
 
