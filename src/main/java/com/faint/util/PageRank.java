@@ -1,8 +1,7 @@
 package com.faint.util;
 
-import java.util.*;
-
 public class PageRank {
+	
 
 	public int path[][];
 	public double pagerank[];
@@ -15,7 +14,7 @@ public class PageRank {
 
 		double InitialPageRank;
 		double OutgoingLinks = 0;
-		double DampingFactor = 0.85;
+		double DampingFactor = 0.85; //가중치
 		double TempPageRank[] = new double[(int)totalNodes];
 
 		int ExternalNodeNumber;

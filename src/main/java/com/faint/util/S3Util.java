@@ -1,4 +1,5 @@
 package com.faint.util;
+
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -6,6 +7,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import java.io.*;
 
 import java.util.List;
+
 
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
@@ -17,9 +19,11 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class S3Util {
 
 
+
     private AmazonS3 conn;
 
     public S3Util() {
+
         this.conn = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.AP_NORTHEAST_2)
                 .build();
@@ -53,6 +57,7 @@ public class S3Util {
 
     // 파일 삭제
     public void fileDelete(String bucketName, String fileName) {
+
     	System.out.println("fileName : " + fileName);
         String imgName = (fileName).replace(File.separatorChar, '/');
         conn.deleteObject(bucketName, imgName);

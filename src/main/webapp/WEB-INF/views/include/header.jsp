@@ -26,6 +26,12 @@
 <link rel="stylesheet" href="/resources/css/header.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/animation.css" type="text/css">
 
+<!-- 길이제한 함수, 해쉬태그 필터링 -->
+<script type="text/javascript" src="../../resources/js/common.js"></script>
+
+<!-- 웹소켓 -->
+<script type="text/javascript" src="../../resources/js/scokjs.js"></script>
+
 <style>
 .navbar-default .explore {
    width: 24px;
