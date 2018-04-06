@@ -9,6 +9,5 @@ public interface MailService {
 
 
 	public void sendMail(HttpServletRequest req, Map<String, Object> map);
-
 	
 }

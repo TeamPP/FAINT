@@ -24,7 +24,6 @@ public class MemberCriteria extends Criteria {
 	private Date regdate;
 	private int isFollow; //로그인한 유저가 팔로우할경우 해당 유저의 id값 반환 아닐경우 null(0)반환
 	
-	
 	public int getId() {
 		return id;
 	}

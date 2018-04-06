@@ -7,8 +7,6 @@
 <mapper namespace="com.faint.mapper.AdminMapper">
 
 
-
-
 	<!-- 관리자페이지 회원 리스트 가져오기 -->
 	<select id="getSearchMemberList" resultType="UserVO">
 

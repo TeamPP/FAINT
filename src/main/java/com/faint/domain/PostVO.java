@@ -18,7 +18,8 @@ public class PostVO {
 	private String url; //추출시에는 모든 파일명 출력되며 |를 기준으로 파일명 구분됨
 
 	private int row;				//row추가(table에 없는 변수)
-
+	
+	
 	private String[] files;
 	private String[] filters;
 

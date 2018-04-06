@@ -3,8 +3,7 @@ package com.faint.domain;
 import java.util.Date;
 
 public class TagVO {
-
-	//еб╠в
+	//О©╫б╠О©╫
 	private Integer id;
 	private String name;
 	private Integer tagcount;

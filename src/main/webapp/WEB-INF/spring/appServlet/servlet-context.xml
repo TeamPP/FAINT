@@ -11,7 +11,6 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-	
     <context:component-scan base-package="common" />
 	<!-- 네이버 -->
 	<beans:bean id="naverLoginBO" class="naver.NaverLoginBO" /> 

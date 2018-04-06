@@ -19,7 +19,6 @@ import com.faint.util.HashTagHelper;
 
 @Service
 public class PostServiceImpl implements PostService {
-
 	@Inject
 	private PostDAO dao;
 
@@ -178,5 +177,12 @@ public class PostServiceImpl implements PostService {
 	public void postTakeaway(RelationDTO dto) throws Exception{
 		dao.postTakeaway(dto);
 	}
+
+	//게시글 수정
+	@Override
+	public void modify(PostVO post) throws Exception {
+		dao.modify(post);
+	}
+	
 	
 }

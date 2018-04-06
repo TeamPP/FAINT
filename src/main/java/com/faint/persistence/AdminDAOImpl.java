@@ -26,7 +26,6 @@ public class AdminDAOImpl implements AdminDAO {
 	System.out.println(" 여기 서에러 날수도 있겠다 ");
 		
 		return sqlSession.selectList(namespace+".getSearchMemberList", scri);
-		
 	}
 	
 	@Override

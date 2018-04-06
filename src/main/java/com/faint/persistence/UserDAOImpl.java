@@ -17,7 +17,6 @@ import com.faint.dto.LoginDTO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
-
 	@Inject
 	private SqlSession session;
 

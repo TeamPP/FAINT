@@ -21,8 +21,6 @@ public class PasswordUtil implements PasswordEncoder {
 		encoder = new BCryptPasswordEncoder();
 	}
 	
-	
-	// 암호화된 문자열을 리턴하는 메소드
 	@Override
 	public String encode(CharSequence pwd) {
 		String hash = encoder.encode(pwd);

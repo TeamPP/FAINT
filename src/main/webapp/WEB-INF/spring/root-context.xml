@@ -77,5 +77,4 @@
 	  <property name="scope" value="https://www.googleapis.com/auth/plus.login" />
 	  <property name="redirectUri" value="http://localhost:8181/user/googleSignInCallback" />
 	</bean>
-	
 </beans>

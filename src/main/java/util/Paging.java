@@ -23,7 +23,6 @@ public class Paging {
 			pagingStr += "<li><a href='" + page + "nowPage=" + (intTemp - blockPage) + "'>"
 					+ "<span class=\"glyphicon glyphicon-chevron-left\"></span></a></li>";
 		}
-
 		// 페이지표시 제어를 위한 변수
 		int blockCount = 1;
 

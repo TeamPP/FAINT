@@ -6,8 +6,6 @@ public class SearchCriteria {
 	private String keyword;	// 검색어는 String이므로 Type 필요없음
 	private int row;				// 무한 스크롤 row
 
-
-	
 	//getter, setter
 	public String getKeyword() {
 		return keyword;

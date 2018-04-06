@@ -18,7 +18,6 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public List<SearchDTO> listKeyword(SearchCriteria cri) throws Exception {
-		
 		return dao.listKeyword(cri);
 	}
 

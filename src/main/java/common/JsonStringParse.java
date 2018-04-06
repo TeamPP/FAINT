@@ -25,7 +25,6 @@ public class JsonStringParse {
 //	String profile = (String)response.get("gender");
 //	System.out.println(profile);
 //
-
         return response;
     }
 

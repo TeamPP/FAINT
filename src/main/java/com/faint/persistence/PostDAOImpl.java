@@ -14,7 +14,6 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
@@ -27,6 +26,11 @@ public class PostDAOImpl implements PostDAO {
 	@Override
 	public void create(PostVO vo) throws Exception {
 		session.insert(namespace + ".create", vo);
+	}
+	
+	@Override
+	public void modify(PostVO vo) throws Exception {
+		session.update(namespace + ".modify", vo);
 	}
 
 	@Override

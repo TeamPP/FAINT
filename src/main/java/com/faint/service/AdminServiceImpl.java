@@ -19,7 +19,6 @@ public class AdminServiceImpl  implements AdminService{
 	
 	@Inject
 	private AdminDAO dao;
-	
 	 @Override
 	 public void getSearchMemberList(SearchMemberCriteria scri, HashMap<String, Object>map ) {
 		 
@@ -45,5 +44,4 @@ public class AdminServiceImpl  implements AdminService{
 			
 			return dao.deleteMember(memberEmail);
 		}
-
 }

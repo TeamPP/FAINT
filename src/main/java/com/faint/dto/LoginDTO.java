@@ -6,7 +6,6 @@ public class LoginDTO {
 	private boolean useCookie;
 	private String snsID;
 	private String nickname;
-	
 	public String getEmail() {
 		return email;
 	}

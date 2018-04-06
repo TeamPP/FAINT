@@ -10,7 +10,6 @@ function checkVideoType(fileName) {
 	return fileName.match(pattern);
 
 }
-
 function getFileInfo(fullName) {
 	var fileName,
 		imgsrc,

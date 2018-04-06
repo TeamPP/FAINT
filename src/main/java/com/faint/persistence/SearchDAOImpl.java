@@ -23,6 +23,5 @@ public class SearchDAOImpl implements SearchDAO {
 	public List<SearchDTO> listKeyword(SearchCriteria cri) throws Exception {
 		return session.selectList(namespace+".listKeyword", cri);
 	}
-
 }
 

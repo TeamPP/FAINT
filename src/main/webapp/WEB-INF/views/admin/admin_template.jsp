@@ -16,7 +16,6 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js sidebar-large">
 <!--<![endif]-->
-
 <head>
 <!-- BEGIN META SECTION -->
 <meta charset="utf-8">

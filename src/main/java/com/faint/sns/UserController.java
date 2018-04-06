@@ -45,9 +45,6 @@ import common.JsonStringParse;
 import common.TempKey;
 import naver.NaverLoginBO;
 
-
-
-
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
@@ -60,7 +57,6 @@ public class UserController {
     public void registerGET(UserVO board, Model model) throws Exception {
 		
     	System.out.println("register GET 진입");
-      
     }
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

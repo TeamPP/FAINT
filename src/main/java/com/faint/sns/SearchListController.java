@@ -36,7 +36,6 @@ public class SearchListController {
 	public String searchlist() {
 		return "userPage2";
 	}
-
 	
 	// list.jsp에서 키워드를 받아서 키워드와 일치하는 유저목록 출력
 	// 리다이렉트(redirect)시 값(parameter) 전달: RedirectAttributes redirectAttributes

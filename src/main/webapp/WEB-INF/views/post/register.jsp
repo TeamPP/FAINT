@@ -5,7 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -318,10 +317,6 @@
 	        </label>
  <label class="btn btn-default btn-circle" id="confirm_button" >
 	       			<i class="glyphicon glyphicon-ok"></i>
-data={
-"hi":1234,
-"adsf":123234
-}
 	        </label>
 </div>
 		<div id="map" style="width:500px; height:500px; display: block;"></div>
@@ -381,7 +376,7 @@ data={
 				+ "'> ";
 				var filter ="";
 				if(typeof this.filter == "undefined" || this.filter == null) {
-					filter = "";
+					filter = " ";
 				}else{
 					filter = this.filter;
 				}

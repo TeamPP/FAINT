@@ -13,7 +13,7 @@ import com.faint.dto.TopPostDTO;
 public interface PostDAO {
 
 	public void create(PostVO vo)throws Exception;
-
+	public void modify(PostVO vo)throws Exception;
 	//파일첨부
 	public void addAttach(String fullName, String filter) throws Exception;
 	

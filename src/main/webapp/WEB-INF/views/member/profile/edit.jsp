@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로필 편집</title>
-
 </head>
 <link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
 <style>

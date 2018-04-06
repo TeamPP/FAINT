@@ -42,7 +42,6 @@ public class UploadController {
 	public void uploadAjax(){
 		
 	}
-	
 	//서버에 파일 업로드
 	@ResponseBody
 	@RequestMapping(value ="/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")

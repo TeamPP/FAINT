@@ -31,7 +31,6 @@ import net.sf.json.JSONArray;
 public class ExploreController {
 
    private static final Logger logger = LoggerFactory.getLogger(ExploreController.class);
-
    @Inject
    private TagService tagservice;
 

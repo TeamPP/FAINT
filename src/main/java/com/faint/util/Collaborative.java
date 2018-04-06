@@ -13,6 +13,7 @@ import com.faint.service.UserService;
 
 public class Collaborative {
 
+
 	@Inject
 	private UserService service;
 	
@@ -36,7 +37,6 @@ public class Collaborative {
 	public void nonTargetCalc() throws Exception {
 		
 
-		
 	}
 	
 	//두 유저의 유사도를 통해 추천
