@@ -201,7 +201,7 @@ span{
 .storeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-color: #fff; margin-left: 842%; border: none; font-size: 0;}
 .s2_4{ width: 100%; height: auto; }
 .s2_4_1{ padding: 10px 0 10px 0; }
-.replyRegist{ font-size: 15px; border: none; width: 90%; height: auto; float: left; }
+.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; float: left; }
 </style>
 </script>
 
@@ -396,6 +396,7 @@ function getPostList(){
                   //게시물 수정버튼 삽입
                   if(data.userid==${login.id}){
                 	  $(".s2_4_1").append("<span><a href='/post/"+data.postid+"/postEditor'><i class='glyphicon glyphicon-option-horizontal'></i></a></span>")
+                	  $(".replyRegist").css("width", "94%");
                   }
                   
                   //modal창 보이기
