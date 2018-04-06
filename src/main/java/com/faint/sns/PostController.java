@@ -37,7 +37,6 @@ public class PostController {
 	private PostService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
-	
 	/*게시물 등록창 읽기*/
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String registerGET(Model model, HttpServletRequest request) throws Exception {

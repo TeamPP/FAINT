@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.faint.domain.ReplyVO;
 import com.faint.dto.RelationDTO;
 import com.faint.persistence.ReplyDAO;
-
-
 @Service
 public class ReplyServiceImpl implements ReplyService{
 	

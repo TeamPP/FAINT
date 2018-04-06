@@ -27,7 +27,6 @@ public class TagServiceImpl implements TagService {
 	public List<TagVO> listAll() throws Exception {
 		return dao.listAll();
 	}
-
 	// 태그 검색
 	@Override
 	public List<String> listKeyword(SearchCriteria cri) throws Exception {

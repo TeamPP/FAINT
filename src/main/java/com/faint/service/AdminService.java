@@ -8,12 +8,9 @@ import com.faint.domain.UserVO;
 import util.SearchMemberCriteria;
 
 public interface AdminService {
-	
 	void getSearchMemberList(SearchMemberCriteria scri, HashMap<String, Object> map	);
 	
 	public List<UserVO> listAll() throws Exception;
 	
 	public int deleteMember(String memberEmail);
-	
-	
 }

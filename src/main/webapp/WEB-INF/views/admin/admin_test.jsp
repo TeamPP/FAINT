@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1> 관리자 공홈 페이지 </h1>
+	
 </body>
 </html>

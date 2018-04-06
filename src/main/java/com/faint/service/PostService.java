@@ -12,7 +12,6 @@ import com.faint.dto.TopPostDTO;
 
 public interface PostService {
 	// ====================post둥록 ===================
-
 	// POST등록(사진/태그 Transaction)
 	public void regist(PostVO post) throws Exception;
 

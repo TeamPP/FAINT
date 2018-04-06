@@ -11,5 +11,6 @@
 	<div>${userVO.nickname}</div>
 	<div>${userVO.name}</div>
 	<div>${userVO.email}</div>
+	
 </body>
 </html>

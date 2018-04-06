@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.faint.persistence.UserDAOImpl;
 
-
 public class IPCheckInterceptor implements HandlerInterceptor {
 	private static final Logger logger = Logger.getLogger(IPCheckInterceptor.class);
 	

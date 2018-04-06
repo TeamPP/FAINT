@@ -29,7 +29,6 @@ public class S3Util {
     public List<Bucket> getBucketList() {
         return conn.listBuckets();
     }
-
     // 버킷을 생성하는 메서드이다.
     public Bucket createBucket(String bucketName) {
         return conn.createBucket(bucketName);

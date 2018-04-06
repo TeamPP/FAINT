@@ -39,7 +39,6 @@ public class AdminRestController {
 			@RequestParam(required = false, defaultValue = "") String keyword) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
 		System.out.println("@))@)@)@)@)@)@)@)@)@)@");
 		System.out.println("관리자 페이지Json 회원 목록 실행 여부 ");
 		if (pageSize == null || blockPage == null) {

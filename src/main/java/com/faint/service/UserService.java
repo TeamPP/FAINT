@@ -9,7 +9,6 @@ import com.faint.dto.RelationDTO;
 import com.faint.dto.LoginDTO;
 
 public interface UserService {
-	
 	//=================읽기=================
 	public List<UserVO> listAll() throws Exception; //사용자 전체목록 + pagerank에서 사용
 	

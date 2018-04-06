@@ -20,7 +20,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  * 
  * */
 
-
 public class MailHandler {
 	 private JavaMailSender mailSender;
 	    private MimeMessage message;

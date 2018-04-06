@@ -39,7 +39,6 @@ public class MemberController {
 	
 	@Inject
 	private PostService postService;
-	
 	// ======================================프로필 페이지 - 유저정보 읽기======================================
 	
 	@RequestMapping(value="/{nickname}", method=RequestMethod.GET)

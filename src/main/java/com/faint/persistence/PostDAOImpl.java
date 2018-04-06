@@ -14,7 +14,6 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 
 @Repository
 public class PostDAOImpl implements PostDAO {

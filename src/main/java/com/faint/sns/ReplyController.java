@@ -36,7 +36,6 @@ public class ReplyController {
 	
 	@Inject
 	private UserDAO userDao;
-	
 	/*댓글 등록 - rest방식*/
 	@ResponseBody
 	@RequestMapping(value="", method=RequestMethod.POST)

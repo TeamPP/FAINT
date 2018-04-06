@@ -19,7 +19,6 @@ import com.faint.util.HashTagHelper;
 
 @Service
 public class PostServiceImpl implements PostService {
-
 	@Inject
 	private PostDAO dao;
 

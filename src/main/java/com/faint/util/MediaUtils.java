@@ -10,7 +10,6 @@ public class MediaUtils {
 	static{
 		
 		mediaMap = new HashMap<String, MediaType>();	
-
 		//이미지
 		mediaMap.put("JPG", MediaType.IMAGE_JPEG);
 		mediaMap.put("GIF", MediaType.IMAGE_GIF);

@@ -3,7 +3,6 @@
     .tab-content{
         padding-top: 6px;
     }
-
     body{
         background-image: url("/resources/images/login5.jpg");
         background-size: contain;

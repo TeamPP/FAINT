@@ -28,12 +28,6 @@
     overflow:auto;
     white-space: nowrap;
 }
-/* .preview-images-zone > .preview-image:first-child {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-right: 5px;
-} */
 .preview-images-zone > .preview-image {
 	border: 1px solid;
 	height: 200px;

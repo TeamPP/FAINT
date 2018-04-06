@@ -25,7 +25,6 @@ margin:0;
 					../../resources/img/emptyProfile.jpg
 				</c:if>
 			">
-		
 		</button>
 	</div>
 		<div class="_ax54t">

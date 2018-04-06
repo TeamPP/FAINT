@@ -11,7 +11,6 @@ public class PageRank {
 		this.path=new int[totalNodes][totalNodes];
 		this.pagerank=new double[totalNodes];
 	}
-
 	public int calc(double totalNodes) {
 
 		double InitialPageRank;

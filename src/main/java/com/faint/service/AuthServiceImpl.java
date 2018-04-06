@@ -18,7 +18,6 @@ public class AuthServiceImpl implements AuthService{
 	@Inject
 	UserService service;
 	
-	
 	public UserDetails loadUserByUsername(String username) throws Exception{
 		
 		RelationDTO dto=new RelationDTO();

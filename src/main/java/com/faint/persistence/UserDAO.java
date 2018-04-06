@@ -11,7 +11,6 @@ import com.faint.dto.LoginDTO;
 public interface UserDAO {
 
 	public void create(UserVO vo) throws Exception;
-
 	// ======================사용자 읽기======================
 	public List<UserVO> listAll() throws Exception;
 	

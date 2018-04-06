@@ -24,7 +24,6 @@ public class PageRankController {
 	@RequestMapping(value = "/pagerank", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model)throws Exception{
 		
-		
 		List<String> follow = service.rank();
 		List<UserVO> allUser = service.listAll();
 		String[][] userid=new String[allUser.size()][allUser.size()];

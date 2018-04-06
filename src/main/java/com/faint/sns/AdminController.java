@@ -34,7 +34,6 @@ public class AdminController {
 			
 		return "admin/admin_dashboard";
 	}
-	
 	@RequestMapping(value="admin/login", method = RequestMethod.GET)
 	public String adminLogin(HttpServletRequest req, Model model,HttpSession session) {
 		System.out.println("어드민 로그인 페이지");

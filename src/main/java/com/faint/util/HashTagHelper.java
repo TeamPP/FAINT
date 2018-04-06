@@ -13,7 +13,6 @@ public class HashTagHelper {
    //태그를 담을 기본 capacity 
       private static final int DEFAULT_CAPACITY = 20;
          
-      
       //태그를 담을 기본 capacity 
       public static List<String> getAllHashTags(String caption){
          //1.태그를 담을 set

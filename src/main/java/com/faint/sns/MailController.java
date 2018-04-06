@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.faint.service.MailService;
 
-
-
 @Controller
 public class MailController {
 

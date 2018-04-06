@@ -3,7 +3,6 @@ package com.faint.domain;
 import java.sql.Date;
 
 public class UserVO {
-	
 	private int id;
 	private String email;
 	private String password;

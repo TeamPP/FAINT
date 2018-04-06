@@ -17,6 +17,7 @@
 		<li><a class="<c:out value="${reqURL == '/member/profile/blockedUser'? '_fvhml _t0stc' : '_fvhml _etlo6'}" />"
 		id="blockedUser" href="blockedUser">차단된 사용자</a></li>
 	</ul>
+	
 </div>
 </body>
 </html>

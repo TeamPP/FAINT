@@ -19,7 +19,6 @@ import com.faint.domain.UserVO;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final String LOGIN="login";
 	private static final Logger logger=LoggerFactory.getLogger(LoginInterceptor.class);
-	
 //	//이전 세션 삭제
 //	@Override
 //	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
