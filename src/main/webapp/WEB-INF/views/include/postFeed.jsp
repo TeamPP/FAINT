@@ -305,7 +305,7 @@ function getPostList(){
       
       $(".imageContainer:eq("+index+")").append(img);
       
-      var str = "<div style='display:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       

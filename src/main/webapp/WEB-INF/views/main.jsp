@@ -1207,8 +1207,8 @@ function follow(){
   var all=$("#carousel").children(); //초기값
 	function cateClick(thisTag){
 	  var customType=$(thisTag).data("filter");
-		console.log("카테고리 번호는:      "+customType);
-		console.log("all:" +all);
+	  //보고있던 이미지값 저장
+	var currentTitle=$(".selected").children("img").attr("title");
 	
 	  $("#carousel").children().remove(); //다 지우기
  	  $("#carousel").prepend(all); //초기값 넣기
@@ -1224,7 +1224,12 @@ function follow(){
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
 	$('#carousel div').click(function() {
     	moveToSelected($(this));
-    	});
+    });
+	
+	//이전 선택한 이미지가 있을 경우
+	if($(".post>img[title="+currentTitle+"]")[0]!=undefined){
+		$(".post>img[title="+currentTitle+"]").parent().trigger("click");
+	}
 	
     }
 	
@@ -1233,18 +1238,19 @@ function replyCursor(thisBtn){
 	var postid=$(thisBtn).parent().attr("title");
 	$("._replyRegister[title="+postid+"]").children("input").focus();
 }
- 	//슬라이드 이미지 div 클래스 추가
- 	function changeClass(){
-     	//클래스명 추가하기
-     	$("#carousel").children().eq(0).addClass("post hideLeft"); //1번사진
-     	$("#carousel").children().eq(1).addClass("post prevLeftSecond"); //2번사진
-     	$("#carousel").children().eq(2).addClass("post prev"); //3번사진
-     	$("#carousel").children().eq(3).addClass("post selected"); //4번사진_가운데
-     	$("#carousel").children().eq(4).addClass("post next"); //5번사진
-     	$("#carousel").children().eq(5).addClass("post nextRightSecond"); //6번사진
-     	//나머지는 다 class명을 hideRight로 추가
-     	$("div.nextRightSecond").nextAll().addClass("post hideRight"); //6번사진이후로
- 	}    
+
+//슬라이드 이미지 div 클래스 추가
+function changeClass(){
+   	//클래스명 추가하기
+   	$("#carousel").children().eq(0).addClass("post selected"); //1번사진
+   	$("#carousel").children().eq(1).addClass("post next"); //2번사진
+   	$("#carousel").children().eq(2).addClass("post nextRightSecond"); //3번사진
+   	//$("#carousel").children().eq(3).addClass("post selected"); //4번사진_가운데
+   	//$("#carousel").children().eq(4).addClass("post next"); //5번사진
+   	//$("#carousel").children().eq(5).addClass("post nextRightSecond"); //6번사진
+   	//나머지는 다 class명을 hideRight로 추가
+   	$("div.nextRightSecond").nextAll().addClass("post hideRight"); //6번사진이후로
+}    
  	
 	
     function moveToSelected(element) {
@@ -1255,6 +1261,7 @@ function replyCursor(thisBtn){
     	} else {
     		var selected = element;
     	}
+    	
     	var next = $(selected).next();
     	var prev = $(selected).prev();
     	var prevSecond = $(prev).prev();
@@ -1287,7 +1294,12 @@ function replyCursor(thisBtn){
 	}); 
 	
 	$('#carousel div').click(function() {
-	moveToSelected($(this));
+		if($(this).hasClass("hideLeft")){
+			moveToSelected($(".hideLeft:eq(0)"));	
+		}else{
+			moveToSelected($(this));
+		}
+		
 	});
 	
 	/* prev, next 아이콘 클릭 사진이동  */

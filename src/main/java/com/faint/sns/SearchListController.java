@@ -93,7 +93,7 @@ public class SearchListController {
 		cri.setKeyword(name);
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
-		System.out.println("태그사이즈"+taglist.size());
+		
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);
 			model.addAttribute("jsonList", jsonArray.fromObject(taglist));
@@ -133,10 +133,15 @@ public class SearchListController {
 		
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> locationList=postService.locationsAjax(cri);
-		model.addAttribute("locationList", locationList);
-		model.addAttribute("jsonList", jsonArray.fromObject(locationList));
-		model.addAttribute("keyword", "%"+location);
-		return "/search/locations";
+		
+		if(locationList.size()>0){
+			model.addAttribute("locationList", locationList);
+			model.addAttribute("jsonList", jsonArray.fromObject(locationList));
+			model.addAttribute("keyword", location);
+			return "/search/locations";
+		}else {
+			return "forward:/empty";
+		}
 	}
 
 	
