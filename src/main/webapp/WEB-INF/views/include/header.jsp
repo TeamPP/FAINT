@@ -30,7 +30,7 @@
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 
 <!-- 웹소켓 -->
-<script type="text/javascript" src="../../resources/js/scokjs.js"></script>
+<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <style>
 .navbar-default .explore {

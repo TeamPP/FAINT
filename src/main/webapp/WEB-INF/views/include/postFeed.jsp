@@ -305,7 +305,7 @@ function getPostList(){
       
       $(".imageContainer:eq("+index+")").append(img);
       
-      var str = "<div style='display:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
@@ -373,7 +373,7 @@ function getPostList(){
 				$(".popPostImage").each(function(){
 					if(this.naturalWidth <= this.naturalHeight){
 						$(this).css("min-height", "100%");
-					}else{
+					}else if(this.naturalWidth > this.naturalHeight){
 						$(this).css("min-width", "100%");
 					}
 				})
@@ -449,7 +449,6 @@ function reply(){
      	var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
      	
         $(rpldata).each(function(index){
-            console.log(this);
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
                replystr +="<div class='reply' title='"+this.id+"'>"+
@@ -537,9 +536,12 @@ function deleteReply(thisTag){
 
 //게시물 저장하기 + 저장하기 취소 
 function store(){
+	var storeFlg=false;
    $(".storeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var storeBtn=this;
+      if(storeFlg){return;};
+      storeFlg=true;
       if($(this).css("background-position")=="-78px -349px"){
          var type="post";
          var url ="/post/"+postid+"/store";
@@ -560,6 +562,7 @@ function store(){
          success:function(result){
             if(result=="SUCCESS"){
                $(storeBtn).css("background-position", val);
+               storeFlg=false;
             };
          }
       });
@@ -567,10 +570,12 @@ function store(){
 };
 //게시물 좋아요 + 좋아요 취소
 function like(){
+	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var likeBtn=this;
-      
+      if(likeFlg){ return; };
+      likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
          var url ="/post/"+postid+"/like";
@@ -593,6 +598,7 @@ function like(){
                $(likeBtn).css("background-position", val);
                likerList();
                getPostList();
+               likeFlg=false;
             };
          }      
       });

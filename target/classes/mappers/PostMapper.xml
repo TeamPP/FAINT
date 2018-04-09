@@ -31,7 +31,7 @@
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from
 			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
-			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid) pa
+			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid order by a.url) pa
 		left join
 			(select p.id, count(*) as likeCount from tbl_post p right join tbl_post_like l on p.id=l.postid group by p.id) pl
 		on
@@ -251,8 +251,7 @@
 	<!-- post&like -->
 	<insert id="postLike">
 		INSERT INTO tbl_post_like (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_post_like where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postUnlike">
@@ -287,8 +286,7 @@
 	<!-- store -->
 	<insert id="postStore">
 		INSERT INTO tbl_store (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_store where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postTakeaway">
@@ -412,7 +410,8 @@
             join tbl_attach as a
             on p.id = a.postid
             join tbl_user as u
-            on p.userid = u.id) as pa
+            on p.userid = u.id
+            group by p.id ) as pa
             
             left join
             
@@ -449,7 +448,7 @@
             join tbl_attach as a
             on p.id = a.postid
             join tbl_user as u
-            on p.userid = u.id) as pa
+            group by p.id ) as pa
             
             left join
             

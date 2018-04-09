@@ -745,11 +745,11 @@ main {
 	object-fit: cover;
 }
 #carousel .hideLeft {
-	height: 300px;
-	width: 300px;
+	height: 200px;
+	width: 200px;
 	left: 0%; /* 왼쪽 0으로 빠지는 애니메이션 효과 */
 	opacity: 0; /*투명도 0으로 숨김처리 */
-	transform: translateY(50%) translateX(-50%); /*부모기준으로 위치지정 */
+	transform: translateY(75%) translateX(-75%); /*부모기준으로 위치지정 */
 }
 #carousel .hideLeft img {
 	height: 100%;
@@ -757,11 +757,11 @@ main {
 	object-fit: cover;
 }
 #carousel .hideRight {
-	height: 300px;
-	width: 300px;
+	height: 200px;
+	width: 200px;
 	left: 100%;
 	opacity: 0;
-	transform: translateY(50%) translateX(-50%);
+	transform: translateY(75%) translateX(-75%);
 }
 #carousel .hideRight img {
 	height: 100%;
@@ -905,11 +905,11 @@ main {
 				<c:forEach var="i" begin="0" end="${fn:length(urlList)-1}" step="1">
 					<c:choose>
 						<c:when test="${i==0}">
-							<img  src="/displayFile?fileName=${urlList[i]}"
+							<img  src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${urlList[i]}"
 								title="${postDTO.postid}" />
 						</c:when>
 						<c:otherwise>
-							<img  src="/displayFile?fileName=${urlList[i]}"
+							<img  src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${urlList[i]}"
 								style="display: none;" title="${postDTO.postid}" />
 						</c:otherwise>
 					</c:choose>
@@ -928,7 +928,7 @@ main {
 
 
 
-	<script id="modalLike" type="text/x-handlebars-template">
+<script id="modalLike" type="text/x-handlebars-template">
 <div id="myModal" class="likeModal">
 	<span class="close">&times;</span>
 	<div class="likeModal-content">
@@ -941,12 +941,13 @@ main {
 <script>
 //postid 가져와서 댓글달기
 $(document).ready(function(){
-	reply(); 
+	reply();
 	searchFilter();
 	
 	//이미지 class명부여
 	changeClass();
 })
+
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
  function reply(){
 	$(".replyContainer").each(function(){
@@ -999,6 +1000,7 @@ $(document).ready(function(){
 		});
 	});
 }
+
 //댓글등록함수 = 댓글입력창에서 onkeypress로 작동 (태그 객체와 event키값 매개변수로 받음)
 function registReply(thisTag, key){
 	var enter=key.keyCode||key.which;
@@ -1028,6 +1030,7 @@ function registReply(thisTag, key){
 		});
 	}
 }
+
 //댓글 삭제함수 = 댓글 삭제버튼에서 사용(태그객체 받음)
 function deleteReply(thisTag){
 	var rid=$(thisTag).parent().attr("title");
@@ -1047,6 +1050,7 @@ function deleteReply(thisTag){
 		}
 	});
 }
+
 //게시물 저장 + 저장 취소
 store();
 function store(){
@@ -1078,6 +1082,7 @@ function store(){
 		});
 	});
 };
+
 //게시물 좋아요 + 좋아요 취소
 like();
 function like(){
@@ -1111,6 +1116,7 @@ function like(){
 		});
 	});
 };
+
 //좋아요 count+likerlist
 likerList();
 function likerList(){
@@ -1165,6 +1171,7 @@ function likerList(){
 		}); 
 	});
 };
+
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	$(".isFlw").on("click", function(){
@@ -1195,94 +1202,20 @@ function follow(){
 		});
 	});
 };
-//댓글내용 및 글내용 검색처리
-//searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리
-function searchFilter(){
-   $(".intro, .captionContainer").find("span").each(function(){
-      
-      //1. 텍스트 가져오기 & 처리한 새로운 문자
-      var text = $(this).text();
-      
-      //2. split() 함수처리하기
-      text = split(text);
-      
-      //3. 공백으로 나누기
-      var splitArray = text.split(" ");
-      
-      //4. 특수문자 
-      var special = "!$%^&*()-=+<>?_";
-      
-      //5. 링크처리
-      for(var i in splitArray){
-         var word = splitArray[i];
-         
-         //두글자 이상이면서, 첫글자가 #이면서 , 두번째글자가 특수문자가 아니면 링크처리
-         if(splitArray[i].length!=1 && (word.indexOf("#")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
-            var hash=word.substring(word.lastIndexOf("#")+1);
-            splitArray[i] = "<a href='/search/tags?name="+hash+"'>"+splitArray[i]+"</a>";
-         
-         
-         //두글자 이상이면서, 첫글자가 @이면서 , 두번째글자가 특수문자가 아니면 링크처리
-         } else if(splitArray[i].length!=1 && (word.indexOf("@")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
-            var person=word.substring(word.lastIndexOf("@")+1);
-            splitArray[i] = "<a href='/member/"+person+"'>"+splitArray[i]+"</a>";
-         }
-      }
-      
-      //6. 한문장으로 합치기
-      var splitMerge = splitArray.join(" ");
-      
-      $(this).html(splitMerge);
-   });
-}
-//searchFilter메서드의 보조 사용 함수
-function split(text){
-    
-    //1. 공백기준으로 나누기
-    var splitArray = text.split(" ");
-    
-    //2. 처리될 특수문자 
-    var special="!$%^&*()-=+<>?_";
-    
-    //3. 두글자 이상이면서, 2번째 글자가 특수문자가 아님
-    // '#'->' #' : #과 @앞에 공백넣기
-    for(var i in splitArray){
-       if(splitArray[i].length!=1 && special.indexOf(splitArray[i].charAt(1))==-1){
-           splitArray[i]=splitArray[i].replace(/#/g, " #"); 
-           splitArray[i]=splitArray[i].replace(/@/g, " @"); 
-       } //if end
-    } // for end
-    
-    //4. 배열의 각 요소를 한문장으로 합치기
-    var splitMerge = splitArray.join(" ");
-    return splitMerge;
-}
-// 일단 막음
-//css - 사진클릭시 이동
-/* $(".imageContainer").children().on("click", function(event){
-	if($(this).parent().children(":first")==$(this).parent().children(":last")){
-		return;
-	}else if($(this)[0]==$(this).parent().children(":last")[0]){
-		console.log(1);
-		$(this).css("display", "none");
-		$(this).parent().children(":first").css("display", "");
-	}else{
-		$(this).css("display", "none");
-		$(this).next().css("display", "");
-	}
-}) */
+
 //css - 카테고리별 게시물 필터링
   var all=$("#carousel").children(); //초기값
 	function cateClick(thisTag){
 	  var customType=$(thisTag).data("filter");
-		console.log("카테고리 번호는:      "+customType);
-		console.log("all:" +all);
+	  //보고있던 이미지값 저장
+	var currentTitle=$(".selected").children("img").attr("title");
 	
 	  $("#carousel").children().remove(); //다 지우기
  	  $("#carousel").prepend(all); //초기값 넣기
 			
 	  if(customType==="all") {
-	  } else{
+		  
+	  }else{
 		  $(".post").not("div[data-filter='" + customType +"']").remove(); //customType 일치하지않는 요소 삭제
 	  }
 	$("#carousel").children().removeClass(); //기존 클래스명 삭제
@@ -1291,7 +1224,12 @@ function split(text){
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
 	$('#carousel div').click(function() {
     	moveToSelected($(this));
-    	});
+    });
+	
+	//이전 선택한 이미지가 있을 경우
+	if($(".post>img[title="+currentTitle+"]")[0]!=undefined){
+		$(".post>img[title="+currentTitle+"]").parent().trigger("click");
+	}
 	
     }
 	
@@ -1300,28 +1238,30 @@ function replyCursor(thisBtn){
 	var postid=$(thisBtn).parent().attr("title");
 	$("._replyRegister[title="+postid+"]").children("input").focus();
 }
- 	//슬라이드 이미지 div 클래스 추가
- 	function changeClass(){
-     	//클래스명 추가하기
-     	$("#carousel").children().eq(0).addClass("post hideLeft");  //1번사진
-     	$("#carousel").children().eq(1).addClass("post prevLeftSecond"); //2번사진
-     	$("#carousel").children().eq(2).addClass("post prev"); //3번사진
-     	$("#carousel").children().eq(3).addClass("post selected");  //4번사진_가운데
-     	$("#carousel").children().eq(4).addClass("post next"); //5번사진
-     	$("#carousel").children().eq(5).addClass("post nextRightSecond");  //6번사진
-     	//나머지는 다 class명을 hideRight로 추가
-     	$("div.nextRightSecond").nextAll().addClass("post hideRight");  //6번사진이후로
- 	}    
+
+//슬라이드 이미지 div 클래스 추가
+function changeClass(){
+   	//클래스명 추가하기
+   	$("#carousel").children().eq(0).addClass("post selected"); //1번사진
+   	$("#carousel").children().eq(1).addClass("post next"); //2번사진
+   	$("#carousel").children().eq(2).addClass("post nextRightSecond"); //3번사진
+   	//$("#carousel").children().eq(3).addClass("post selected"); //4번사진_가운데
+   	//$("#carousel").children().eq(4).addClass("post next"); //5번사진
+   	//$("#carousel").children().eq(5).addClass("post nextRightSecond"); //6번사진
+   	//나머지는 다 class명을 hideRight로 추가
+   	$("div.nextRightSecond").nextAll().addClass("post hideRight"); //6번사진이후로
+}    
  	
 	
     function moveToSelected(element) {
     	if (element == "next") {
-    	  var selected = $(".selected").next();
+    		var selected = $(".selected").next();
     	} else if (element == "prev") {
-    	  var selected = $(".selected").prev();
+    		var selected = $(".selected").prev();
     	} else {
-    	  var selected = element;
+    		var selected = element;
     	}
+    	
     	var next = $(selected).next();
     	var prev = $(selected).prev();
     	var prevSecond = $(prev).prev();
@@ -1337,31 +1277,38 @@ function replyCursor(thisBtn){
     	$(nextSecond).nextAll().removeClass().addClass('post hideRight');
     	$(prevSecond).prevAll().removeClass().addClass('post hideLeft');
     	}
-    	// Eventos teclado
-    	//   <- , -> 키보드 화살표로 이동
-     	$(document).keydown(function(e) {
-    	  switch(e.which) {
-    	      case 37: // left
-    	      moveToSelected('prev');
-    	      break;
-    	      case 39: // right
-    	      moveToSelected('next');
-    	      break;
-    	      default: return;
-    	  }
-    	  e.preventDefault();
-    	}); 
-    	$('#carousel div').click(function() {
-    	moveToSelected($(this));
-    	});
-    	
-    	/* prev, next 아이콘 클릭 사진이동  */
-    	$('#prev').click(function() {
-    	moveToSelected('prev');
-    	});
-    	$('#next').click(function() {
-    	moveToSelected('next');
-    	});
+    
+    
+	//   <- , -> 키보드 화살표로 이동
+ 	$(document).keydown(function(e) {
+	  switch(e.which) {
+	      case 37: // left
+	      moveToSelected('prev');
+	      break;
+	      case 39: // right
+	      moveToSelected('next');
+	      break;
+	      default: return;
+	  }
+	  e.preventDefault();
+	}); 
+	
+	$('#carousel div').click(function() {
+		if($(this).hasClass("hideLeft")){
+			moveToSelected($(".hideLeft:eq(0)"));	
+		}else{
+			moveToSelected($(this));
+		}
+		
+	});
+	
+	/* prev, next 아이콘 클릭 사진이동  */
+	$('#prev').click(function() {
+	moveToSelected('prev');
+	});
+	$('#next').click(function() {
+	moveToSelected('next');
+	});
 </script>
 
 
