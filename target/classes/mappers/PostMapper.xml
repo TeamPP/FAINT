@@ -76,10 +76,10 @@
 		on
 		psa.id=pr.id
         left join
-		(select userid from tbl_block where blockedid=1) bu
+		(select userid from tbl_block where blockedid=#{userid}) bu
 		on psa.userid = bu.userid
         left join
-        (select blockedid from tbl_block where userid=1) ub
+        (select blockedid from tbl_block where userid=#{userid}) ub
         on psa.userid = ub.blockedid
 		where bu.userid is null and ub.blockedid is null
 		order by psa.regdate desc

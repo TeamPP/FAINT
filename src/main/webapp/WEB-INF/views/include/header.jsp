@@ -32,6 +32,11 @@
 <!-- 웹소켓 -->
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
+<!-- 아이콘 부트스트랩  -->
+<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+
 <style>
 .navbar-default .explore {
    width: 24px;

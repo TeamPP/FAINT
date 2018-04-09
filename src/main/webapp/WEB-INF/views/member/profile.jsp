@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${userVO.name}(@${userVO.nickname})</title>
-<!-- 프로필 사진 변경 공통 처리 -->
 <style>
 a {
 	color: black;
@@ -158,14 +157,8 @@ div.secondLine span {
 	border-top: 1.5px solid black;
 }
 </style>
-
-
 </head>
 <body>
-
-<script>
-console.log("${userVO}");
-</script>
 
 <article style = "margin-top: 60px;">
 	<div class="photo-profile">

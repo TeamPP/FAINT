@@ -76,14 +76,13 @@ border-radius: 150px;  /* 프사 둥글게 */
 					<ul id="blockedUserContainer">
 					<c:forEach var="blockedUserList" items='${blockedUserList}' varStatus='status'>
 					<li class='oneofList'> 
-					<img class='followPhoto' src="
+					<img class='followPhoto'
 							<c:if test="${blockedUserList.profilephoto ne null && blockedUserList.profilephoto != '' }">
-							http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122=${blockedUserList.profilephoto}
+							 src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${blockedUserList.profilephoto}'
 						</c:if>
 						<c:if test="${blockedUserList.profilephoto eq null || blockedUserList.profilephoto == '' }">
-							../../resources/img/emptyProfile.jpg
-						</c:if>"/> 
-					&nbsp &nbsp<a href='/member/${blockedUserList.nickname}'>${blockedUserList.nickname}</a>
+							src='../../resources/img/emptyProfile.jpg'
+						</c:if>/>&nbsp &nbsp<a href='/member/${blockedUserList.nickname}'>${blockedUserList.nickname}</a>
 					<button class='btn_block' data-user ='${blockedUserList.blockedid}'>차단해제</button>
 					</li>
 					</c:forEach>
