@@ -153,13 +153,13 @@ public class PostController {
 	//게시물 삭제
 	@RequestMapping(value="/{postid}/delete", method=RequestMethod.DELETE)
 	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, HttpServletRequest request) throws Exception {
-		
 		ResponseEntity<String> entity=null;
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
 		
 		try{
 			String delete=service.deleteOne(postid, vo.getId());
+			System.out.println(delete);
 			if(delete=="SUCCESS"){
 				entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);	
 			}else{
