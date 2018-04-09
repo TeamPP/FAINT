@@ -120,10 +120,11 @@ $(".search-form").submit(function(event) {
       return false;
       }
    
+   // enter치면 목록에서 첫번째꺼로 페이지 이동
    else if($("._ndl3t").length>=1) {
       document.getElementsByClassName("_ndl3t _4jr79")[0].click();
       return false;
-      } 
+      }
    
    return true;
    }); 
@@ -170,6 +171,7 @@ function searchAjax(){
             //dataType: "text",
             success: function(result){
                
+            console.log("searchwords길이"+searchwords.length);
                console.log("결과값 :"+JSON.stringify(result));
                
                 for(var i=0; i<result.length; i++) {
@@ -178,57 +180,81 @@ function searchAjax(){
                         for(var a=0; a<searchwords.length; a++) {
                            
                             if(result[i].type==0 && result[i].tagname!=null){
-                               for(var b=a; b<result[i].tagname.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].tagname.charAt(b)) {
-                                     if(a==b) {
-                                        result[i].score += 2;
-                                     } else {
+                            	
+                            	// 특수문자 자르고
+                            	tagname=result[i].tagname.substring(1);
+                            	
+                               for(var b=a; b<tagname.length; b++) {
+                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
+                                     if(a==b && tagname.indexOf(searchwords)==0) {
+                                        result[i].score += 3;
+                                     } else if(a==b) {
+                                    	 result[i].score += 2;
+                                     }
+                                     else {
                                         result[i].score++;
                                         }
                                      }
                                   }
                                } /* tagname if문 끝 */
                             
-                            else if(result[i].nickname!=null && result[i].nickname!=null) {
+                            else if(result[i].nickname!=null) {
+                            	// 특수문자 자르고
+                            	nickname = result[i].nickname.substring(1);
+                            	
                                var nickscore = result[i].score;
-                                  var namescore = result[i].score;
-                               for(var b=a; b<result[i].nickname.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].nickname.charAt(b)) {
-                                      if(a==b) {
-                                         nickscore += 2;
-                                      } else {
-                                         nickscore++;
-                                         }
-                                     } /* nickname if문 끝 */
-                                  
-                                  if(searchwords.charAt(a)==result[i].name.charAt(b)) {
-                                      if(a==b) {
+                               var namescore = result[i].score;
+                               
+                               // nickname O name O => 둘 다 있는 경우
+                              if(result[i].name!=null) {
+                            	// 특수문자 자르고
+                            	name = result[i].name.substring(1);
+                               for(var b=a; b<name.length; b++) {
+                                  if(searchwords.charAt(a)==name.charAt(b)) {
+                                      if(a==b && name.indexOf(searchwords)==0) {
+                                          namescore += 3;
+                                       } else if(a==b) {
                                          namescore += 2;
                                       } else {
                                          namescore++;
                                          }
-                                     } /* naem if문 끝 */
-                                  
-                                  }
+                                     }
+                               } /* name for문 끝 */
+                              }
+                              
+                               // nickname O name X => nickname만 있을 경우
+                               for(var b=a; b<nickname.length; b++) {
+                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
+                                      if(a==b && nickname.indexOf(searchwords)==0) {
+                                         nickscore += 3;
+                                       } else if(a==b) {
+                                    	 nickscore += 2;
+                                      } else {
+                                    	  nickscore++;
+                                         }
+                                     } 
+                                  } /* nickname for문 끝 */
                                
+                                  // nickscore와 namescore 비교한 후 더 큰 점수를 적용시킴
                                   if(nickscore<namescore) {
                                      result[i].score = namescore;
                                      } else if(nickscore>namescore){
-                                     result[i].score=nickscore;
-                                  } else {
+                                     	result[i].score=nickscore;
+                                 	 } else {
                                      result[i].score = nickscore+namescore;
-                                  }
-                            }/* elseif끝 */
+                                	  }
+                            }/* nickname elseif끝 */
                             
                             
                             else if(result[i].type==2 && result[i].location!=null) {
+                            	
                                for(var b=a; b<result[i].location.length; b++) {
                                   if(searchwords.charAt(a)==result[i].location.charAt(b)) {
-                                      if(a==b) {
-                                         result[i].score += 2; 
-                                      } else {
-                                         result[i].score++;
-                                         }
+										if(a==b) {
+                                        	result[i].score += 2;
+                                       } else {
+                                    	   result[i].score++;
+                                          }
                                      }
                                   }
                             } /* location elseif문 끝 */
@@ -241,6 +267,7 @@ function searchAjax(){
                      }
                 }/* for문 끝 */
                 
+               // score를 비교하여 점수 높은 순으로 출력하기
                 for(var i=0;i<result.length;i++) {
                   for(var j=i; j<result.length-1-i; j++) {
                      if(result[j].score<result[j+1].score) {

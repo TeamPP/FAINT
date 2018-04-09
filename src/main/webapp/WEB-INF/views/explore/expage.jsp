@@ -16,10 +16,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
    
 <!--검색창 부트스트랩  -->  
 <link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
+
+<!-- expage.css -->
+<link rel="stylesheet" href="/resources//css/expage.css"> 
   
 <title>Insert title here</title>
 <!-- jquery 2.1.4. -->
@@ -31,93 +33,10 @@
    /* animation-iteration-count: infinite; */
 }
 
- .tit {
-   text-overflow: ellipsis;
-   width: 100px;
-   
-}
-
-/* 인기 검색어 스타일 */
 h2 {
-   text-align: center;
+	text-align: center;
 }
 
-.top{
-   display: inline-block;
-   border: 1px solid black;
-   width: 400px;
-   margin: auto;
-   background: white;
-}
-
-.tagOL, .userOL { 
-   list-style-type: decimal; 
-}
-
-em { 
-   font-style: normal;
-   cursor : pointer;
-}
-
-.tagnum, .usernum {
-   display: block;
-    float: left;
-    min-width: 13px;
-    _width: 13px;
-    height: 12px;
-    margin-right: 9px;
-    border: 1px solid #e0e0e0;
-    color: #666;
-    line-height: 12px;
-    font-size: 11px;
-    text-align: center;
-    font-family: tahoma,sans-serif;
-}
-
-.tagList {
-   /* width: 200px; */
-   margin: auto;
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
-.userList {
-   /* width: 200px; */
-   margin: auto;
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
- .tagList .keyword .tit {
-    display: block;
-    overflow: hidden;
-    _width: 210px;
-    font-size: 12px;
-    color: #000;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: normal;
-}
-
- .userList .keyword .tit {
-    display: block;
-    overflow: hidden;
-    _width: 210px;
-    font-size: 12px;
-    color: #000;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: normal;
-}
-
-span {
-   display : inline-block;
-   margin: 0;
-    padding: 0;
-    border: 0;
-    font: inherit;
-    vertical-align: baseline;
-}
 </style>
 
 
@@ -128,22 +47,31 @@ span {
 <br/>
 <br/>
 <h2>실시간 둘러보기</h2>
-<p class="dsc"><time></time></p>
-<br/>
 
-<div class="top">
-<div class="topTag">
-<br/>
+<div class="realtime_keywd">
+    <div class="wrap_last_date">
+        <span class="none">실시간 급상승 키워드 최종 업데이트 시간</span>
+        <span class="last_date"></span><span class="last_time"></span>
+    </div>
+
+    <div class="keywd_control">
+        <button type="button" title="실시간 급상승 키워드 이전 보기" class="btn_keywd_control pre" style="display: none;"><span class="odd_span">이전</span></button>
+        <button type="button" title="실시간 급상승 키워드 재생"  class="btn_keywd_control play" style="display: none;"><span class="odd_span">재생</span></button>
+       <button type="button" title="실시간 급상승 키워드 일시 정지"  class="btn_keywd_control stop" style="display: none;"><span class="odd_span">일시정지</span></button>
+       <button type="button" title="실시간 급상승 키워드 다음 보기" class="btn_keywd_control next" style="display: none;"><span class="odd_span">다음</span></button>
+   </div>
+   
    <ol class="tagOL"></ol>
 </div>
-</div>
-
 
 <script type="text/javascript">
 
-   RTtag();
+
+  	RTtag();
        
    function RTtag () {  
+	   flag = false;
+	   console.log(">>"+flag);
        $.ajax({
            type:"POST",
            url: "/explore/getTag",
@@ -158,13 +86,24 @@ span {
                
             var str = ' ';
                for(var i=1; i<data.length+1; i++) {
-                  str += "<li class='tagList' style='list-style-type:none;'>"
-                        + "<a class='tagname' href='/search/tags?name="+data[i-1].name+"'>"
-                        + "<span class='keyword'>"
-                        + "<em class='tagnum'>"+i+"</em>"
-                        + "<span class='fid'>"
-                        + "<span class='tit'>"+data[i-1].name+"</span>"
-                        + "   </span></span></a></li>";
+                        
+                  str += "<li class='rank"+i+"'>"
+                  		+ "<div class='realtime_rank'>"
+                  		+ "<span class='no'>"+i+"</span>"
+                  		+ "<span class='none'>위</span>"
+                  		+ "<div class='keywd'>"
+                  		+ "<span class='none'>실시간 급상승 키워드</span>"
+                  		+ "<a class='ellipsis' href='/search/tags?name="+data[i-1].name+"'>"+data[i-1].name+"</a>"
+                  		+ "</div>"
+                  		+ "</div>"
+                  		+ "<div class='cntt_realtime'>"
+                  		+ "<div class='no'>"+i+"위</div>"
+                  		+ "<div class='keywd'>"
+                  		+ "<span class='none'>실시간 급상승 키워드</span>"
+                  		+ "<a class='ellipsis' href='/search/tags?name="+data[i-1].name+"'>"+data[i-1].name+"</a>"
+                  		+ "</div>"
+                  		+ "</div>"
+                  		+ "</li>";
                         
                } /* for문 끝*/
                
@@ -177,48 +116,84 @@ span {
                  console.log("에러로갓니?");
               }
               
-              updater.stop();
               console.log("갱신스탑");
            }/* error 끝 */
            
        }); /* ajax 끝 */
        
+       flag = true;
+       console.log(">>>"+flag);
    } /* RTtag끝  */
 
    
 $(document).ready(function() {
+	
+	// 실시간 검색어  flag가 false일 때 ajax로 데이터 가져옴
+	var flag = true;
+	console.log(">"+flag);
+	
+	//처음에 expage 들어간 시간 적용
+ 	 var d = new Date();
+	 $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+	 if(d.getHours()>12) {
+		 $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
+	   } else {
+		   $(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
+		   }
    
-   setInterval("RTtag()", 100000);
-   // 30초에 한번씩 받아온다.   
-   
+	var ii =1;
+	var jj =1;
+	
+	// 인기 검색어 1위~10위 className
+	var chgname = document.getElementsByClassName("cntt_realtime"); 
+
+	if(flag) {
+		setInterval(function(){
+		    
+	        if(ii == chgname.length+1) {
+	        	ii=1;
+	        	console.log(ii);
+	        	
+	        	// 대략 1분 단위로 데이터 갱신
+	        	if(jj==31){
+	        		console.log("갱신하잣");
+	        		RTtag();
+	        		
+	     	   	   var d = new Date();
+	    	   	   $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+	    	   	   if(d.getHours()>12) {
+	    	   		   $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
+	    	   	   } else {
+	    	   			$(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
+	    	   	   }
+	        		jj=1;
+	        		
+	        	} /* jj if문 끝 */
+	        	
+	        } /* ii if문 끝 */
+	        
+	        	// 1위부터 10위까지 순차적으로 효과주기
+		    	$(".rank"+ii+"").toggleClass("on");
+		    	d = new Date();
+		        
+		    	// 효과 해제하기
+		        (function(x){
+		            window.setTimeout(function(){
+			               $(".rank"+x+"").toggleClass("on");
+		            },2000);
+		        })(ii);
+
+		        ii++;
+		        jj++;
+	        
+	    },2200); // 2.2초마다 실행
+		
+	} else {
+	   	   console.log("실시간 검색어 에러다 에러에러 삐뽀삐뽀");
+	}
+	
 });
    
-</script>
-
-<script>
-
-var ii =0;
-var fade = document.getElementsByClassName("fid");
-
-window.setInterval(function(){
-        if(ii == fade.length) {   //다 보여주면 스탑
-               ii=0;
-        }
-        
-        //카드 보여주기
-        $(".fid:eq("+ii+")").toggleClass("fadeInDown animated");
-        
-        //보여준 후 다시 뒤집
-        (function(x){
-            window.setTimeout(function(){
-               $(".fid:eq("+x+")").toggleClass("fadeInDown animated");
-            },1000);
-        })(ii);
-
-        ii++;
-        
-    },1000);   
-
 </script>
 
 <!-- 인기 게시글 -->
