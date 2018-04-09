@@ -101,15 +101,27 @@ public class UserDAOImpl implements UserDAO {
 		return session.selectOne(namespace+".login",dto);
 	}
 	
-	// 로그인 유지  세션 에 담기
-	public void keepLogin(Integer userID, String sessionkey, Date next){
-		System.out.println("세션키 저장하러 오나요?1 ");
+//	// 로그인 유지  세션 에 담기
+//	public void keepLogin(Integer userID, String sessionkey, Date next){
+//		System.out.println("세션키 저장하러 오나요?1 ");
+//		Map<String, Object> paramMap = new HashMap<String, Object>();
+//		paramMap.put("userID", userID);
+//		paramMap.put("sessionKey", sessionkey);
+//		paramMap.put("next", next);
+//
+//		session.update(namespace + ".keepLogin", paramMap);
+//	}
+	// 세션으로 로그인 여부 판단
+	@Override
+	public void keepLogin(String email, String sessionId, Date next) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("userID", userID);
-		paramMap.put("sessionKey", sessionkey);
+		paramMap.put("email", email);
+		paramMap.put("sessionId", sessionId);
 		paramMap.put("next", next);
-
-		session.update(namespace + ".keepLogin", paramMap);
+		
+		System.out.println("aa"+sessionId);
+		
+		session.update(namespace +".keepLogin", paramMap);
 	}
 	
 	// 세션 확인 

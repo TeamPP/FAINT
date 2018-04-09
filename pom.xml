@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
-			<version>4.1.6.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		
 		<!-- jstl JSON 변환 -->
