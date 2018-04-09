@@ -688,6 +688,7 @@ function like(){
          dataType:"text",
          success:function(result){
             if(result=="SUCCESS"){
+            	
                $(likeBtn).css("background-position", val);
                likerList();
                getPostList();
