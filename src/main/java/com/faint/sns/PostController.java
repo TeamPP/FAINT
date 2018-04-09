@@ -215,7 +215,7 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping(value="/detail", method=RequestMethod.POST)
-	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request)throws Exception{
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
@@ -237,7 +237,7 @@ public class PostController {
 	
 	//게시물 저장 - rest방식
 	@RequestMapping(value="/{postid}/store", method=RequestMethod.POST)
-	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -258,7 +258,7 @@ public class PostController {
 
 	//게시물 저장 취소 - rest방식
 	@RequestMapping(value="/{postid}/takeaway", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -279,7 +279,7 @@ public class PostController {
 	
 	//like 등록 - rest방식
 	@RequestMapping(value="/{postid}/like", method=RequestMethod.POST)
-	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -300,7 +300,7 @@ public class PostController {
 
 	//like 삭제 - rest방식
 	@RequestMapping(value="/{postid}/unlike", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -322,7 +322,7 @@ public class PostController {
 	//게시물에 대한 좋아요 유저반환(PK,nickname만) - JSON객체(LIST배열에 담아서 던져줌)
 	@ResponseBody
 	@RequestMapping(value="/{postid}/likerlist", method=RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<List<UserVO>> entity=null;
 		
 		HttpSession session=request.getSession();

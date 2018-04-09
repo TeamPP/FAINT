@@ -53,8 +53,8 @@ border-radius: 2px;
 }
 
 .followPhoto{
-width: 30px;
-height: 30px;
+width: 33px;
+height: 33px;
 display: inline-block;
 float: left;
 border-radius: 150px;  /* 프사 둥글게 */
@@ -76,13 +76,21 @@ border-radius: 150px;  /* 프사 둥글게 */
 					<ul id="blockedUserContainer">
 					<c:forEach var="blockedUserList" items='${blockedUserList}' varStatus='status'>
 					<li class='oneofList'> 
-					<img class='followPhoto'
-							<c:if test="${blockedUserList.profilephoto ne null && blockedUserList.profilephoto != '' }">
-							 src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${blockedUserList.profilephoto}'
+						<img class='followPhoto'
+								<c:if test="${blockedUserList.profilephoto ne null && blockedUserList.profilephoto != '' }">
+									 src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${blockedUserList.profilephoto}'
+								</c:if>
+								<c:if test="${blockedUserList.profilephoto eq null || blockedUserList.profilephoto == '' }">
+									src='../../resources/img/emptyProfile.jpg'
+								</c:if>
+							/>&nbsp &nbsp
+						
+						<c:if test="${blockedUserList.name ne null && blockedUserList.name != '' }">
+							<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='/member/${blockedUserList.nickname}'>${blockedUserList.nickname}</a><p style='margin:0;'>${blockedUserList.name}</p></div>
 						</c:if>
-						<c:if test="${blockedUserList.profilephoto eq null || blockedUserList.profilephoto == '' }">
-							src='../../resources/img/emptyProfile.jpg'
-						</c:if>/>&nbsp &nbsp<a href='/member/${blockedUserList.nickname}'>${blockedUserList.nickname}</a>
+						<c:if test="${blockedUserList.name eq null || blockedUserList.name == '' }">
+							<a style='font-weight:bold; line-height: 28px;' href='/member/${blockedUserList.nickname}'>${blockedUserList.nickname}</a>
+						</c:if>
 					<button class='btn_block' data-user ='${blockedUserList.blockedid}'>차단해제</button>
 					</li>
 					</c:forEach>

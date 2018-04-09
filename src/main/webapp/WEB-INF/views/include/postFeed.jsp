@@ -225,7 +225,7 @@ span{
 #likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
 .isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
 	border-width: 1px; line-height: 26px; border-radius: 2px; }
-.followPhoto{ width: 30px; height: 30px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
+.followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
 a{ font-weight: bold; }
 </style>
 </script>
@@ -752,15 +752,22 @@ function likerList(){
                 
                 var likers="";
                 data.each(function(){
-                	
+        			console.log(this);
                     likers+="<li class='oneofList'> <img class='followPhoto' ";
                     
                    	// 프로필 사진이 있는경우 | 없는 경우
     				if(this.profilephoto != null){
-    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp";
                 	}else{
-                		likers+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+                		likers+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp";
                 	}
+                   	// 이름이 있는 경우 | 없는 경우
+                   	if(this.name != null){
+                   		likers+="<div style='display:inline-block; line-height:16px;'><a href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+                   	}else{
+                   		likers+="<a style='line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
+                   	}
+                   	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFollow > 0){
                 		likers+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";

@@ -272,7 +272,7 @@
 	
 	<select id="postLiker" resultType="com.faint.domain.UserVO">
 		SELECT DISTINCT * from
-		(SELECT u.id, u.nickname
+		(SELECT u.id, u.nickname, u.profilephoto, u.name
 		FROM tbl_post_like l JOIN tbl_user u
 		ON l.postid=#{postid} AND l.userid=u.id
 		ORDER BY l.regdate DESC) pl
