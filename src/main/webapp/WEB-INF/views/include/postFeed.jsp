@@ -570,7 +570,6 @@ function like(){
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var likeBtn=this;
-      
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
          var url ="/post/"+postid+"/like";
@@ -590,6 +589,7 @@ function like(){
          dataType:"text",
          success:function(result){
             if(result=="SUCCESS"){
+            	
                $(likeBtn).css("background-position", val);
                likerList();
                getPostList();

@@ -84,6 +84,19 @@
 		blockedid=#{userid}
 	</delete>
 	
+	<!-- 차단 리스트 출력 -->
+	<select id="readblocked" resultType="com.faint.dto.BlockedUserDTO">
+		SELECT bl.USERID as userid
+		, bl.BLOCKEDID as blockedid
+	    , u.NICKNAME as nickname
+	    , u.name as name
+	    , u.PROFILEPHOTO as profilephoto
+	    FROM 
+		faint.tbl_block bl 
+		join faint.tbl_user u
+	    on bl.BLOCKEDID = u.id
+	    where bl.USERID = #{uid}
+	</select>
 	<!-- follow -->
 	<!-- 팔로우등록 -->
 	<insert id="flwCreate">

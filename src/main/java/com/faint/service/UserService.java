@@ -6,6 +6,7 @@ import java.util.List;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 
 public interface UserService {
@@ -30,6 +31,9 @@ public interface UserService {
 	public void userBlock(RelationDTO dto) throws Exception;
 	
 	public void userUnblock(RelationDTO dto) throws Exception;
+	
+	//차단목록가져오기
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception;
 	
 	//=================회원가입 및 정보변경=================
 	public void regist(UserVO user) throws Exception;
