@@ -108,6 +108,7 @@
 .thumbnail>img, .thumbnail a>img, .thumbnail>video, .thumbnail a>video {
     margin-right: auto;
     margin-left: auto;
+        width: 100%;
 }
 
 .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img, .thumbnail>video, .thumbnail a>video, .carousel-inner>.item>video, .carousel-inner>.item>a>video {

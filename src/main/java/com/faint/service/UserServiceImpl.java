@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.persistence.UserDAO;
 
@@ -94,7 +95,11 @@ public class UserServiceImpl implements UserService {
 	public void userUnblock(RelationDTO dto) throws Exception{
 		dao.userUnblock(dto);
 	}
-
+	
+	@Override
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception {
+		return dao.readBlockedList(uid);
+	}
 	//=================회원가입 및 정보수정=================
 	@Override
 	public void regist(UserVO vo) throws Exception{

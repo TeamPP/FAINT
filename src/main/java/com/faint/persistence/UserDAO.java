@@ -6,6 +6,7 @@ import java.util.List;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 
 public interface UserDAO {
@@ -23,6 +24,8 @@ public interface UserDAO {
 	public void userBlock(RelationDTO dto) throws Exception;
 	
 	public void userUnblock(RelationDTO dto) throws Exception;
+	
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception;
 
 	// ======================팔로우====================== 
 	public void flwCreate(RelationDTO dto) throws Exception;
