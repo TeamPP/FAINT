@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.faint.domain.SearchCriteria;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
 
 @Repository

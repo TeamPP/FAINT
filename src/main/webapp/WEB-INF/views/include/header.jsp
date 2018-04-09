@@ -170,6 +170,8 @@ function searchAjax(){
             //dataType: "text",
             success: function(result){
                
+            	console.log("결과값--- "+JSON.stringify(result));
+            	
                 for(var i=0; i<result.length; i++) {
                     if(searchwords.length>0) {
                         for(var a=0; a<searchwords.length; a++) {

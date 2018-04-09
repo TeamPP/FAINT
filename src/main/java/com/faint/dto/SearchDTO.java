@@ -2,6 +2,10 @@ package com.faint.dto;
 
 public class SearchDTO {
 
+	private int loginid;
+	private String keyword;
+	
+	private int userid;
 	private int type;
 	private int score;
 	private String tagname;		
@@ -14,10 +18,35 @@ public class SearchDTO {
 	private String location;
 
 	// getter, setter
+	
+	public int getLoginid() {
+		return loginid;
+	}
+	
+	public void setLoginid(int loginid) {
+		this.loginid = loginid;
+	}
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+	
 	public int getType() {
 		return type;
 	}
-	
+
 	public void setType(int type) {
 		this.type = type;
 	}
@@ -78,12 +107,13 @@ public class SearchDTO {
 		this.location = location;
 	}
 
+
 	//toString
 	@Override
 	public String toString() {
-		return "SearchDTO [type=" + type + ", score=" + score + ", tagname=" + tagname + ", postedtagCnt="
-				+ postedtagCnt + ", nickname=" + nickname + ", name=" + name + ", profilephoto=" + profilephoto
-				+ ", location=" + location + "]";
+		return "SearchDTO [userid=" + userid + ", type=" + type + ", score=" + score
+				+ ", tagname=" + tagname + ", postedtagCnt=" + postedtagCnt + ", nickname=" + nickname + ", name="
+				+ name + ", profilephoto=" + profilephoto + ", location=" + location + "]";
 	}
 
 

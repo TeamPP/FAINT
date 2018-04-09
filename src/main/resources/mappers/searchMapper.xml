@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.faint.mapper.SearchMapper">
+
 <!-- 검색창 검색 태그는 #, 닉네임은 @, 이름은 $ -->
 <select id="listKeyword" resultType="com.faint.dto.SearchDTO">
 <![CDATA[
@@ -22,9 +23,17 @@ select * from tbl_search
     left outer join
     
     ( select concat('@', u.nickname) as nickname, concat('$', u.name) as name, u.profilephoto
-   from    tbl_user as u
-   where   u.nickname like CONCAT('%', #{keyword} , '%') 
-    or u.name like concat('%', #{keyword} , '%') ) as userT
+		from tbl_user u
+        
+	left join (SELECT b.userid as userid, b.blockedid as blockedid, u.nickname as nickname, u.name as name
+	from tbl_block b 
+	join tbl_user u
+	on b.blockedid = u.id
+	where b.userid = #{loginid} ) as bl
+    
+	on u.id = bl.blockedid
+	where bl.blockedid is null
+	and (u.nickname like CONCAT('%', #{keyword} , '%') or  u.name like concat('%', #{keyword} , '%'))) as userT
     
     on type=1
     
