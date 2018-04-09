@@ -5,7 +5,6 @@ public class SearchMemberCriteria extends MemberCriteria {
 	private String searchType;
 	private String keyword;
 	
-	
 	public String getSearchType() {
 		return searchType;
 	}

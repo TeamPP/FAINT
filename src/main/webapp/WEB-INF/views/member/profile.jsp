@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!--헤더-->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -681,9 +680,12 @@ function following(){
 
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
+	var followFlg=false;
    $(".isFlw").on("click", function(){
       var userid=$(this).attr("title");
       var isFlw=this;
+      if(followFlg){return;};
+      followFlg=true;
       if(($(this).html()=="팔로우")){
          var type="post";
          var url ="/member/follow/"+userid;
@@ -705,6 +707,7 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
+                followFlg=false;
             };
          }
       });

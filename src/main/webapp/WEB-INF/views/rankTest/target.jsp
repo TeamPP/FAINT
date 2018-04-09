@@ -7,7 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1> 관리자 공홈 페이지 </h1>
-	
+	<%-- <div>${userVO.id}</div>
+	<div>${userVO.nickname}</div>
+	<div>${userVO.name}</div>
+	<div>${userVO.email}</div> --%>
+	hi target
 </body>
 </html>

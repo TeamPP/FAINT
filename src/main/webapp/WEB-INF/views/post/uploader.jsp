@@ -28,12 +28,6 @@
     overflow:auto;
     white-space: nowrap;
 }
-/* .preview-images-zone > .preview-image:first-child {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-right: 5px;
-} */
 .preview-images-zone > .preview-image {
 	border: 1px solid;
 	height: 200px;
@@ -114,6 +108,7 @@
 .thumbnail>img, .thumbnail a>img, .thumbnail>video, .thumbnail a>video {
     margin-right: auto;
     margin-left: auto;
+        width: 100%;
 }
 
 .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img, .thumbnail>video, .thumbnail a>video, .carousel-inner>.item>video, .carousel-inner>.item>a>video {

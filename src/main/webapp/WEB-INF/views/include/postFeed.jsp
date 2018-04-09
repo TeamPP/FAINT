@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <html>
 <header>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -105,6 +104,7 @@ span{
 
 <body>
 
+<!-- post개별 게시물 모달팝업 -->
 <script id="modalPost" type="text/x-handlebars-template">
 <div id="myModal" class="postModal">
    <span class="close">&times;</span>
@@ -201,7 +201,42 @@ span{
 .storeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-color: #fff; margin-left: 842%; border: none; font-size: 0;}
 .s2_4{ width: 100%; height: auto; }
 .s2_4_1{ padding: 10px 0 10px 0; }
-.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; }
+.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; float: left; }
+</style>
+</script>
+
+<!-- 선택메뉴창 팝업 -->
+<script id="modalTemplate" type="text/x-handlebars-template">
+   <div class="_pfyik" role="dialog" onclick="callRemoveDialog(event)">
+   <div class="_23gmb"></div>
+   <div class="_o0j5z" onclick="callRemoveDialog(event)">
+   <div class="_784q7" id="modalChangeProfilePhoto" onclick="callRemoveDialog(event)">
+   <ul class="_cepxb">
+   </ul>
+   </div>
+   </div>
+      <button class="_dcj9f"  onclick="callRemoveDialog(event)">닫기</button>
+   </div>
+<style>
+._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:3}
+._dcj9f{background:0 0;border:0;cursor:pointer;height:36px;outline:0;overflow:hidden;position:absolute;right:0;top:0;z-index:4}
+._dcj9f::before{color:#fff;content:'\00D7';display:block;font-size:36px;font-weight:600;line-height:36px;padding:0;margin:0}
+._784q7{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;margin:auto;max-width:935px;pointer-events:auto;width:100%}
+._23gmb{bottom:0;left:0;pointer-events:none;position:fixed;right:0;top:0;z-index:2}
+._23gmb *{pointer-events:auto}
+._o0j5z{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;min-height:100%;overflow:auto;width:auto;z-index:3}
+@media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
+@media (max-width:480px){._23gmb,._dcj9f{display:none}}
+
+._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
+._h74gn:hover{background-color:#efefef}
+._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
+._o2wxh:last-child{border-bottom-width:0}
+._hql7s{color:#999;font-size:16px;font-weight:600;line-height:50px;text-align:center}
+@media (min-width:736px){._hql7s,._o2wxh{min-width:510px}}
+@media (min-width:414px) and (max-width:735px){._cepxb,._hql7s,._o2wxh{width:100%}}
+@media (min-width:414px){._cepxb{margin:0 auto}}
 </style>
 </script>
 
@@ -278,17 +313,16 @@ function getPostList(){
    
    //게시물이 있을 때
    if(data.length%3==0){
- 	 lenn = 100/(data.length/3);
- 	 console.log(lenn);
+	 	
  	 
-   for (i = 0; i < data.length/3; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
-      }
-   }else{
-      for (i = 0; i < parseInt(data.length/3)+1; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
-      }
-   }
+	   for (i = 0; i < data.length/3; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
+	      }
+	   }else{
+	      for (i = 0; i < parseInt(data.length/3)+1; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
+	      }
+	   }
    
    $(".postLiner").height($(".postLiner").width()*0.33);
    
@@ -307,7 +341,7 @@ function getPostList(){
       
       $(".imageContainer:eq("+index+")").append(img);
       
-      var str = "<div style='display:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon fas fa-comment'>aa</i><span> \t"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
@@ -375,7 +409,7 @@ function getPostList(){
 				$(".popPostImage").each(function(){
 					if(this.naturalWidth <= this.naturalHeight){
 						$(this).css("min-height", "100%");
-					}else{
+					}else if(this.naturalWidth > this.naturalHeight){
 						$(this).css("min-width", "100%");
 					}
 				})
@@ -396,7 +430,8 @@ function getPostList(){
                   
                   //게시물 수정버튼 삽입
                   if(data.userid==${login.id}){
-                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
+                	  $(".s2_4_1").append("<span style='cursor: pointer; '><i id='postEdit' class='glyphicon glyphicon-option-horizontal'></i></span>")
+                	  $(".replyRegist").css("width", "94%");
                   }
                   
                   //modal창 보이기
@@ -416,6 +451,7 @@ function getPostList(){
                      $("#myModal").remove();
                   })
                   
+                  postEdit();
                   reply();
                   like();
                   likerList();
@@ -429,6 +465,62 @@ function getPostList(){
    })
    var height=$(window).scrollTop(height);
 };
+
+
+//게시물 수정
+function postEdit(){
+	$("#postEdit").on("click",function(){
+		var postid=$(".s2_4_1").attr("title");
+		var template = Handlebars.compile($("#modalTemplate").html());
+		$("body").append(template);
+		$("body").attr("aria-hidden","true");
+		
+		var list = '<li class="_o2wxh"><a href="/post/'+postid+'/postEditor"><button class="_h74gn">게시물 수정하기</button></a></li>';
+		list += '<li class="_hql7s"><button class="_h74gn" id="btnDeletePost" data-post='+postid+' onclick="postDelete(this)">게시물 삭제하기</button></li>';
+		list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
+		
+		$("._cepxb").html(list);
+		
+		$("._hql7s").on("click",function(event){
+		     event.stopPropagation();
+		});
+	})
+
+}
+
+//게시물 삭제
+function postDelete(thisTag){
+	var postid=$(thisTag).data("post");
+	$.ajax({
+		type: "delete",
+		url: "/post/"+postid+"/delete",
+		headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
+		dataType:"text",
+		success:function(result){
+			if(result=="SUCCESS"){
+				//메뉴모달 끄기
+				$("body").attr("sytle","");
+				$("body").attr("aria-hidden","false");
+				$("div[role='dialog']").remove();
+				//post모달 끄기
+				$("#myModal").css("display","none");
+				$("#myModal").remove();
+				//postlist다시부르기
+				getPostList();
+			};
+		}
+	})
+}
+
+//메뉴 모달 취소버튼 - CSS처리
+function callRemoveDialog(event){
+   if(typeof event != "undefined"){
+      event.stopPropagation();
+   }
+   $("body").attr("sytle","");
+   $("body").attr("aria-hidden","false");
+   $("div[role='dialog']").remove();
+}
 
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
@@ -450,7 +542,6 @@ function reply(){
      	var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
      	
         $(rpldata).each(function(index){
-            console.log(this);
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
                replystr +="<div class='reply' title='"+this.id+"'>"+
@@ -538,9 +629,12 @@ function deleteReply(thisTag){
 
 //게시물 저장하기 + 저장하기 취소 
 function store(){
+	var storeFlg=false;
    $(".storeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var storeBtn=this;
+      if(storeFlg){return;};
+      storeFlg=true;
       if($(this).css("background-position")=="-78px -349px"){
          var type="post";
          var url ="/post/"+postid+"/store";
@@ -561,6 +655,7 @@ function store(){
          success:function(result){
             if(result=="SUCCESS"){
                $(storeBtn).css("background-position", val);
+               storeFlg=false;
             };
          }
       });
@@ -568,10 +663,12 @@ function store(){
 };
 //게시물 좋아요 + 좋아요 취소
 function like(){
+	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var likeBtn=this;
-      
+      if(likeFlg){ return; };
+      likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
          var url ="/post/"+postid+"/like";
@@ -591,9 +688,11 @@ function like(){
          dataType:"text",
          success:function(result){
             if(result=="SUCCESS"){
+            	
                $(likeBtn).css("background-position", val);
                likerList();
                getPostList();
+               likeFlg=false;
             };
          }      
       });

@@ -20,7 +20,6 @@ public class UploadFileUtils {
 	// String originalName 원본 팡리 이름
 	// byte[] fileData 파일 데이터
 	public static String uploadFile(String uploadPath, String originalName, byte[] fileData, String userid) throws Exception {
-		
 	      //S3 서버 관련 설정   // 3/28
 		
 		   S3Util s3 = new S3Util();

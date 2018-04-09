@@ -13,13 +13,12 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 import com.faint.persistence.PostDAO;
 import com.faint.util.HashTagHelper;
+import com.faint.util.S3Util;
 
 @Service
 public class PostServiceImpl implements PostService {
-
 	@Inject
 	private PostDAO dao;
 
@@ -29,14 +28,13 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void regist(PostVO post) throws Exception {
 		dao.create(post);
-		// 첨부파일 목록 불러들임
+		// 첨부파일 목록, filter 불러들임
 		String[] files = post.getFiles();
+		String[] filters = post.getFilters();
 
 		// 파일 목록 없으면 아무것도 안함
-		if (files != null) {
-			for (String url : files) {
-				dao.addAttach(url);
-			}
+		for(int i =0; i< files.length; i++){
+			dao.addAttach(files[i], filters[i]);
 		}
 		List<String> hashTags = HashTagHelper.getAllHashTags(post.getCaption());
 		if (!hashTags.isEmpty()) { // exist hash tag
@@ -177,6 +175,39 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void postTakeaway(RelationDTO dto) throws Exception{
 		dao.postTakeaway(dto);
+	}
+
+	//==============게시글 수정==============
+	@Override
+	public void modify(PostVO post) throws Exception {
+		dao.modify(post);
+	}
+	
+	//==============게시글 삭제==============
+	@Transactional
+	@Override
+	public String deleteOne(int postid, int loginid) throws Exception {
+		
+		PostVO vo = dao.readOne(postid);
+		if(vo.getUserid()!=loginid){
+			return "FAIL";
+		}
+		
+		//S3
+		S3Util s3 = new S3Util();
+		//파일명 자르기
+		String[] array=vo.getUrl().split("\\|");
+		
+		//S3파일 삭제
+		for(String fileName : array){
+			String inputDirectory = "faint1122";
+			System.out.println(fileName);
+	        s3.fileDelete(inputDirectory+fileName);
+		}
+		
+		dao.deleteOne(postid);
+		return "SUCCESS";
+        
 	}
 	
 }

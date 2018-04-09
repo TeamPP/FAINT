@@ -3,7 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.faint.mapper.postMapper">
-	
 	<!-- 게시글 작성 -->
 	<insert id="create">
 		insert into tbl_post (userid, cateid, caption, location)
@@ -13,18 +12,39 @@
 			select last_insert_id() as id
 		</selectKey> 
 	</insert>
-
+	
 	<!-- 	첨부파일 추가 -->
 	<!-- 게시글에 이미지,동영상추가 -->
 	<insert id="addAttach">
-		insert into tbl_attach (postid, url) values (LAST_INSERT_ID(), #{url})
+		insert into tbl_attach (postid, url, filter) values (LAST_INSERT_ID(), #{url}, #{filter})
 	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="modify">
+	UPDATE tbl_post SET cateid=#{cateid}
+		, caption=#{caption}
+		, location=#{location}
+		, moddate=NOW()
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteOne">
+		DELETE
+		FROM faint.tbl_post
+		WHERE id=#{postid}
+	</delete>
+	
+	<select id="readOne" resultType="com.faint.domain.PostVO">
+		select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+		from tbl_post p left join tbl_attach a on p.id = a.POSTID where p.id=#{postid}  group by postid order by a.url;
+	</select>
 	
 	<!-- 유저 게시글 읽기 -->
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from
 			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
-			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid) pa
+			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid order by a.url) pa
 		left join
 			(select p.id, count(*) as likeCount from tbl_post p right join tbl_post_like l on p.id=l.postid group by p.id) pl
 		on
@@ -121,12 +141,7 @@
 		WHERE id=#{id}
 	</update>
 	
-	<!-- 게시글 삭제 -->
-	<delete id="delete">
-		DELETE
-		FROM faint.tbl_post
-		WHERE id=#{id}
-	</delete>
+
 	
 	<!--post 전체목록 -->
 	<select id="listAllPost" resultType="com.faint.domain.PostVO">
@@ -244,8 +259,7 @@
 	<!-- post&like -->
 	<insert id="postLike">
 		INSERT INTO tbl_post_like (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_post_like where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postUnlike">
@@ -280,8 +294,7 @@
 	<!-- store -->
 	<insert id="postStore">
 		INSERT INTO tbl_store (postid, userid)
-		SELECT #{postid}, #{loginid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_store where postid=#{postid} and userid=#{loginid});
+		SELECT #{postid}, #{loginid}
 	</insert>
 	
 	<delete id="postTakeaway">
@@ -405,7 +418,8 @@
             join tbl_attach as a
             on p.id = a.postid
             join tbl_user as u
-            on p.userid = u.id) as pa
+            on p.userid = u.id
+            group by p.id ) as pa
             
             left join
             
@@ -442,7 +456,7 @@
             join tbl_attach as a
             on p.id = a.postid
             join tbl_user as u
-            on p.userid = u.id) as pa
+            group by p.id ) as pa
             
             left join
             

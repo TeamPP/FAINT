@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
-
 	@Inject
 	private SqlSession session;
 
@@ -55,7 +55,12 @@ public class UserDAOImpl implements UserDAO {
 	public void userUnblock(RelationDTO dto) throws Exception{
 		session.delete(namespace + ".userUnblock", dto);
 	}
-
+	
+	@Override
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception {
+		return session.selectList(namespace + ".readblocked", uid);
+	}
+	
 	// ======================팔로우====================== 
 	@Override
 	public void flwCreate(RelationDTO dto) throws Exception {

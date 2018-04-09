@@ -6,7 +6,6 @@ import com.faint.domain.ReplyVO;
 import com.faint.dto.RelationDTO;
 
 public interface ReplyDAO {
-	
 	public void create(ReplyVO vo) throws Exception;
 	
 	public List<ReplyVO> read(RelationDTO dto) throws Exception;

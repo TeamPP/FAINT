@@ -20,5 +20,4 @@ public interface TagService {
 	
 	//인기 태그
 	public List<TagVO> topTag() throws Exception;
-
 }

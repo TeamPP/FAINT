@@ -18,13 +18,11 @@ public class TagDAOImpl implements TagDAO{
 	
 	private static String namespace = "com.faint.mapper.TagMapper";
 	
-	
 	// 태그 등록
 	@Override
 	public void create(TagVO vo) throws Exception {
 		session.insert(namespace+".create", vo);
 	}
-
 	// 태그 전체 목록
 	@Override
 	public List<TagVO> listAll() throws Exception {

@@ -10,7 +10,6 @@ import java.util.Random;
  * 
  * 
  * */
-
 public class TempKey {
 
     private boolean lowerCheck;

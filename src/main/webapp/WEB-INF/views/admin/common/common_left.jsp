@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- 관리자 페이지 전용 Sidebar -->
-
-
 		<!-- BEGIN MAIN SIDEBAR -->
 		<nav id="sidebar">
 			<div id="main-menu">

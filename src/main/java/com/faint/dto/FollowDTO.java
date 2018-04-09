@@ -27,5 +27,4 @@ public class FollowDTO {
 	public String toString() {
 		return "FollowDTO [nickname=" + nickname + ", userid=" + userid + ", loginid=" + loginid + "]";
 	}
-	
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.persistence.UserDAO;
 
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
 	public List<UserVO> listAll() throws Exception {
 		return dao.listAll();
 	}
-	
 	// 특정 사용자 정보 = 로그인한 유저의 id값과 해당 페이지 유저의 닉네임값을 이용하여 follow여부까지 추출
 	@Override
 	public UserVO userRead(RelationDTO dto) throws Exception{
@@ -95,7 +95,11 @@ public class UserServiceImpl implements UserService {
 	public void userUnblock(RelationDTO dto) throws Exception{
 		dao.userUnblock(dto);
 	}
-
+	
+	@Override
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception {
+		return dao.readBlockedList(uid);
+	}
 	//=================회원가입 및 정보수정=================
 	@Override
 	public void regist(UserVO vo) throws Exception{

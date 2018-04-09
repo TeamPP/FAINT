@@ -1,5 +1,4 @@
 package com.faint.persistence;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
@@ -29,13 +27,31 @@ public class PostDAOImpl implements PostDAO {
 	public void create(PostVO vo) throws Exception {
 		session.insert(namespace + ".create", vo);
 	}
+	
+	@Override
+	public void modify(PostVO vo) throws Exception {
+		session.update(namespace + ".modify", vo);
+	}
+	
+	@Override
+	public void deleteOne(int postid) throws Exception {
+		session.delete(namespace + ".deleteOne", postid);
+	}
 
 	@Override
-	public void addAttach(String url) throws Exception {
-		session.insert(namespace + ".addAttach", url);
+	public void addAttach(String url,String filter) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("url", url);
+		paramMap.put("filter", filter);
+		session.insert(namespace + ".addAttach", paramMap);
 	}
 	
 	//==============================게시물 읽기==============================
+	//특정 포스트
+	public PostVO readOne(int postid) throws Exception{
+		return session.selectOne(namespace+".readOne", postid);
+	}
+	
 	// post전체목록  - 한 유저에 대해
 	@Override
 	public List<PostVO> read(Integer userid) throws Exception{

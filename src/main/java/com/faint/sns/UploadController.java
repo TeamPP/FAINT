@@ -42,7 +42,6 @@ public class UploadController {
 	public void uploadAjax(){
 		
 	}
-	
 	//서버에 파일 업로드
 	@ResponseBody
 	@RequestMapping(value ="/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -170,9 +169,8 @@ public class UploadController {
 	public ResponseEntity<String> deleteFile(String fileName){
 		logger.info("delete file: "+fileName);
 		
-		String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
 		String inputDirectory = "faint1122";
-        s3.fileDelete(bucketName, inputDirectory+fileName);
+        s3.fileDelete(inputDirectory+fileName);
         		
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}

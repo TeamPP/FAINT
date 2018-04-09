@@ -18,8 +18,18 @@ public class PostVO {
 	private String url; //추출시에는 모든 파일명 출력되며 |를 기준으로 파일명 구분됨
 
 	private int row;				//row추가(table에 없는 변수)
-
+	
+	
 	private String[] files;
+	private String[] filters;
+
+	public String[] getFilters() {
+		return filters;
+	}
+
+	public void setFilters(String[] filters) {
+		this.filters = filters;
+	}
 
 	public int getId() {
 		return id;
@@ -122,7 +132,7 @@ public class PostVO {
 		return "PostVO [id=" + id + ", userid=" + userid + ", cateid=" + cateid + ", caption=" + caption + ", regdate="
 				+ regdate + ", moddate=" + moddate + ", location=" + location + ", replyCount=" + replyCount
 				+ ", likeCount=" + likeCount + ", url=" + url + ", row=" + row + ", files=" + Arrays.toString(files)
-				+ "]";
+				+ ", filters=" + Arrays.toString(filters) + "]";
 	}
 
 }

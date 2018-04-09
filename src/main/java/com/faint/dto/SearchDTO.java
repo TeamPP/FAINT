@@ -4,7 +4,6 @@ public class SearchDTO {
 
 	private int type;
 	private int score;
-
 	private String tagname;		
 	private int postedtagCnt;		
 	

@@ -17,7 +17,6 @@ public class AuthController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 	
-
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {

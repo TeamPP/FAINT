@@ -55,6 +55,7 @@ public class ReplyVO {
 		this.regdate = regdate;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "ReplyVO [id=" + id + ", postid=" + postid + ", postwriter=" + postwriter + ", userid=" + userid

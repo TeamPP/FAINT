@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.service.PostService;
 import com.faint.service.UserService;
@@ -39,7 +40,6 @@ public class MemberController {
 	
 	@Inject
 	private PostService postService;
-	
 	// ======================================프로필 페이지 - 유저정보 읽기======================================
 	
 	@RequestMapping(value="/{nickname}", method=RequestMethod.GET)
@@ -50,8 +50,6 @@ public class MemberController {
 		dto.setLoginid(vo.getId());
 		dto.setNickname(nickname);
 		UserVO user=(UserVO)service.userRead(dto);
-		
-		System.out.println(user.toString());
 		
 		if(user!=null && user.getBlocked()==0){
 			model.addAttribute("userVO", user);
@@ -275,11 +273,13 @@ public class MemberController {
 	//회원차단
 	@RequestMapping(value = "/block", method=RequestMethod.POST)
 	public ResponseEntity<String> userBlock (@RequestParam("userid") int userid, HttpServletRequest request) throws Exception {
+		System.out.println("block ");
 		UserVO vo = (UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto = new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
+		System.out.println(dto.toString());
 		ResponseEntity<String> entity=null;
 		try{
 			service.userBlock(dto);
@@ -294,12 +294,13 @@ public class MemberController {
 	//회원차단해제
 	@RequestMapping(value = "/unblock/{userid}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> userUnblock (@PathVariable("userid") int userid, HttpServletRequest request) throws Exception {
-		
+		System.out.println("userUnblock ");
 		UserVO vo = (UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto = new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
 		
+		System.out.println(dto.toString());
 		ResponseEntity<String> entity=null;
 		try{
 			service.userUnblock(dto);
@@ -310,5 +311,26 @@ public class MemberController {
 		}
 		return entity;
 	}
+	//차단 목록 보기
+	@RequestMapping(value = "/profile/blockedUser", method = RequestMethod.GET)
+	public void blockedUser(Model model, HttpServletRequest request) throws Exception {
+		logger.info("blockedUser edit GET..............");
+		HttpSession session = request.getSession();
+		if(session != null){
+			
+			//로그인 된 user정보 읽어들임
+			UserVO user = (UserVO) session.getAttribute("login");
+			logger.info("login info ========= ");
+			logger.info(user.toString());
+			
+			//유저 id로 갱신된 데이터 새로 읽기
+			List<BlockedUserDTO> list = service.readBlockedList(user.getId());
+			model.addAttribute("blockedUserList", list);
+			model.addAttribute("reqURL", request.getRequestURI());
+		}
+	}
+	
+	
+	
 }
 	

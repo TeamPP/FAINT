@@ -3,7 +3,6 @@ package com.faint.dto;
 import java.util.Date;
 
 public class FollowinPostDTO {
-	
 	//팔로우중인 유저들의 게시물과 그 게시자의 정보
 	private int postid;
 	private int userid;

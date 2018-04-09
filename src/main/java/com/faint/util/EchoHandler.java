@@ -22,7 +22,6 @@ public class EchoHandler extends TextWebSocketHandler{
     //방법 2 : 전체 채팅
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
     
-    
     private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
     
     /**

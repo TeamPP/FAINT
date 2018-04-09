@@ -18,8 +18,6 @@ public class Criteria {
 		this.blockPage= 10;
 	}
 	
-
-
 	public int getNowPage() {
 		return nowPage;
 	}

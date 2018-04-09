@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,6 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <link rel="stylesheet" href="/resources/css/header.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/animation.css" type="text/css">
+
+<!-- 길이제한 함수, 해쉬태그 필터링 -->
+<script type="text/javascript" src="../../resources/js/common.js"></script>
+
+<!-- 웹소켓 -->
+<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <style>
 .navbar-default .explore {
@@ -76,11 +81,10 @@
 }
 </style>
 
-
 </head>
 <body>
 
-   <nav class="navbar navbar-default">
+   <nav class="navbar navbar-default" style="z-index: 1;">
    <div class="nav-wrap" style="display: block;">
       <a class="logo pull-left" href="/main"></a>
       <form class="search-form" action="/search/search" method="get">

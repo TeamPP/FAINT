@@ -37,7 +37,6 @@ public class PostController {
 	private PostService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
-	
 	/*게시물 등록창 읽기*/
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String registerGET(Model model, HttpServletRequest request) throws Exception {
@@ -85,19 +84,40 @@ public class PostController {
 	@RequestMapping(value = "/{postid}/postEditor", method = RequestMethod.GET)
 	public String modifyGET(@PathVariable("postid") int postid, Model model, HttpServletRequest request) throws Exception {
 		
-		String address=request.getRequestURI();
-		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setPostid(postid);
-
-		FollowinPostDTO post=(FollowinPostDTO)service.detailRead(dto);
 		
+		//이미지 확장자 리스트
+		List<String> imageType = Arrays.asList("jpg", "bmp", "gif", "png", "jpeg");
+		//비디오 확장자 리스트
+		List<String> videoType = Arrays.asList("avi", "mp4", "mpg", "mpeg", "mpe", "wmv", "asf", "flv", "ogg");
+		
+		FollowinPostDTO post=(FollowinPostDTO)service.detailRead(dto);
 		if(vo.getId()!=post.getUserid()){
 			return "forward:/empty";
 		}else{
+			String[] url = post.getUrl().split("\\|");
+			JSONArray jArray = new JSONArray();
+			for(int i =0; i<url.length;i++){
+				String tmp = url[i].substring(url[i].lastIndexOf('.')+1);
+				String type ="";
+				//파일 타입체크
+				if(imageType.contains(tmp.toLowerCase())){
+					type = "image";
+				}else if (videoType.contains(tmp.toLowerCase())){
+					type = "video";
+				}
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("fileUrl", url[i]);
+				jsonObj.put("fileType", type);
+				jArray.add(jsonObj);
+			}
+			logger.info(jArray.toJSONString());
+			model.addAttribute("files", jArray);
 			model.addAttribute("postVO", post);
+			System.out.println(post.toString());
 			return "forward:/post/modify";
 		}
 
@@ -111,10 +131,47 @@ public class PostController {
 	
 	// 게시물 수정 post
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public void modifyPOST(Model model, HttpServletRequest request) throws Exception {
-		
-	}
+	public String modifyPOST(PostVO post, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+		System.out.println("===================modify post.........=========");
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO)session.getAttribute("login");
+		//게시글 유저정보랑 로그인 유저랑 다를경우 리턴
+		//같을떄만 수정 가능
+		if(post.getUserid() != user.getId() ){
+			
+			rttr.addFlashAttribute("msg", "fail");
+		}else{
+			
+			System.out.println(post.toString());
+			service.modify(post);
+			rttr.addFlashAttribute("msg", "SUCCESS");
+		}
 
+		return "redirect:/member/"+user.getNickname();
+	}
+	
+	//게시물 삭제
+	@RequestMapping(value="/{postid}/delete", method=RequestMethod.DELETE)
+	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, HttpServletRequest request) throws Exception {
+		ResponseEntity<String> entity=null;
+		
+		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		
+		try{
+			String delete=service.deleteOne(postid, vo.getId());
+			System.out.println(delete);
+			if(delete=="SUCCESS"){
+				entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);	
+			}else{
+				entity=new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	/*파일 첨부*/
 	@RequestMapping(value = "/uploader", method = RequestMethod.GET)
 	public void uploader() throws Exception {
@@ -129,8 +186,9 @@ public class PostController {
 		logger.info(post.toString());
 		
 		HttpSession session = request.getSession();
-		
+		System.out.println(Arrays.toString(post.getFilters()));
 		UserVO user = (UserVO)session.getAttribute("login");
+		
 		post.setUserid(user.getId());
 		
 		service.regist(post);

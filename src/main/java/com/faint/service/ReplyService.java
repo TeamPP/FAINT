@@ -14,5 +14,4 @@ public interface ReplyService{
 	public void remove(Integer id) throws Exception;
 	
 	public Integer writeCount(ReplyVO vo);
-	
 }

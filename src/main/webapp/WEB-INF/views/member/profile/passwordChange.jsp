@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
@@ -103,52 +102,10 @@ h2{
 				return false;
 			}
 			var form = $("#profileForm");
-
-			//비공개 체크 데이터 입력
-			if ($("#chkPri").is(":checked")) {
-				//비공개 체크 되어있으면 1
-				$("#userlevel").val(1);
-			} else {
-				//안되있으면 0
-				$("#userlevel").val(0);
-			}
+			
 			form.submit();
 		});
 
-		//닉네임 중복체크
-		$("#nickname").keyup( function() {
-			var orgNick = "${userVO.nickname}";
-			var nick = $(this).val();
-
-			//입력값 없으면 아무거도 안함
-			if (nick == null || nick == "") return;
-
-			//원래 이름과 같으면
-			if (orgNick == nick) {
-				//글자색 빨강
-				$("#chkResult").css("color", "#999");
-				$("#chkResult").text("");
-				errFlg = false;
-				return;
-			}
-			//유효성 검사
-			validCheck(this);
-			if(errFlg) return;
-			//errFlg False면 정상, true면 error 유효하지 않으면
-			$.getJSON("/member/profile/edit/chkNick", {nick: nick}, function(data) {
-				//data = 0 중복아님, != 0  중복
-				if (data == 0) {
-					//글자색 검정
-					$("#chkResult").css("color", "black");
-					$("#chkResult").text("사용가능한 닉네임입니다.");
-				} else {
-					//글자색 빨강
-					$("#chkResult").css("color", "red");
-					$("#chkResult").text("중복된 닉네임입니다.");
-				}
-			});
-		});
-		
 		//이전 비밀번호 입력
 		$("#prevPw").keyup(function(){
 			changePwBtn();

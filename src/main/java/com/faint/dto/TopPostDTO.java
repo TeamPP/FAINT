@@ -2,7 +2,6 @@ package com.faint.dto;
 
 import java.util.Arrays;
 import java.util.Date;
-
 //�α� �Խù� ����
 //tbl_post + tbl_attach
 public class TopPostDTO {

@@ -41,5 +41,4 @@ public class ReplyDAOImpl implements ReplyDAO{
 		System.out.println("뻒이가요 ");
 		return session.selectOne(namespace+".count", vo);
 	}
-	
 }
