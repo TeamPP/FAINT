@@ -27,6 +27,19 @@
 		, moddate=NOW()
 		WHERE id=#{id}
 	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteOne">
+		DELETE
+		FROM faint.tbl_post
+		WHERE id=#{postid}
+	</delete>
+	
+	<select id="readOne" resultType="com.faint.domain.PostVO">
+		select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+		from tbl_post p left join tbl_attach a on p.id = a.POSTID and p.id=#{postid} order by a.url;
+	</select>
+	
 	<!-- 유저 게시글 읽기 -->
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from
@@ -128,12 +141,7 @@
 		WHERE id=#{id}
 	</update>
 	
-	<!-- 게시글 삭제 -->
-	<delete id="delete">
-		DELETE
-		FROM faint.tbl_post
-		WHERE id=#{id}
-	</delete>
+
 	
 	<!--post 전체목록 -->
 	<select id="listAllPost" resultType="com.faint.domain.PostVO">
