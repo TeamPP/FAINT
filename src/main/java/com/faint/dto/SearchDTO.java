@@ -1,9 +1,6 @@
 package com.faint.dto;
 
 public class SearchDTO {
-
-	private int loginid;
-	private String keyword;
 	
 	private int userid;
 	private int type;
@@ -18,22 +15,6 @@ public class SearchDTO {
 	private String location;
 
 	// getter, setter
-	
-	public int getLoginid() {
-		return loginid;
-	}
-	
-	public void setLoginid(int loginid) {
-		this.loginid = loginid;
-	}
-	
-	public String getKeyword() {
-		return keyword;
-	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
 
 	public int getUserid() {
 		return userid;

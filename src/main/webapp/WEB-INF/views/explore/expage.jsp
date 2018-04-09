@@ -29,12 +29,19 @@
 
 <style>
 
-.fadeInDown {
-   /* animation-iteration-count: infinite; */
+article {
+	text-align: center;
+	display: block;
 }
 
-h2 {
-	text-align: center;
+.mid-line {
+    border-top: 1px solid #9d9d9d;
+    width: 935px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 200;
+    height: 35px;
 }
 
 </style>
@@ -46,7 +53,6 @@ h2 {
 <!-- 실시간 -->
 <br/>
 <br/>
-<h2>실시간 둘러보기</h2>
 
 <div class="realtime_keywd">
     <div class="wrap_last_date">
@@ -196,12 +202,16 @@ $(document).ready(function() {
 </script>
 
 <!-- 인기 게시글 -->
-<br/>
-<br/>
+</br>
+</br>
+</br>
+</br>
 
 <!-- 모달 적용한 것 -->
-
-<h2>=====인기 게시물=====</h2>
+</br>
+<article>
+<div class="mid-line"></div>
+</article>
 <br/>
 
 

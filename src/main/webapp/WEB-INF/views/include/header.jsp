@@ -170,8 +170,6 @@ function searchAjax(){
             //dataType: "text",
             success: function(result){
                
-            	console.log("결과값--- "+JSON.stringify(result));
-            	
                 for(var i=0; i<result.length; i++) {
                     if(searchwords.length>0) {
                         for(var a=0; a<searchwords.length; a++) {
@@ -257,9 +255,8 @@ function searchAjax(){
                     }
                }
                 
+                console.log("결과값--- "+JSON.stringify(result));
                  
-                console.log("바뀐결과값 :"+JSON.stringify(result));
-                
                 // 검색 첫 글자가 문자일 때
                 if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
                    var count = 0;
@@ -333,13 +330,14 @@ function searchAjax(){
                        } else {
                           $("#results").html(str);
                       	 }
+                      	
                    }/* for문 끝 */
                    
                 } /* 문자 검색 끝 */
                 // 검색 문자 첫 글자가 #인 경우
                else if(searchwords[0]=="#") {
                   var count = 0;
-                  var str = ' ';
+                  var str = '';
                   for(i=0; i<result.length; i++) {
                         if(result[i].type==0 && result[i].tagname!=null) {
                             console.log("태그다");
@@ -354,18 +352,18 @@ function searchAjax(){
                                   +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
                                   +"</div></div></div></a>"
                                   }
-                           
-                           else if(result[i].score==0){
-                             result[i] = null;
+                           else if(result[i].tagname==null){
                              count ++;
+                             $("#results").html("");
                           }
-                        
-                       if(count>=3) {
+                 	 }
+                 		
+                       if(count>=3 && result.length==3) {
+                    	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                      	  } else {
-                          $("#results").html(str);
-                       }
-                  }
+                     		 $("#results").html(str);
+                     	  }
                } /* #검색 끝 */
                
                 // 검색 첫 글자가 @인 경우
@@ -399,21 +397,19 @@ function searchAjax(){
                           str+="</div></div></div></a>";
                     }
                         
-                     else if(result[i].score==0){
-                         result[i] = null;
+                     else if(result[i].nickname==null){
                          count ++;
-                        console.log("여기갔지?");
-                        console.log(count);
+                         $("#results").html("");
                       }
-                    
-                   if(count>=3) {
-                      console.log("총카운트:"+count);
-                      $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                  	 } else {
-                      $("#results").html(str);
-                  	 	}
-                 	}
+                 }
+                    if(count>=3 && result.length==3) {
+                 	   console.log(">>>"+result.length);
+                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                  	  } else {
+                  		 $("#results").html(str);
+                  	  }
                } /* @ 검색 끝 */
+
                 
                else {
                   console.log("검색문else로왔다");
