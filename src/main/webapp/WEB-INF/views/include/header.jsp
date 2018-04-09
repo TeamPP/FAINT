@@ -132,7 +132,6 @@ function searchAjax(){
    
    if($("#keywordInput").val()=="") {
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-      
    }
    
    $("#keywordInput").keyup(function(){
@@ -151,7 +150,7 @@ function searchAjax(){
          }
          searchwords += chgwords;
       }
-      console.log("searchwords : -----------" + searchwords);
+      console.log("searchwords-----------> " + searchwords);
       
       /* 검색 단어가 있으면 일치하는 것 출력 */
       if(searchwords!=''){
@@ -167,16 +166,10 @@ function searchAjax(){
             //dataType: "text",
             success: function(result){
                
-            console.log("searchwords길이"+searchwords.length);
-               console.log("결과값 :"+JSON.stringify(result));
-               
                 for(var i=0; i<result.length; i++) {
-                   
                     if(searchwords.length>0) {
                         for(var a=0; a<searchwords.length; a++) {
-                           
                             if(result[i].type==0 && result[i].tagname!=null){
-                            	
                             	// 특수문자 자르고
                             	tagname=result[i].tagname.substring(1);
                             	
@@ -187,19 +180,14 @@ function searchAjax(){
                                      } else if(a==b) {
                                     	 result[i].score += 2;
                                      }
-                                     else {
-                                        result[i].score++;
-                                        }
+                                    	 result[i].score += 1;
                                      }
                                   }
                                } /* tagname if문 끝 */
                             
                             else if(result[i].nickname!=null) {
                             	// 특수문자 자르고
-                            	nickname = result[i].nickname.substring(1);
-                            	
-                               var nickscore = result[i].score;
-                               var namescore = result[i].score;
+                               nickname = result[i].nickname.substring(1);
                                
                                // nickname O name O => 둘 다 있는 경우
                               if(result[i].name!=null) {
@@ -208,39 +196,29 @@ function searchAjax(){
                                for(var b=a; b<name.length; b++) {
                                   if(searchwords.charAt(a)==name.charAt(b)) {
                                       if(a==b && name.indexOf(searchwords)==0) {
-                                          namescore += 3;
+                                    	  result[i].score += 3;
                                        } else if(a==b) {
-                                         namescore += 2;
-                                      } else {
-                                         namescore++;
-                                         }
+                                    	   result[i].score += 2;
+                                      } 
+                                    	  result[i].score += 1;
                                      }
                                } /* name for문 끝 */
-                              }
+                             }
                               
                                // nickname O name X => nickname만 있을 경우
                                for(var b=a; b<nickname.length; b++) {
                                   if(searchwords.charAt(a)==nickname.charAt(b)) {
                                       if(a==b && nickname.indexOf(searchwords)==0) {
-                                         nickscore += 3;
+                                    	  result[i].score += 3;
                                        } else if(a==b) {
-                                    	 nickscore += 2;
+                                    	   result[i].score += 2;
                                       } else {
-                                    	  nickscore++;
+                                    	  result[i].score += 1;
                                          }
                                      } 
                                   } /* nickname for문 끝 */
-                               
-                                  // nickscore와 namescore 비교한 후 더 큰 점수를 적용시킴
-                                  if(nickscore<namescore) {
-                                     result[i].score = namescore;
-                                     } else if(nickscore>namescore){
-                                     	result[i].score=nickscore;
-                                 	 } else {
-                                     result[i].score = nickscore+namescore;
-                                	  }
-                            }/* nickname elseif끝 */
-                            
+                                  
+                            }/* nickname&name elseif끝 */
                             
                             else if(result[i].type==2 && result[i].location!=null) {
                             	
@@ -248,9 +226,8 @@ function searchAjax(){
                                   if(searchwords.charAt(a)==result[i].location.charAt(b)) {
 										if(a==b) {
                                         	result[i].score += 2;
-                                       } else {
-                                    	   result[i].score++;
-                                          }
+                                       }
+                                    	   result[i].score += 1;
                                      }
                                   }
                             } /* location elseif문 끝 */
@@ -265,14 +242,15 @@ function searchAjax(){
                 
                // score를 비교하여 점수 높은 순으로 출력하기
                 for(var i=0;i<result.length;i++) {
-                  for(var j=i; j<result.length-1-i; j++) {
-                     if(result[j].score<result[j+1].score) {
-                        var temp = result[j];
-                        result[j] = result[j+1];
-                        result[j+1] = temp;
+                  for(var j=i+1; j<result.length; j++) {
+                     if(result[j].score>result[i].score) {
+                        var temp = result[i];
+                        result[i] = result[j];
+                        result[j] = temp;
                       }
                     }
                }
+                
                  
                 console.log("바뀐결과값 :"+JSON.stringify(result));
                 
@@ -338,17 +316,17 @@ function searchAjax(){
                        
                        else if(result[i].score==0){
                           count ++;
-                       }
+                     	  }
                        
                        else {
                           $("#results").html("");
-                       }
+                      	 }
                        
                        if(count>=3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                        } else {
                           $("#results").html(str);
-                       }
+                      	 }
                    }/* for문 끝 */
                    
                 } /* 문자 검색 끝 */
@@ -375,13 +353,15 @@ function searchAjax(){
                              result[i] = null;
                              count ++;
                           }
+                        
                        if(count>=3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                       } else {
+                     	  } else {
                           $("#results").html(str);
                        }
                   }
                } /* #검색 끝 */
+               
                 // 검색 첫 글자가 @인 경우
                else if(searchwords[0]=="@") {
                  var count = 0;
@@ -391,7 +371,7 @@ function searchAjax(){
                           console.log("이름이다");
                         str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
                                    +"<div class='_o92vn'>";
-                             
+                                   
                              //프로필사진
                              //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
                              if(result[i].profilephoto == null){
@@ -419,13 +399,14 @@ function searchAjax(){
                         console.log("여기갔지?");
                         console.log(count);
                       }
+                    
                    if(count>=3) {
                       console.log("총카운트:"+count);
                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                   } else {
+                  	 } else {
                       $("#results").html(str);
-                   }
-                 }
+                  	 	}
+                 	}
                } /* @ 검색 끝 */
                 
                else {
@@ -434,6 +415,7 @@ function searchAjax(){
                }
                
             }, /* success  끝 */
+            
             error: function(e){
                if(e.status==500) {
                   console.log("에러로갓니?");
@@ -442,26 +424,23 @@ function searchAjax(){
                }
             }/* error 끝 */
             
-            
          }); /* ajax 끝 */
       }      /* if 끝 */
       
       // enter 안 먹음
       else{
          console.log("그럼여기구나");
-         //$("#results").html("");
+       	 console.log("결과값: "+JSON.stringify(result));
       }
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
+
 function show(str){
    searchAjax();
     $("#searchModal").modal('show');
 }
   
 </script>
-
-
-
 </body>
 </html>

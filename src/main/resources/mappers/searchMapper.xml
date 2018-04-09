@@ -44,40 +44,5 @@ select * from tbl_search
 </select>
 
 
-<!-- 나중에 쓸거 지우지마요 -->
-<!-- <select id="listKeyword" resultType="com.faint.dto.SearchDTO">
-<![CDATA[
 
-select * from tbl_search
-    
-    left outer join
-    
-    ( select concat('#', t.name) as tagname, count(*) as postedtagCnt
-    from tbl_tag t, tbl_posted_tag pt
-    where t.id=pt.tagid
-    and t.name like concat('%', #{keyword} ,'%') group by t.name) as tag
-    
-    on type=0
-    
-    left outer join
-    
-    ( select concat('@', u.nickname) as nickname, concat('$', u.name) as name
-   from    tbl_user as u
-   where   u.nickname like CONCAT('%', #{keyword} , '%') 
-    or u.name like concat('%', #{keyword} , '%') ) as userT
-    
-    on type=1
-    
-    left outer join
-    
-    (select concat('%', p.location) as location
-   from    tbl_post as p
-   where   p.location like CONCAT('%', #{keyword} ,'%') ) as locationT
-   
-    on type=2
-    
-    order by type
-  
-]]>
-</select> -->
 </mapper>

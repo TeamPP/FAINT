@@ -66,12 +66,9 @@ h2 {
 
 <script type="text/javascript">
 
-
   	RTtag();
-       
    function RTtag () {  
 	   flag = false;
-	   console.log(">>"+flag);
        $.ajax({
            type:"POST",
            url: "/explore/getTag",
@@ -82,7 +79,6 @@ h2 {
            },
            
            success : function (data) {
-               // 변경된 태그 부분을 넘어온 index 값으로 찾은 뒤 on/off를 변경합니다.
                
             var str = ' ';
                for(var i=1; i<data.length+1; i++) {
@@ -130,16 +126,18 @@ $(document).ready(function() {
 	
 	// 실시간 검색어  flag가 false일 때 ajax로 데이터 가져옴
 	var flag = true;
-	console.log(">"+flag);
+	//console.log(">"+flag);
 	
 	//처음에 expage 들어간 시간 적용
  	 var d = new Date();
 	 $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
 	 if(d.getHours()>12) {
 		 $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
-	   } else {
+	   } else if(d.getHours()==12) {
+  	  		$(".last_time").html("오후 "+(d.getHours())+"시 "+d.getMinutes()+"분 기준");
+ 	  	 } else {
 		   $(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
-		   }
+		   	}
    
 	var ii =1;
 	var jj =1;
@@ -152,21 +150,22 @@ $(document).ready(function() {
 		    
 	        if(ii == chgname.length+1) {
 	        	ii=1;
-	        	console.log(ii);
 	        	
-	        	// 대략 1분 단위로 데이터 갱신
-	        	if(jj==31){
-	        		console.log("갱신하잣");
+	        	// 대략 5분 단위로 데이터 갱신
+	        	if(jj==151){
+	        		//console.log("갱신하잣");
 	        		RTtag();
 	        		
 	     	   	   var d = new Date();
 	    	   	   $(".last_date").html(d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
 	    	   	   if(d.getHours()>12) {
 	    	   		   $(".last_time").html("오후 "+(d.getHours()-12)+"시 "+d.getMinutes()+"분 기준");
-	    	   	   } else {
+	    	   	  	 } else if(d.getHours()==12) {
+	    	   	  		$(".last_time").html("오후 "+(d.getHours())+"시 "+d.getMinutes()+"분 기준");
+	    	   	  	 } else {
 	    	   			$(".last_time").html("오전 "+d.getHours()+"시 "+d.getMinutes()+"분 기준");
-	    	   	   }
-	        		jj=1;
+	    	   	 	  }
+	        	jj=1;
 	        		
 	        	} /* jj if문 끝 */
 	        	
@@ -180,7 +179,7 @@ $(document).ready(function() {
 		        (function(x){
 		            window.setTimeout(function(){
 			               $(".rank"+x+"").toggleClass("on");
-		            },2000);
+		            },2100);
 		        })(ii);
 
 		        ii++;

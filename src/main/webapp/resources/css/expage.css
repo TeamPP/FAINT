@@ -177,6 +177,16 @@ li {
     width: 198px;
 }
 
+.realtime_keywd li.on .realtime_rank .keywd .ellipsis {
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.realtime_keywd li.on .realtime_rank .no {
+    color: #fff;
+}
+
 .realtime_keywd .realtime_rank .keywd .ellipsis {
     display: block;
     width: 90%;
@@ -250,6 +260,7 @@ a:-webkit-any-link {
 .realtime_keywd li.rank10 .realtime_rank {
     top: 249px;
 }
+
 
 /* 확대 검색어 css */
 
@@ -348,6 +359,10 @@ a:-webkit-any-link {
 }
 
 /* 마우스 오버 */
+.realtime_keywd li .realtime_rank:hover {
+    background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) no-repeat 0 0;
+}
+
 .realtime_keywd li.on .realtime_rank {
     background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) no-repeat 0 0;
 }
