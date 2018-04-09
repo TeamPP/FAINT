@@ -84,8 +84,6 @@ public class PostController {
 	@RequestMapping(value = "/{postid}/postEditor", method = RequestMethod.GET)
 	public String modifyGET(@PathVariable("postid") int postid, Model model, HttpServletRequest request) throws Exception {
 		
-		String address=request.getRequestURI();
-		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
@@ -151,7 +149,29 @@ public class PostController {
 
 		return "redirect:/member/"+user.getNickname();
 	}
-
+	
+	//게시물 삭제
+	@RequestMapping(value="/{postid}/delete", method=RequestMethod.DELETE)
+	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, HttpServletRequest request) throws Exception {
+		
+		ResponseEntity<String> entity=null;
+		
+		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		
+		try{
+			String delete=service.deleteOne(postid, vo.getId());
+			if(delete=="SUCCESS"){
+				entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);	
+			}else{
+				entity=new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	/*파일 첨부*/
 	@RequestMapping(value = "/uploader", method = RequestMethod.GET)
 	public void uploader() throws Exception {

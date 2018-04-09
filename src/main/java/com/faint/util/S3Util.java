@@ -17,10 +17,15 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public class S3Util {
+	
+	//bucketName
+    private String bucketName = "faint1122";
+	//bucketName getter    
+    public String getBucketName() {
+		return bucketName;
+	}
 
-
-
-    private AmazonS3 conn;
+	private AmazonS3 conn;
 
     public S3Util() {
 
@@ -56,11 +61,11 @@ public class S3Util {
     }
 
     // 파일 삭제
-    public void fileDelete(String bucketName, String fileName) {
+    public void fileDelete(String fileName) {
 
     	System.out.println("fileName : " + fileName);
         String imgName = (fileName).replace(File.separatorChar, '/');
-        conn.deleteObject(bucketName, imgName);
+        conn.deleteObject(this.getBucketName(), imgName);
         System.out.println("삭제성공");
     }
 
