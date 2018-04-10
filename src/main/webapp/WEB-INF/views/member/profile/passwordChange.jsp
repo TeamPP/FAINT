@@ -109,7 +109,7 @@ h2{
 		//이전 비밀번호 입력
 		$("#prevPw").keyup(function(){
 			changePwBtn();
-			validCheck(this);
+			//validCheck(this);
 			
 		});
 		//새 비밀번호 입력
