@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로필 편집</title>
 
-<link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <style>
@@ -109,6 +109,7 @@ border-radius: 150px;  /* 프사 둥글게 */
 <!-- 공통 처리 import -->
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 <script type="text/javascript" src="../../resources/js/upload.js"></script>
+<link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
 <script>
 
 
