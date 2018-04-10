@@ -8,6 +8,30 @@
 
 	<beans:bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	  <authentication-manager>
+     	<authentication-provider user-service-ref ="customUserDetailsService">
+     		<password-encoder ref="bcryptPasswordEncoder"/>
+     	</authentication-provider>
+     </authentication-manager>
+		
+<http use-expressions="true"> 
+          <intercept-url pattern="/memberinfo/**" access="isAuthenticated()" />
+          <intercept-url pattern="/write_view/**" access="isAuthenticated()" />
+          <intercept-url pattern="/memberModify/**" access="isAuthenticated()" />
+          <intercept-url pattern="/note/**" access="isAuthenticated()" />
+          <intercept-url pattern="/login_view/**" access="isAnonymous()" />
+		  <intercept-url pattern="/**" access="permitAll" />
+
+                   <form-login login-page="/login_view"
+                           login-processing-url="/login"
+                           username-parameter="bId"
+                           password-parameter="bPass"
+                           authentication-failure-handler-ref="customAuthenticationFailHandler" />
+ 
+                  <logout logout-url="/logout" 
+                  				logout-success-url="/main"/>       
+     </http>
+           
 	
 	<!-- <http auto-config='true'  use-expressions="true">
 		<intercept-url pattern="/user/login" access="permitAll" />

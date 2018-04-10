@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println("멤버서비스 dto");
 		try {
 			String pw = dao.getUserPw(dto.getEmail()).getPassword();
-			String rawPw = dto.getPassword();
+			String rawPw = dto.getbPass();
 			
 			System.out.println("pw====================="+pw);
 			System.out.println("raw===================="+rawPw);
@@ -137,11 +137,11 @@ public class UserServiceImpl implements UserService {
 			//System.out.println(passwordEncoder.matches(rawPw, pw));
 			if(passwordEncoder.matches(rawPw, pw)) {
 				System.out.println("비밀번호 일치");
-				dto.setPassword(pw);
+				dto.setbPass(pw);
 			}else {
 				//============System.out.println("비밀번호 불일치");=======================
 				//주석 해제 시 비 암호화 설정된 db Pw  값으로  로그인 되지 않음
-				dto.setPassword(rawPw);
+				dto.setbPass(rawPw);
 			}
 		}catch(NullPointerException npe){
 			UserVO vo=new UserVO();
