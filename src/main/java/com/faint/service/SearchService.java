@@ -3,6 +3,7 @@ package com.faint.service;
 import java.util.List;
 
 import com.faint.domain.SearchCriteria;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
 
 public interface SearchService {
