@@ -23,12 +23,7 @@ span{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 /* Modal Content */
-.postModal-content {
-    background-color: #fefefe;
-    margin: auto;
-    width: 935px;
-    height: 600px;
-}
+
 
 .postContainerWrp{
    text-align : center;
@@ -178,12 +173,19 @@ span{
             </div>
          </div>
         </section>
+		<!-- 포스트 이동 버튼 -->
+		<i class="postLeft material-icons">keyboard_arrow_left</i>
+		<i class="postRight material-icons">keyboard_arrow_right</i>
    </div>
 </div>
 <style>
+.postModal-content { position: relative; background-color: #fefefe; margin: auto; width: 935px; height: 600px; }
+.postModal-content > i { position: absolute; font-size: 80px; color: white; top: 44%; }
+.postLeft {left: -7%; cursor: pointer;}
+.postRight {right: -7%; cursor: pointer;}
 .section1{width: 600px; height: 600px; display: inline-block; float: left; position: relative; background-color: black; }
-#moveLeft > i{ border-radius: 150px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.7;}
-#moveRight > i{ border-radius: 150px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.8;}    
+#moveLeft > i{ border-radius: 150px; border: none; margin: 8px 8px 8px; left:0; margin-top: 48%; position: absolute; font-size: 30px; color: white; opacity: 0.7;}
+#moveRight > i{ border-radius: 150px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 48%; position: absolute; font-size: 30px; color: white; opacity: 0.8;}    
 .popPostImage{ position: absolute; max-width: 100%; max-height: 100%; width: auto; height: auto; margin: auto; top: 0; bottom: 0; left: 0; right: 0; }
 .section2{ width: 335px; height: 100%; display: inline-block; text-align: center; padding-left: 20px; padding-right: 20px; }
 .s2_1{ padding-top: 20px; padding-bottom: 20px; height: 78px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -378,59 +380,83 @@ function getPostList(){
       
       //이미지에서 벗어날 때
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
-      
-      $(".imageContainer:eq("+index+")").on("click", function(){
-         var pid=$(this).children("img").attr("title");
-         $.ajax({
-            type:"post",
-            url:"/post/detail",
-            headers:{
-               "X-HTTP-Method-Override" : "POST"
-            },
-            data:{postid:pid},
-            datatype:"json",
-            success:function(data){
-               if(data!=null){
-                  //handlebar추가
-                  var source=$("#modalPost").html();
-                  var post=Handlebars.compile(source);
-                  var postmodal=post(data);
-                  $("body").append(postmodal);
-                  
-                  //프로필 사진 삽입
-                  if(data.profilephoto!=null){
-                 	 $(".s2_1_1_1").attr("src", "http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+data.profilephoto)
-                  }else{
-                 	 $(".s2_1_1_1").attr("src", "/resources/img/emptyProfile.jpg")
-                  }
-                  
-              //이미지 배열화
-              var urlList=data.url.split('|');
-              	//첨부 이미지or영상 수
-                 var len = urlList.length;
-              	if(len == 1){
-              		$("#moveRight").css("display", "none");
-              	}
+   })
+   
+   //포스트 모달
+   postModal();
+   
+   var height=$(window).scrollTop(height);
+};
+
+function postModal(){
+
+	//포스트 모달 팝업 창
+	$(".imageContainer").on("click", function(){
+		var curIndex=$(".imageContainer").index(this);
+		console.log(curIndex);
+		var pid=$(this).children("img").attr("title");
+	   $.ajax({
+	      type:"post",
+	      url:"/post/detail",
+	      headers:{
+	         "X-HTTP-Method-Override" : "POST"
+	      },
+	      data:{postid:pid},
+	      datatype:"json",
+	      success:function(data){
+	         if(data!=null){
+	            //handlebar추가
+	            var source=$("#modalPost").html();
+	            var post=Handlebars.compile(source);
+	            var postmodal=post(data);
+	            $("body").append(postmodal);
+	            
+	            //현재 위치값 저장
+	            $(".postModal-content").data("index", curIndex);
+	          	//현재 위치값을 통해 움직이는 버튼 삭제 여부 결정
+	            if($(".imageContainer:has(img)").length==1){
+	            	$(".postModal-content > i").remove();
+	            }else if(curIndex == $(".imageContainer:has(img)").length-1){
+	            	$(".postRight").remove();
+	            }else if(curIndex == 0){
+	            	$(".postLeft").remove();
+	            }
+	          	
+	            //프로필 사진 삽입
+	            if(data.profilephoto!=null){
+	           	 $(".s2_1_1_1").attr("src", "http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+data.profilephoto)
+	            }else{
+	           	 $(".s2_1_1_1").attr("src", "/resources/img/emptyProfile.jpg")
+	            }
+	            
+		        //이미지 배열화
+		        var urlList=data.url.split('|');
+	        	//첨부 이미지or영상 수
+	          	var len = urlList.length;
+	        	if(len == 1){
+	        		$("#moveRight").css("display", "none");
+	        	}
 				//이미지 잘라서 삽입
-                 for (var i in urlList) {
-                 	
-                 	//이미지일 경우(upload.js func)
-                 	if(checkImageType(urlList[i])){
-                         $(".popImageContainer").append("<img class='popPostImage' id='image"+i+"' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
-                         if(i!=0){$("#image"+i).css("display", "none");}
-                     
-                     //영상일 경우(upload.js func)
-                 	}else if(checkVideoType(urlList[i])){
-                 		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
-                 		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
-                 	
-                 	//이미지나 영상타입이 아닐경우	
-                 	}else{
-                 		alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
-                 	}
-                  }
+	          	for (var i in urlList) {
+	           	
+		           	//이미지일 경우(upload.js func)
+		           	if(checkImageType(urlList[i])){
+	                	$(".popImageContainer").append("<img class='popPostImage' id='image"+i+"' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
+	                	if(i!=0){$("#image"+i).css("display", "none");}
+	               
+					//영상일 경우(upload.js func)
+	           		}else if(checkVideoType(urlList[i])){
+		           		$(".popImageContainer").append("<video class='popPostImage' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>")
+		           		if(i!=0){$("#video"+i).css("display", "none"); $("#video"+i).autoplay=false; }
+	           	
+					//이미지나 영상타입이 아닐경우	
+	           		}else{
+	           			alert("지원하지 않는 타입의 파일형식을 포함하고 있음")
+	           		}
+	            
+	          	}
 				
-				//길이조정
+				//이미지 길이조정
 				$(".popPostImage").each(function(){
 					if(this.naturalWidth <= this.naturalHeight){
 						$(this).css("min-height", "100%");
@@ -438,58 +464,69 @@ function getPostList(){
 						$(this).css("min-width", "100%");
 					}
 				})
-                  
-                  //좋아요버튼 삽입
-                  if(data.isLike=='0'){
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>♡</button></span>")
-                  }else{
-                     $(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>♥</button></span>")
-                  }
-                  
-                  //저장하기 버튼 삽입
-                  if(data.isStore=='0'){
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>□</button></span>")
-                  }else{
-                     $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>■</button></span>")
-                  }
-                  
-                  //게시물 수정버튼 삽입
-                  if(data.userid==${login.id}){
-                	  $(".s2_4_1").append("<span style='cursor: pointer; '><i id='postEdit' class='glyphicon glyphicon-option-horizontal'></i></span>")
-                	  $(".replyRegist").css("width", "94%");
-                  }
-                  
-                  //modal창 보이기
-                  $("#myModal").css("display","block");
-                  
-                  //modal끄기 메서드-바깥부분
-                  $("#myModal").click(function(event){
-                     if(event.target==this){
-                        $("#myModal").css("display","none");
-                        $("#myModal").remove();
-                     }
-                  })
-                  
-                  //modal끄기 메서드-버튼부분
-                  $(".close:eq(0)").on("click", function(){
-                     $("#myModal").css("display","none");
-                     $("#myModal").remove();
-                  })
-                  
-                  postEdit();
-                  reply();
-                  like();
-                  likerList();
-                  store();
-                  searchFilter();
-               }
-            }
-         })
-      })
-      
-   })
-   var height=$(window).scrollTop(height);
-};
+	            
+	            //좋아요버튼 삽입
+	            if(data.isLike=='0'){
+					$(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: -26px -349px;'>좋아요</button></span>")
+	            }else{
+					$(".btnContainer").prepend("<span><button class='likeBtn' style='background-position: 0 -349px;'>좋아요 취소</button></span>")
+	            }
+	            
+	            //저장하기 버튼 삽입
+	            if(data.isStore=='0'){
+	               $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -78px -349px;'>저장하기</button></span>")
+	            }else{
+	               $(".btnContainer").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>저장하기 취소</button></span>")
+	            }
+	            
+	            //게시물 수정버튼 삽입
+	            if(data.userid==${login.id}){
+	          		$(".s2_4_1").append("<span style='cursor: pointer; '><i id='postEdit' class='glyphicon glyphicon-option-horizontal'></i></span>")
+	          		$(".replyRegist").css("width", "94%");
+	            }
+	            
+	            //modal창 보이기
+	            $("#myModal").css("display","block");
+	            
+	            //modal끄기 메서드-바깥부분
+	            $("#myModal").click(function(event){
+	               if(event.target==this){
+	                  $("#myModal").css("display","none");
+	                  $("#myModal").remove();
+	               }
+	            })
+	           
+
+	            
+	            //modal끄기 메서드-버튼부분
+	            $(".close:eq(0)").on("click", function(){
+	               $("#myModal").css("display","none");
+	               $("#myModal").remove();
+	            })
+	            
+	            //포스트 움직이기 버튼 함수 적용
+	    		$(".postLeft").on("click", function(){
+	    			var curIndex=$(".postModal-content").data("index");
+	    			$(".close:eq(0)").trigger("click");
+	    			$(".imageContainer:eq("+(curIndex-1)+")").trigger("click");
+	    		});
+	    		$(".postRight").on("click", function(){
+	    			var curIndex=$(".postModal-content").data("index");
+	    			$(".close:eq(0)").trigger("click");
+	    			$(".imageContainer:eq("+(curIndex+1)+")").trigger("click");
+	    		});
+	            
+	            postEdit();
+	            reply();
+	            like();
+	            likerList();
+	            store();
+	            searchFilter();
+	         }
+	      }
+	   })
+	})
+}
 
 
 //게시물 수정
