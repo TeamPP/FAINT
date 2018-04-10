@@ -275,8 +275,8 @@ public class UserController {
 
 			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
 
-			service.keepLogin(vo.getId(), session.getId(), sessionLimit);
-			System.out.println(vo.getId()+"아이디"+session.getId()+"ㅅㅔ션"+sessionLimit);
+			service.keepLogin(vo.getEmail(), session.getId(), sessionLimit);
+			System.out.println(vo.getEmail()+"아이디"+session.getId()+"ㅅㅔ션"+sessionLimit);
 			System.out.println("세션에 값좀 넣어주셈 ");
 		}
 
@@ -323,7 +323,7 @@ public class UserController {
     			loginCookie.setPath("/");
     			loginCookie.setMaxAge(0);
     			response.addCookie(loginCookie);
-    			service.keepLogin(vo.getId(), session.getId(), new Date());
+    			service.keepLogin(vo.getEmail(), session.getId(), new Date());
 			}
 		}
 		return "/user/logout";

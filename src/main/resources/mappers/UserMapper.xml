@@ -270,12 +270,18 @@
     </update>
 	
 	<!-- 세션키 확인 로그인 유지 -->
-	<update id="keepLogin">
+<!-- 	<update id="keepLogin">
 		update tbl_user
 		set sessionkey = #{sessionKey}
 		   ,sessionlimit = #{next}
-		where ID = #{id}
-	</update>
+		where ID = #{id} -->
+
+
+	  	<!-- sessionKey로 로그인 여부 판단  -->
+  	<update id="keepLogin" parameterType="map">
+  		update tbl_user
+  		 set sessionkey = #{sessionId}, sessionLimit = #{next} where email=#{email};
+  	</update>
 	
  	<!-- 세션키 체크 -->
 	<select id="checkSessionKey" resultType="com.faint.domain.UserVO">

@@ -99,7 +99,7 @@ public class AdminController {
     			loginCookie.setPath("/");
     			loginCookie.setMaxAge(0);
     			resp.addCookie(loginCookie);
-    			service.keepLogin(vo.getId(), session.getId(), new Date());
+    			service.keepLogin(vo.getEmail(), session.getId(), new Date());
 			}
 		}
 

@@ -53,7 +53,7 @@ public interface UserService {
 	
 	public void findPassword(UserVO vo) throws Exception; //비번찾기
 	
-	public void keepLogin(Integer userid, String sessionKey, Date next) throws Exception; //로그인 유지
+	public void keepLogin(String email, String sessionId, Date next) throws Exception;
 
 	public UserVO checkLoginBefore(String value); //세션키 확인
 	

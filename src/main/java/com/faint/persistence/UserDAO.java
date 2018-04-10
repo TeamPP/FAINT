@@ -47,7 +47,8 @@ public interface UserDAO {
 
 	public UserVO login(LoginDTO dto) throws Exception; // 로그
 	
-	public void keepLogin(Integer memberID, String sessionKey, Date next);  // 로그인 유지  세션 에 담기 
+	// sessionKey & sessionLimit 업데이트
+	public void keepLogin(String email, String sessionId, Date next) throws Exception; // sessinId = DB의 sessionKey
 
 	public UserVO checkSessionKey(String value);   // 세션 확인 
 	

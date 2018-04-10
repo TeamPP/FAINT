@@ -276,10 +276,10 @@ public class UserServiceImpl implements UserService {
 	
 	//로그인 유지
 	@Override
-	public void keepLogin(Integer userid, String sessionkey, Date next) throws Exception{
+	public void keepLogin(String email, String sessionId, Date next) throws Exception{
 		System.out.println("세션키 저장하러 오나요?service에  ");
 
-		dao.keepLogin(userid, sessionkey, next);
+		dao.keepLogin(email, sessionId, next);
 	}
 
 	//세션키 확인
