@@ -296,8 +296,8 @@ border-radius: 2px;
 }
 
 .followPhoto{
-width: 30px;
-height: 30px;
+width: 33px;
+height: 33px;
 display: inline-block;
 float: left;
 border-radius: 150px;  /* 프사 둥글게 */
