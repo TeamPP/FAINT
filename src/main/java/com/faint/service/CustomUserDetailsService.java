@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		CustomUserDetails user = new CustomUserDetails();
 		user.setEmail(dto.getEmail());
 		user.setNickname(dto.getNickname());
-		user.setbPass(dto.getbPass());
+		user.setbPass(dto.getPassword());
 		user.setProfilephoto(dto.getProfilephoto());
 		user.setEnabled(true);
 		//user의 권한 정보는 항상 ROLR_USER를 반환하도록 되어있어서 여기서는 따로 설정해주지 않아도 됨.

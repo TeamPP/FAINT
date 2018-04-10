@@ -2,7 +2,7 @@ package com.faint.dto;
 
 public class LoginDTO {
 	private String email;
-	private String bPass;
+	private String password;
 	private boolean useCookie;
 	private String snsID;
 	private String nickname;
@@ -24,11 +24,11 @@ public class LoginDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getbPass() {
-		return bPass;
+	public String getPassword() {
+		return password;
 	}
-	public void setbPass(String bPass) {
-		this.bPass = bPass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public boolean isUseCookie() {
 		return useCookie;
@@ -50,7 +50,7 @@ public class LoginDTO {
 	}
 	@Override
 	public String toString() {
-		return "LoginDTO [email=" + email + ", password=" + bPass + ", useCookie=" + useCookie + ", snsID=" + snsID
+		return "LoginDTO [email=" + email + ", password=" + password + ", useCookie=" + useCookie + ", snsID=" + snsID
 				+ ", nickname=" + nickname + "]";
 	}
 
