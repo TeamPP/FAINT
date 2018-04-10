@@ -329,8 +329,7 @@ $(document).ready(function() {
     
     $(document).on('click', '.image-cancel', function() {
         let no = $(this).data('no');
-    
-        $.ajax({
+         $.ajax({
 			url : "/deleteFile",
 			type : "post",
 			data : {
@@ -342,7 +341,7 @@ $(document).ready(function() {
 				    $(".preview-image.preview-show-"+no).remove();
 				}
 			}
-		}); 
+		});  
     });
   	//드래그 영력에서 드래그에 대한 이벤트 막음
 	$(".preview-images-zone").on("dragenter dragover", function(event) {
@@ -374,9 +373,7 @@ $(document).ready(function() {
 			//파일 type 추가
     		data.fileType = obj.attr("data-type");
 
-			console.log(obj[0]);
     		data.filter = obj.attr("class").split(" ")[1];
-    		console.log(JSON.stringify(data));
 			str += "<input type='hidden' name='files' value='" + JSON.stringify(data) + "'> ";
 			
 			cnt++;

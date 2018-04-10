@@ -351,7 +351,7 @@
 		
 		//파일 리스트 생성
 		var filesArr = ${files};
-		
+		console.log(filesArr);
 		//게시물 글자수 제한
 		$("._bilrf").first().keyup(function(){
 	        if ($(this).val().length > $(this).attr('maxlength')) {
@@ -369,10 +369,9 @@
 			console.log(files);
 			var str = "";
 
-			$(files).each(function(index){
-				console.log(index + this.fileUrl);
-				str += "<input type='hidden' name='files[" + index
-				+ "]' value='" + this.fileUrl
+			$(files).each(function(){
+				console.log( this.fileUrl);
+				str += "<input type='hidden' name='files' value='" + this.fileUrl
 				+ "'> ";
 				var filter ="";
 				if(typeof this.filter == "undefined" || this.filter == null) {
@@ -411,7 +410,7 @@
 			$("._784q7").on("click",function(event){
 				event.stopPropagation();
 			});
-			
+		
 			//맵초기화
 			initMap();
 		 	//맵초기화 끝나고 현재 접속한 위치 GPS로 읽기
@@ -421,6 +420,8 @@
 			else{
 				geocoding($('#address').text());
 			}
+		 	
+			$('body').css("overflow","hidden");
 			
 			// 모달 창 닫기 버튼
 			$("#modalclose").click(function(event) {
@@ -443,6 +444,8 @@
 				//지도에 현재 위치 표시, 위도경도 읽어옴
 				navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 			});
+			
+			
 		});
 		
 		//오른쪽으로 넘기기
@@ -459,8 +462,6 @@
 			}
 			//다음객체 비율 조정
 			nextObj.parent("div").css("padding-bottom", nextObj.height()/6+"%");
-			console.log(filesArr);
-			console.log(filesArr[curIdx+1]);
 			//필터 적용
 			$("._4rbun").attr("class", "_4rbun "+ filesArr[curIdx+1].filter);
 			//이미지 전환
@@ -539,7 +540,7 @@
 			   var files = ${files};
 			   
 			   $(files).each(function(){
-				   $.ajax({
+				    $.ajax({
 						url : "/deleteFile",
 						type : "post",
 						data : {
@@ -548,7 +549,7 @@
 						dataType : "text",
 						success : function(result) {
 						}
-					}); 
+					});  
 			   });
 		   }else{
 			   event.preventDefault();
@@ -564,6 +565,7 @@
 		$("body").attr("sytle","");
 		$("#react-root").attr("aria-hidden","false");
 		$("div[role='dialog']").remove();
+		$('body').css("overflow","auto");
 	}
 	
 	var map, geocoder, marker;

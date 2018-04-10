@@ -88,7 +88,7 @@ $(document).ready(function(){
 			$("#react-root").after(template);
 			$("body").attr("sytle","position: fixed; top: -"+$(window).scrollTop()+"px; width: 100%;");
 			$("#react-root").attr("aria-hidden","true");
-			
+			$('body').css("overflow","hidden");
 			$("._hql7s").on("click",function(event){
 				event.stopPropagation();
 			});
@@ -194,6 +194,7 @@ $(document).ready(function(){
 		$("body").attr("sytle","");
 		$("#react-root").attr("aria-hidden","false");
 		$("div[role='dialog']").remove();
+		$('body').css("overflow","auto");
 	}
 	//프로필 사진 DB업데이트
 	function updatePhoto(fullName){

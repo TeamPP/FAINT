@@ -380,7 +380,7 @@ function getPostList(){
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
       
       $(".imageContainer:eq("+index+")").on("click", function(){
-         var pid=$(this).children("img").attr("title");
+    	  var pid=$(this).children("img").attr("title");
          $.ajax({
             type:"post",
             url:"/post/detail",
@@ -432,7 +432,7 @@ function getPostList(){
 				
 				//길이조정
 				$(".popPostImage").each(function(){
-					if(this.naturalWidth <= this.naturalHeight){
+				 	if(this.naturalWidth <= this.naturalHeight){
 						$(this).css("min-height", "100%");
 					}else if(this.naturalWidth > this.naturalHeight){
 						$(this).css("min-width", "100%");

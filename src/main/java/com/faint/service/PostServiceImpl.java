@@ -179,8 +179,16 @@ public class PostServiceImpl implements PostService {
 
 	//==============게시글 수정==============
 	@Override
+	@Transactional
 	public void modify(PostVO post) throws Exception {
 		dao.modify(post);
+		
+		List<String> hashTags = HashTagHelper.getAllHashTags(post.getCaption());
+		if (!hashTags.isEmpty()) { // exist hash tag
+			for (String tagname : hashTags) {
+				registPostAndTag(post.getId(), tagname);
+			}
+		}
 	}
 	
 	//==============게시글 삭제==============
