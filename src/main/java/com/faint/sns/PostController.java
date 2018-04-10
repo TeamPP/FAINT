@@ -84,8 +84,6 @@ public class PostController {
 	@RequestMapping(value = "/{postid}/postEditor", method = RequestMethod.GET)
 	public String modifyGET(@PathVariable("postid") int postid, Model model, HttpServletRequest request) throws Exception {
 		
-		String address=request.getRequestURI();
-		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
@@ -151,7 +149,29 @@ public class PostController {
 
 		return "redirect:/member/"+user.getNickname();
 	}
-
+	
+	//게시물 삭제
+	@RequestMapping(value="/{postid}/delete", method=RequestMethod.DELETE)
+	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, HttpServletRequest request) throws Exception {
+		ResponseEntity<String> entity=null;
+		
+		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		
+		try{
+			String delete=service.deleteOne(postid, vo.getId());
+			System.out.println(delete);
+			if(delete=="SUCCESS"){
+				entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);	
+			}else{
+				entity=new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	/*파일 첨부*/
 	@RequestMapping(value = "/uploader", method = RequestMethod.GET)
 	public void uploader() throws Exception {
@@ -195,7 +215,7 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping(value="/detail", method=RequestMethod.POST)
-	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request)throws Exception{
 		
 		HttpSession session=request.getSession();
 		UserVO userVO=(UserVO)session.getAttribute("login");
@@ -217,7 +237,7 @@ public class PostController {
 	
 	//게시물 저장 - rest방식
 	@RequestMapping(value="/{postid}/store", method=RequestMethod.POST)
-	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -238,7 +258,7 @@ public class PostController {
 
 	//게시물 저장 취소 - rest방식
 	@RequestMapping(value="/{postid}/takeaway", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -259,7 +279,7 @@ public class PostController {
 	
 	//like 등록 - rest방식
 	@RequestMapping(value="/{postid}/like", method=RequestMethod.POST)
-	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -280,7 +300,7 @@ public class PostController {
 
 	//like 삭제 - rest방식
 	@RequestMapping(value="/{postid}/unlike", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -302,7 +322,7 @@ public class PostController {
 	//게시물에 대한 좋아요 유저반환(PK,nickname만) - JSON객체(LIST배열에 담아서 던져줌)
 	@ResponseBody
 	@RequestMapping(value="/{postid}/likerlist", method=RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
 		ResponseEntity<List<UserVO>> entity=null;
 		
 		HttpSession session=request.getSession();

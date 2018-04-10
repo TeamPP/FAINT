@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${userVO.name}(@${userVO.nickname})</title>
-<!-- 프로필 사진 변경 공통 처리 -->
 <style>
 a {
 	color: black;
@@ -158,14 +157,8 @@ div.secondLine span {
 	border-top: 1.5px solid black;
 }
 </style>
-
-
 </head>
 <body>
-
-<script>
-console.log("${userVO}");
-</script>
 
 <article style = "margin-top: 60px;">
 	<div class="photo-profile">
@@ -301,8 +294,8 @@ border-radius: 2px;
 }
 
 .followPhoto{
-width: 30px;
-height: 30px;
+width: 33px;
+height: 33px;
 display: inline-block;
 float: left;
 border-radius: 150px;  /* 프사 둥글게 */
@@ -556,14 +549,20 @@ function followed(){
             var followedList="";
             data.each(function(){
             
-               followedList+="<li class='oneofList'> <img class='followPhoto' ";
+               followedList+="<li class='oneofList'> <a href='/member/"+this.nickname+"'> <img class='followPhoto' ";
                 
                	// 프로필 사진이 있는경우 | 없는 경우
 				if(this.profilephoto != null){
-					followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+					followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
             	}else{
-					followedList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+					followedList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
             	}
+               	// 이름이 있는 경우 | 없는 경우
+               	if(this.name != null){
+               		followedList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+               	}else{
+               		followedList+="<a style='font-weight:bold; line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
+               	}
             	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
             	if(this.isFollow > 0){
 					followedList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
@@ -624,13 +623,19 @@ function following(){
          var followingList="";
             data.each(function(){
                
-               followingList+="<li class='oneofList'> <img class='followPhoto' ";
+               followingList+="<li class='oneofList'> <a href='/member/"+this.nickname+"'> <img class='followPhoto' ";
                	// 프로필 사진이 있는경우 | 없는 경우
             	if(this.profilephoto != null){
-            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
             	}else{
-            		followingList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp; <a href='/member/"+this.nickname+"'>" + this.nickname + "</a>";
+            		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
             	}
+               	// 이름이 있는 경우 | 없는 경우
+               	if(this.name != null){
+               		followingList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+               	}else{
+               		followingList+="<a style='font-weight:bold; line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
+               	}
             	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
             	if(this.isFollow > 0){
                   followingList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
@@ -680,9 +685,12 @@ function following(){
 
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
+	var followFlg=false;
    $(".isFlw").on("click", function(){
       var userid=$(this).attr("title");
       var isFlw=this;
+      if(followFlg){return;};
+      followFlg=true;
       if(($(this).html()=="팔로우")){
          var type="post";
          var url ="/member/follow/"+userid;
@@ -704,6 +712,7 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
+                followFlg=false;
             };
          }
       });

@@ -71,8 +71,7 @@
 	<!-- 차단등록 -->
 	<insert id="userBlock">
 		INSERT INTO tbl_block (userid, blockedid)
-		SELECT #{loginid}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_block where userid=#{loginid} and blockedid=#{userid});
+		SELECT #{loginid}, #{userid}
 	</insert>
 	
 	<!-- 차단해제 -->
@@ -84,12 +83,24 @@
 		blockedid=#{userid}
 	</delete>
 	
+	<!-- 차단 리스트 출력 -->
+	<select id="readblocked" resultType="com.faint.dto.BlockedUserDTO">
+		SELECT bl.USERID as userid
+		, bl.BLOCKEDID as blockedid
+	    , u.NICKNAME as nickname
+	    , u.name as name
+	    , u.PROFILEPHOTO as profilephoto
+	    FROM 
+		faint.tbl_block bl 
+		join faint.tbl_user u
+	    on bl.BLOCKEDID = u.id
+	    where bl.USERID = #{uid}
+	</select>
 	<!-- follow -->
 	<!-- 팔로우등록 -->
 	<insert id="flwCreate">
 		INSERT INTO tbl_follow (userid, followedid)
-		SELECT #{loginid}, #{userid} from DUAL
-        WHERE NOT EXISTS(select * from tbl_follow where userid=#{loginid} and followedid=#{userid});
+		SELECT #{loginid}, #{userid}
 	</insert>
 
 	<!-- 팔로우해제 -->
@@ -318,7 +329,12 @@
 		WHERE id=#{id}
 		AND BINARY password=#{password}
 	</select>
-	
+	<!-- 암호화비밀번호 가져오기 2-->
+    <select id="getUserPassword1" resultType="com.faint.domain.UserVO">
+	    select PASSWORD
+	    FROM  tbl_user
+	    WHERE ID = #{id}
+    </select>
 	<!-- ====================ip차단==================== -->
 	<insert id="insert_ip_ban" parameterType="String">
 		INSERT INTO IPBANLIST (IP) VALUES(#{param1})

@@ -8,7 +8,6 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 
 public interface PostService {
 	// ====================post둥록 ===================
@@ -27,6 +26,10 @@ public interface PostService {
 	// ====================post 수정 ==================
 	// 게시글 수정
 	public void modify(PostVO post) throws Exception;
+	
+	// 게시글 삭제
+	public String deleteOne(int postid, int loginid) throws Exception;
+	
 	// ====================post읽기 ===================
 	// post 전체목록
 	public List<PostVO> listAllPost() throws Exception;

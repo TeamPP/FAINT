@@ -32,6 +32,11 @@ public class PostDAOImpl implements PostDAO {
 	public void modify(PostVO vo) throws Exception {
 		session.update(namespace + ".modify", vo);
 	}
+	
+	@Override
+	public void deleteOne(int postid) throws Exception {
+		session.delete(namespace + ".deleteOne", postid);
+	}
 
 	@Override
 	public void addAttach(String url,String filter) throws Exception {
@@ -42,6 +47,11 @@ public class PostDAOImpl implements PostDAO {
 	}
 	
 	//==============================게시물 읽기==============================
+	//특정 포스트
+	public PostVO readOne(int postid) throws Exception{
+		return session.selectOne(namespace+".readOne", postid);
+	}
+	
 	// post전체목록  - 한 유저에 대해
 	@Override
 	public List<PostVO> read(Integer userid) throws Exception{

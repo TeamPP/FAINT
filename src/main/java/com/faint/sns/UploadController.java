@@ -169,9 +169,8 @@ public class UploadController {
 	public ResponseEntity<String> deleteFile(String fileName){
 		logger.info("delete file: "+fileName);
 		
-		String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
 		String inputDirectory = "faint1122";
-        s3.fileDelete(bucketName, inputDirectory+fileName);
+        s3.fileDelete(inputDirectory+fileName);
         		
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}

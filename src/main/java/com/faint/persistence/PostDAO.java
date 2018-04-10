@@ -8,16 +8,23 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
-import com.faint.dto.TopPostDTO;
 
 public interface PostDAO {
 
+	//게시물 생성
 	public void create(PostVO vo)throws Exception;
+	//게시물 수정
 	public void modify(PostVO vo)throws Exception;
+	//게시물 삭제
+	public void deleteOne(int postid)throws Exception;
+	
 	//파일첨부
 	public void addAttach(String fullName, String filter) throws Exception;
 	
 	//==================post read관련======================
+	//특정 포스트
+	public PostVO readOne(int postid) throws Exception;
+	
 	//특정유저의 전체 포스트
 	public List<PostVO> read(Integer userid) throws Exception;
 	

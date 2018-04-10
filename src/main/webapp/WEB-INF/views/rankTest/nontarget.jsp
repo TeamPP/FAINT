@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>${userVO.id}</div>
+	<%-- <div>${userVO.id}</div>
 	<div>${userVO.nickname}</div>
 	<div>${userVO.name}</div>
-	<div>${userVO.email}</div>
-	
+	<div>${userVO.email}</div> --%>
+	hi nontarget
 </body>
 </html>

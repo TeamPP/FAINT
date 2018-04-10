@@ -3,6 +3,7 @@
 <html>
 <header>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
 </header>
 <style>
 span{
@@ -25,7 +26,7 @@ span{
 .postModal-content {
     background-color: #fefefe;
     margin: auto;
-    width: 940px;
+    width: 935px;
     height: 600px;
 }
 
@@ -104,6 +105,7 @@ span{
 
 <body>
 
+<!-- post개별 게시물 모달팝업 -->
 <script id="modalPost" type="text/x-handlebars-template">
 <div id="myModal" class="postModal">
    <span class="close">&times;</span>
@@ -115,12 +117,12 @@ span{
 			</div>
 			<!-- 왼쪽 이미지 이동 버튼 -->
 			<a class="_5wmqs _pak6p coreSpriteLeftChevron" role="button" id="moveLeft" style ="display: none" onclick="moveLeft()">
-				<i class="fa fa-chevron-circle-left" style="font-size: 30px; color: lightgray;"></i>
+				<i class="fa fa-chevron-circle-left"></i>
 			</a>
 
 			<!-- 오른쪽 이미지 이동 버튼 -->
 			<a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
-				<i class="fa fa-chevron-circle-right" style="font-size: 30px; color: lightgray;"></i>
+				<i class="fa fa-chevron-circle-right"></i>
 			</a>
 
 			<!-- 사진 몇개인지 표시 -->
@@ -165,7 +167,7 @@ span{
                <div class="btnContainer" title="{{postid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
-               <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개(링크미구현)</a>
+               <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개</a>
             </div>
          </div>
 
@@ -180,8 +182,8 @@ span{
 </div>
 <style>
 .section1{width: 600px; height: 600px; display: inline-block; float: left; position: relative; background-color: black; }
-#moveLeft > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -40px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; }
-#moveRight > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -72px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; }    
+#moveLeft > i{ border-radius: 150px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.7;}
+#moveRight > i{ border-radius: 150px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.8;}    
 .popPostImage{ position: absolute; max-width: 100%; max-height: 100%; width: auto; height: auto; margin: auto; top: 0; bottom: 0; left: 0; right: 0; }
 .section2{ width: 335px; height: 100%; display: inline-block; text-align: center; padding-left: 20px; padding-right: 20px; }
 .s2_1{ padding-top: 20px; padding-bottom: 20px; height: 78px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -200,7 +202,66 @@ span{
 .storeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-color: #fff; margin-left: 842%; border: none; font-size: 0;}
 .s2_4{ width: 100%; height: auto; }
 .s2_4_1{ padding: 10px 0 10px 0; }
-.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; }
+.replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; float: left; }
+.likeContainer{ font-weight: bold; cursor: default; }
+</style>
+</script>
+
+<!-- 좋아요 list Modal -->
+<script id="modalLiker" type="text/x-handlebars-template">
+<section class="section3">
+	<div class="likersTitle">
+		<div class="likersClose"><i class="material-icons">clear</i></div>
+		<strong>좋아요</strong>
+	</div>
+	<ul id="likersContainer"></ul>
+</section>
+
+<style>
+.section3{ width: 335px; height: 100%; display: inline-block; text-align: left; }
+.likersClose { width:20px; height:20px; cursor: pointer; float:left; }
+.likersTitle{ width: 100%; height: 7%; padding: 10px; font-size: 17px; text-align: center; border-bottom: 1.3px solid #efefef; }
+.oneofList{ border-bottom: solid 1px #efefef; width: 100%; height: 53px; padding: 10px 16px; float: left; }
+#likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
+.isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
+	border-width: 1px; line-height: 26px; border-radius: 2px; }
+.followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
+a{ font-weight: bold; }
+</style>
+</script>
+
+<!-- 선택메뉴창 팝업 -->
+<script id="modalTemplate" type="text/x-handlebars-template">
+   <div class="_pfyik" role="dialog" onclick="callRemoveDialog(event)">
+   <div class="_23gmb"></div>
+   <div class="_o0j5z" onclick="callRemoveDialog(event)">
+   <div class="_784q7" id="modalChangeProfilePhoto" onclick="callRemoveDialog(event)">
+   <ul class="_cepxb">
+   </ul>
+   </div>
+   </div>
+      <button class="_dcj9f"  onclick="callRemoveDialog(event)">닫기</button>
+   </div>
+<style>
+._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:3}
+._dcj9f{background:0 0;border:0;cursor:pointer;height:36px;outline:0;overflow:hidden;position:absolute;right:0;top:0;z-index:4}
+._dcj9f::before{color:#fff;content:'\00D7';display:block;font-size:36px;font-weight:600;line-height:36px;padding:0;margin:0}
+._784q7{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;margin:auto;max-width:935px;pointer-events:auto;width:100%}
+._23gmb{bottom:0;left:0;pointer-events:none;position:fixed;right:0;top:0;z-index:2}
+._23gmb *{pointer-events:auto}
+._o0j5z{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;min-height:100%;overflow:auto;width:auto;z-index:3}
+@media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
+@media (max-width:480px){._23gmb,._dcj9f{display:none}}
+
+._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
+._h74gn:hover{background-color:#efefef}
+._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
+._o2wxh:last-child{border-bottom-width:0}
+._hql7s{color:#999;font-size:16px;font-weight:600;line-height:50px;text-align:center}
+@media (min-width:736px){._hql7s,._o2wxh{min-width:510px}}
+@media (min-width:414px) and (max-width:735px){._cepxb,._hql7s,._o2wxh{width:100%}}
+@media (min-width:414px){._cepxb{margin:0 auto}}
 </style>
 </script>
 
@@ -277,17 +338,16 @@ function getPostList(){
    
    //게시물이 있을 때
    if(data.length%3==0){
- 	 lenn = 100/(data.length/3);
- 	 console.log(lenn);
+	 	
  	 
-   for (i = 0; i < data.length/3; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
-      }
-   }else{
-      for (i = 0; i < parseInt(data.length/3)+1; i++) {
-         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
-      }
-   }
+	   for (i = 0; i < data.length/3; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block;'>")
+	      }
+	   }else{
+	      for (i = 0; i < parseInt(data.length/3)+1; i++) {
+	         $(".postContainer").append("<div class='postLiner' style='display:inline-block; '>")
+	      }
+	   }
    
    $(".postLiner").height($(".postLiner").width()*0.33);
    
@@ -306,7 +366,7 @@ function getPostList(){
       
       $(".imageContainer:eq("+index+")").append(img);
       
-      var str = "<div style='display:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span> \t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span>\t"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
@@ -374,7 +434,7 @@ function getPostList(){
 				$(".popPostImage").each(function(){
 					if(this.naturalWidth <= this.naturalHeight){
 						$(this).css("min-height", "100%");
-					}else{
+					}else if(this.naturalWidth > this.naturalHeight){
 						$(this).css("min-width", "100%");
 					}
 				})
@@ -395,7 +455,8 @@ function getPostList(){
                   
                   //게시물 수정버튼 삽입
                   if(data.userid==${login.id}){
-                	  $(".btnContainer").append("<span><a href='/post/"+data.postid+"/postEditor'>더보기</a></span>")
+                	  $(".s2_4_1").append("<span style='cursor: pointer; '><i id='postEdit' class='glyphicon glyphicon-option-horizontal'></i></span>")
+                	  $(".replyRegist").css("width", "94%");
                   }
                   
                   //modal창 보이기
@@ -415,6 +476,7 @@ function getPostList(){
                      $("#myModal").remove();
                   })
                   
+                  postEdit();
                   reply();
                   like();
                   likerList();
@@ -428,6 +490,62 @@ function getPostList(){
    })
    var height=$(window).scrollTop(height);
 };
+
+
+//게시물 수정
+function postEdit(){
+	$("#postEdit").on("click",function(){
+		var postid=$(".s2_4_1").attr("title");
+		var template = Handlebars.compile($("#modalTemplate").html());
+		$("body").append(template);
+		$("body").attr("aria-hidden","true");
+		
+		var list = '<li class="_o2wxh"><a href="/post/'+postid+'/postEditor"><button class="_h74gn">게시물 수정하기</button></a></li>';
+		list += '<li class="_hql7s"><button class="_h74gn" id="btnDeletePost" data-post='+postid+' onclick="postDelete(this)">게시물 삭제하기</button></li>';
+		list += '<li class="_hql7s"><button class="_h74gn" id="btnCancle" onclick="callRemoveDialog(event)">취소</button></li>';
+		
+		$("._cepxb").html(list);
+		
+		$("._hql7s").on("click",function(event){
+		     event.stopPropagation();
+		});
+	})
+
+}
+
+//게시물 삭제
+function postDelete(thisTag){
+	var postid=$(thisTag).data("post");
+	$.ajax({
+		type: "delete",
+		url: "/post/"+postid+"/delete",
+		headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
+		dataType:"text",
+		success:function(result){
+			if(result=="SUCCESS"){
+				//메뉴모달 끄기
+				$("body").attr("sytle","");
+				$("body").attr("aria-hidden","false");
+				$("div[role='dialog']").remove();
+				//post모달 끄기
+				$("#myModal").css("display","none");
+				$("#myModal").remove();
+				//postlist다시부르기
+				getPostList();
+			};
+		}
+	})
+}
+
+//메뉴 모달 취소버튼 - CSS처리
+function callRemoveDialog(event){
+   if(typeof event != "undefined"){
+      event.stopPropagation();
+   }
+   $("body").attr("sytle","");
+   $("body").attr("aria-hidden","false");
+   $("div[role='dialog']").remove();
+}
 
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
@@ -449,14 +567,13 @@ function reply(){
      	var replyMore = 10; //댓글더보기 클릭 시 추가되는 댓글 수
      	
         $(rpldata).each(function(index){
-            console.log(this);
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
                replystr +="<div class='reply' title='"+this.id+"'>"+
                   "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
                
                if(this.userid==${login.id} || this.postwriter==${login.id}){
-                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' >X</a></li>";
+                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li>";
                }else{
                   replystr+="</div>";
                };
@@ -537,9 +654,12 @@ function deleteReply(thisTag){
 
 //게시물 저장하기 + 저장하기 취소 
 function store(){
+	var storeFlg=false;
    $(".storeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var storeBtn=this;
+      if(storeFlg){return;};
+      storeFlg=true;
       if($(this).css("background-position")=="-78px -349px"){
          var type="post";
          var url ="/post/"+postid+"/store";
@@ -560,6 +680,7 @@ function store(){
          success:function(result){
             if(result=="SUCCESS"){
                $(storeBtn).css("background-position", val);
+               storeFlg=false;
             };
          }
       });
@@ -567,10 +688,12 @@ function store(){
 };
 //게시물 좋아요 + 좋아요 취소
 function like(){
+	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").attr("title");
       var likeBtn=this;
-      
+      if(likeFlg){ return; };
+      likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
          var url ="/post/"+postid+"/like";
@@ -590,27 +713,86 @@ function like(){
          dataType:"text",
          success:function(result){
             if(result=="SUCCESS"){
+            	
                $(likeBtn).css("background-position", val);
                likerList();
                getPostList();
+               likeFlg=false;
             };
          }      
       });
    });
 };
+
+
 //좋아요 count+list
 function likerList(){
    $(".likeContainer").each(function(){
       var pid=$(this).attr("title");
       var likeContainer = this;
+      
       $.getJSON("/post/" + pid + "/likerlist", function(data){
          var likerList="";
          var data=$(data)
+         //좋아요 갯수가 1개 이상일때
          if(data.length>0){
             $(likeContainer).children("span").html(data.length);
+            $(likeContainer).css("cursor", "pointer");
+            
+            //좋아요 리스트 클릭함수
             $(likeContainer).on("click", function(){
-               ///list append 추가예정
+                //원래 내용
+                $(".section2").hide();
+                
+            	//handlebar추가
+                var source=$("#modalLiker").html();
+                var post=Handlebars.compile(source);
+                var postmodal=post(data);
+                $(".postModal-content").append(postmodal);
+                
+                var likers="";
+                data.each(function(){
+        			console.log(this);
+                    likers+="<li class='oneofList'><a href='/member/"+this.nickname+"'><img class='followPhoto' ";
+                    
+                   	// 프로필 사진이 있는경우 | 없는 경우
+    				if(this.profilephoto != null){
+    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
+                	}else{
+                		likers+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
+                	}
+                   	// 이름이 있는 경우 | 없는 경우
+                   	if(this.name != null){
+                   		likers+="<div style='display:inline-block; line-height:16px;'><a href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+                   	}else{
+                   		likers+="<a style='line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
+                   	}
+                   	
+                	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
+                	if(this.isFollow > 0){
+                		likers+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
+                   
+	                }else if(this.isFollow==0 && this.id!=${login.id}){
+	                	likers+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
+	                   
+	                }else{
+	                	likers+="</li>";
+	                }
+                })
+                
+                $("#likersContainer").append(likers)
+                //팔로우+언팔로우
+                follow();
+                
+                $(".likersClose").on("click", function(){
+                	$(".section3").remove();
+                	$(".section2").show();
+                })
+                
             });
+            
+
+            
          }else if(data.length==0){
             $(likeContainer).children("span").html(0);
          }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
 import com.faint.dto.RelationDTO;
+import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 
 public interface UserDAO {
@@ -23,6 +24,8 @@ public interface UserDAO {
 	public void userBlock(RelationDTO dto) throws Exception;
 	
 	public void userUnblock(RelationDTO dto) throws Exception;
+	
+	public List<BlockedUserDTO> readBlockedList(int uid) throws Exception;
 
 	// ======================팔로우====================== 
 	public void flwCreate(RelationDTO dto) throws Exception;
@@ -77,6 +80,8 @@ public interface UserDAO {
 
 	public UserVO getUserPw(String email) throws Exception; // 유저비밀번호 등
 	
+	public UserVO getUserPw1(int id) throws Exception; // 유저 아이디 비번 ///
+	
 	// ======================회원정보 변경======================
 	
 	public int checkPassWord(int id, String pw) throws Exception; //비밀번호 체크
@@ -98,4 +103,5 @@ public interface UserDAO {
 	public UserVO naverReadUser(LoginDTO dto) throws Exception; // 네이버 유저읽기( 아직 안됨)
 	
 	public void naverInsertUser(LoginDTO dto) throws Exception; // 네이버 등
+	
 }

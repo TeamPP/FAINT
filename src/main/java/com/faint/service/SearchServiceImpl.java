@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.faint.domain.SearchCriteria;
+import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
 import com.faint.persistence.SearchDAO;
 
