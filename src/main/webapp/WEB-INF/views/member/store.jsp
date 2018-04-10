@@ -473,13 +473,13 @@ function followed(){
             var followedList="";
             data.each(function(){
 				
-            	followedList+="<li class='oneofList'> <img class='followPhoto' ";
+            	followedList+="<li class='oneofList'> <a href='/member/"+this.nickname+"'> <img class='followPhoto' ";
                 
             	// 프로필 사진이 있는경우 | 없는 경우
 				if(this.profilephoto != null){
-					followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp";
+					followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
             	}else{
-					followedList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp";
+					followedList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
             	}
                	// 이름이 있는 경우 | 없는 경우
                	if(this.name != null){
@@ -547,13 +547,13 @@ function following(){
 			var followingList="";
             data.each(function(){
             	
-               followingList+="<li class='oneofList'> <img class='followPhoto' ";
+               followingList+="<li class='oneofList'> <a style='font-weight:bold;' href='/member/"+this.nickname+"'> <img class='followPhoto' ";
                
 	            // 프로필 사진이 있는경우 | 없는 경우
 	           	if(this.profilephoto != null){
-	           		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp";
+	           		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
 	           	}else{
-	           		followingList+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp";
+	           		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
 	           	}
               	// 이름이 있는 경우 | 없는 경우
               	if(this.name != null){

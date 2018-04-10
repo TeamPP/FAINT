@@ -753,13 +753,13 @@ function likerList(){
                 var likers="";
                 data.each(function(){
         			console.log(this);
-                    likers+="<li class='oneofList'> <img class='followPhoto' ";
+                    likers+="<li class='oneofList'><a href='/member/"+this.nickname+"'><img class='followPhoto' ";
                     
                    	// 프로필 사진이 있는경우 | 없는 경우
     				if(this.profilephoto != null){
-    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp";
+    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
                 	}else{
-                		likers+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp";
+                		likers+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
                 	}
                    	// 이름이 있는 경우 | 없는 경우
                    	if(this.name != null){
