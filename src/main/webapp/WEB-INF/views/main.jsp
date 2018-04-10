@@ -10,9 +10,6 @@
 <title>FAINT</title>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- 슬라이드 넘기기 버튼 부트스트랩  -->
- <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-
 
 </head>
 <style>
@@ -681,7 +678,7 @@ function follow(){
 
 //css - 카테고리별 게시물 필터링
   var all=$("#carousel").children(); //초기값
-	function cateClick(thisTag){
+function cateClick(thisTag){
 	  var customType=$(thisTag).data("filter");
 	  //보고있던 이미지값 저장
 	var currentTitle=$(".selected").children("img").attr("title");
@@ -699,7 +696,11 @@ function follow(){
 	
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
 	$('#carousel div').click(function() {
-    	moveToSelected($(this));
+		if($(this).hasClass("hideLeft")){
+			moveToSelected($(".hideLeft:eq(0)"));	
+		}else{
+			moveToSelected($(this));
+		}
     });
 	
 	//이전 선택한 이미지가 있을 경우
@@ -707,7 +708,7 @@ function follow(){
 		$(".post>img[title="+currentTitle+"]").parent().trigger("click");
 	}
 	
-    }
+}
 	
 //css - 댓글달기 버튼 클릭시 커서 포커스
 function replyCursor(thisBtn){
@@ -775,7 +776,6 @@ function changeClass(){
 		}else{
 			moveToSelected($(this));
 		}
-		
 	});
 	
 	/* prev, next 아이콘 클릭 사진이동  */

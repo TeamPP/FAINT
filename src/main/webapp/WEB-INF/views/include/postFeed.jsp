@@ -3,6 +3,7 @@
 <html>
 <header>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
 </header>
 <style>
 span{
@@ -25,7 +26,7 @@ span{
 .postModal-content {
     background-color: #fefefe;
     margin: auto;
-    width: 940px;
+    width: 935px;
     height: 600px;
 }
 
@@ -116,12 +117,12 @@ span{
 			</div>
 			<!-- 왼쪽 이미지 이동 버튼 -->
 			<a class="_5wmqs _pak6p coreSpriteLeftChevron" role="button" id="moveLeft" style ="display: none" onclick="moveLeft()">
-				<i class="fa fa-chevron-circle-left" style="font-size: 30px; color: lightgray;"></i>
+				<i class="fa fa-chevron-circle-left"></i>
 			</a>
 
 			<!-- 오른쪽 이미지 이동 버튼 -->
 			<a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
-				<i class="fa fa-chevron-circle-right" style="font-size: 30px; color: lightgray;"></i>
+				<i class="fa fa-chevron-circle-right"></i>
 			</a>
 
 			<!-- 사진 몇개인지 표시 -->
@@ -166,7 +167,7 @@ span{
                <div class="btnContainer" title="{{postid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
-               <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개(링크미구현)</a>
+               <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개</a>
             </div>
          </div>
 
@@ -181,8 +182,8 @@ span{
 </div>
 <style>
 .section1{width: 600px; height: 600px; display: inline-block; float: left; position: relative; background-color: black; }
-#moveLeft > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -40px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; }
-#moveRight > i{ height: 25px; width: 25px; border-radius: 150px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -324px -72px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; }    
+#moveLeft > i{ border-radius: 150px; border: none; margin: 8px 8px 8px; left:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.7;}
+#moveRight > i{ border-radius: 150px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 50%; position: absolute; font-size: 30px; color: white; opacity: 0.8;}    
 .popPostImage{ position: absolute; max-width: 100%; max-height: 100%; width: auto; height: auto; margin: auto; top: 0; bottom: 0; left: 0; right: 0; }
 .section2{ width: 335px; height: 100%; display: inline-block; text-align: center; padding-left: 20px; padding-right: 20px; }
 .s2_1{ padding-top: 20px; padding-bottom: 20px; height: 78px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -202,6 +203,30 @@ span{
 .s2_4{ width: 100%; height: auto; }
 .s2_4_1{ padding: 10px 0 10px 0; }
 .replyRegist{ font-size: 15px; border: none; width: 100%; height: auto; float: left; }
+.likeContainer{ font-weight: bold; cursor: default; }
+</style>
+</script>
+
+<!-- 좋아요 list Modal -->
+<script id="modalLiker" type="text/x-handlebars-template">
+<section class="section3">
+	<div class="likersTitle">
+		<div class="likersClose"><i class="material-icons">clear</i></div>
+		<strong>좋아요</strong>
+	</div>
+	<ul id="likersContainer"></ul>
+</section>
+
+<style>
+.section3{ width: 335px; height: 100%; display: inline-block; text-align: left; }
+.likersClose { width:20px; height:20px; cursor: pointer; float:left; }
+.likersTitle{ width: 100%; height: 7%; padding: 10px; font-size: 17px; text-align: center; border-bottom: 1.3px solid #efefef; }
+.oneofList{ border-bottom: solid 1px #efefef; width: 100%; height: 53px; padding: 10px 16px; float: left; }
+#likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
+.isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
+	border-width: 1px; line-height: 26px; border-radius: 2px; }
+.followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
+a{ font-weight: bold; }
 </style>
 </script>
 
@@ -341,7 +366,7 @@ function getPostList(){
       
       $(".imageContainer:eq("+index+")").append(img);
       
-      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon fas fa-comment'>aa</i><span> \t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span>\t"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
@@ -548,7 +573,7 @@ function reply(){
                   "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
                
                if(this.userid==${login.id} || this.postwriter==${login.id}){
-                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' >X</a></li>";
+                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li>";
                }else{
                   replystr+="</div>";
                };
@@ -698,19 +723,76 @@ function like(){
       });
    });
 };
+
+
 //좋아요 count+list
 function likerList(){
    $(".likeContainer").each(function(){
       var pid=$(this).attr("title");
       var likeContainer = this;
+      
       $.getJSON("/post/" + pid + "/likerlist", function(data){
          var likerList="";
          var data=$(data)
+         //좋아요 갯수가 1개 이상일때
          if(data.length>0){
             $(likeContainer).children("span").html(data.length);
+            $(likeContainer).css("cursor", "pointer");
+            
+            //좋아요 리스트 클릭함수
             $(likeContainer).on("click", function(){
-               ///list append 추가예정
+                //원래 내용
+                $(".section2").hide();
+                
+            	//handlebar추가
+                var source=$("#modalLiker").html();
+                var post=Handlebars.compile(source);
+                var postmodal=post(data);
+                $(".postModal-content").append(postmodal);
+                
+                var likers="";
+                data.each(function(){
+        			console.log(this);
+                    likers+="<li class='oneofList'> <img class='followPhoto' ";
+                    
+                   	// 프로필 사진이 있는경우 | 없는 경우
+    				if(this.profilephoto != null){
+    					likers+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />&nbsp &nbsp";
+                	}else{
+                		likers+="src='/resources/img/emptyProfile.jpg' />&nbsp &nbsp";
+                	}
+                   	// 이름이 있는 경우 | 없는 경우
+                   	if(this.name != null){
+                   		likers+="<div style='display:inline-block; line-height:16px;'><a href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+                   	}else{
+                   		likers+="<a style='line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
+                   	}
+                   	
+                	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
+                	if(this.isFollow > 0){
+                		likers+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
+                   
+	                }else if(this.isFollow==0 && this.id!=${login.id}){
+	                	likers+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
+	                   
+	                }else{
+	                	likers+="</li>";
+	                }
+                })
+                
+                $("#likersContainer").append(likers)
+                //팔로우+언팔로우
+                follow();
+                
+                $(".likersClose").on("click", function(){
+                	$(".section3").remove();
+                	$(".section2").show();
+                })
+                
             });
+            
+
+            
          }else if(data.length==0){
             $(likeContainer).children("span").html(0);
          }
