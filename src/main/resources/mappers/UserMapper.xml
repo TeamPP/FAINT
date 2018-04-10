@@ -329,7 +329,12 @@
 		WHERE id=#{id}
 		AND BINARY password=#{password}
 	</select>
-	
+	<!-- 암호화비밀번호 가져오기 2-->
+    <select id="getUserPassword1" resultType="com.faint.domain.UserVO">
+	    select PASSWORD
+	    FROM  tbl_user
+	    WHERE ID = #{id}
+    </select>
 	<!-- ====================ip차단==================== -->
 	<insert id="insert_ip_ban" parameterType="String">
 		INSERT INTO IPBANLIST (IP) VALUES(#{param1})

@@ -291,10 +291,47 @@ public class UserServiceImpl implements UserService {
 	//============================회원정보 변경============================
 	
 	//비밀번호 체크
-	@Override
-	public int checkPassWord(int id, String pw) throws Exception {
-		return dao.checkPassWord(id, pw);
-	}
+		@Override
+		public int checkPassWord(int id, String pw) throws Exception {
+			
+			System.out.println("service dto: "+id+"비번"+pw);
+			System.out.println("멤버서비스 dto");
+			
+			
+			UserVO vo = dao.read(id);
+			
+			
+			try {
+				System.out.println(pw);
+				pw = dao.getUserPw1(vo.getId()).getPassword();
+				String rawPw = vo.getPassword();
+				
+				System.out.println("pw====================="+pw);
+				System.out.println("raw===================="+rawPw);
+				//System.out.println("db pW  : "+pw);
+				//System.out.println("입렵Pw:"+rawPw);
+				//System.out.println(passwordEncoder.matches(rawPw, pw));
+				if(passwordEncoder.matches(rawPw, pw)) {
+					System.out.println("비밀번호 일치");
+					vo.setPassword(pw);
+				}else {
+					//============System.out.println("비밀번호 불일치");=======================
+					//주석 해제 시 비 암호화 설정된 db Pw  값으로  로그인 되지 않음
+					vo.setPassword(rawPw);
+				}
+			}catch(NullPointerException npe){
+				UserVO v1=new UserVO();
+				v1=null;
+				System.out.println(v1);
+				return 0;
+			}catch (Exception e){
+				UserVO v1=new UserVO();
+				vo=null;
+				return 0;
+			}
+			
+			return dao.checkPassWord(id, pw);
+		}
 	
 	//비밀번호 수정
 	@Override

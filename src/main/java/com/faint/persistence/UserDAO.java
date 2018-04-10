@@ -80,6 +80,8 @@ public interface UserDAO {
 
 	public UserVO getUserPw(String email) throws Exception; // 유저비밀번호 등
 	
+	public UserVO getUserPw1(int id) throws Exception; // 유저 아이디 비번 ///
+	
 	// ======================회원정보 변경======================
 	
 	public int checkPassWord(int id, String pw) throws Exception; //비밀번호 체크
@@ -101,4 +103,5 @@ public interface UserDAO {
 	public UserVO naverReadUser(LoginDTO dto) throws Exception; // 네이버 유저읽기( 아직 안됨)
 	
 	public void naverInsertUser(LoginDTO dto) throws Exception; // 네이버 등
+	
 }
