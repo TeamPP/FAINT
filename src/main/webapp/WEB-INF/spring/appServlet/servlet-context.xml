@@ -70,10 +70,10 @@
 			<mapping path="/user/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
-		<interceptor>
+		<!-- <interceptor>
 			<mapping path="/main" />
 			<beans:ref bean="authInterceptor" />
-		</interceptor>
+		</interceptor> -->
 	</interceptors>
 
  </beans:beans>

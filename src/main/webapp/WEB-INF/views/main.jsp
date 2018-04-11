@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!--헤더-->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
@@ -292,6 +293,7 @@ header,div{-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:
 
 
 <body>
+
 	<div id="carousel">
 	
 		<c:forEach items="${list}" var="postDTO" varStatus='status'>

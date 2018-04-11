@@ -47,6 +47,7 @@ public class MemberController {
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
 		RelationDTO dto=new RelationDTO();
+		
 		dto.setLoginid(vo.getId());
 		dto.setNickname(nickname);
 		UserVO user=(UserVO)service.userRead(dto);
