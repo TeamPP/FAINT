@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!--헤더-->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
@@ -317,6 +318,19 @@ main {
 </style>
 
 <body>
+
+
+<%--  <br>
+ <br>
+ <br>
+	<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
+		<a href="<c:url value='/join.do'/>">회원 가입하기</a>
+		<a href="<c:url value='/login.do'/>">로그인하기</a>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
+		<a href="<c:url value='/users-modify.do'/>">회원정보변경</a>
+		<a href="<c:url value='/logout'/>">로그아웃 </a>
+	</sec:authorize> --%>
 <!-- 카테고리 버튼 -->
 <section class="cateSection">
 <ul id="categoryList">

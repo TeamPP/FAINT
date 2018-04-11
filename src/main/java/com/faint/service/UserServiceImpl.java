@@ -5,15 +5,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.faint.domain.Authority;
 import com.faint.domain.UserVO;
+import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
+import com.faint.persistence.AuthorityDao;
 import com.faint.persistence.UserDAO;
 
 import common.MailHandler;
@@ -24,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
 	@Inject
 	private UserDAO dao;
+	
+	@Autowired
+	private AuthorityDao authorityDao;
 	
 	@Inject
 	private JavaMailSender mailSender;
@@ -387,6 +397,36 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int modifyPhoto(Integer id, String url) throws Exception {
 		return dao.updatePhoto(id, url);
+	}
+	
+	
+	/////////+++++++====================
+	@Override
+	public UserVO detailByEmail(String email) throws UsersException {
+		
+		
+		System.out.println(email+"email은 ");
+		return dao.selectByEmail(email);
+	}
+
+	@Override
+	public Authority getAuthority(Integer id) throws UsersException {
+		return authorityDao.select(id);
+	}
+
+	@Override
+	public UserDetails getPrincipal() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		System.out.println(auth+"get");
+		System.out.println("userDetailes");
+		
+		Object principal = auth.getPrincipal();
+		if (principal instanceof UserDetails) {
+			return (UserDetails) principal;
+		}
+		
+		return null;
 	}
 	
 }

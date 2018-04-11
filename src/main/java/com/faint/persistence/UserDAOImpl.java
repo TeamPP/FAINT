@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
+import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
@@ -124,6 +125,39 @@ public class UserDAOImpl implements UserDAO {
 	// session.update(namespace + ".keepLogin", paramMap);
 	// }
 	// 세션으로 로그인 여부 판단
+	
+	@Override
+	public UserVO selectByEmail(String email) throws UsersException {
+		
+		System.out.println("daoimpl "+email);
+		UserVO users = null;
+		
+		try {
+			
+			System.out.println(""+email+"try임플리 ");
+			users = session.selectOne(namespace + ".select-users-by-email", email);
+			
+			System.out.println("userDAO 로그인 ");
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+		
+		return users;
+	}
+	
+
+	@Override   // 권한 주기 
+	public void insertAuthority(UserVO users) throws UsersException {
+		try {
+			session.insert(namespace + ".insert-authority", users);
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+	}
+
+
 	@Override
 	public void keepLogin(String email, String sessionId, Date next) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
