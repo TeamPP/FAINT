@@ -397,8 +397,6 @@ function getPostList(){
 };
 
 function postModal(){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
 	//포스트 모달 팝업 창
 	$(".imageContainer").on("click", function(){
 		var curIndex=$(".imageContainer").index(this);
