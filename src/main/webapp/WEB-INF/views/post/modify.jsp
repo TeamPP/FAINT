@@ -143,15 +143,13 @@
 		<header class="_7b8eu _9dpug">
 			<div class="_82odm _i2o1o">
 				<a class="_pg23k _jpwof _gvoze" href="/member/${postVO.usernickname}" style="width: 30px; height: 30px;">
-				<img class="_rewi8"
-				src="
-						<c:if test="${postVO.profilephoto ne null && postVO.profilephoto != '' }">
-							/displayFile?fileName=${postVO.profilephoto}
-						</c:if>
-						<c:if test="${postVO.profilephoto eq null || postVO.profilephoto == '' }">
-							../../resources/img/emptyProfile.jpg
-						</c:if>
-				">
+				<img class="_rewi8" 
+					<c:if test="${postVO.profilephoto ne null && postVO.profilephoto != '' }">
+						src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${postVO.profilephoto}"
+					</c:if>
+					<c:if test="${postVO.profilephoto eq null || postVO.profilephoto == '' }">
+						src="../../resources/img/emptyProfile.jpg"
+					</c:if>/>
 				</a>
 			</div>
 			<div class="_j56ec">

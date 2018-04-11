@@ -178,8 +178,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	//==============게시글 수정==============
-	@Override
 	@Transactional
+	@Override
 	public void modify(PostVO post) throws Exception {
 		dao.modify(post);
 		
