@@ -1,4 +1,4 @@
-package com.faint.service;
+/*package com.faint.service;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.faint.domain.UserVO;
-import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
+import com.faint.dto.RelationDTO;
 import com.faint.persistence.UserDAO;
 
 import common.MailHandler;
@@ -386,3 +386,4 @@ public class UserServiceImpl implements UserService {
 	}
 	
 }
+*/
