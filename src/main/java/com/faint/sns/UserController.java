@@ -317,16 +317,6 @@ public class UserController {
 	}
 	
 	
-	// 접근 제한 페이지
-	@RequestMapping(value="/access-denied", method=RequestMethod.GET)
-	public String accessDenied(Model model) {
-		
-		System.out.println("sasdsadasdsad");
-		
-		model.addAttribute("email", service.getPrincipal().getUsername());
-		
-		return "access-denied";
-	}
 
 
 	@RequestMapping (value="/logout",method = RequestMethod.GET)

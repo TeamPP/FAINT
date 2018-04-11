@@ -195,7 +195,7 @@ public class PostController {
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		return "redirect:/";
+		return "redirect:/main";
 	}
 	
 	

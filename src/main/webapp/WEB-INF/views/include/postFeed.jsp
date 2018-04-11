@@ -3,7 +3,8 @@
 <html>
 <header>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   
+   <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
 span{
@@ -99,7 +100,9 @@ span{
 </style>
 
 <body>
-
+<input type="hidden"
+	name="${_csrf.parameterName}"
+	value="${_csrf.token}"/>
 <!-- post개별 게시물 모달팝업 -->
 <script id="modalPost" type="text/x-handlebars-template">
 <div id="myModal" class="postModal">
@@ -309,6 +312,10 @@ function getPostList(){
          url:"/post/" + uid,
          datatype:"json",
          async:false,
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          success:function(userdata){
             data=$(userdata);
          }
@@ -390,7 +397,8 @@ function getPostList(){
 };
 
 function postModal(){
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
 	//포스트 모달 팝업 창
 	$(".imageContainer").on("click", function(){
 		var curIndex=$(".imageContainer").index(this);
@@ -402,6 +410,10 @@ function postModal(){
 	      headers:{
 	         "X-HTTP-Method-Override" : "POST"
 	      },
+	      beforeSend : function(xhr)
+          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+          },
 	      data:{postid:pid},
 	      datatype:"json",
 	      success:function(data){
@@ -558,6 +570,10 @@ function postDelete(thisTag){
 		type: "delete",
 		url: "/post/"+postid+"/delete",
 		headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
 		dataType:"text",
 		success:function(result){
 			if(result=="SUCCESS"){
@@ -651,6 +667,10 @@ function registReply(thisTag, key){
             "Content-Type" : "application/json",
             "X-HTTP-Method-Override" : "POST"
          },
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          dataType:"text",
          data:JSON.stringify({
             postid:postid,
@@ -678,6 +698,10 @@ function deleteReply(thisTag){
       headers:{
          "Content-Type" : "application/json",
          "X-HTTP-Method-Override" : "DELETE"
+      },
+      beforeSend : function(xhr)
+      {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+          xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
       },
       dataType:"text",
       success:function(result){
@@ -715,6 +739,10 @@ function store(){
          url: url,
          headers: headers,
          dataType:"text",
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          success:function(result){
             if(result=="SUCCESS"){
                $(storeBtn).css("background-position", val);
@@ -749,6 +777,10 @@ function like(){
          url: url,
          headers: {headers},
          dataType:"text",
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          success:function(result){
             if(result=="SUCCESS"){
             	
