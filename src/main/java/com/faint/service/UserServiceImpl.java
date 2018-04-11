@@ -1,4 +1,4 @@
-package com.faint.service;
+/*package com.faint.service;
 
 import java.util.Date;
 import java.util.List;
@@ -431,4 +431,4 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
-}
+}*/
