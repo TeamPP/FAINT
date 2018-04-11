@@ -116,12 +116,12 @@ h2{
 		//새 비밀번호 입력
 		$("#newPw").keyup(function(){
 			changePwBtn();			
-			validCheck(this);
+			//validCheck(this);
 		});
 		//새 비밀번호 확인 입력
 		$("#newPwChk").keyup(function(){
 			changePwBtn();			
-			validCheck(this);
+			//validCheck(this);
 		});
 		
 		//비번 변경
