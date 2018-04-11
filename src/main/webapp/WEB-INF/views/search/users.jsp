@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 
 </head>
@@ -115,6 +117,10 @@ $(function () {
                     	"row" : lastrow,
                     	 "keyword" : keyword
                     },
+                    beforeSend : function(xhr)
+			          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			          },
                     success : function(data){// ajax 가 성공했을시에 수행될 function이다. 이 function의 파라미터는 서버로 부터 return받은 데이터이다.
                          
                         var str = "";

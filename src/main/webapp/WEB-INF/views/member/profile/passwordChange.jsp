@@ -75,6 +75,7 @@ h2{
 			<div class="_cd2n1"><div class="_qr7ez">
 			<span class="_ov9ai"><button class="_qv64e _gexxb _r9b8f _jfvwv" id="btnChangePW" disabled="">비밀번호 변경</button></span></div></div></div>
 			<input type="hidden" name="id" value="${userVO.id }">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 		
 	</div>

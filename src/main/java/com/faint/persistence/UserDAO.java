@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
+import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
@@ -46,6 +47,14 @@ public interface UserDAO {
 	// ======================로그인======================
 
 	public UserVO login(LoginDTO dto) throws Exception; // 로그
+	
+	// 이메일로 사용자의 모든 정보 가져오기//// 추가 
+	public  UserVO selectByEmail(String email) throws UsersException;
+	
+	
+	// users_authority 테이블에 정보를 입력하기
+	public void insertAuthority(UserVO users) throws UsersException;
+	///////////////////////////////////
 	
 	// sessionKey & sessionLimit 업데이트
 	public void keepLogin(String email, String sessionId, Date next) throws Exception; // sessinId = DB의 sessionKey

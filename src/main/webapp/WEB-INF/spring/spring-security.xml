@@ -8,6 +8,64 @@
 
 	<beans:bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	  <authentication-manager>
+     	<authentication-provider user-service-ref ="customUserDetailsService">
+     		<password-encoder ref="bcryptPasswordEncoder"/>
+     	</authentication-provider>
+     </authentication-manager>
+     <beans:bean id="customAuthenticationFailHandler" class="handler.CustomAuthenticationFailHandler"/>
+      
+    
+     	 <http auto-config='true' use-expressions="true">
+
+			<intercept-url pattern="/explore/**" access="hasAuthority('ROLE_USER')" /> 
+			<intercept-url pattern="/member/**" access="hasAuthority('ROLE_USER')" /> 
+			<intercept-url pattern="/user/**" access="hasAuthority('ROLE_USER')" /> 
+			<intercept-url pattern="/post/**" access="hasAuthority('ROLE_USER')" />  
+			<intercept-url pattern="/main" access="hasAuthority('ROLE_USER')" />  
+			<intercept-url pattern="/**" access="permitAll" />
+          <intercept-url pattern="/loginTest/**" access="isAnonymous()" />
+			
+			<intercept-url pattern="/**" access="permitAll" />
+		<form-login 
+				login-page="/loginTest" 
+				login-processing-url="/login-processing"
+				default-target-url="/main"
+				username-parameter="email"
+				password-parameter="password" 
+				authentication-failure-url="/login?error=loginTest"/>
+				
+				
+				
+				
+		
+		
+			<access-denied-handler error-page="/access-denied"/>
+		<csrf />
+		
+		
+	</http>      
+<!-- 		
+	 <http auto-config='true' use-expressions="true">
+	    		<intercept-url pattern="/admin/**" access="hasAuthority('USER_MANAGER')" />
+		<security:intercept-url pattern="/manager/**" access="hasAuthority(ROLE_USER)" /> hasRole/hasAuthority 같은뜻 저권한 가지만 사람만 접근가
+			<intercept-url pattern="/member/**" access="hasAuthority('ROLE_USER')" /> 인증된 사람만 접근 가능 
+			<intercept-url pattern="/user/**" access="hasAuthority('ROLE_USER')" /> 인증된 사람만 접근 가능 
+			<intercept-url pattern="/post/**" access="hasAuthority('ROLE_USER')" /> 인증된 사람만 접근 가능 
+			
+			<intercept-url pattern="/**" access="permitAll" />
+		<form-login 
+				login-page="/login" 
+				login-processing-url="/login-processing"
+				default-target-url="/main"
+				username-parameter="email"
+				password-parameter="password" 
+				authentication-failure-url="/login?error=login"/>
+				
+		
+		<access-denied-handler error-page="/access-denied"/>
+		<csrf />
+	</http> -->
 	
 	<!-- <http auto-config='true'  use-expressions="true">
 		<intercept-url pattern="/user/login" access="permitAll" />

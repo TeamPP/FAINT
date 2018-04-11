@@ -10,6 +10,8 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 </head>
 <style>
@@ -150,6 +152,7 @@ text-decoration:none;
     </fieldset>
     <div class="preview-images-zone"> </div>
     <form id="uploadForm" method="post" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </div>
 
 <div class="container">
@@ -336,6 +339,10 @@ $(document).ready(function() {
 				fileName : $(this).attr("data-src")
 			},
 			dataType : "text",
+			beforeSend : function(xhr)
+	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	          },
 			success : function(result) {
 				if (result == 'deleted') {
 				    $(".preview-image.preview-show-"+no).remove();
@@ -446,6 +453,10 @@ function readImage(files) {
 				processData : false,
 				contentType : false,
 				type : 'POST',
+				beforeSend : function(xhr)
+		          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+		              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		          },
 				success : function(data) {
 					var fileInfo = getFileInfo(data);
 					

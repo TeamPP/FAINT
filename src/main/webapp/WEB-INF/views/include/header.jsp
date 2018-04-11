@@ -8,7 +8,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
+   
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -31,7 +33,8 @@
 
 <!-- 웹소켓 -->
 <script type="text/javascript" src="../../resources/js/scokjs.js"></script>
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <style>
 .navbar-default .explore {
    width: 24px;
@@ -82,7 +85,6 @@
 
 
 /* 카테고리 아이콘____ */
-/* 카테고리 아이콘____ */
 .cateSection ul {
    height: 150px;
    position: absolute;
@@ -97,7 +99,7 @@
    color: white;
 }
 .cateSection ul:hover {
-   top: 70px; /* mouseenter 시에 이벤트  판넬 내려옴 */
+   top: 50px; /* mouseenter 시에 이벤트  판넬 내려옴 */
    left: 0px;
 }
 #categoryList {
@@ -179,7 +181,6 @@ li.cate:hover img, li.cate.hover img {
    -webkit-transform: scale(1.15);
    transform: scale(1.15);
 }
-
 /* 화살표 아이콘 */
 .arrow {
    padding:5px;
@@ -332,6 +333,10 @@ function searchAjax(){
             },
             async: false,
             data: searchwords,
+            beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
             //dataType: "text",
             success: function(result){
                

@@ -2,6 +2,7 @@ package com.faint.sns;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -232,9 +233,19 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/loginTest", method = RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto) {
+//	@RequestMapping(value = "/loginTest", method = RequestMethod.GET)
+//	public void loginGET(Model model ,Principal principal) {
+//		System.out.println("스미마");
+//	}
+	
+	@RequestMapping(value="/login_view")
+	public String login_view(Model model, Principal principal, HttpSession session) {
+		model.addAttribute("principal", principal);
+		System.out.println(principal);
 		
+		UserVO vo = (UserVO)session.getAttribute("principal");
+		System.out.println("asd");
+		return "user/loginTest";
 	}
 	
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
@@ -288,6 +299,7 @@ public class UserController {
 		System.out.println(vo);
 
 	}
+	
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.GET)
 	public void loginPOSTGet(LoginDTO dto, HttpSession session, Model model) throws Exception{
@@ -303,6 +315,8 @@ public class UserController {
         session.setAttribute("socialID","true");
         session.setAttribute("modify","true");
 	}
+	
+	
 
 
 	@RequestMapping (value="/logout",method = RequestMethod.GET)
