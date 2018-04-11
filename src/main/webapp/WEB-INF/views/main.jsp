@@ -18,6 +18,7 @@
 <style>
 body{
 	overflow: hidden;
+	}
 .likeModal {
    display: none; /* Hidden by default */
    position: fixed; /* Stay in place */
@@ -57,146 +58,7 @@ body{
    position: absolute;
    z-index: 2;
 }
-/* .cateSection ul {
-   height: 150px;
-   position: absolute;
-   top: -30px;
-   left: 0px;
-   transition: 0.3s;
-   margin: 0;
-   padding: 5px 0;
-   width: 30%;
-   text-decoration: none;
-   font-size: 20px;
-   color: white;
-}
-.cateSection ul:hover {
-   top: 70px; 
-   left: 0px;
-}
-#categoryList {
-   list-style: none; 
-}
-li.cate {
-   list-style: none; 
-   font-family: 'Raleway', Arial, sans-serif;
-   position: relative;
-   float: left;
-   overflow: hidden;
-   margin: 20px 1% 0 1%;
-   width: 50px;
-   height: 50px;
-   background: #000000;
-   color: #ffffff;
-   text-align: center;
-   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-   border-radius: 150px;
-   border: 2px solid black;
-}
-li.cate * {
-   
-   -webkit-transition: all 0.45s ease-in-out;
-   transition: all 0.45s ease-in-out;
-}
-li.cate img {
-   height: 100%;
-   width: 100%;
-   position: relative;
-   opacity: 1; 
-   border-radius: 150px;
-}
-/* li.cate .caption {
-   overflow: hidden;
-   -webkit-transform: translateY(20%); 
-   /* "일상" Y위치 */
-   /* transform: translateY(20%);
-   transform: translateX(2%);
-   -webkit-transform: translateX(2%);  */
-   /* "일상" X위치 */
-/*    position: absolute;
-   width: 100%;
-   bottom: 0;
-}  */
-/* li.cate p {
-   display: table;
-   margin: 0 auto;
-   padding: 0 10px;
-   position: relative;
-   text-align: center;
-   width: auto;
-   text-transform: uppercase;
-   font-weight: 400;
-} */
-/* "일상" 글자크기 & 글자 하얀테두리 감싸기 */
-/* li.cate p {
-   font-size: 0.8em;
-   font-weight: 500;
-   color: black;
-   
-   text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
-      #F2F1F6;
-   -moz-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
-      #F2F1F6;
-   -webkit-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0
-      -1px #F2F1F6;
-} */
-/* a링크가 전체 이미지 크기만큼 */
-/* li.cate a {
-   left: 0;
-   right: 0;
-   top: 0;
-   bottom: 0;
-   position: absolute;
-   z-index: 1;
-} */
-/*이미지 변경 스타일 */
-/* li.cate:hover img, li.cate.hover img {
-   opacity: 0.35;
-   -webkit-transform: scale(1.15);
-   transform: scale(1.15);
-} */
-/* .gray {
-   -webkit-filter: grayscale(100%);
-   filter: gray;
-}
- */
-/* 프로필 사진 및 닉네임 */
-/*         ._header{
-            padding: 10px;
-            border: 1px solid #efefef;
-        } */
-/*프사 */
-/*       ._postImage{
-      width:30px;
-       height:30px;
-        border-radius: 150px;
-      }
-    */
-/*포스트 사진 밑 부분( 좋아요 caption내용) */
-/*    ._footer{
-         padding: 10px;
-            border: 1px solid #efefef;
-      }  */
-/* 화살표 아이콘 */
-/*
-.arrow {
-      padding:5px;
-    border: solid black;
-    border-width: 0 2px 2px 0; /*아이콘 밑 화살표모양으로 만들기 */
-/*    position: absolute;
-   left: 4px;
-   bottom: 30px;
-   transform: rotate(45deg);
-   -webkit-transform: rotate(45deg);
-}  */ 
-/* 회전목마 슬라이드 */
-main {
-   position: relative;
-   width: 100%;
-   height: 100%;
-   margin: 25% auto;
-   padding: 0;
-}
+
 /*id는 스타일 최우선으로 적용됨 그 다음에 class */
 #carousel {
 	position: relative;
@@ -430,58 +292,6 @@ header,div{-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:
 
 
 <body>
-<!-- 카테고리 버튼 -->
-<!-- <section class="cateSection">
-<ul id="categoryList">
-    ALL 여행 영화 음악 음식 글귀
-        <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://pbs.twimg.com/profile_images/892243625198755842/X1n8LRQH_400x400.jpg" alt="sample22" />
-              <div class="caption"><p>ALL</p></div>
-        </li>
-   
-        <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src=https://post-phinf.pstatic.net/MjAxNzExMzBfMTQx/MDAxNTEyMDI5ODQxMTM5.sdeLNBYNUgcXjghC6MTd1IZAH5OWJKds9qWnSdByBCQg.VjtqfFZ_074J9dsv6qN3DD2f51O03av1gw9K_BL4UN8g.GIF/emot_020_x3.gif?type=w1200 alt="sample22" />
-              <div class="caption">
-                <p>여행</p>
-              </div>
-        </li>
-        
-          <li class="cate"  data-filter="2" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="http://kstatic.inven.co.kr/upload/2017/10/24/bbs/i16627999197.gif" alt="sample22" />
-              <div class="caption">
-                <p>영화</p>
-              </div>
-        </li>
-        
-          <li class="cate"  data-filter="3" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNkYEtCWfkb94vsBBh_O_-9rvPsW7DcE70k4THgoCHYHH0wN_yBw" alt="sample22" />
-              <div class="caption">
-                <p>음악</p>
-              </div>
-        </li>
-        
-          <li class="cate"  data-filter="4" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://i.pinimg.com/originals/8d/6a/86/8d6a867e299c5cb6bef1eb33bfe9791b.gif" alt="sample22" />
-              <div class="caption">
-                <p>음식</p>
-              </div>
-        </li>
-      
-       
-                 <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="http://upload2.inven.co.kr/upload/2017/07/01/bbs/i16284189296.gif" alt="sample22" />
-              <div class="caption">
-                <p>글귀</p>
-              </div>
-        </li>
-         화살표 아이콘 
-         <i class="mega-octicon octicon-chevron-down" id=""></i>
-         <i class="arrow"></i>
-</ul>
-</section> -->
-
-
-
 	<div id="carousel">
 	
 		<c:forEach items="${list}" var="postDTO" varStatus='status'>
@@ -587,9 +397,10 @@ $(document).ready(function(){
   var all=$("#carousel").children(); //초기값
 function cateClick(thisTag){
 	  var customType=$(thisTag).data("filter");
+	  console.log(customType);
 	  //보고있던 이미지값 저장
 	//var currentTitle=$(".selected").children("img").attr("title");
-	var currentTitle=$(".selected").children("img").data("postid");
+	var currentTitle=$(".selected").children("div").children("img").data("postid");
 	
 	  $("#carousel").children().remove(); //다 지우기
  	  $("#carousel").prepend(all); //초기값 넣기
@@ -597,13 +408,13 @@ function cateClick(thisTag){
 	  if(customType==="all") {
 		  
 	  }else{
-		  $(".post").not("div[data-filter='" + customType +"']").remove(); //customType 일치하지않는 요소 삭제
+		  $(".post").not("article[data-filter='" + customType +"']").remove(); //customType 일치하지않는 요소 삭제
 	  }
 	$("#carousel").children().removeClass(); //기존 클래스명 삭제
 	changeClass(); //클래스명 다시부여
 	
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
-	$('#carousel div').click(function() {
+	$('#carousel article').click(function() {
 		if($(this).hasClass("hideLeft")){
 			moveToSelected($(".hideLeft:eq(0)"));	
 		}else{
@@ -612,18 +423,18 @@ function cateClick(thisTag){
     });
 	
 	//이전 선택한 이미지가 있을 경우
-	if($(".post>img[data-postid="+currentTitle+"]")[0]!=undefined){
-		$(".post>img[data-postid="+currentTitle+"]").parent().trigger("click");
+	if($(".post>div>img[data-postid="+currentTitle+"]")[0]!=undefined){
+		$(".post>div>img[data-postid="+currentTitle+"]").parent().parent().trigger("click");
 	}
 }
 	
 //슬라이드 이미지 div 클래스 추가
 function changeClass(){
    	//클래스명 추가하기
-   	$("#carousel").children().eq(1).addClass("post prev"); //1번사진
-   	$("#carousel").children().eq(0).addClass("post selected"); //1번사진
-   	$("#carousel").children().eq(1).addClass("post next"); //2번사진
-   	$("#carousel").children().eq(2).addClass("post nextRightSecond"); //3번사진
+   	$("#carousel").children().eq(0).addClass("post prev"); //1번사진
+   	$("#carousel").children().eq(1).addClass("post selected"); //1번사진
+   	$("#carousel").children().eq(2).addClass("post next"); //2번사진
+   	$("#carousel").children().eq(3).addClass("post nextRightSecond"); //3번사진
    	//$("#carousel").children().eq(3).addClass("post selected"); //4번사진_가운데
    	//$("#carousel").children().eq(4).addClass("post next"); //5번사진
    	//$("#carousel").children().eq(5).addClass("post nextRightSecond"); //6번사진

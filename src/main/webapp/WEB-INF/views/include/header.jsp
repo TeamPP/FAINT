@@ -82,7 +82,6 @@
 
 
 /* 카테고리 아이콘____ */
-/* 카테고리 아이콘____ */
 .cateSection ul {
    height: 150px;
    position: absolute;
@@ -97,7 +96,7 @@
    color: white;
 }
 .cateSection ul:hover {
-   top: 70px; /* mouseenter 시에 이벤트  판넬 내려옴 */
+   top: 50px; /* mouseenter 시에 이벤트  판넬 내려옴 */
    left: 0px;
 }
 #categoryList {
@@ -179,7 +178,6 @@ li.cate:hover img, li.cate.hover img {
    -webkit-transform: scale(1.15);
    transform: scale(1.15);
 }
-
 /* 화살표 아이콘 */
 .arrow {
    padding:5px;
