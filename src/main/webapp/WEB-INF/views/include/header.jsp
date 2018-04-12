@@ -34,64 +34,275 @@
 
 <!-- 아이콘 부트스트랩  -->
 <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
 
 <style>
+
+body {
+	 padding-top: 5px;
+}
+
 .navbar-default .explore {
-   width: 24px;
-   height: 23px;
+   width: 38px;
+   height: 38px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -200px -342px;
+   background-size: 38px;
+   background-image: url(/resources/image/explore_icon.png);
+   background-repeat: no-repeat;
+   position: relative;
 }
+
 .navbar-default .new-post {
-   width: 24px;
-   height: 23px;
+   width: 40px;
+   height: 40px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -201px -111px;
+   background-size: 40px;
+   background-image: url(/resources/image/camera_icon.png);
+   background-repeat: no-repeat;
+   position: relative;
+   top: 3px;
 }
+
 .navbar-default .follow-list {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -192px -283px;
+    width: 34px;
+    height: 36px;
+    margin-left: 30px;
+    display: inline-block;
+    background-size: 34px;
+    background-image: url(/resources/image/heart.png);
+    background-repeat: no-repeat;
+    position: relative;
 }
+
 .navbar-default .account {
-   width: 24px;
-   height: 23px;
+   width: 40px;
+   height: 40px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -275px -342px;
+   background-size: 40px;
+   background-image: url(/resources/img/emptyProfile.jpg);
+   background-repeat: no-repeat;
+   border-radius:50%;
 }
+
 .navbar-default .nav-wrap {
    max-width: 1010px;
    width: 100%;
    margin: 0 auto;
    padding: 0 30px;
 }
+
+.empty {
+	height: 80px;
+}
+
+/* 카테고리 시작 */
+.cateSection {
+	display: inline-block;
+	visibility: hidden;
+	position: fixed;
+  	left: 38.5%;
+    width: 385px;
+    top: 0;
+}
+
+.cateSection ul {
+	height: 150px;
+	transition: 0.3s;
+	margin: 0;
+	padding: 5px 0;
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+	position: fixed;
+    left: 38.5%;
+    width: 385px;
+}
+
+#categoryList {
+	list-style: none; /* 리스트 쩜 없애기 */
+    position: fixed;
+    left: 38.5%;
+    width: 385px;
+    top: 135px;
+}
+
+li.cate {
+	list-style: none; /* 리스트 쩜모양 없애기 */
+	font-family: 'Raleway', Arial, sans-serif;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 20px 1% 0 1%;
+	width: 50px;
+	height: 50px;
+	background: #000000;
+	color: #ffffff;
+	text-align: center;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	border-radius: 150px; /*사진 둥글게 */
+	border: 2px solid black;
+}
+
+li.cate * {
+	/* 쩜쩜하면서 천천히 바뀜 */
+	-webkit-transition: all 0.45s ease-in-out;
+	transition: all 0.45s ease-in-out;
+}
+
+li.cate img {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	opacity: 1; /* 투명도 */
+	border-radius: 150px; /*사진 둥글게 */
+}
+
+li.cate .caption {
+	overflow: hidden;
+	-webkit-transform: translateY(20%); /* "일상" Y위치 */
+	transform: translateY(20%);
+	transform: translateX(2%);
+	-webkit-transform: translateX(2%); /* "일상" X위치 */
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+li.cate p {
+	display: table;
+	margin: 0 auto;
+	padding: 0 10px;
+	position: relative;
+	text-align: center;
+	width: auto;
+	text-transform: uppercase;
+	font-weight: 400;
+}
+
+/* "일상" 글자크기 & 글자 하얀테두리 감싸기 */
+li.cate p {
+	font-size: 0.8em;
+	font-weight: 500;
+	color: black;
+	/* 글씨에 하얀 테두리 감싸기 */
+	text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
+		#F2F1F6;
+	-moz-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
+		#F2F1F6;
+	-webkit-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0
+		-1px #F2F1F6;
+}
+
+/* a링크가 전체 이미지 크기만큼 */
+li.cate a {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+/*이미지 변경 스타일 */
+li.cate:hover img, li.cate.hover img {
+	opacity: 0.35;
+	-webkit-transform: scale(1.15);
+	transform: scale(1.15);
+}
+
+/* 화살표 아이콘 */
+i {
+	border: solid #ddd;
+	border-width: 0 5px 5px 0;
+	display: inline-block;
+	padding: 5px;
+}
+
+.one{
+	top: 5px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.two{
+	top: 20px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.empty {
+	height: 220px;
+}
+
+.dropbtn {
+    background-color: white;
+    color: #999;
+    width: 109px;
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    font-family: Arial;
+    position: fixed;
+    top: 45.8px;
+}
+
+.dropbtn:hover {
+	color: black;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-top: 1px solid #f1f1f1;
+    min-width: 109px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    font-family: Arial;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+.dropdown a:visited {color: black;}
+
+.show {display:block;}
+
+
 </style>
 
 </head>
 <body>
 
    <nav class="navbar navbar-default" style="z-index: 1;">
+
+   <a href="/main"><div class="faintlogo"></div></a>
    <div class="nav-wrap" style="display: block;">
-      <a class="logo pull-left" href="/main"></a>
       <form class="search-form" action="/search/search" method="get">
          <input class="textInput" type="text" name='inputKeyword'
             id='keywordInput' value="${keyword}" placeholder="검색"
@@ -99,11 +310,62 @@
             data-target="#searchModal" data-backdrop="true" autocomplete="off">
          <span class="search-icon"></span>
       </form>
-      <span class="pull-right"> <a class="explore"
-         href="/explore/expage"></a> <a class="new-post" href="/post/register"></a>
-         <a class="follow-list" href="javascript:;"></a> <a class="account"
-         href="/member/${login.nickname}"></a>
-      </span>
+
+	<div class="arrowslide">
+		<i class="arrow one"></i> 
+		<i class="arrow two"></i> 
+	</div>
+	
+		<div class="cateSection" id="1">   
+        	<ul id="categoryList" style="z-index:5;">
+ 		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption"><p>ALL</p></div>
+        </li>
+	
+		  <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+                <p>여행</p>
+              </div>
+        </li>
+        
+          <li class="cate"  data-filter="2" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+                <p>영화</p>
+              </div>
+        </li>
+        
+          <li class="cate"  data-filter="3" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+                <p>음악</p>
+              </div>
+        </li>
+        
+          <li class="cate"  data-filter="4" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+                <p>음식</p>
+              </div>
+        </li>
+ 		
+ 		          <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+                <p>글귀</p>
+              </div>
+        </li>
+	</ul>
+	</div>
+      
+      <span class="pull-right">
+      <a class="explore" href="/explore/expage"></a> 
+      <a class="new-post" href="/post/register"></a>
+      <a class="follow-list" href="javascript:;"></a>
+      <a class="account" href="/member/${login.nickname}"></a>
+	<div class="dropdown">
+		<div class="dropbtn" onclick="myFunction()">${login.nickname}</div>
+		<div id="myDropdown" class="dropdown-content">
+			<a href="#" onclick='unloadCheck()' >LOGOUT</a>
+			<a href="/member/${login.nickname}" onclick='unloadCheck()'>MY PAGE</a>
+		</div>
+		</span>
    </div>
    </nav>
 
@@ -117,8 +379,44 @@
          </div>
       </div>
    </div>
+   <div class="empty"></div>
 
-   <script>
+<script>
+
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+$(".arrowslide").click(function() {
+	if($(".cateSection").attr("id")=="1"){
+		$(".cateSection").css("visibility", "visible");
+		$(".cateSection").fadeIn();
+		$(".cateSection").attr("id", "2");
+	}
+	
+	else if($(".cateSection").attr("id")=="2") {
+		$(".cateSection ").fadeOut();
+		$(".cateSection").css("visibility", "hidden");
+		$(".cateSection").attr("id", "1");
+	}
+})
+
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
    if($("._oznku").text()=="검색 결과가 없습니다.") {
@@ -133,9 +431,10 @@ $(".search-form").submit(function(event) {
    
    return true;
    }); 
+   
 </script>
 
-   <script>
+<script>
 searchAjax();
 function searchAjax(){
    
@@ -271,7 +570,7 @@ function searchAjax(){
                           console.log("태그다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.jpg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].tagname+"</span>"
@@ -313,7 +612,7 @@ function searchAjax(){
                           console.log("지역이다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/location.jpg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/location.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
@@ -348,7 +647,7 @@ function searchAjax(){
                             console.log("태그다");
                             str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                   +"<div class='_o92vn'>"
-                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.jpg' style='height:23px; width:23px;'></span>"
+                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.svg' style='height:23px; width:23px;'></span>"
                                   +"<div class='_poxna'>"
                                   +"<div class='_lv0uf'>"
                                   +"<span class='_b01op'>"+result[i].tagname+"</span>"

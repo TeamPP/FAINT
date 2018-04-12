@@ -51,8 +51,6 @@ article {
 <body>
 
 <!-- 실시간 -->
-<br/>
-<br/>
 
 <div class="realtime_keywd">
     <div class="wrap_last_date">
