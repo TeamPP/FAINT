@@ -268,14 +268,26 @@ li.cate:hover img, li.cate.hover img {
    </div>
     <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-              <security:authorize access="isAnonymous()"><li><a class="login" href="login_view">login</a></li></security:authorize>
-              <security:authorize access="hasRole('ROLE_USER')">
+          <%--     <security:authorize access="isAnonymous()"><li><a class="login" href="login_view">login</a></li></security:authorize> --%>
+       <%--        <security:authorize access="hasRole('ROLE_USER')">
               <form action="<c:url value='/logout'/>" method="post">
                
                               <button type="submit" class="btn btn-default">로그아웃</button>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
-        </security:authorize>
+        </security:authorize> --%>
+        		<sec:authorize access="!hasRole('ROLE_USER') ">
+		<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_USER')">
+		 <form action="<c:url value='/logout'/>" method="post">
+               
+                              <button type="submit" class="btn btn-default">로그아웃</button>
+                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+	</sec:authorize>
+        
+        
              <%-- 	 <form>
 	            	  <a class="logout" href="<c:url value='/logout'/>">logout</a>
 	            	   

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.faint.domain.Authority;
 import com.faint.domain.UserVO;
 import com.faint.domain.UsersException;
-import com.faint.dto.LoginDTO;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

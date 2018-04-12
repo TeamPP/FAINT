@@ -1,5 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
 <style>
 
@@ -107,7 +110,11 @@
                 data: {'email' : email},
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType : "json",
-
+				
+            	beforeSend : function(xhr)
+  	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+  	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+  	          },
                 success:function(data){
                     console.log("success")
                     alert(decodeURIComponent(data.msg))
@@ -141,7 +148,11 @@
                 data: {'nickname' : nickname},
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType : "json",
-
+				
+            	beforeSend : function(xhr)
+  	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+  	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+  	          },
                 success:function(data){
                     console.log("success")
                     alert(decodeURIComponent(data.msg))
@@ -176,6 +187,7 @@
 				<%--</div>--%>
 
 				<form role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<table>
 						<tr>
 							<div class="control-group">
