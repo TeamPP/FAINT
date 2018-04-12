@@ -75,6 +75,7 @@ h2{
 			<div class="_cd2n1"><div class="_qr7ez">
 			<span class="_ov9ai"><button class="_qv64e _gexxb _r9b8f _jfvwv" id="btnChangePW" disabled="">비밀번호 변경</button></span></div></div></div>
 			<input type="hidden" name="id" value="${userVO.id }">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 		
 	</div>
@@ -115,12 +116,12 @@ h2{
 		//새 비밀번호 입력
 		$("#newPw").keyup(function(){
 			changePwBtn();			
-			validCheck(this);
+			//validCheck(this);
 		});
 		//새 비밀번호 확인 입력
 		$("#newPwChk").keyup(function(){
 			changePwBtn();			
-			validCheck(this);
+			//validCheck(this);
 		});
 		
 		//비번 변경

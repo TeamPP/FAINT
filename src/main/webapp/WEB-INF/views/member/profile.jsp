@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>${userVO.name}(@${userVO.nickname})</title>
 <style>
 a {
@@ -408,6 +410,10 @@ function uploadFiles(files) {
          processData : false,
          contentType : false,
          type : 'POST',
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          success : function(data) {
             var fileInfo = getFileInfo(data);
             //프로필 사진 수정
@@ -432,6 +438,10 @@ function removePhoto(){
          fileName : data_src
       },
       dataType : "text",
+      beforeSend : function(xhr)
+      {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+          xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+      },
       success : function(result) {
          if (result == 'deleted') {
             $("#btnChangePhoto").children("img").attr("src", "../../resources/img/emptyProfile.jpg");
@@ -457,6 +467,10 @@ function updatePhoto(fullName){
       },
       dataType : 'text',
       type : 'POST',
+      beforeSend : function(xhr)
+      {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+          xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+      },
       success : function(result) {
             //update문, 0보다크면 업데이트 성공
             if(result > 0) {
@@ -507,6 +521,10 @@ function userBlock(){
 		data: {
 			"userid": ${userVO.id}
 		},
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
 		success: function(result){
 			if(result=="SUCCESS"){
 				alert("차단되었습니다");
@@ -524,6 +542,10 @@ function userUnblock(){
 		headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
 		dataType: "text",
 		async: false,
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
 		success: function(result){
 			if(result=="SUCCESS"){
 				alert("차단해제되었습니다");
@@ -708,6 +730,10 @@ function follow(){
          url: url,
          headers:header,
          dataType:"text",
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
          success:function(result){
             if(result=="SUCCESS"){
             	followed();

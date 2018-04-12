@@ -64,6 +64,17 @@ public class MainController {
 	public void empty(Model model)throws Exception{
 
 	}
+	// 접근 제한 페이지
+	@RequestMapping(value="/access-denied", method=RequestMethod.GET)
+	public String accessDenied(Model model) {
+		
+		System.out.println("sasdsadasdsad");
+		
+		model.addAttribute("email", uservice.getPrincipal().getUsername());
+		
+		return "access-denied";
+	}
+
 	
 	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
 	public void chatTest(Model model)throws Exception{
