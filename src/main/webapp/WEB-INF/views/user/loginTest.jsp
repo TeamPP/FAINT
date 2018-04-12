@@ -98,14 +98,14 @@
         }
 
     </style>
-<script>
+<!-- <script>
     var memberID=Boolean(${login.id});
     if(memberID){
         alert("이미 로그인 되어있습니다. 로그아웃 해주세요");
         self.location = "/";
     }
 
-</script>
+</script> -->
 <link href="/resources/dist/css/login.css" rel="stylesheet">
 <div  id="login">
     <div class="wrapper fadeInDown text-center">

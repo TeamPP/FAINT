@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -266,6 +266,22 @@ li.cate:hover img, li.cate.hover img {
          href="/member/${login.nickname}"></a>
       </span>
    </div>
+    <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+              <security:authorize access="isAnonymous()"><li><a class="login" href="login_view">login</a></li></security:authorize>
+              <security:authorize access="hasRole('ROLE_USER')">
+              <form action="<c:url value='/logout'/>" method="post">
+               
+                              <button type="submit" class="btn btn-default">로그아웃</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+        </security:authorize>
+             <%-- 	 <form>
+	            	  <a class="logout" href="<c:url value='/logout'/>">logout</a>
+	            	   
+	              </form> --%>
+            	</ul>
+            </div>
    </nav>
 
    <!-- Modal -->

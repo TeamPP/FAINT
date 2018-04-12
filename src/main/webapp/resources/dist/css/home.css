@@ -1,0 +1,479 @@
+
+@import url(https://fonts.googleapis.com/css?family=Righteous);
+@import url(https://fonts.googleapis.com/css?family=Baloo+Da);
+@import url(https://fonts.googleapis.com/earlyaccess/hanna.css);
+.bd{
+    font-family: 'Baloo Da', cursive;
+}
+.hn{
+    font-family: 'Hanna', serif;
+}
+.row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.removePadding{
+    padding:0;
+}
+/*body부분*/
+.deaf{
+    height: 80px;
+}
+.deaf2{
+    height: 100px;
+}
+textarea{
+    resize: none;
+}
+.selector {word-break:break-all;}
+
+.so{
+    overflow-x: auto;
+    overflow-x: -moz-hidde-unscrollable;
+    overflow-y: scroll;
+    width:300px;
+    height: 60px;
+}
+
+.widthFull{
+    width:100%;
+    height:100%;
+    /*background-color: #6a0d6a;*/
+}
+
+/*스크롤바 스타일*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+/*스크롤*/
+
+img {max-width: 100%;}
+
+.navbar-inverse{
+    background-color: #97a3aa;
+}
+section {
+    /*width:2493px;*/
+    width:100%;
+
+    background-repeat:no-repeat;
+    /*background-size:98%;*/
+
+
+}
+
+section.a{
+    background-image: url("/resources/images/main/mainA.png");
+    background-color: #00c4ff;
+    background-position: bottom;
+    background-size:contain;
+
+
+
+}
+section.b{
+    background-image: url("/resources/images/main/mainB.png");
+    background-color: #000;
+    background-attachment: fixed;
+    background-size:contain;
+
+}
+
+section.c{
+    /*background-image: url("/resources/images/main/mainA.png");*/
+    /*height:700px;*/
+    /*background-color:#da7908;*/
+    background-color: orange;
+    /*background-attachment:fixed;*/
+    background-position: bottom;
+    background-size:contain;
+
+}
+
+
+
+.di{display: inline-block}
+
+
+.scroll-down {
+    opacity: 1;
+    -webkit-transition: all .5s ease-in 3s;
+    transition: all .5s ease-in 3s;
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 75%;
+    margin-left: -16px;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border: 4px solid #FFF;
+    background-size: 20px auto;
+    border-radius: 50%;
+    z-index: 2;
+    -webkit-animation: bounce 2s infinite 2s;
+    animation: bounce 2s infinite 2s;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+}
+
+.scroll-down:before {
+    position: absolute;
+    top: calc(50% - 8px);
+    left: calc(50% - 6px);
+    transform: rotate(-45deg);
+    display: block;
+    width: 12px;
+    height: 12px;
+    content: "";
+    border: 4px solid white;
+    border-width: 0px 0 4px 4px;
+}
+
+@keyframes bounce {
+    0%,
+    100%,
+    20%,
+    50%,
+    80% {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(-10px);
+        -ms-transform: translateY(-10px);
+        transform: translateY(-10px);
+    }
+    60% {
+        -webkit-transform: translateY(-5px);
+        -ms-transform: translateY(-5px);
+        transform: translateY(-5px);
+    }
+}
+
+
+/*title*/
+
+/*버튼*/
+
+
+.Photo{
+    width:50px;
+    height:50px;
+}
+
+.Photo2{
+    width:100px;
+    height:100px;
+}
+
+/*list Page*/
+
+/*border line*/
+/*왼쪽 아래*/
+.borderLB{
+    border-left: #fff solid 8pt ;
+    border-bottom: #fff solid 8pt;
+    border-bottom-left-radius: 50px;
+}
+/*오른쪽 위*/
+.borderRT {
+    border-right:#fff solid 8pt;
+    border-top: #fff solid 8pt;
+    border-top-right-radius: 50px;
+}
+.borderRB{
+    border-right:#fff solid 8pt;
+    border-bottom: #fff solid 8pt;
+    border-bottom-right-radius: 50px;
+
+}
+.borderLT {
+    border-left:#fff solid 8pt;
+    border-top: #fff solid 8pt;
+    border-top-left-radius: 50px;
+}
+/*왼쪽*/
+.borderL{
+    border-left:#fff solid 8pt;
+
+}
+/*오른쪽*/
+.borderR{
+    border-right:#fff solid 8pt;
+}
+.borderB{
+    border-bottom:#fff solid 8pt;
+}
+
+.border{
+    border:#fff solid 8pt!important;
+}
+
+.borderT{
+    border-top:#fff solid 8pt;
+}
+
+
+/*black*/
+.borderRTB{
+    border-right:#000 solid 8pt;
+    border-top: #000 solid 8pt;
+    border-top-right-radius: 50px;
+}
+
+
+.black-background{
+    background-color: black;
+}
+
+.white-background{
+    background-color: white;
+}
+
+
+.borderLBB{
+    border-left: #000 solid 8pt ;
+    border-bottom: #000 solid 8pt;
+    border-bottom-left-radius: 50px;
+}
+
+.borderRBB{
+    border-right:#000 solid 8pt;
+    border-bottom: #000 solid 8pt;
+    border-bottom-right-radius: 50px;
+
+}
+.borderLTB {
+    border-left:#000 solid 8pt;
+    border-top: #000 solid 8pt;
+    border-top-left-radius: 50px;
+}
+/*왼쪽*/
+.borderLB{
+    border-left:#fff solid 8pt;
+
+}
+/*오른쪽*/
+
+
+.borderWidth{
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    padding-top: 40px;
+
+}
+
+
+
+
+
+#updateicon{
+    border: 10px solid #fff;
+}
+
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #333;
+    border-color: #333;
+
+}
+
+
+/*list*/
+
+
+
+ul, menu, dir {
+    list-style-type: none;
+
+}
+li{
+    list-style-type: none;
+}
+.commentReply{
+
+    height: 200px;
+}
+
+/*mypage*/
+
+
+a:hover {
+    text-decoration: none;
+}
+
+/* the grid */
+.grid-1 {
+    /*display: grid;*/
+    /*width: 100%;*/
+    /*max-width: 770px;*/
+    /*margin: 10% auto;*/
+    /*grid-template-columns: 1fr;*/
+    /*grid-template-rows: auto 200px 200px auto 200px 200px 200px auto 200px 200px auto;*/
+    /*grid-gap: 25px;*/
+    margin-top: 50px;
+    margin-bottom: 80px;
+    /*margin-left: 200px;*/
+
+}
+
+/* panels */
+.panel {
+    /*color: white;*/
+    background-repeat: no-repeat;
+    background-position:  center center;
+    background-size: cover;
+    /*box-shadow: 0 0px 0px 5px #251b19;*/
+}
+
+/* individual panels */
+.panel-title {
+    box-shadow: none;
+
+}
+
+.panel-1,.panel-2,
+.panel-3,.panel-4,.panel-5,.panel-6,.panel-7,.panel-9{
+    box-shadow: none;
+
+}
+.panel-8 {
+    background-color: #fff;
+}
+
+.panel-copyright {
+    box-shadow: none;
+    font-size: .75em;
+}
+
+/* media query 1 */
+@media only screen and (min-width: 400px) {
+
+    .grid-1 {
+        /*grid-template-columns: repeat(2, 1fr);*/
+        /*grid-template-rows: auto 200px auto 200px 200px auto 200px auto;*/
+    }
+    .panel-title,
+    .panel-7,
+    .panel-copyright {
+        grid-column: span 2;
+    }
+    .panel-copyright {
+        text-align: right;
+    }
+    .panel-7 {
+        text-align: center;
+    }
+
+}
+
+/* media query 2 */
+@media only screen and (min-width: 600px) {
+
+    .grid-1 {
+        /*grid-template-columns: repeat(3, 1fr);*/
+        /*grid-template-rows: auto 200px 200px 200px auto;*/
+    }
+    .panel-title,
+    .panel-copyright {
+        grid-column: span 3;
+    }
+
+
+    .panel-8 {
+        grid-column: span 2;
+    }
+
+
+    /* layering */
+    .panel-7 {
+        grid-column: 1;
+        grid-row: 4;
+        z-index: 1;
+        margin: -5px 0 0 -10px;
+        transform: rotate(-2deg);
+    }
+
+    .panel-7 p {
+        background: #FFAA3E;
+        /*box-shadow: 0 0px 0px 5px #6A6A6A;*/
+        text-align: left;
+        margin-bottom: 50px;
+    }
+
+    .panel-8 {
+        grid-column: 1 / span 2;
+        grid-row: 4;
+        background-size: 70%;
+        background-position: right;
+    }
+
+}
+
+@media (min-width: 400px) and (max-width: 1100px) {
+    section {
+        background-size: 98% 476px;
+    }
+    section.a {
+        height: 565px;
+    }
+    .animated img {
+        height: 150px;
+    }
+}
+/*스크롤*/
+/* css */
+.show-on-scroll { visibility: hidden; }
+.show-on-scroll.shown { visibility: visible; }
+
+
+
+a {
+
+    text-decoration: none; }
+
+.btn-outline-success {
+    color: #A0D468;
+    background-color: transparent;
+    background-image: none;
+    border-color: #A0D468;
+}
+input{
+    font-family: 'Hanna', serif;
+}
+
+#titleList{
+    font-family: 'Hanna', serif;
+    color: white;
+}
+
+.eclipsis{
+    width: 100%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
