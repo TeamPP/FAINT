@@ -111,6 +111,8 @@ public class UserDAOImpl implements UserDAO {
 	// ======================로그인======================
 
 	public UserVO login(LoginDTO dto) throws Exception {
+		
+		System.out.println("로그인 ");
 		return session.selectOne(namespace + ".login", dto);
 	}
 
@@ -155,6 +157,19 @@ public class UserDAOImpl implements UserDAO {
 		} catch (Exception e) {
 			throw new UsersException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public Integer selectLastInsertId() throws UsersException {
+		Integer lastInsertId = null;
+		try {
+			lastInsertId = session.selectOne(namespace + ".select-last-insert-id");
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+		
+		return lastInsertId;
 	}
 
 

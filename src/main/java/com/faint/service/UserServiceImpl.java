@@ -1,7 +1,9 @@
 package com.faint.service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.faint.domain.Authority;
+import com.faint.domain.AuthorityId;
 import com.faint.domain.UserVO;
 import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
@@ -121,8 +124,28 @@ public class UserServiceImpl implements UserService {
 		String encPassword = passwordEncoder.encode(vo.getPassword());
 		vo.setPassword(encPassword);
 		//System.out.println("암호화된 비밀번호 : "+user.getUserPassword());
-
+		
+		// 가입하려는 사용자의 권한을 입력 (일반사용자 권한: 20, "USER")
+		Authority auth = new Authority(AuthorityId.USER.getAuthorityId(), AuthorityId.USER.name());
+		
+		// Set 컬렉션을 이용하여 users 객체에 권한을 담기
+		Set<Authority> auths = new HashSet<>();
+		auths.add(auth);
+		vo.setAuthorities(auths);
+		
 		dao.insertUser(vo);
+		
+		System.out.println(vo.getId());
+		
+		// 방금 등록한 users의 사용자 번호를 가져온다.
+		
+		// 가져온 사용자 번호를 users 객체에 담는다.
+		Integer id =vo.getId();
+		
+		System.out.println(id+"방금 가입한 아이 아이디 번호는/");
+		dao.insertAuthority(vo);
+		
+		
 		System.out.println(vo);
 		System.out.println("///////////////////////  찍히");
 		String key = new TempKey().getKey(50,false);  // 인증키 생성
@@ -440,6 +463,18 @@ public class UserServiceImpl implements UserService {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(req, resp, auth);
 		}
+	}
+	
+	@Override
+	public boolean isPasswordMatched(String oldPassword) throws UsersException {
+		// 현재 로그인한 사용자의 암호화된 비밀번호를 가져온다.
+		String email = this.getPrincipal().getUsername();
+		UserVO users = dao.selectByEmail(email);
+		
+		System.err.println(users.toString());
+		System.out.println(oldPassword);
+		// 입력한 비밀번호와 기존 비밀번호를 비교하여 일치하면 true, 아니면 false 리턴
+		return passwordEncoder.matches(oldPassword, users.getPassword());
 	}
 	
 }

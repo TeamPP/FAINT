@@ -36,17 +36,17 @@
   	</select>
  
   	
-  	<select id="select-last-insert-id" resultType="int">
-  		SELECT LAST_INSERT_ID()
-  	</select>
+<!--   	<select id="select-last-insert-id" resultType="int">
+  		SELECT LAST_INSERT_ID() as #{id}
+  	</select> -->
   	
   	<insert id="insert-users" parameterType="com.faint.dto.LoginDTO">
   		INSERT INTO users (email, password, nickename, profilephoto)
   		VALUES (#{email}, #{password}, #{nickename}, #{profilephoto})
   	</insert>
   	
-  	<insert id="insert-authority" parameterType="com.faint.dto.LoginDTO">
-  		INSERT INTO users_authority(users_id, authority_id) VALUES
+  	<insert id="insert-authority" parameterType="com.faint.domain.UserVO">
+  		INSERT INTO users_authority(user_id, authority_id) VALUES
   		<foreach collection="authorities" item="item" separator=", ">
   			(#{id}, #{item.id})
   		</foreach>
@@ -211,6 +211,11 @@
 	<insert id="insertUser">
         INSERT INTO tbl_user (EMAIL, PASSWORD, NICKNAME)
         VALUES (#{email}, #{password}, #{nickname})
+        
+          <selectKey keyProperty="id" resultType="int" order="AFTER"> 
+      <!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+            select last_insert_id() as id
+        </selectKey>
     </insert>
 	
 	<!-- 네이버 -->
