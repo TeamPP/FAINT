@@ -81,17 +81,5 @@ public class MainController {
 	public void chatTest(Model model)throws Exception{
 
 	}
-//	// 로그아웃
-//	@RequestMapping(value="/logout", method=RequestMethod.GET)
-//	public String logout(HttpServletRequest req, HttpServletResponse resp) {
-//		// 서비스의 로그아웃 메소드 호출
-//		
-//		System.out.println("로그아웃한다난 ");
-//			uservice.logout(req, resp);
-//		System.out.println("친구들아 들어오ㅓ");
-//		
-//		// 로그아웃 한 뒤 로그인 페이지로 이동 후 로그아웃 메시지 출력을 위해 쿼리문자열 사용
-//		return "redirect:/main";
-//	}
 
 }
