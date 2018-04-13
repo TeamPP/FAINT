@@ -4,7 +4,7 @@
 #header-modal {
 	padding: 0px;
 	overflow-y: auto;
-	height: 220px;
+	height: 196px;
 } /* 모달 스크롤 창 */
 ._ndl3t _4jr79, ._ndl3t _4jr79:visited {
 	color: #003569;
@@ -53,6 +53,8 @@
 	flex-shrink: 0;
 	height: 65px;
 	padding: 8px 14px;
+/* 	font-size: 13px;
+    font-family: Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif; */
 }
 
 ._ig0cz, ._po4xn {
@@ -233,8 +235,12 @@ span {
 }
 
 .modal-content {
-	right: 5%;
-    top: 70px;
+	right: 11px;
+    top: 20px;
+    border: solid 1px #e6e6e6;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px rgba(0,0,0,.0975);
 }
 
 /* 사이드바 */

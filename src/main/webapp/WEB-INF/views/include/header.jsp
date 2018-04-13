@@ -40,6 +40,7 @@
 
 body {
 	 padding-top: 5px;
+	 font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .navbar-default .explore {
@@ -210,19 +211,16 @@ li.cate:hover img, li.cate.hover img {
 }
 
 /* 화살표 아이콘 */
-i {
-	border: solid #ddd;
-	border-width: 0 5px 5px 0;
-	display: inline-block;
-	padding: 5px;
-}
-
 .arrowslide {
 	position: fixed;
 	left: 50%;
 }
 
 .one{
+	border: solid #ddd;
+	border-width: 0 5px 5px 0;
+	display: inline-block;
+	padding: 5px;
 	top: 5px;
 	position: absolute;
 	left: 50%;
@@ -232,12 +230,25 @@ i {
 }
 
 .two{
+	border: solid #ddd;
+	border-width: 0 5px 5px 0;
+	display: inline-block;
+	padding: 5px;
 	top: 20px;
 	position: absolute;
 	left: 50%;
 	bottom: 30px;
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
+}
+
+.modal-i {
+	top: 5px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);	
 }
 
 .empty {
@@ -294,6 +305,18 @@ i {
 
 .show {display:block;}
 
+.modal-content::after {
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    height: 0;
+    left: 98px;
+    top: -10px;
+    width: 0;
+    z-index: 3;
+	content: " ";
+	position: absolute;
+}
 
 </style>
 
@@ -449,6 +472,7 @@ function searchAjax(){
    
    if($("#keywordInput").val()=="") {
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+      $("#header-modal").css("height", "51px");
    }
    
    $("#keywordInput").keyup(function(){
@@ -640,7 +664,9 @@ function searchAjax(){
                        
                        if(count>=3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                          $("#header-modal").css("height", "51px");
                        } else {
+                          $("#header-modal").css("height", "196px");
                           $("#results").html(str);
                       	 }
                       	
@@ -674,7 +700,9 @@ function searchAjax(){
                        if(count>=3 && result.length==3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                          $("#header-modal").css("height", "51px");
                      	  } else {
+                     		 $("#header-modal").css("height", "196px");
                      		 $("#results").html(str);
                      	  }
                } /* #검색 끝 */
@@ -718,7 +746,9 @@ function searchAjax(){
                     if(count>=3 && result.length==3) {
                  	   console.log(">>>"+result.length);
                        $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                       $("#header-modal").css("height", "51px");
                   	  } else {
+                  		$("#header-modal").css("height", "196px");
                   		 $("#results").html(str);
                   	  }
                } /* @ 검색 끝 */
@@ -727,6 +757,7 @@ function searchAjax(){
                else {
                   console.log("검색문else로왔다");
                   $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                  $("#header-modal").css("height", "51px");
                }
                
             }, /* success  끝 */
@@ -735,6 +766,7 @@ function searchAjax(){
                if(e.status==500) {
                   console.log("에러로갓니?");
                   $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                  $("#header-modal").css("height", "51px");
                //throw e.responseText;
                }
             }/* error 끝 */
