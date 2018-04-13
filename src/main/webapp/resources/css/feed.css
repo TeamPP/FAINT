@@ -1,0 +1,178 @@
+#feed{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: none;
+}
+
+.photo{
+    max-width:600px;
+    background-color: white;
+    border:1px solid #e6e6e6;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-bottom: 60px;
+}
+
+.photo:last-child{
+    margin-bottom: 0;
+}
+
+.photo__header{
+    padding:15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.rounded-circle Photo profileHeader{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: 5s martinaRotates infinite linear;
+}
+
+
+@keyframes martinaRotates{
+    from{
+        transform: rotate(0turn);
+    }
+    to{
+        transform: rotate(1turn)
+    }
+}
+
+.photo__author{
+    display: block;
+    font-weight: 600;
+    margin-bottom:3px;
+}
+
+.photo__image{
+    max-width: 100%;
+}
+
+.photo__main{
+    padding: 15px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+}
+
+.photo__actions{
+    margin-bottom: 15px;
+}
+
+.photo__actions i:last-child{
+    margin-left: 12px;
+}
+
+.photo__likes{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.photo__comments{
+    margin-bottom: 15px;
+}
+
+.photo__comment{
+    margin-bottom: 7px;
+}
+
+.photo__comment-author{
+    font-weight: 600;
+}
+
+.photo__date{
+    display: block;
+    margin-bottom: 10px;
+   color: #999;
+   text-transform: uppercase;
+   font-size: 12px;
+}
+
+.photo__add-comment-container{
+    border-top: 1px solid #e6e6e6;
+    position: relative;
+}
+
+.photo__add-comment-container textarea{
+    padding-top:15px;
+    width: 95%;
+    resize: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.photo__add-comment-container i {
+    cursor: pointer;
+}
+
+.photo__add-comment-container textarea:focus{
+    outline: none;
+}
+
+.photo__add-comment-container i{
+    position: absolute;
+    top: 18px;
+    right: 01px;
+}
+
+.fa-heart{
+    animation:.5s pump infinite linear;
+    color:red;
+    transition: all .3s linear;
+}
+
+@keyframes pump{
+    from{
+        transform: none;
+    }
+    to{
+        transform: scale(1.1,1.1);
+    }
+}
+
+.popUp{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top:0;
+    display: none;
+}
+
+.popUp i{
+    position: absolute;
+    top:10px;
+    right:20px;
+    color:white;
+    cursor: pointer;
+}
+
+.popUpContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.popUpContainer a{
+    display: block;
+    background-color: white;
+    width:420px;
+    text-align: center;
+    padding:25px 0;
+    border-bottom:1px solid #e6e6e6;
+    font-size: 16px;
+    color:black;
+}
+
+.popUpContainer a:hover{
+    background-color: #efefef;
+}

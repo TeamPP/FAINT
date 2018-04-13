@@ -54,6 +54,8 @@ public interface UserDAO {
 	
 	// users_authority 테이블에 정보를 입력하기
 	public void insertAuthority(UserVO users) throws UsersException;
+	// 최근 등록한 사용자의 번호를 가져오기
+	public Integer selectLastInsertId() throws UsersException;
 	///////////////////////////////////
 	
 	// sessionKey & sessionLimit 업데이트

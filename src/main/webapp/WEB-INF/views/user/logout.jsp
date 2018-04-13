@@ -4,11 +4,5 @@
 <html>
   <body>
    로그아웃합니다.
-<script type="text/javascript">
-
-setTimeout(function(){$("body").fadeOut(300);},300);
-setTimeout(function(){location.href="loginTest"},300);
-</script>
-  
   </body>
 </html>
