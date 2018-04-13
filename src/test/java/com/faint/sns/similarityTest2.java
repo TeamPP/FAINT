@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,7 +73,7 @@ public class similarityTest2 {
 
 
 	   //코사인유사도
-	  public static double cosineSimilarity(double[] vectorA, double[] vectorB) {
+	  public  double cosineSimilarity(double[] vectorA, double[] vectorB) {
 	       double dotProduct = 0.0;  //벡터의 내적 각 원소를 짝지어서 곱한뒤 합산
 	       double normA = 0.0;
 	       double normB = 0.0;
@@ -86,105 +85,114 @@ public class similarityTest2 {
 	       return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 	   }
 	  
-	//활동표 가져오기
-	@Test
-	public void test()throws Exception{
-	List<ActivityDTO> activity=dao.activityTbl(4);   //아이디 7번
-	
-	//list-->array 변경
-	ActivityDTO[] array2=activity.toArray(new ActivityDTO[activity.size()]);
-	
-	//2차원 배열에 넣기
-	double[][] t=new double[activity.size()][15];
-	
-	for(int i=0; i<activity.size(); i++){
-	t[i][0]=array2[i].getC1PostCnt();
-	t[i][1]=array2[i].getC2PostCnt();
-	t[i][2]=array2[i].getC3PostCnt();
-	t[i][3]=array2[i].getC4PostCnt();
-	t[i][4]=array2[i].getC5PostCnt();
-	
-	t[i][5]=array2[i].getC1ReplyCnt();
-	t[i][6]=array2[i].getC2ReplyCnt();
-	t[i][7]=array2[i].getC3ReplyCnt();
-	t[i][8]=array2[i].getC4ReplyCnt();
-	t[i][9]=array2[i].getC5ReplyCnt();
-	
-	t[i][10]=array2[i].getC1LikeCnt();
-	t[i][11]=array2[i].getC2LikeCnt();
-	t[i][12]=array2[i].getC3LikeCnt();
-	t[i][13]=array2[i].getC4LikeCnt();
-	t[i][14]=array2[i].getC5LikeCnt();
-	}
-	
-	
-	//유사도를 구한뒤 arr에 넣기
-	//t[0]는 매개변수로 받은 userid의 활동표
-	double[] simility=new double[activity.size()];
-	for(int i=0; i<activity.size(); i++){
-		simility[i]=cosineSimilarity(t[0], t[i]);
-	}	
-		
-    //전체 테이블
-	List<ActivityDTO> actTbl= dao.activityTbl(4);  //7번 아이디 
-    
-    double[][] actScore=new double[actTbl.size()-1][2];  //자기자신은 제외
-   
-	//정리
-    for (int i = 0; i < actTbl.size()-1; i++) {
-        actScore[i][0]=actTbl.get(i+1).getUserid();   //id 자기자신은 제외
-        
-        //코사인유사도
-        if(Double.isNaN(simility[i+1])){   //NaN값이라면 0으로 대체
-        	actScore[i][1]=0; 
-        } else {  //유사도 있으면 넣어주기
-        	actScore[i][1]=simility[i+1];
-        }
-	}
-    
-    for(int i=0; i<actScore.length; i++){
-    	System.out.println(Arrays.toString(actScore[i]));   
-    	//[6.0, 0.0]
-    	//[20.0, 0.0]
-    }
-    
-    
-    //배열복사_유사도에 따른 정렬을 위해서
-    double[][] tmp=new double[1][2]; 
-    
-    for(int i=actScore.length-1; i>0 ; i--){
-        for(int j=0; j<i; j++){
-        	if(actScore[j][1]<actScore[j+1][1]){
-            	tmp[0]=actScore[j+1];
-            	actScore[j+1]=actScore[j];
-            	actScore[j]=tmp[0];
-            }
-        }
-    }
+	  
+	  //활동표 점수를 2차원 배열로 넣기
+	  public double[][] getActScore(List<ActivityDTO> activity){
+		  	
+		  	//list-->array 변경
+			ActivityDTO[] array=activity.toArray(new ActivityDTO[activity.size()]);
+		  
+			//2차원 배열에 넣기
+			double[][] t=new double[activity.size()][15];
+			
+			for(int i=0; i<activity.size(); i++){
+			t[i][0]=array[i].getC1PostCnt();
+			t[i][1]=array[i].getC2PostCnt();
+			t[i][2]=array[i].getC3PostCnt();
+			t[i][3]=array[i].getC4PostCnt();
+			t[i][4]=array[i].getC5PostCnt();
+			
+			t[i][5]=array[i].getC1ReplyCnt();
+			t[i][6]=array[i].getC2ReplyCnt();
+			t[i][7]=array[i].getC3ReplyCnt();
+			t[i][8]=array[i].getC4ReplyCnt();
+			t[i][9]=array[i].getC5ReplyCnt();
+			
+			t[i][10]=array[i].getC1LikeCnt();
+			t[i][11]=array[i].getC2LikeCnt();
+			t[i][12]=array[i].getC3LikeCnt();
+			t[i][13]=array[i].getC4LikeCnt();
+			t[i][14]=array[i].getC5LikeCnt();
+			}
+			return t;
+	  }
+	  
+	  
+	  //actScore를 유사도 기준으로 정렬하고 추천받는 유저의 번호만 list형식으로 리턴함
+	  public  List<Integer> sort(double[][] actScore){
+		    //배열복사_유사도에 따른 정렬을 위해서
+		    double[][] tmp=new double[1][2]; 
+		    
+		    for(int i=actScore.length-1; i>0 ; i--){
+		        for(int j=0; j<i; j++){
+		        	if(actScore[j][1]<actScore[j+1][1]){
+		            	tmp[0]=actScore[j+1];
+		            	actScore[j+1]=actScore[j];
+		            	actScore[j]=tmp[0];
+		            }
+		        }
+		    }
+		    
+		    //추천할 유저의 id를 리스트에 넣기
+		    List<Integer> reList=new ArrayList<Integer>();
+		    for(int i=0; i<actScore.length; i++){
+		    	if(actScore[i][1]>0.3)  {    //유사도가 0.3이상만 추천받도록
+		    		reList.add((int)actScore[i][0]);      		
+		    	}
+		    }
+		    
+		    return reList;
+	  }
+	  
+	 
+	  //ActivityDTO List를 받는 함수_id값과 유사도를 2차원 배열의 값으로 return 함
+	  public  List<Integer> getActTable(List<ActivityDTO> activity){
+		  	
+		  //활동점수만 2차원 배열로 넣기
+			double[][] t=getActScore(activity);
+			
+			//유사도를 구한뒤 arr에 넣기
+			//t[0]는 매개변수로 받은 userid의 활동표
+			double[] simility=new double[activity.size()];
+			for(int i=0; i<activity.size(); i++){
+				simility[i]=cosineSimilarity(t[0], t[i]);
+			}	
+		    
+			
+		  double[][] actScore=new double[activity.size()-1][2];  //자기자신은 제외
+		   
+			//정리
+		    for (int i = 0; i < activity.size()-1; i++) {
+		        actScore[i][0]=activity.get(i+1).getUserid();   //id 자기자신은 제외
+		        
+		        //코사인유사도
+		        if(Double.isNaN(simility[i+1])){   //NaN값이라면 0으로 대체
+		        	actScore[i][1]=0; 
+		        } else {  //유사도 있으면 넣어주기
+		        	actScore[i][1]=simility[i+1];
+		        }
+			}
+		    
+		    //유사도 내림차순 정렬하고 0.3이상 id만 reList로 반환
+		    List<Integer> reList=sort(actScore);
+		    return reList;
+	  }
+	  
+	  
+	  
+	  @Test
+		public void test()throws Exception{
+		  List<ActivityDTO> activity=dao.activityTbl(6);   //아이디 7번
+		  
+		  
+		  //추천받는 유저 id
+		  List<Integer> reList=getActTable(activity);
+		  System.out.println(reList);
+		  
+	  }
+	  
+	  
 
-    
-    //정렬뒤 확인
-    for(int i=0; i<actScore.length; i++){
-    	System.out.println("정렬값:       "+Arrays.toString(actScore[i]));   
-    	//[6.0, 0.0]
-    	//[20.0, 0.0]
-    }
-    
-    
-    //추천할 유저의 id를 배열로 뽑음
-    int[] recomm=new int[actScore.length];
-    for(int i=0; i<actScore.length; i++){
-    	recomm[i]=(int)actScore[i][0];   //0이면 제외하는 조건 추가할것
-    }
-    
-    //추천할 유저의 id 배열 출력
-    System.out.println("추천할 id값 입니다:        "+Arrays.toString(recomm));
-    
-	}
-	
-	
-	
-	
 	
 
 }
