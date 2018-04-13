@@ -5,12 +5,12 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,35 +30,35 @@ public class MainController {
 	private UserService uservice;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, Principal principal) {
 		
+		//인가받은 유저가 접속할 경우
+		if(principal!=null){
+			return "redirect:/main";
+		}
+		
+		//인가받지 않은 유저가 접속할 경우
 		return "forward:/user/loginTest";
-		
 	}
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model,Principal principal)throws Exception{
-		HttpSession session=request.getSession();
-		//UserVO vo=(UserVO)session.getAttribute("principal");
 		
-		System.out.println("---------------------123");
+		
+		System.out.println("인증받고 '/'들렀다가 'main'들어옴");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO users = uservice.detailByEmail(authentication.getName());
-		System.out.println("_-------------p;;;;;;;-------princiapl");
-		System.out.println("아이디 들어옴>"+authentication.getName());
-		session.setAttribute("login", users);
-		System.out.println(authentication.toString());
-		System.out.println(users.toString());
-		System.out.println(users.getId());
-	//	model.addAttribute("principal", principal);
-	//	System.out.println(principal.getName());
-	 
 		
-			
+		//세션 생성 및 메인 피드 생성
 		if(users!=null){
 			
-				model.addAttribute("list", service.mainRead(users.getId())); //세션 아이디값을 통해 현재 팔로우중인 유저들의 게시물정보 및 유저정보 등을 받아옴
+			HttpSession session=request.getSession();
+			session.setAttribute("login", users);
+			
+			model.addAttribute("list", service.mainRead(users.getId())); //세션 아이디값을 통해 현재 팔로우중인 유저들의 게시물정보 및 유저정보 등을 받아옴
+			
 		}
+		System.out.println("안들어가나요?");
 	}
 	
 	@RequestMapping(value = "/empty", method = RequestMethod.GET)

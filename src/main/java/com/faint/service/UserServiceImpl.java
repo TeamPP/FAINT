@@ -426,27 +426,24 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-	/////////+++++++====================
+	//============================시큐리티 인증관련============================
+	// 이메일로 사용자의 모든 정보 가져오기
 	@Override
 	public UserVO detailByEmail(String email) throws UsersException {
-		
-		
-		System.out.println(email+"email은 ");
 		return dao.selectByEmail(email);
 	}
-
+	
+	// 사용자 권한 가져오기
 	@Override
 	public Authority getAuthority(Integer id) throws UsersException {
 		return authorityDao.select(id);
 	}
-
+	
+	// Principal 객체 가져오기
 	@Override
 	public UserDetails getPrincipal() {
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		System.out.println(auth+"get");
-		System.out.println("userDetailes");
-		
 		Object principal = auth.getPrincipal();
 		if (principal instanceof UserDetails) {
 			return (UserDetails) principal;
@@ -454,17 +451,19 @@ public class UserServiceImpl implements UserService {
 		
 		return null;
 	}
+	
+	// 로그아웃
 	@Override
 	public void logout(HttpServletRequest req, HttpServletResponse resp) {
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		
-		System.out.println("ㅁㄴㅇㄴ");
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(req, resp, auth);
 		}
+		
 	}
 	
+	// 패스워드 일치 확인
 	@Override
 	public boolean isPasswordMatched(String oldPassword) throws UsersException {
 		// 현재 로그인한 사용자의 암호화된 비밀번호를 가져온다.

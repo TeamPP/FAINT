@@ -131,16 +131,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserVO selectByEmail(String email) throws UsersException {
 		
-		System.out.println("daoimpl "+email);
 		UserVO users = null;
 		
 		try {
-			
-			System.out.println(""+email+"try임플리 ");
 			users = session.selectOne(namespace + ".select-users-by-email", email);
-			
-			System.out.println("userDAO 로그인 ");
-			
 		} catch (Exception e) {
 			throw new UsersException(e.getMessage());
 		}

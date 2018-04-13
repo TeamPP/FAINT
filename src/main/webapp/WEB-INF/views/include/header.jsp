@@ -229,7 +229,7 @@ li.cate:hover img, li.cate.hover img {
 
    <nav class="navbar navbar-default" style="z-index: 1;">
    <div class="nav-wrap" style="display: block;">
-      <a class="logo pull-left" href="/main">나와라 로고!</a>
+      <a class="logo pull-left" href="/">나와라 로고!</a>
       <form class="search-form" action="/search/search" method="get">
          <input class="textInput" type="text" name='inputKeyword'
             id='keywordInput' value="${keyword}" placeholder="검색"
