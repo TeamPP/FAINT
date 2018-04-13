@@ -58,6 +58,11 @@
 	height: 33px;
 	display: inline-block;
 	border-radius: 150px;  /* 프사 둥글게 */
+	vertical-align: baseline !important;
+}
+
+.search-form{
+	text-align:center;
 }
 
 
@@ -243,14 +248,23 @@ li.cate:hover img, li.cate.hover img {
        <a class="follow-list" href="javascript:;"><i class="material-icons">insert_comment</i></a>
       <a class="account" href="/member/${login.nickname}">
 		<c:choose>
-			<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-				<img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
+			<c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+				<img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" /> 
 			</c:when>
 			<c:otherwise>
 				<img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
 			</c:otherwise>
 		</c:choose>
       </a>
+      			<sec:authorize access="hasRole('ROLE_USER')">
+				<form action="<c:url value='/logout'/>" method="post">
+
+					<button type="submit" class="btn btn-default">로그아웃</button>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
+			</sec:authorize>
+      
       </span>
    </div>
     <div class="top-menu">
@@ -266,16 +280,10 @@ li.cate:hover img, li.cate.hover img {
         		<sec:authorize access="!hasRole('ROLE_USER') ">
 		<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
 	</sec:authorize>
-	<sec:authorize access="hasRole('ROLE_USER')">
-		 <form action="<c:url value='/logout'/>" method="post">
-               
-                              <button type="submit" class="btn btn-default">로그아웃</button>
-                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            </form>
-	</sec:authorize>
-        
-        
-             <%-- 	 <form>
+
+
+
+			<%-- 	 <form>
 	            	  <a class="logout" href="<c:url value='/logout'/>">logout</a>
 	            	   
 	              </form> --%>
