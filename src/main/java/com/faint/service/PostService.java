@@ -81,4 +81,10 @@ public interface PostService {
 	public List<PostVO> locationsAjax(SearchCriteria cri) throws Exception;
 
 	public List<PostVO> infiniteScrollLocations(SearchCriteria cri, Integer row) throws Exception;
+	
+	
+	// =================== 카테고리 필터링 ====================
+	// 카테고리 번호로 필터링
+	public List<PostVO> cateAjax(int cateid) throws Exception;
+	
 }

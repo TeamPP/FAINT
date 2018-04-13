@@ -483,4 +483,44 @@
 	    ]]>
 	    </select>
 	
+		<!-- 카테고리 번호로 필터링 -->
+	<select id="cateFilter" resultType="com.faint.domain.PostVO">
+		 <![CDATA[
+            select topT.*, (@rank := @rank +1) as rank
+			from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            on p.userid = u.id
+            group by p.id ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
+            
+            where cateid =#{cateid}
+            
+            order by likeCount desc, replyCount desc
+            
+            limit 0,10;
+		 ]]>
+	</select>
+	
+	
+	
 </mapper>

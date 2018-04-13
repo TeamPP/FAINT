@@ -44,7 +44,6 @@ article {
     font-weight: 200;
     height: 35px;
 }
-
 </style>
 
 

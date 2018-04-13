@@ -22,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.faint.domain.Authority;
 import com.faint.domain.AuthorityId;
 import com.faint.domain.UserVO;
+
 import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
+
 import com.faint.persistence.AuthorityDao;
 import com.faint.persistence.UserDAO;
 
