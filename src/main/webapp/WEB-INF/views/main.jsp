@@ -392,7 +392,7 @@ background-color:black;
 			</div>
 			<div style="display: inline-block;">
 		        <!-- 위치 추가 -->
-		        <label class="btn btn-default btn-circle" id="" >
+		        <a class="btn btn-default btn-circle" id="" href="/search/category?cateid=${postDTO.cateid}">
 		        <c:choose>
 		        <c:when test="${postDTO.cateid == 1 }">
 	       			<i class="glyphicon glyphicon-plane"></i>
@@ -410,7 +410,7 @@ background-color:black;
      	       			<i class="fa fa-pencil"></i>
 		        </c:when>
 		        </c:choose>
-		        </label>
+		        </a>
 	        </div>
 		</header>
 		<c:forEach items="${fileInfoList[status.index]}" var="fileInfo" varStatus='fileInfoListStatus'>
@@ -687,8 +687,8 @@ function cateClick(thisTag){
 		  $(".post").not("article[data-filter='" + customType +"']").remove(); //customType 일치하지않는 요소 삭제
 	  }
 	$("#carousel").children().removeClass(); //기존 클래스명 삭제
-	changeClass(); //클래스명 다시부여
-	
+	//changeClass(); //클래스명 다시부여
+	moveToSelected($("#carousel").children().eq(1));
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
 	$('#carousel article').not(".selected").click(function() {
 		if($(this).hasClass("hideLeft")){
@@ -803,13 +803,13 @@ function postModal(){
 	            $("#carousel").css("-webkit-filter"," blur(6px)");	            
 	            //-----------------------------------여기도 수정
 	            //현재 위치값 저장
-	            $(".postModal-content").data("index", curIndex);
+	            $(".postModal-content").attr("data-index", curIndex);
 	          	//현재 위치값을 통해 움직이는 버튼 삭제 여부 결정
-	            if($(".imageContainer:has(img)").length==1){
+	            if($(".post").length==1){
 	            	$(".postModal-content > i").remove();
-	            }else if(curIndex == $(".imageContainer:has(img)").length-1){
+	            }else if(curIndex == $(".post").length-1){
 	            	$(".postRight").remove();
-// 	            }else if(curIndex == 0){
+ 	            }else if(curIndex == 0){
 	            	$(".postLeft").remove();
 	            }
 	          	//--------------------------------------------------
@@ -822,11 +822,7 @@ function postModal(){
 	            
 		        //이미지 배열화
 		        var urlList=data.url.split('|');
-	        	//첨부 이미지or영상 수
-	          	var len = urlList.length;
-	        	if(len == 1){
-	        		$("#moveRight").css("display", "none");
-	        	}
+	        	
 				//이미지 잘라서 삽입
 	          	for (var i in urlList) {
 	           	
@@ -859,8 +855,11 @@ function postModal(){
 	           		}else{
 	           			alert("지원하지 않는 타입의 파일형식을 포함하고 있음");
 	           		}
-	            
 	          	}
+	          	//첨부 이미지or영상 수
+	          	if(urlList.length == 1){
+	          		$(".popImageContainer[data-postid="+pid+"]").siblings("#moveRight").css("display","none");
+	        	}
 				
 	            //좋아요버튼 삽입
 	            if(data.isLike=='0'){
@@ -908,7 +907,7 @@ function postModal(){
 	    			$(".selected > div").children().click();
 	    		});
 	            
-	            postEdit();
+	            postEdit(pid);
 	            reply();
 	            like();
 	            likerList();
@@ -927,9 +926,15 @@ function postModal(){
 }
 
 //게시물 수정
-function postEdit(){
-	$("#postEdit").on("click",function(){
-		var postid=$(".s2_4_1").data("postid");
+function postEdit(pid){
+	var postid;	
+	if(typeof pid == "undefined" || pid == null) postid=$(".s2_4_1").data("postid");
+	else{postid = pid;}
+	
+	console.log(postid);
+	$(".s2_4_1[data-postid="+postid+"] > span > i").on("click",function(){
+/* 	$("#postEdit").on("click",function(){ */
+		
 		var template = Handlebars.compile($("#modalTemplate").html());
 		$("body").append(template);
 		$("body").attr("aria-hidden","true");
@@ -971,13 +976,14 @@ function postDelete(thisTag){
 				//postlist다시부르기
 				
 				//다음 객체 저장
-				var nextObj = $(".post>div>img[data-postid="+ postid+ "]").parent().parent().next();
+				var nextObj = $(".post>div[data-postid="+ postid+ "]").parent().next();
 				//카테고리 필터 리스트 다시 읽기 
 				all=all.not(".selected"); 
 				//article 지우고 다시로딩
-				$(".post>div>img[data-postid="+ postid+ "]").parent().parent().remove();
+				$(".post>div[data-postid="+ postid+ "]").parent().remove();
 				//다음 게시물을 선택
 				$(nextObj).trigger("click");
+				$("#carousel").css("-webkit-filter","");
 			};
 		}
 	})
@@ -1239,7 +1245,7 @@ function likerList(){
 		                }
 	                })
 	                
-	                $("#likersContainer").append(likers)
+	                $("#likersContainer").html(likers);
 	                //팔로우+언팔로우
 	                follow();
 	                

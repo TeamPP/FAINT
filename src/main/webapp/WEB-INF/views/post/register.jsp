@@ -377,7 +377,7 @@
 				console.log( this.fileUrl);
 				str += "<input type='hidden' name='files' value='" + this.fileUrl
 				+ "'> ";
-				var filter ="";
+				var filter =" ";
 				if(typeof this.filter == "undefined" || this.filter == null) {
 					filter = " ";
 				}else{
