@@ -225,8 +225,8 @@ public class PostController {
 		dto.setLoginid(userVO.getId());
 		
 		ResponseEntity<FollowinPostDTO> entity=null;
-		
 		try{
+		
 			entity=new ResponseEntity<>(service.detailRead(dto), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
