@@ -1,79 +1,21 @@
-package com.faint.sns;
+package com.faint.util;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-import java.util.*;
-
-
-import javax.inject.Inject;
-
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.faint.domain.UserVO;
 import com.faint.dto.ActivityDTO;
-import com.faint.persistence.ActivityDAO;
-import com.faint.persistence.TagDAO;
-import com.faint.service.ActivityService;
 
-
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-	locations ={"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
-
-
-public class similarityTest2 {
+/*
+ * 유사도를 구하는 함수
+ */
+public class Simility {
    
-	@Inject
-	private ActivityDAO dao;
-   
-	@Inject
-	private ActivityService service;
-
-   
-   
-   //corr 상관계수
-/*     public static double Correlation(int[] xs, int[] ys) {
-          //TODO: check here that arrays are not null, of the same length etc
-
-          double sx = 0.0;
-          double sy = 0.0;
-          double sxx = 0.0;
-          double syy = 0.0;
-          double sxy = 0.0;
-
-          int n = xs.length;
-
-          for(int i = 0; i < n; ++i) {
-            double x = xs[i];
-            double y = ys[i];
-
-            sx += x;
-            sy += y;
-            sxx += x * x;
-            syy += y * y;
-            sxy += x * y;
-          }
-
-          // covariation
-          double cov = sxy / n - sx * sy / n / n;
-          // standard error of x
-          double sigmax = Math.sqrt(sxx / n -  sx * sx / n / n);
-          // standard error of y
-          double sigmay = Math.sqrt(syy / n -  sy * sy / n / n);
-
-          // correlation is just a normalized covariation
-          return cov / sigmax / sigmay;
-        }*/
-   
-
-
+        
+      
 	   //코사인유사도
-	  public  double cosineSimilarity(double[] vectorA, double[] vectorB) {
+	  public  static double cosineSimilarity(double[] vectorA, double[] vectorB) {
 	       double dotProduct = 0.0;  //벡터의 내적 각 원소를 짝지어서 곱한뒤 합산
 	       double normA = 0.0;
 	       double normB = 0.0;
@@ -87,7 +29,7 @@ public class similarityTest2 {
 	  
 	  
 	  //활동표 점수를 2차원 배열로 넣기
-	  public double[][] getActScore(List<ActivityDTO> activity){
+	  public static double[][] getActScore(List<ActivityDTO> activity){
 		  	
 		  	//list-->array 변경
 			ActivityDTO[] array=activity.toArray(new ActivityDTO[activity.size()]);
@@ -123,7 +65,7 @@ public class similarityTest2 {
 	  
 	  
 	  //actScore를 유사도 기준으로 정렬하고 추천받는 유저의 번호만 list형식으로 리턴함
-	  public  ArrayList<Integer> sort(double[][] actScore){
+	  public static  ArrayList<Integer> sort(double[][] actScore){
 		    //배열복사_유사도에 따른 정렬을 위해서
 		    double[][] tmp=new double[1][2]; 
 		    
@@ -151,8 +93,8 @@ public class similarityTest2 {
 	  }
 	  
 	 
-	  //ActivityDTO List를 받는 함수_id값과 유사도를 2차원 배열의 값으로 return 함
-	  public  String getRecomId(List<ActivityDTO> activity){
+	  //ActivityDTO 추천받을 Id값을 (1,2,3) 형식의 String값으로 반환, 없으면 () 으로 반환
+	  public static ArrayList<Integer> getRecomId(List<ActivityDTO> activity){
 		  	
 		  //활동점수만 2차원 배열로 넣기
 			double[][] t=getActScore(activity);
@@ -189,11 +131,11 @@ public class similarityTest2 {
 		    ArrayList<Integer> reList=sort(actScore);
 		    System.out.println("추천할 아이디 번호:        " +reList);
 		    
-		    
+		    return reList;
 		    //() 괄호안에 추천 아이디를 넣는 String으로 변환
 		    // id값이 ()에 담긴 String 만들기
 		    // ex.(1,2,3)
-		 String reListString="(";
+/*			  String reListString="(";
 			  
 			  Iterator it=reList.iterator();
 			  while(it.hasNext()){
@@ -208,40 +150,18 @@ public class similarityTest2 {
 			  }
 			  reListString+=")";
 			  System.out.println("reListString :  "+reListString); 
-		
 		    
 		    
-		    return reListString;
+		    
+		    return reListString;*/
 		    
 	  }
 	  
 	  
 	  
-/*	  @Test
-		public void test()throws Exception{
-		  List<ActivityDTO> activity=dao.activityTbl(4);   //아이디 7
-		  
-		  String reId=getRecomId(activity);
-		  System.out.println("reId:     "+reId);
-
-		  //id:4 ->5,1
-		  //id:5->18,3
-
-	  }*/
 	  
 	  
 	  
-	  @Test
-		public void test()throws Exception{
-		  
-		  //String reId="(1,2,3)";
-		  List<UserVO> uerList=service.recomm(4); //id 4번이 추천받는 UserVO 객체 리스트를 반환
-		  System.out.println(uerList);
-
-		  //id:4 ->5,1
-		  //id:5->18,3
-	  }
-
-	
-
+   
+   
 }

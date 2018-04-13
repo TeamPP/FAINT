@@ -1,149 +1,24 @@
 package com.faint.dto;
 
 public class ActivityDTO {
-	/*private String userid;
-	
-	private String c1PostCnt;
-	private String c2PostCnt;
-	private String c3PostCnt;
-	private String c4PostCnt;
-	private String c5PostCnt;
-	
-	private String c1ReplyCnt;
-	private String c2ReplyCnt;
-	private String c3ReplyCnt;
-	private String c4ReplyCnt;
-	private String c5ReplyCnt;
-	
-	private String c1LikeCnt;
-	private String c2LikeCnt;
-	private String c3LikeCnt;
-	private String c4LikeCnt;
-	private String c5LikeCnt;
-	
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	public String getC1PostCnt() {
-		return c1PostCnt;
-	}
-	public void setC1PostCnt(String c1PostCnt) {
-		this.c1PostCnt = c1PostCnt;
-	}
-	public String getC2PostCnt() {
-		return c2PostCnt;
-	}
-	public void setC2PostCnt(String c2PostCnt) {
-		this.c2PostCnt = c2PostCnt;
-	}
-	public String getC3PostCnt() {
-		return c3PostCnt;
-	}
-	public void setC3PostCnt(String c3PostCnt) {
-		this.c3PostCnt = c3PostCnt;
-	}
-	public String getC4PostCnt() {
-		return c4PostCnt;
-	}
-	public void setC4PostCnt(String c4PostCnt) {
-		this.c4PostCnt = c4PostCnt;
-	}
-	public String getC5PostCnt() {
-		return c5PostCnt;
-	}
-	public void setC5PostCnt(String c5PostCnt) {
-		this.c5PostCnt = c5PostCnt;
-	}
-	public String getC1ReplyCnt() {
-		return c1ReplyCnt;
-	}
-	public void setC1ReplyCnt(String c1ReplyCnt) {
-		this.c1ReplyCnt = c1ReplyCnt;
-	}
-	public String getC2ReplyCnt() {
-		return c2ReplyCnt;
-	}
-	public void setC2ReplyCnt(String c2ReplyCnt) {
-		this.c2ReplyCnt = c2ReplyCnt;
-	}
-	public String getC3ReplyCnt() {
-		return c3ReplyCnt;
-	}
-	public void setC3ReplyCnt(String c3ReplyCnt) {
-		this.c3ReplyCnt = c3ReplyCnt;
-	}
-	public String getC4ReplyCnt() {
-		return c4ReplyCnt;
-	}
-	public void setC4ReplyCnt(String c4ReplyCnt) {
-		this.c4ReplyCnt = c4ReplyCnt;
-	}
-	public String getC5ReplyCnt() {
-		return c5ReplyCnt;
-	}
-	public void setC5ReplyCnt(String c5ReplyCnt) {
-		this.c5ReplyCnt = c5ReplyCnt;
-	}
-	public String getC1LikeCnt() {
-		return c1LikeCnt;
-	}
-	public void setC1LikeCnt(String c1LikeCnt) {
-		this.c1LikeCnt = c1LikeCnt;
-	}
-	public String getC2LikeCnt() {
-		return c2LikeCnt;
-	}
-	public void setC2LikeCnt(String c2LikeCnt) {
-		this.c2LikeCnt = c2LikeCnt;
-	}
-	public String getC3LikeCnt() {
-		return c3LikeCnt;
-	}
-	public void setC3LikeCnt(String c3LikeCnt) {
-		this.c3LikeCnt = c3LikeCnt;
-	}
-	public String getC4LikeCnt() {
-		return c4LikeCnt;
-	}
-	public void setC4LikeCnt(String c4LikeCnt) {
-		this.c4LikeCnt = c4LikeCnt;
-	}
-	public String getC5LikeCnt() {
-		return c5LikeCnt;
-	}
-	public void setC5LikeCnt(String c5LikeCnt) {
-		this.c5LikeCnt = c5LikeCnt;
-	}
-	@Override
-	public String toString() {
-		return "ActivityDTO [userid=" + userid + ", c1PostCnt=" + c1PostCnt + ", c2PostCnt=" + c2PostCnt
-				+ ", c3PostCnt=" + c3PostCnt + ", c4PostCnt=" + c4PostCnt + ", c5PostCnt=" + c5PostCnt + ", c1ReplyCnt="
-				+ c1ReplyCnt + ", c2ReplyCnt=" + c2ReplyCnt + ", c3ReplyCnt=" + c3ReplyCnt + ", c4ReplyCnt="
-				+ c4ReplyCnt + ", c5ReplyCnt=" + c5ReplyCnt + ", c1LikeCnt=" + c1LikeCnt + ", c2LikeCnt=" + c2LikeCnt
-				+ ", c3LikeCnt=" + c3LikeCnt + ", c4LikeCnt=" + c4LikeCnt + ", c5LikeCnt=" + c5LikeCnt + "]";
-	}
-	
-	*/
-	
-	
 	
 	private int userid;
 	
+	//올린 post 갯수
 	private int c1PostCnt;
 	private int c2PostCnt;
 	private int c3PostCnt;
 	private int c4PostCnt;
 	private int c5PostCnt;
 	
+	//댓글수
 	private int c1ReplyCnt;
 	private int c2ReplyCnt;
 	private int c3ReplyCnt;
 	private int c4ReplyCnt;
 	private int c5ReplyCnt;
 	
+	//좋아요수
 	private int c1LikeCnt;
 	private int c2LikeCnt;
 	private int c3LikeCnt;
