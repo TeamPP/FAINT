@@ -99,11 +99,11 @@
 
     </style>
 <script>
-    var memberID=Boolean(${login.id});
+/*     var memberID=Boolean(${login.id});
     if(memberID){
         alert("이미 로그인 되어있습니다. 로그아웃 해주세요");
         self.location = "/";
-    }
+    } */
 
 </script>
 <link href="/resources/dist/css/login.css" rel="stylesheet">
@@ -126,7 +126,7 @@
 
                     <input type="text" class="form-control" id="email" name="email" placeholder="가입한 Email을 입력해주세요12" autofocus>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password를 입력해주세요" >
-                    	<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+                    <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
                     <input type="submit" class="form-control btn btn-primary" value="로그인"/>
 
                 </form>

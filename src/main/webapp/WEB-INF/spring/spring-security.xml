@@ -26,24 +26,20 @@
           <intercept-url pattern="/loginTest/**" access="isAnonymous()" />
 			
 			<intercept-url pattern="/**" access="permitAll" />
-		<form-login 
+			
+		<form-login
 				login-page="/loginTest" 
 				login-processing-url="/login-processing"
 				default-target-url="/main"
 				username-parameter="email"
 				password-parameter="password" 
 				authentication-failure-url="/login?error=loginTest"/>
-				
-				
-				
-				
-		
-		
 			<access-denied-handler error-page="/access-denied"/>
-		<csrf />
+			
+		<logout invalidate-session="true" logout-success-url="/signin" logout-url="/signout" />
 		
 		
-	</http>      
+	</http>
 <!-- 		
 	 <http auto-config='true' use-expressions="true">
 	    		<intercept-url pattern="/admin/**" access="hasAuthority('USER_MANAGER')" />

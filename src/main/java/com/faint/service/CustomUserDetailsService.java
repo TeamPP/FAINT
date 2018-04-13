@@ -27,14 +27,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) 
 			throws UsernameNotFoundException {
 		
-		System.out.println("야야야야ㅑ야야야ㅑ ");
+		System.out.println("loadUserByUsername");
 		
 		try {
 			/*
 			 * 로그인할 때 클라이언트로부터 전달받은 아이디(email) 값을 넘겨 받아
 			 * 해당 사용자의 정보를 불러온다.
 			 */
-			System.out.println(email+"이메일 123asd123");
+			System.out.println("loadUserByUsername & email: "+email);
 			UserVO users = service.detailByEmail(email);
 			System.out.println("야야야야ㅑ야야야ㅑ111 ");
 			
@@ -48,13 +48,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 			
 		
 			if (users == null) {
-			System.out.println("asdasdas");
+			System.out.println("UsernameNotFoundException 부분");
 				throw new UsernameNotFoundException("해당 사용자를 찾지 못했습니다.");
 				
 			}
 
-			System.out.println("users"+users.toString());
-			System.out.println(this.getGrantedAuthorities(users));
+			System.out.println("userDetailService의 userVO값: "+users.toString());
+			System.out.println("userDetailService인스턴스의 getGrantedAuthorities(권한값): "+this.getGrantedAuthorities(users));
 			
 			
 			return new User(users.getEmail(),

@@ -36,51 +36,28 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 <style>
-.navbar-default .explore {
-   width: 24px;
-   height: 23px;
+.pull-right > a {
+   width: 33px;
+   height: 33px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -200px -342px;
 }
-.navbar-default .new-post {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -201px -111px;
-}
-.navbar-default .follow-list {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -192px -283px;
-}
-.navbar-default .account {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -275px -342px;
+.pull-right > a > i{
+	font-size:33px !important;
+	color: lightcoral !important;
 }
 .navbar-default .nav-wrap {
    max-width: 1010px;
    width: 100%;
    margin: 0 auto;
    padding: 0 30px;
+   color: gray;
+}
+.headerPhoto{
+	width: 33px;
+	height: 33px;
+	display: inline-block;
+	border-radius: 150px;  /* 프사 둥글게 */
 }
 
 
@@ -252,7 +229,7 @@ li.cate:hover img, li.cate.hover img {
 
    <nav class="navbar navbar-default" style="z-index: 1;">
    <div class="nav-wrap" style="display: block;">
-      <a class="logo pull-left" href="/main"></a>
+      <a class="logo pull-left" href="/main">나와라 로고!</a>
       <form class="search-form" action="/search/search" method="get">
          <input class="textInput" type="text" name='inputKeyword'
             id='keywordInput' value="${keyword}" placeholder="검색"
@@ -260,10 +237,20 @@ li.cate:hover img, li.cate.hover img {
             data-target="#searchModal" data-backdrop="true" autocomplete="off">
          <span class="search-icon"></span>
       </form>
-      <span class="pull-right"> <a class="explore"
-         href="/explore/expage"></a> <a class="new-post" href="/post/register"></a>
-         <a class="follow-list" href="javascript:;"></a> <a class="account"
-         href="/member/${login.nickname}"></a>
+      <span class="pull-right">
+      <a class="explore" href="/explore/expage"><i class="material-icons">explore</i></a>
+      <a class="new-post" href="/post/register"><i class="material-icons">create</i></a>
+       <a class="follow-list" href="javascript:;"><i class="material-icons">insert_comment</i></a>
+      <a class="account" href="/member/${login.nickname}">
+		<c:choose>
+			<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
+				<img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
+			</c:when>
+			<c:otherwise>
+				<img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
+			</c:otherwise>
+		</c:choose>
+      </a>
       </span>
    </div>
    </nav>
