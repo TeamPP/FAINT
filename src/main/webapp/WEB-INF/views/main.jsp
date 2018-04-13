@@ -759,11 +759,16 @@ function moveToSelected(element) {
 	moveToSelected('next');
 	});
 }
+var modalFlg = false;
 function postModal(){
 	//포스트 모달 팝업 창
 
 	$(".selected").on("click", function(e){
-		
+		if(modalFlg) {
+			console.log("그만 클릭해");
+			return;
+		}
+		modalFlg = true;
 		if(!(e.target.tagName == 'IMG' || e.target.tagName == 'VIDEO')){
 			return;
 		}
@@ -895,20 +900,11 @@ function postModal(){
 	            
 	            //포스트 움직이기 버튼 함수 적용
 	    		$(".postLeft").on("click", function(){
-	    			
-	    			var curIndex=$(".postModal-content").data("index");
-	    			console.log("다음 꺼 클릭함 : "+ curIndex-1);
-	    			console.log("현재 id : "+ pid);
-	    			//$(".post:eq("+(curIndex-1)+")").trigger("click");
 	    			curObj.prev().click();
 	    			$(".selected > div").children().click();
 	    		});
 	    		$(".postRight").on("click", function(){
-	    			var curIndex=$(".postModal-content").data("index");
-	    			console.log("다음 꺼 클릭함 : "+ curIndex+1);
-	    			console.log("현재 id : "+ pid);
 	    			curObj.next().click();
-	    			//$(".post:eq("+(curIndex+1)+")").trigger("click");
 	    			$(".selected > div").children().click();
 	    		});
 	            
@@ -922,8 +918,10 @@ function postModal(){
 	            $(".postModal").not("#myModal[data-postid="+ pid+ "]").remove();
 		       //modal창 보이기
 	            $("#myModal[data-postid="+ pid+ "]").css("display","block");
-	         }
-	      }
+		       
+		       modalFlg = false;
+	         }//if end
+	      }	//success end
 	   });
 	});
 }
