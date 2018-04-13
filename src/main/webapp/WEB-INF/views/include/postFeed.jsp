@@ -848,7 +848,7 @@ function likerList(){
 	                }
                 })
                 
-                $("#likersContainer").append(likers)
+                $("#likersContainer").html(likers)
                 //팔로우+언팔로우
                 follow();
                 
