@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,51 +36,33 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 <style>
-.navbar-default .explore {
-   width: 24px;
-   height: 23px;
+.pull-right > a {
+   width: 33px;
+   height: 33px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -200px -342px;
 }
-.navbar-default .new-post {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -201px -111px;
-}
-.navbar-default .follow-list {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -192px -283px;
-}
-.navbar-default .account {
-   width: 24px;
-   height: 23px;
-   margin-left: 30px;
-   display: inline-block;
-   background-size: 413px 391px;
-   background-image:
-      url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-   background-position: -275px -342px;
+.pull-right > a > i{
+	font-size:33px !important;
+	color: lightcoral !important;
 }
 .navbar-default .nav-wrap {
    max-width: 1010px;
    width: 100%;
    margin: 0 auto;
    padding: 0 30px;
+   color: gray;
+}
+.headerPhoto{
+	width: 33px;
+	height: 33px;
+	display: inline-block;
+	border-radius: 150px;  /* 프사 둥글게 */
+	vertical-align: baseline !important;
+}
+
+.search-form{
+	text-align:center;
 }
 
 
@@ -252,7 +234,7 @@ li.cate:hover img, li.cate.hover img {
 
    <nav class="navbar navbar-default" style="z-index: 1;">
    <div class="nav-wrap" style="display: block;">
-      <a class="logo pull-left" href="/main"></a>
+      <a class="logo pull-left" href="/">나와라 로고!</a>
       <form class="search-form" action="/search/search" method="get">
          <input class="textInput" type="text" name='inputKeyword'
             id='keywordInput' value="${keyword}" placeholder="검색"
@@ -260,12 +242,53 @@ li.cate:hover img, li.cate.hover img {
             data-target="#searchModal" data-backdrop="true" autocomplete="off">
          <span class="search-icon"></span>
       </form>
-      <span class="pull-right"> <a class="explore"
-         href="/explore/expage"></a> <a class="new-post" href="/post/register"></a>
-         <a class="follow-list" href="javascript:;"></a> <a class="account"
-         href="/member/${login.nickname}"></a>
+      <span class="pull-right">
+      <a class="explore" href="/explore/expage"><i class="material-icons">explore</i></a>
+      <a class="new-post" href="/post/register"><i class="material-icons">create</i></a>
+       <a class="follow-list" href="javascript:;"><i class="material-icons">insert_comment</i></a>
+      <a class="account" href="/member/${login.nickname}">
+		<c:choose>
+			<c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+				<img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" /> 
+			</c:when>
+			<c:otherwise>
+				<img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
+			</c:otherwise>
+		</c:choose>
+      </a>
+      			<sec:authorize access="hasRole('ROLE_USER')">
+				<form action="<c:url value='/logout'/>" method="post">
+
+					<button type="submit" class="btn btn-default">로그아웃</button>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
+			</sec:authorize>
+      
       </span>
    </div>
+    <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+          <%--     <security:authorize access="isAnonymous()"><li><a class="login" href="login_view">login</a></li></security:authorize> --%>
+       <%--        <security:authorize access="hasRole('ROLE_USER')">
+              <form action="<c:url value='/logout'/>" method="post">
+               
+                              <button type="submit" class="btn btn-default">로그아웃</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+        </security:authorize> --%>
+        		<sec:authorize access="!hasRole('ROLE_USER') ">
+		<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
+	</sec:authorize>
+
+
+
+			<%-- 	 <form>
+	            	  <a class="logout" href="<c:url value='/logout'/>">logout</a>
+	            	   
+	              </form> --%>
+            	</ul>
+            </div>
    </nav>
 
    <!-- Modal -->
