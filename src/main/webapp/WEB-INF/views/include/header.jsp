@@ -48,7 +48,7 @@ body {
    margin-left: 30px;
    display: inline-block;
    background-size: 38px;
-   background-image: url(/resources/image/explore_icon.png);
+   background-image: url(/resources/image/header_icon/explore_icon.png);
    background-repeat: no-repeat;
    position: relative;
 }
@@ -59,7 +59,7 @@ body {
    margin-left: 30px;
    display: inline-block;
    background-size: 40px;
-   background-image: url(/resources/image/camera_icon.png);
+   background-image: url(/resources/image/header_icon/camera_icon.png);
    background-repeat: no-repeat;
    position: relative;
    top: 3px;
@@ -71,7 +71,7 @@ body {
     margin-left: 30px;
     display: inline-block;
     background-size: 34px;
-    background-image: url(/resources/image/heart.png);
+    background-image: url(/resources/image/header_icon/heart.png);
     background-repeat: no-repeat;
     position: relative;
 }
@@ -138,12 +138,8 @@ li.cate {
 	margin: 20px 1% 0 1%;
 	width: 50px;
 	height: 50px;
-	background: #000000;
 	color: #ffffff;
 	text-align: center;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-	border-radius: 150px; /*사진 둥글게 */
-	border: 2px solid black;
 }
 
 li.cate * {
@@ -157,7 +153,7 @@ li.cate img {
 	width: 100%;
 	position: relative;
 	opacity: 1; /* 투명도 */
-	border-radius: 150px; /*사진 둥글게 */
+
 }
 
 li.cate .caption {
@@ -221,6 +217,11 @@ i {
 	padding: 5px;
 }
 
+.arrowslide {
+	position: fixed;
+	left: 50%;
+}
+
 .one{
 	top: 5px;
 	position: absolute;
@@ -244,7 +245,7 @@ i {
 }
 
 .dropbtn {
-    background-color: white;
+    background-color: #f8f8f8;
     color: #999;
     width: 109px;
     text-align: center;
@@ -254,13 +255,13 @@ i {
     cursor: pointer;
     font-family: Arial;
     position: fixed;
-    top: 45.8px;
+    top: 22.8px;
 }
 
 .dropbtn:hover {
 	color: black;
-    background-color: white;
-    border: 1px solid white;
+    background-color: #f8f8f8;
+    border: 1px solid #f8f8f8;
 }
 
 .dropdown {
@@ -319,36 +320,44 @@ i {
 		<div class="cateSection" id="1">   
         	<ul id="categoryList" style="z-index:5;">
  		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
-              <div class="caption"><p>ALL</p></div>
+              <div class="caption">
+              	<img src="/resources/image/cate_icon/microsoft.svg" style="width:27px; height:45px;">
+              	<!-- <p>ALL</p> -->
+              </div>
         </li>
 	
 		  <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>여행</p>
+		  		<img src="/resources/image/cate_icon/plane.svg" style="width:33px; height:45px;">
+                <!-- <p>여행</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="2" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>영화</p>
+              	<img src="/resources/image/cate_icon/film.svg" style="width:33px; height:45px;">
+                <!-- <p>영화</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="3" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>음악</p>
+              	<img src="/resources/image/cate_icon/music.svg" style="width:29px; height:45px;">
+                <!-- <p>음악</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="4" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>음식</p>
+              	<img src="/resources/image/cate_icon/food.svg" style="width:23px; height:46px;">
+                <!-- <p>음식</p> -->
               </div>
         </li>
  		
  		          <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>글귀</p>
+              	<img src="/resources/image/cate_icon/write.svg" style="width:30px; height:45px;">
+                <!-- <p>글귀</p> -->
               </div>
         </li>
 	</ul>
@@ -358,12 +367,12 @@ i {
       <a class="explore" href="/explore/expage"></a> 
       <a class="new-post" href="/post/register"></a>
       <a class="follow-list" href="javascript:;"></a>
-      <a class="account" href="/member/${login.nickname}"></a>
+      <a class="account" href="#"></a>
 	<div class="dropdown">
 		<div class="dropbtn" onclick="myFunction()">${login.nickname}</div>
 		<div id="myDropdown" class="dropdown-content">
-			<a href="#" onclick='unloadCheck()' >LOGOUT</a>
 			<a href="/member/${login.nickname}" onclick='unloadCheck()'>MY PAGE</a>
+			<a href="#" onclick='unloadCheck()' >LOGOUT</a>
 		</div>
 		</span>
    </div>
@@ -570,7 +579,7 @@ function searchAjax(){
                           console.log("태그다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.svg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].tagname+"</span>"
@@ -612,7 +621,7 @@ function searchAjax(){
                           console.log("지역이다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/location.svg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
@@ -647,7 +656,7 @@ function searchAjax(){
                             console.log("태그다");
                             str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                   +"<div class='_o92vn'>"
-                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.svg' style='height:23px; width:23px;'></span>"
+                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
                                   +"<div class='_poxna'>"
                                   +"<div class='_lv0uf'>"
                                   +"<span class='_b01op'>"+result[i].tagname+"</span>"

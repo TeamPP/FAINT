@@ -4,27 +4,36 @@ body{
 
 }
 
+@font-face {
+	font-family: 'logoFont';
+	src: url('resources/fonts/KaushanScript-Regular.ttf');
+}
+
+
+
 .navbar-default{
-    background-color: #fff;
+	background-color: #f8f8f8;
     /* background-color: #e7e7e7; */
-    height: 145px; 
+    height: 90px;
     padding: 5px 40px;
     text-align: center;
     position: fixed;
     width: 100%;
     top: 0;
+    border-color: #ddd;
+    opacity: 0.86;
 }
 
 .navbar-default .faintlogo {
-	display: inline-block;
-	background-image: url(/resources/image/111111.png);
-	background-repeat: no-repeat;
-	background-size: 100px;
-	width: 100px;
-	height: 120px;
-	position: fixed;
-	left: 18%;
-	top: 15px;
+    display: inline-block;
+    background-image: url(/resources/image/faint.png);
+    background-repeat: no-repeat;
+    background-size: 190px;
+    width: 190px;
+    height: 60px;
+    position: fixed;
+    left: 19%;
+    top: 13px;
 }
 
 .navbar-default .category {
@@ -57,7 +66,7 @@ body{
 
 .search-form{
     position: fixed;
-    top: 55px;
+    top: 31px;
     left: 43%;
     width: 215px;
     height: 26px;
@@ -99,10 +108,9 @@ body{
 }
 
 .pull-right{
-    float: right;
-    position: fixed;
-    top: 49px;
-    left: 65%;
+	position: fixed;
+    top: 25px;
+    left: 60%;
 }
 
 .modal-dialog {
