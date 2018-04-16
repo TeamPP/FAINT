@@ -163,7 +163,7 @@
 					</div>
 				</div>
 				<div class="_60iqg">
-					<a class="_q8ysx _6y8ij" id="address" title="" href="#">${postVO.location }</a>
+					<a class="_q8ysx _6y8ij" id="address" title="" href="/search/locations?location=${postDTO.location }">${postVO.location }</a>
 				</div>
 			</div>
 		</header>

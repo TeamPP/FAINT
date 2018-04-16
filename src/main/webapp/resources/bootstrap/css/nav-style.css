@@ -1,4 +1,4 @@
-
+/* 
 body{
     background-color: #f8f8f8;
 
@@ -82,7 +82,7 @@ body{
 
 .textInput{
     width: 215px;
-    /* height: 28px; */
+    height: 28px;
     height: 28px;
     background: #fafafa;
     border: solid 1px #dbdbdb;
@@ -112,3 +112,4 @@ body{
 
 
 
+ */

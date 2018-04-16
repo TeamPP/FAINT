@@ -182,5 +182,15 @@ public class PostDAOImpl implements PostDAO {
 	@Override
 	public void postTakeaway(RelationDTO dto) throws Exception{
 		session.delete(namespace + ".postTakeaway", dto);
+	}
+
+	
+	
+	//==============================category filtering==============================
+		//카테고리로 필터링
+	@Override
+	public List<PostVO> cateAjax(int cateid) throws Exception {
+		return session.selectList(namespace + ".cateFilter", cateid);
+		
 	};
 }

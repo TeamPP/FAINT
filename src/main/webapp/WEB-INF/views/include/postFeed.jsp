@@ -368,6 +368,9 @@ function getPostList(){
    
    $(data).each(function(index){
       var url=this.url.split('|').reverse(); //쿼리문에서 역순으로 붙어오기때문에 reverse사용
+      
+      console.log("url[0]:               "+url[0]);
+      
       var img = "<img class='postImage' title='"+this.id+"' style='height:100%; width:100%; object-fit:cover;' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+url[0]+"' />";
       
       //이미지 많을때 아이콘
@@ -397,8 +400,6 @@ function getPostList(){
 };
 
 function postModal(){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
 	//포스트 모달 팝업 창
 	$(".imageContainer").on("click", function(){
 		var curIndex=$(".imageContainer").index(this);

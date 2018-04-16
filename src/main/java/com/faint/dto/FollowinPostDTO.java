@@ -1,5 +1,6 @@
 package com.faint.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class FollowinPostDTO {
@@ -82,7 +83,6 @@ public class FollowinPostDTO {
 	public void setIsStore(int isStore) {
 		this.isStore = isStore;
 	}
-	
 	@Override
 	public String toString() {
 		return "FollowinPostDTO [postid=" + postid + ", userid=" + userid + ", caption=" + caption + ", cateid="
@@ -90,4 +90,5 @@ public class FollowinPostDTO {
 				+ ", profilephoto=" + profilephoto + ", regdate=" + regdate + ", isLike=" + isLike + ", isStore="
 				+ isStore + "]";
 	}
+	
 }

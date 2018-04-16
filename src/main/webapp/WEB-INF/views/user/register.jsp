@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
+<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
 <style>
 
 	td {

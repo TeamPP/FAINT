@@ -1,35 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <!DOCTYPE html>
-<html>
-<head><title>로그인 페이지</title></head>
-<body>
-	<h1>로그인 페이지</h1>
-	<form action="<c:url value='/login-processing'/>" method="post">
-		<input type="email" name="email" placeholder="이메일 입력" required>
-		<input type="password" name="password" placeholder="비밀번호 입력" required>
-		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
-		<input type="submit" value="로그인">
-	</form>
-	<a href="<c:url value='/join.do'/>">회원가입</a>
-	<c:if test="${ param.error == 'login' }">
-		<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력하셨습니다.</p>
-	</c:if>
-	<c:if test="${ param.logout == 'true' }">
-		<p style="color:#FF0000">로그아웃 하였습니다.</p>
-	</c:if>
-</body>
-</html> --%>
-
-
-
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
+<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
 
     <link rel="shortcut icon" href="/resources/images/favicon/idea.ico" type="image/x-icon" />
     <link rel="icon"  href="/resources/images/favicon/idea.ico"  type="image/x-icon"  />
-    <title>FFFFAAAAIIIINNT</title>
+    <title>Sign-In</title>
     <!--필수 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=1, user-scalable=no">
@@ -98,14 +74,7 @@
         }
 
     </style>
-<!-- <script>
-    var memberID=Boolean(${login.id});
-    if(memberID){
-        alert("이미 로그인 되어있습니다. 로그아웃 해주세요");
-        self.location = "/";
-    }
-
-</script> -->
+    
 <link href="/resources/dist/css/login.css" rel="stylesheet">
 <div  id="login">
     <div class="wrapper fadeInDown text-center">
@@ -121,12 +90,12 @@
             <div class="card-body text-secondary" id="formFooter">
 
                 <!-- Login Form -->
-                <form name="login" action="<c:url value='/login-processing'/>"method="post">
+                <form name="login" action="<c:url value='login-processing'/>"method="post">
 
 
-                    <input type="text" class="form-control" id="email" name="email" placeholder="가입한 Email을 입력해주세요12" autofocus>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="가입한 Email을 입력해주세요" autofocus>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password를 입력해주세요" >
-                    	<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+                    <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
                     <input type="submit" class="form-control btn btn-primary" value="로그인"/>
 					  	<c:if test="${ param.error == 'login' }">
 						<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력하셨습니다.</p>

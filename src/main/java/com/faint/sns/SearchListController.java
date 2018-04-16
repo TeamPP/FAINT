@@ -157,5 +157,27 @@ public class SearchListController {
 
 		return postService.infiniteScrollLocations(cri, row);
 	}
+	
+	
+	
+	/*-----------------------------------------------카테고리 필터---------------------------------------------------------------*/
+	
+	// 키워드받는 태그 게시물목록 무한스크롤 (처음 10개 목록)
+		@RequestMapping(value = "/category", method = RequestMethod.GET)
+		public String cateSearch(@RequestParam("cateid") Integer cateid, Model model) throws Exception {
+
+			JSONArray jsonArray=new JSONArray();
+			List<PostVO> catelist=postService.cateAjax(cateid);
+			
+			if(catelist.size()>0){
+				model.addAttribute("cateList", catelist);
+				model.addAttribute("jsonList", jsonArray.fromObject(catelist));
+				model.addAttribute("keyword", "category."+cateid);
+				return "/search/cateFilter";
+			}else{
+				return "forward:/empty";
+			}
+			
+		}
 
 }
