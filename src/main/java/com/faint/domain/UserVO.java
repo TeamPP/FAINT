@@ -1,6 +1,7 @@
 package com.faint.domain;
 
 import java.sql.Date;
+import java.util.Set;
 
 public class UserVO {
 	private int id;
@@ -24,8 +25,17 @@ public class UserVO {
 	private int blocked; //차단여부 확인 - 로그인한 유저가 차단당하지 않은 경우 0반환
 	private int isBlock; //차단여부 확인 - 로그인한 유저가 해당 유저를 차단하지 않았을 경우 0반환
 	private int postCount;
+	private Set<Authority> authorities;
 	
 	
+	public Set<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(Set<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
 	public int getId() {
 		return id;
 	}

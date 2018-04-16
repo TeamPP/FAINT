@@ -45,7 +45,7 @@ public class ReplyController {
 		
 		int count = service.writeCount(vo);
 		System.out.println(count);
-		if(count>=10) {
+		if(count>=2000) {
 			System.out.println("here is coming ");
 			try {
 				 response.setContentType("text/html; charset=UTF-8");

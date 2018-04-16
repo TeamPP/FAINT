@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
+   
 <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -139,6 +142,7 @@
 	
 	<article class="_s5vjd _622au _5lms4 _8n9ix _9445e">
 		<form id="registerForm" role="form" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<!-- 프사, 닉네임 -->
 		<header class="_7b8eu _9dpug">
 			<div class="_82odm _i2o1o">
@@ -373,7 +377,7 @@
 				console.log( this.fileUrl);
 				str += "<input type='hidden' name='files' value='" + this.fileUrl
 				+ "'> ";
-				var filter ="";
+				var filter =" ";
 				if(typeof this.filter == "undefined" || this.filter == null) {
 					filter = " ";
 				}else{
@@ -469,9 +473,10 @@
 			nextObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.next("video").length == 1){
+			if(nextObj.is("video")){
 				nextObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			
@@ -507,9 +512,10 @@
 			prevObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.prev("video").length == 1){
+			if(prevObj.is("video")){
 				prevObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			
@@ -547,6 +553,10 @@
 							fileName : this.fileUrl
 						},
 						dataType : "text",
+						beforeSend : function(xhr)
+				          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				          },
 						success : function(result) {
 						}
 					});  

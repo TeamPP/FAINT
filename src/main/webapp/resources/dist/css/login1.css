@@ -1,0 +1,113 @@
+.login{
+    display: flex;
+    width:75%;
+    margin:0 auto;
+    margin-top:50px;
+    align-items: center;
+}
+
+#phone-image,
+#login{
+    width: 50%;
+}
+
+#phone-image{
+    margin-right: 20px;
+}
+
+.login__box{
+    background-color: white;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 10px;
+    
+}
+
+.login__box--transparent{
+    border:none;.login__box--transparent
+    background-color: transparent;
+    margin-top:20px;
+   text-align: center;
+}
+
+.login__box--account{
+    padding:25px 0;
+    text-align: center;
+}
+
+.login__link{
+    color:#3897f0;
+}
+
+.login__appstores img{
+    height: 40px;
+    cursor: pointer;
+}
+
+.login__appstores{
+    margin-top: 17px;
+}
+
+.login__logo{
+    margin-bottom:10px;
+}
+
+.login__input{
+    padding:7px 0px 7px 10px;
+    box-sizing: border-box;
+    width:100%;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.login__input:focus{
+    outline:none;
+}
+
+.login__box--form{
+    padding:40px;
+    box-sizing: border-box;
+}
+
+.login__form-box{
+    margin-top: 8px;
+    position: relative;
+}
+
+.login__form-box a{
+    position: absolute;
+    top:10px;
+    right:10px;
+}
+
+input[type="submit"]{
+    width:100%;
+    padding:6px 0px;
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    border:0;
+    color:white;
+    font-weight: 700;
+    font-size:14px;
+    background-color: #3897f0;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: all .5s ease-in-out; 
+}
+
+/* input[type="submit"]:hover{
+    transform: rotate(1turn);
+} */
+
+.login__form-divider{
+    display: block;
+    margin:20px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    color:#999;
+}
+
+#login__fb-link{
+    color:#385185;
+}

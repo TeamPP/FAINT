@@ -178,8 +178,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	//==============게시글 수정==============
-	@Override
 	@Transactional
+	@Override
 	public void modify(PostVO post) throws Exception {
 		dao.modify(post);
 		
@@ -216,6 +216,15 @@ public class PostServiceImpl implements PostService {
 		dao.deleteOne(postid);
 		return "SUCCESS";
         
+	}
+	
+	
+	
+	// =================== 카테고리 필터링 ====================
+		// 카테고리 번호로 필터링
+	@Override
+	public List<PostVO> cateAjax(int cateid) throws Exception {
+		return dao.cateAjax(cateid);
 	}
 	
 }

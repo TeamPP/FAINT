@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
+import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
@@ -110,6 +111,8 @@ public class UserDAOImpl implements UserDAO {
 	// ======================로그인======================
 
 	public UserVO login(LoginDTO dto) throws Exception {
+		
+		System.out.println("로그인 ");
 		return session.selectOne(namespace + ".login", dto);
 	}
 
@@ -124,6 +127,46 @@ public class UserDAOImpl implements UserDAO {
 	// session.update(namespace + ".keepLogin", paramMap);
 	// }
 	// 세션으로 로그인 여부 판단
+	
+	@Override
+	public UserVO selectByEmail(String email) throws UsersException {
+		
+		UserVO users = null;
+		
+		try {
+			users = session.selectOne(namespace + ".select-users-by-email", email);
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+		
+		return users;
+	}
+	
+
+	@Override   // 권한 주기 
+	public void insertAuthority(UserVO users) throws UsersException {
+		try {
+			session.insert(namespace + ".insert-authority", users);
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Integer selectLastInsertId() throws UsersException {
+		Integer lastInsertId = null;
+		try {
+			lastInsertId = session.selectOne(namespace + ".select-last-insert-id");
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+		
+		return lastInsertId;
+	}
+
+
 	@Override
 	public void keepLogin(String email, String sessionId, Date next) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();

@@ -3,8 +3,15 @@ package com.faint.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.faint.domain.Authority;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
+import com.faint.domain.UsersException;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
@@ -73,6 +80,20 @@ public interface UserService {
 	public void remove(Integer id) throws Exception; //탈퇴회원 제거
 	
 	public int modifyPhoto(Integer id, String url) throws Exception; //프로필 사진 변경
+	
+	
+	//============================시큐리티 인증관련============================
+	
+	public UserVO detailByEmail(String email) throws UsersException; // 이메일로 사용자의 모든 정보 가져오기
+	
+	public Authority getAuthority(Integer id) throws UsersException; // 사용자 권한 가져오기
+	
+	public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃
+
+	public UserDetails getPrincipal(); // Principal 객체 가져오기 (*Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자))
+	
+	public boolean isPasswordMatched(String oldPassword) throws UsersException; // 비밀번호 일치 여부 확인하는 메소드
+	
 	
 	
 }

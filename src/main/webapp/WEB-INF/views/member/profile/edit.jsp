@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>프로필 편집</title>
 </head>
 <link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
@@ -173,6 +175,7 @@ h2{
 					</div>
 				</div>
 			</div>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>
 	</article> 

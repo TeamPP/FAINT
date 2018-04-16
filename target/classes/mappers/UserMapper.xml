@@ -3,6 +3,54 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.faint.mapper.userMapper">
+
+  	<resultMap type="com.faint.domain.UserVO" id="UsersResultMap">
+  		<id property="id" column="id" />
+  		<result property="email" column="email"/>
+  		<result property="password" column="password"/>
+  		<result property="name" column="name"/>
+  		<result property="nickname" column="nickname"/>
+  		<result property="profilephoto" column="profilephoto"/>
+  		<collection property="authorities" ofType="Authority">
+  			<id property="id" column="id" />
+  			<result property="name" column="aname"/>
+  		</collection>
+  	</resultMap>
+  	
+  	<select id="select-users" parameterType="int" resultMap="UsersResultMap">
+  		SELECT u.id, u.email, u.password, u.name, u.profilephoto, ua.id, ua.name as "aname"
+		FROM tbl_user u,
+			(SELECT users_authority.user_id, authority.id, authority.name
+			FROM users_authority, authority
+			WHERE users_authority.authority_id = authority.id) ua
+		WHERE u.id = ua.users_id AND u.id = #{id}
+  	</select>
+  	
+  	<select id="select-users-by-email" parameterType="String" resultMap="UsersResultMap">
+  		SELECT u.id, u.email, u.password, u.name, u.profilephoto, ua.id, ua.name as 'aname', u.nickname
+		FROM tbl_user u,
+			(SELECT users_authority.user_id, authority.id, authority.name
+			FROM users_authority, authority
+			WHERE users_authority.authority_id = authority.id) ua
+		WHERE u.id = ua.user_id AND u.email = #{email}
+  	</select>
+ 
+  	
+<!--   	<select id="select-last-insert-id" resultType="int">
+  		SELECT LAST_INSERT_ID() as #{id}
+  	</select> -->
+  	
+  	<insert id="insert-users" parameterType="com.faint.dto.LoginDTO">
+  		INSERT INTO users (email, password, nickename, profilephoto)
+  		VALUES (#{email}, #{password}, #{nickename}, #{profilephoto})
+  	</insert>
+  	
+  	<insert id="insert-authority" parameterType="com.faint.domain.UserVO">
+  		INSERT INTO users_authority(user_id, authority_id) VALUES
+  		<foreach collection="authorities" item="item" separator=", ">
+  			(#{id}, #{item.id})
+  		</foreach>
+  	</insert>
 	
 	<!-- 특정 유저데이터 읽기 -->
 	<select id="userRead" resultType="com.faint.domain.UserVO">
@@ -163,6 +211,11 @@
 	<insert id="insertUser">
         INSERT INTO tbl_user (EMAIL, PASSWORD, NICKNAME)
         VALUES (#{email}, #{password}, #{nickname})
+        
+          <selectKey keyProperty="id" resultType="int" order="AFTER"> 
+      <!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+            select last_insert_id() as id
+        </selectKey>
     </insert>
 	
 	<!-- 네이버 -->

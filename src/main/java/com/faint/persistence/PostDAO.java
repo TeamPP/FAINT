@@ -84,4 +84,10 @@ public interface PostDAO {
 	
 	public void postTakeaway(RelationDTO dto) throws Exception;
 	
+	
+	
+	//==============================category filtering==============================
+	//카테고리로 필터링
+	public List<PostVO> cateAjax(int cateid) throws Exception;
+	
 }

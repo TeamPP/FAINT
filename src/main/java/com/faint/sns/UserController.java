@@ -2,6 +2,7 @@ package com.faint.sns;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -231,10 +232,13 @@ public class UserController {
     		System.out.println("에러가 안남 ");
 		return "redirect:/";
 	}
-
-	@RequestMapping(value = "/loginTest", method = RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto) {
-		
+	
+	@RequestMapping(value="/loginTest")
+	public String login_view(Model model, Principal principal, HttpSession session) {
+		model.addAttribute("principal", principal);
+		System.out.println("여기는 UC loginTest1: "+principal);
+		System.out.println("여기는 UC loginTest2: ");
+		return "user/loginTest";
 	}
 	
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
@@ -288,6 +292,7 @@ public class UserController {
 		System.out.println(vo);
 
 	}
+	
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.GET)
 	public void loginPOSTGet(LoginDTO dto, HttpSession session, Model model) throws Exception{
@@ -303,34 +308,6 @@ public class UserController {
         session.setAttribute("socialID","true");
         session.setAttribute("modify","true");
 	}
-
-
-	@RequestMapping (value="/logout",method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
-    	Object obj = session.getAttribute("login");
-
-    	if(obj !=null){
-    		UserVO vo=(UserVO) obj;
-
-    		session.removeAttribute("login");
-    		session.invalidate();
-
-    		Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
-    		
-    		System.out.println("로그인쿠"+loginCookie);
-    		if(loginCookie !=null){
-    			System.out.println("로그아웃시 세션 아");
-    			loginCookie.setPath("/");
-    			loginCookie.setMaxAge(0);
-    			response.addCookie(loginCookie);
-    			service.keepLogin(vo.getEmail(), session.getId(), new Date());
-			}
-		}
-		return "/user/logout";
-	}
-	//mypage 페이지
-   
-	
 
     //유저 정보변경 권한 체크
 	@RequestMapping(value = "/modifyAuthCheck", method = RequestMethod.GET)

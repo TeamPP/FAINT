@@ -10,7 +10,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- 모달 부트스트랩 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -43,13 +44,14 @@ article {
     font-weight: 200;
     height: 35px;
 }
-
 </style>
 
 
 </head>
 <body>
-
+<input type="hidden"
+	name="${_csrf.parameterName}"
+	value="${_csrf.token}"/>
 <!-- 실시간 -->
 
 <div class="realtime_keywd">
@@ -81,7 +83,10 @@ article {
               "Content-Type" : "application/json",
               "X-HTTP-Method-Override" : "POST"
            },
-           
+           beforeSend : function(xhr)
+           {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+           },
            success : function (data) {
                
             var str = ' ';
