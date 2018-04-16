@@ -88,21 +88,17 @@ public interface UserService {
 	
 	public Authority getAuthority(Integer id) throws UsersException; // 사용자 권한 가져오기
 	
-<<<<<<< HEAD
 	// 임 시 사용자 비번호 찾기 
 	public UserVO find_by_id(UserVO vo);
 	// 로그아웃
-	public void logout(HttpServletRequest req, HttpServletResponse resp);
 	/*
 	 *  Principal 객체 가져오기
 	 *  Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자)
 	 */
-	public UserDetails getPrincipal();
-=======
-	public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃
 
 	public UserDetails getPrincipal(); // Principal 객체 가져오기 (*Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자))
->>>>>>> branch 'master' of https://github.com/TeamPP/FAINT.git
+	public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃
+
 	
 	public boolean isPasswordMatched(String oldPassword) throws UsersException; // 비밀번호 일치 여부 확인하는 메소드
 	
