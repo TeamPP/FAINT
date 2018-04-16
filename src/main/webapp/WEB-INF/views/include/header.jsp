@@ -125,9 +125,9 @@ body {
 #categoryList {
 	list-style: none; /* 리스트 쩜 없애기 */
     position: fixed;
-    left: 38.5%;
+    left: 325px;
     width: 385px;
-    top: 135px;
+    top: 109px;
 }
 
 li.cate {
@@ -137,7 +137,7 @@ li.cate {
 	float: left;
 	overflow: hidden;
 	margin: 20px 1% 0 1%;
-	width: 50px;
+	width: 34px;
 	height: 50px;
 	color: #ffffff;
 	text-align: center;
@@ -212,8 +212,10 @@ li.cate:hover img, li.cate.hover img {
 
 /* 화살표 아이콘 */
 .arrowslide {
+	width: 50px;
+	height: 50px;
 	position: fixed;
-	left: 50%;
+	left: 23.3%;
 }
 
 .one{
@@ -221,7 +223,7 @@ li.cate:hover img, li.cate.hover img {
 	border-width: 0 5px 5px 0;
 	display: inline-block;
 	padding: 5px;
-	top: 5px;
+	top: 8px;
 	position: absolute;
 	left: 50%;
 	bottom: 30px;
@@ -234,7 +236,7 @@ li.cate:hover img, li.cate.hover img {
 	border-width: 0 5px 5px 0;
 	display: inline-block;
 	padding: 5px;
-	top: 20px;
+	top: 21px;
 	position: absolute;
 	left: 50%;
 	bottom: 30px;
@@ -335,51 +337,51 @@ li.cate:hover img, li.cate.hover img {
          <span class="search-icon"></span>
       </form>
 
-	<div class="arrowslide">
+	<span class="arrowslide">
 		<i class="arrow one"></i> 
 		<i class="arrow two"></i> 
-	</div>
+	</span>
 	
 		<div class="cateSection" id="1">   
         	<ul id="categoryList" style="z-index:5;">
  		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-              	<img src="/resources/image/cate_icon/microsoft.svg" style="width:27px; height:45px;">
+              	<img src="/resources/image/cate_icon/microsoft.svg" style="width:21px; height:45px;">
               	<!-- <p>ALL</p> -->
               </div>
         </li>
 	
 		  <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-		  		<img src="/resources/image/cate_icon/plane.svg" style="width:33px; height:45px;">
+		  		<img src="/resources/image/cate_icon/plane.svg" style="width:27px; height:45px;">
                 <!-- <p>여행</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="2" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-              	<img src="/resources/image/cate_icon/film.svg" style="width:33px; height:45px;">
+              	<img src="/resources/image/cate_icon/film.svg" style="width:28px; height:45px;">
                 <!-- <p>영화</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="3" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-              	<img src="/resources/image/cate_icon/music.svg" style="width:29px; height:45px;">
+              	<img src="/resources/image/cate_icon/music.svg" style="width:19px; height:46px;">
                 <!-- <p>음악</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="4" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-              	<img src="/resources/image/cate_icon/food.svg" style="width:23px; height:46px;">
+              	<img src="/resources/image/cate_icon/food.svg" style="width:19px; height:46px;">
                 <!-- <p>음식</p> -->
               </div>
         </li>
  		
  		          <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-              	<img src="/resources/image/cate_icon/write.svg" style="width:30px; height:45px;">
+              	<img src="/resources/image/cate_icon/write.svg" style="width:24px; height:49px;">
                 <!-- <p>글귀</p> -->
               </div>
         </li>
@@ -415,11 +417,11 @@ li.cate:hover img, li.cate.hover img {
 
 <script>
 
+// 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
-// Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
 
@@ -435,7 +437,22 @@ window.onclick = function(event) {
 }
 
 
-$(".arrowslide").click(function() {
+// 카테고리 보여지기
+/* $(".arrowslide").click(function() {
+	if($(".cateSection").attr("id")=="1"){
+		$(".cateSection").css("visibility", "visible");
+		$(".cateSection").fadeIn();
+		$(".cateSection").attr("id", "2");
+	}
+	
+	else if($(".cateSection").attr("id")=="2") {
+		$(".cateSection ").fadeOut();
+		$(".cateSection").css("visibility", "hidden");
+		$(".cateSection").attr("id", "1");
+	}
+}) */
+
+$(".arrowslide").mouseover(function() {
 	if($(".cateSection").attr("id")=="1"){
 		$(".cateSection").css("visibility", "visible");
 		$(".cateSection").fadeIn();
