@@ -5,20 +5,21 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.faint.domain.UserVO;
 import com.faint.dto.CustomUserDetails;
 import com.faint.service.CustomUserDetailsService;
 import com.faint.service.PostService;
@@ -29,11 +30,18 @@ public class MainController {
 	@Inject
 	private PostService service;
 	
+	@Inject
+	PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private CustomUserDetailsService uService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, Principal principal) {
+	public String home(Locale locale, Model model, Principal principal, HttpServletRequest req, ModelAndView mv) {
+		
+		System.out.println("메인으로 오는 url: "+req.getRequestURL());
+		System.out.println(req.getParameter("logout"));
+		
 		
 		//인가받은 유저가 접속할 경우
 		if(principal!=null){
@@ -47,9 +55,9 @@ public class MainController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model)throws Exception{
 		
-		
 		System.out.println("인증받고 '/'들렀다가 'main'들어옴");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication.getCredentials());
 		CustomUserDetails user=(CustomUserDetails)uService.loadUserByUsername(authentication.getName());
 		
 		System.out.println("뭐가나오려나"+user.getVo().getEmail());
@@ -68,6 +76,16 @@ public class MainController {
 			System.out.println("안들어가나요?");
 		}
 		
+	}
+	
+	@RequestMapping(value = "/login-processing", method = RequestMethod.GET)
+	public void loginProcessGET(Model model, HttpServletRequest req, HttpServletResponse res)throws Exception{
+		System.out.println("언제들어오나-get");
+	}
+	
+	@RequestMapping(value = "/login-processing", method = RequestMethod.POST)
+	public void loginProcessing(Model model, HttpServletRequest req, HttpServletResponse res)throws Exception{
+		System.out.println("언제들어오나-post");
 	}
 	
 	@RequestMapping(value = "/empty", method = RequestMethod.GET)

@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 				throw new UsernameNotFoundException("해당 사용자를 찾지 못했습니다.");
 			}
 				
-			return new CustomUserDetails(users.getEmail(),
+			return new CustomUserDetails(email,
 					users.getPassword(),
 					
 					true, //enabled
