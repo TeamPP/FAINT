@@ -9,8 +9,11 @@
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
+
 <script type="text/javascript">
+
 	$(document).ready(function() {
+		//엔터치면 전송
 		$("#message").keypress(function(key){
 			var enter=key.keyCode||key.which;
 			 if(enter==13){
@@ -18,7 +21,7 @@
 				 $(this).val("");
 			 }
 		})
-		
+		//전송누르면 전송
 	    $("#sendBtn").click(function() {
 	        sendMessage();
 	    });
@@ -32,6 +35,7 @@
 	
 	sock.onopen=function(){
 		console.log("연결됨");
+		console.log("${userid}");
 	}
 	
 	//자바스크립트 안에 function을 집어넣을 수 있음.
