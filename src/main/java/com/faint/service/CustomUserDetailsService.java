@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.faint.domain.Authority;
 import com.faint.domain.UserVO;
 import com.faint.domain.UsersException;
+import com.faint.dto.CustomUserDetails;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -23,34 +23,21 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UserService service;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) 
+	public CustomUserDetails loadUserByUsername(String email) 
 			throws UsernameNotFoundException {
 		
 		
 		try {
-			/*
-			 * 로그인할 때 클라이언트로부터 전달받은 아이디(email) 값을 넘겨 받아
-			 * 해당 사용자의 정보를 불러온다.
-			 */
 			
+			//이메일 값을 통해 유저정보 가져옴 UserVO형식
 			UserVO users = service.detailByEmail(email);
 			
-			/*
-			 *  해당 사용자가 존재하지 않으면
-			 *  이미 정의된 UsernameNotFoundException을 이용하여
-			 *  예외를 생성해서 던져주면 스프링이 알아서 예외처리를 하게 된다. 
-			 */
-			
-
+			//사용자 존재하지 않을 경우
 			if (users == null) {
 				throw new UsernameNotFoundException("해당 사용자를 찾지 못했습니다.");
 			}
-
-			System.out.println("userDetailService의 userVO값: "+users.toString());
-			System.out.println("userDetailService인스턴스의 getGrantedAuthorities(권한값): "+this.getGrantedAuthorities(users));
-			
-			
-			return new User(users.getEmail(),
+				
+			return new CustomUserDetails(users.getEmail(),
 					users.getPassword(),
 					
 					true, //enabled
@@ -58,7 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 					true, //credentialsNonExpired
 					true, //accountNonLocked
 			
-					this.getGrantedAuthorities(users));
+					this.getGrantedAuthorities(users),
+					users);
 			
 		} catch (UsersException e) {
 			System.out.println(e.getMessage());
