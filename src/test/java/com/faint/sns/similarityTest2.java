@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.faint.domain.UserVO;
 import com.faint.dto.ActivityDTO;
@@ -24,7 +25,7 @@ import com.faint.service.ActivityService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
 	locations ={"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
-
+@WebAppConfiguration
 
 public class similarityTest2 {
    
