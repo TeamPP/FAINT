@@ -128,14 +128,14 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password를 입력해주세요" >
                     	<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
                     <input type="submit" class="form-control btn btn-primary" value="로그인"/>
-
-                </form>
-                	<c:if test="${ param.error == 'login' }">
+					  	<c:if test="${ param.error == 'login' }">
 						<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력하셨습니다.</p>
 					</c:if>
 					<c:if test="${ param.logout == 'true' }">
 						<p style="color:#FF0000">로그아웃 하였습니다.</p>
 					</c:if>
+                </form>
+              
 
              
                 <div>

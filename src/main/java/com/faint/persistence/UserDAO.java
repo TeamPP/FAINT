@@ -51,7 +51,7 @@ public interface UserDAO {
 	// 이메일로 사용자의 모든 정보 가져오기//// 추가 
 	public  UserVO selectByEmail(String email) throws UsersException;
 	
-	
+	public UserVO find_by_id(UserVO vo);
 	// users_authority 테이블에 정보를 입력하기
 	public void insertAuthority(UserVO users) throws UsersException;
 	// 최근 등록한 사용자의 번호를 가져오기

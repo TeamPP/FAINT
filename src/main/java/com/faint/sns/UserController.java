@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.impl.GoogleTemplate;
@@ -26,6 +27,7 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +47,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import common.JsonStringParse;
 import common.TempKey;
 import naver.NaverLoginBO;
+import validator.FindPassValidator;
 
 @Controller
 @RequestMapping("/user/*")
@@ -52,6 +55,9 @@ public class UserController {
 
 	@Inject
 	private UserService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	//유저 등록
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -68,6 +74,47 @@ public class UserController {
         rttr.addFlashAttribute("msg" , "가입시 사용한 이메일로 인증해주세요");
 		return "redirect:/";
 	}
+	
+	
+	///////////////////////
+	@RequestMapping(value="/find_passView", method = RequestMethod.GET)
+	public String Find_passView() {
+		return "find_passView";
+	}
+	
+//	@RequestMapping(value="/find_pass", method = RequestMethod.POST)
+//	public String find_pass(UserVO vo,RedirectAttributes redirectattr,Errors errors) {
+//		new FindPassValidator().validate(vo, errors);
+//		
+//		if(errors.hasErrors())
+//			return "find_passView";
+//			
+//		try {
+//			UserVO resultdto = service.find_by_id(vo);
+//			if(resultdto == null)
+//				throw new Exception();
+//			
+//			double randomvalue = Math.random();
+//			int random = (int)(randomvalue * 1000000) +1;
+//			String password = passwordEncoder.encode(String.valueOf(random));
+//			
+//			resultdto.setPassword(password); //��ȣȭ�� ��й�ȣ�� ��� ��������.
+//			service.pass(resultdto); //��ȣȭ�� ��й�ȣ�� ��� ��������.
+//			
+//			resultdto.setbPass(String.valueOf(random));
+//			
+//			redirectattr.addFlashAttribute("resultDto", resultdto); 
+//			return "redirect:sendpass";
+//		}catch(Exception e)
+//		{
+//			errors.reject("IDNotExist");
+//			return "find_passView"; 
+//		}
+//		
+//	}
+//	
+//	
+	/////////////////////
 
     //유저 email 중복 체크
 	@RequestMapping(value = "/authenticate" , method = RequestMethod.POST, produces = "application/json; charset=utf-8")

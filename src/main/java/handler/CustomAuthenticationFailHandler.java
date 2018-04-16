@@ -16,7 +16,7 @@ public class CustomAuthenticationFailHandler implements AuthenticationFailureHan
 	public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse res, AuthenticationException arg2)
 			throws IOException, ServletException {
 		req.setAttribute("loginid", req.getParameter("email"));
-		req.getRequestDispatcher("/loginTest?error=true").forward(req, res);
+		req.getRequestDispatcher("/?error=true").forward(req, res);
 	}
 
 }
