@@ -57,18 +57,13 @@ public class MainController {
 		
 		System.out.println("인증받고 '/'들렀다가 'main'들어옴");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(authentication.getCredentials());
 		CustomUserDetails user=(CustomUserDetails)uService.loadUserByUsername(authentication.getName());
-		
-		System.out.println("뭐가나오려나"+user.getVo().getEmail());
 		
 		//세션 생성 및 메인 피드 생성
 		if(user!=null){
 			
 			HttpSession session=request.getSession();
 			session.setAttribute("login", user.getVo());
-			
-			System.out.println(session.getAttribute("login").toString());
 			
 			model.addAttribute("list", service.mainRead(user.getVo().getId())); //세션 아이디값을 통해 현재 팔로우중인 유저들의 게시물정보 및 유저정보 등을 받아옴
 			
@@ -106,13 +101,9 @@ public class MainController {
 
 	
 	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
-	public void chatTest(ModelAndView mv, Model model, HttpServletRequest request)throws Exception{
-		mv.setViewName("/chatTest");
-		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(user.getUsername());
-		//mv.addObject("userid", user.getUsername());
+	public void chatTest(Model model)throws Exception{
 		
-		model.addAttribute("userid", user.getUsername());
+		
 	}
 
 }
