@@ -1,4 +1,4 @@
-/* 
+
 body{
     background-color: #f8f8f8;
 
@@ -21,7 +21,7 @@ body{
     width: 100%;
     top: 0;
     border-color: #ddd;
-    opacity: 0.86;
+    opacity: 0.93;
 }
 
 .navbar-default .faintlogo {
@@ -89,7 +89,7 @@ body{
 
 .textInput{
     width: 215px;
-    height: 28px;
+    /* height: 28px; */
     height: 28px;
     background: #fafafa;
     border: solid 1px #dbdbdb;
@@ -121,4 +121,3 @@ body{
 
 
 
- */

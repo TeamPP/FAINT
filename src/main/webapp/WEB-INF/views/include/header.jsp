@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,7 +42,15 @@
 
 body {
 	 padding-top: 5px;
-	 font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	 background-color: white;
+}
+
+.headerPhoto{
+   width: 38px;
+   height: 38px;
+   display: inline-block;
+   border-radius: 150px;  /* 프사 둥글게 */
+   vertical-align: baseline !important;
 }
 
 .navbar-default .explore {
@@ -50,7 +58,7 @@ body {
    height: 38px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 38px;
+   background-size: 37px;
    background-image: url(/resources/image/header_icon/explore_icon.png);
    background-repeat: no-repeat;
    position: relative;
@@ -61,7 +69,7 @@ body {
    height: 40px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 40px;
+   background-size: 36px;
    background-image: url(/resources/image/header_icon/camera_icon.png);
    background-repeat: no-repeat;
    position: relative;
@@ -73,7 +81,7 @@ body {
     height: 36px;
     margin-left: 30px;
     display: inline-block;
-    background-size: 34px;
+    background-size: 29px;
     background-image: url(/resources/image/header_icon/heart.png);
     background-repeat: no-repeat;
     position: relative;
@@ -84,9 +92,9 @@ body {
    height: 40px;
    margin-left: 30px;
    display: inline-block;
-   background-size: 40px;
+/*    background-size: 40px;
    background-image: url(/resources/img/emptyProfile.jpg);
-   background-repeat: no-repeat;
+   background-repeat: no-repeat; */
    border-radius:50%;
 }
 
@@ -104,11 +112,11 @@ body {
 /* 카테고리 시작 */
 .cateSection {
 	display: inline-block;
+	position: relative;
 	visibility: hidden;
-	position: fixed;
-  	left: 38.5%;
-    width: 385px;
+    width: 341px;
     top: 0;
+    height: 90px;
 }
 
 .cateSection ul {
@@ -125,11 +133,12 @@ body {
 }
 
 #categoryList {
-	list-style: none; /* 리스트 쩜 없애기 */
-    position: fixed;
-    left: 325px;
+    list-style: none;
+    position: relative;
+    visibility: visible;
+    left: 12.5%;
     width: 385px;
-    top: 109px;
+    top: 0;
 }
 
 li.cate {
@@ -143,6 +152,7 @@ li.cate {
 	height: 50px;
 	color: #ffffff;
 	text-align: center;
+	outline: 0;
 }
 
 li.cate * {
@@ -210,14 +220,6 @@ li.cate:hover img, li.cate.hover img {
 	opacity: 0.35;
 	-webkit-transform: scale(1.15);
 	transform: scale(1.15);
-}
-
-/* 화살표 아이콘 */
-.arrowslide {
-	width: 50px;
-	height: 50px;
-	position: fixed;
-	left: 23.3%;
 }
 
 .one{
@@ -304,7 +306,7 @@ li.cate:hover img, li.cate.hover img {
     font-family: Arial;
 }
 
-.dropdown a:hover {background-color: #f1f1f1}
+.dropdown a:hover {background-color: #f1f1f1; cursor:pointer;}
 .dropdown a:visited {color: black;}
 
 .show {display:block;}
@@ -332,20 +334,13 @@ li.cate:hover img, li.cate.hover img {
    <a href="/main"><div class="faintlogo"></div></a>
    <div class="nav-wrap" style="display: block;">
       <form class="search-form" action="/search/search" method="get">
-         <input class="textInput" type="text" name='inputKeyword'
-            id='keywordInput' value="${keyword}" placeholder="검색"
-            title="사람검색@ 태그검색# 위치검색*" list="results" data-toggle="modal"
-            data-target="#searchModal" data-backdrop="true" autocomplete="off">
+         <input class="textInput" type="text" name='inputKeyword' id='keywordInput' value="${keyword}" placeholder="검색"
+            title="사람검색@ 태그검색# 위치검색*" list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
          <span class="search-icon"></span>
       </form>
-
-	<span class="arrowslide">
-		<i class="arrow one"></i> 
-		<i class="arrow two"></i> 
-	</span>
 	
 		<div class="cateSection" id="1">   
-        	<ul id="categoryList" style="z-index:5;">
+        	<ul id="categoryList">
  		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
               	<img src="/resources/image/cate_icon/microsoft.svg" style="width:21px; height:45px;">
@@ -394,15 +389,40 @@ li.cate:hover img, li.cate.hover img {
       <a class="explore" href="/explore/expage"></a> 
       <a class="new-post" href="/post/register"></a>
       <a class="follow-list" href="javascript:;"></a>
-      <a class="account" href="#"></a>
+      <a class="account" href="/member/${login.nickname}">
+      <c:choose>
+         <c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+            <img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" /> 
+         </c:when>
+         <c:otherwise>
+            <img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
+         </c:otherwise>
+      </c:choose>
+      </a>
 	<div class="dropdown">
 		<div class="dropbtn" onclick="myFunction()">${login.nickname}</div>
 		<div id="myDropdown" class="dropdown-content">
-			<a href="/member/${login.nickname}" onclick='unloadCheck()'>MY PAGE</a>
-			<a href="#" onclick='unloadCheck()' >LOGOUT</a>
+		
+          <sec:authorize access="hasRole('ROLE_USER')">
+            <form action="<c:url value='/logout'/>" method="post" class="logoutForm">
+            	<a class="logout">LOGOUT</a>
+               <button type="submit" class="btn btn-default" style="display:none;">로그아웃</button>
+               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+         </sec:authorize>
+		
 		</div>
 		</span>
+		
    </div>
+
+   <div class="top-menu">
+           <ul class="nav pull-right top-menu">
+	          <sec:authorize access="!hasRole('ROLE_USER') ">
+	  			<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
+			  </sec:authorize>
+           </ul>
+        </div>
    </nav>
 
    <!-- Modal -->
@@ -418,6 +438,12 @@ li.cate:hover img, li.cate.hover img {
    <div class="empty"></div>
 
 <script>
+
+// 로그아웃 버튼 클릭 애벤트
+$(".logout").click(function() {
+	$(".logoutForm").submit();
+})
+
 
 // 로그아웃 메뉴 펼치기
 function myFunction() {
@@ -439,25 +465,10 @@ window.onclick = function(event) {
 }
 
 
-// 카테고리 보여지기
-/* $(".arrowslide").click(function() {
+$(".cateslide").click(function() {
 	if($(".cateSection").attr("id")=="1"){
-		$(".cateSection").css("visibility", "visible");
 		$(".cateSection").fadeIn();
-		$(".cateSection").attr("id", "2");
-	}
-	
-	else if($(".cateSection").attr("id")=="2") {
-		$(".cateSection ").fadeOut();
-		$(".cateSection").css("visibility", "hidden");
-		$(".cateSection").attr("id", "1");
-	}
-}) */
-
-$(".arrowslide").mouseover(function() {
-	if($(".cateSection").attr("id")=="1"){
 		$(".cateSection").css("visibility", "visible");
-		$(".cateSection").fadeIn();
 		$(".cateSection").attr("id", "2");
 	}
 	
@@ -467,6 +478,7 @@ $(".arrowslide").mouseover(function() {
 		$(".cateSection").attr("id", "1");
 	}
 })
+
 
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
@@ -500,7 +512,7 @@ function searchAjax(){
        //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
        
       // 키워드 받아서 공백 제거하고 저장
-      var chgwords = words;keywordInput
+      var chgwords = words;
       var splitArray = chgwords.split(' ');
       var searchwords = '';
       for(i in splitArray) {
@@ -523,9 +535,13 @@ function searchAjax(){
             },
             async: false,
             data: searchwords,
+            beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
             //dataType: "text",
             success: function(result){
-               
+            	
                 for(var i=0; i<result.length; i++) {
                     if(searchwords.length>0) {
                         for(var a=0; a<searchwords.length; a++) {
@@ -771,7 +787,6 @@ function searchAjax(){
                   		 $("#results").html(str);
                   	  }
                } /* @ 검색 끝 */
-
                 
                else {
                   console.log("검색문else로왔다");
@@ -794,19 +809,18 @@ function searchAjax(){
       }      /* if 끝 */
       
       // enter 안 먹음
+      else if(searchwords=="") {
+          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+          $("#header-modal").css("height", "51px");
+       }
+      
       else{
          console.log("그럼여기구나");
-       	 console.log("결과값: "+JSON.stringify(result));
       }
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
 
-function show(str){
-   searchAjax();
-    $("#searchModal").modal('show');
-}
-  
 </script>
 </body>
 </html>

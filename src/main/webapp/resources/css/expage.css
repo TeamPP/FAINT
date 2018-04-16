@@ -1,5 +1,11 @@
 @CHARSET "UTF-8";
 
+body {
+	background-color: white;
+}
+
+
+
 /* 시간, 날짜 css */
 .realtime_keywd {
 	position: relative;

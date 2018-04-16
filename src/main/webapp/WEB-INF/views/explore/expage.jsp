@@ -30,6 +30,14 @@
 
 <style>
 
+.cateSection {
+	display: none;
+}
+
+.empty {
+    height: 100px;
+}
+
 article {
 	text-align: center;
 	display: block;
