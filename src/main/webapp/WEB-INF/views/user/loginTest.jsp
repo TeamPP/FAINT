@@ -9,7 +9,8 @@
     <!--필수 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=1, user-scalable=no">
-
+	 <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <%--애니메이션 효과--%>
     <link rel="stylesheet" href="/resources/dist/css/animate.min.css">
     <link rel="stylesheet"

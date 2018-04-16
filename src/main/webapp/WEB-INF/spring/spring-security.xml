@@ -17,7 +17,7 @@
 	</authentication-manager>
      
 	<!-- 인증실패 핸들러 -->
-	<beans:bean id="customAuthenticationFailHandler" class="handler.CustomAuthenticationFailHandler"/>
+	<!-- <beans:bean id="customAuthenticationFailHandler" class="handler.CustomAuthenticationFailHandler"/> -->
       
     
     <!-- 시큐리티 기본 세팅 사용 -->
@@ -45,9 +45,10 @@
 					login-page="/" 
 					login-processing-url="/login-processing"
 					default-target-url="/"
+					authentication-failure-url="/?error=login"
 					username-parameter="email"
 					password-parameter="password"
-					authentication-failure-handler-ref="customAuthenticationFailHandler"/>
+					/>
 					
 		<!-- 로그아웃 설정 -->
 		<!-- 로그아웃 단계 1. 세션 초기화 / 2. SecurityContext초기화 / 3. url redirect -->
@@ -56,7 +57,7 @@
 		   
 				
 		<access-denied-handler error-page="/access-denied"/>
-		
+		<csrf/>
 	</http>
 
 </beans:beans>
