@@ -57,7 +57,6 @@
 		   
 				
 		<access-denied-handler error-page="/access-denied"/>
-		<csrf/>
 	</http>
 
 </beans:beans>
