@@ -230,6 +230,18 @@ public class similarityTest2 {
 
 	  }*/
 	  
+	  /*	  @Test
+		public void test()throws Exception{
+		  List<ActivityDTO> activity=dao.activityTbl(4);   //아이디 7
+		  
+		  String reId=getRecomId(activity);
+		  System.out.println("reId:     "+reId);
+
+		  //id:4 ->5,1
+		  //id:5->18,3
+
+	  }*/
+	  
 	  
 	  
 	  @Test
