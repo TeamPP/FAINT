@@ -90,6 +90,8 @@ public interface UserService {
 	public Authority getAuthority(Integer id) throws UsersException;
 	
 	
+	// 임 시 사용자 비번호 찾기 
+	public UserVO find_by_id(UserVO vo);
 	// 로그아웃
 	public void logout(HttpServletRequest req, HttpServletResponse resp);
 	/*

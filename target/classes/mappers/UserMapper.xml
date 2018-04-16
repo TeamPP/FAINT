@@ -34,6 +34,12 @@
 			WHERE users_authority.authority_id = authority.id) ua
 		WHERE u.id = ua.user_id AND u.email = #{email}
   	</select>
+  	
+  	
+  	
+  		<select id="find_by_id" parameterType="com.faint.domain.UserVO" resultType="com.faint.domain.UserVO">
+		SELECT * FROM tbl_user WHERE email = #{email}
+	</select>
  
   	
 <!--   	<select id="select-last-insert-id" resultType="int">

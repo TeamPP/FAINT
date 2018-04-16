@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +33,8 @@ import com.faint.persistence.UserDAO;
 
 import common.MailHandler;
 import common.TempKey;
+
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -291,9 +295,18 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	
+	
+
+	@Override
+	public UserVO find_by_id(UserVO vo) {
+		// TODO Auto-generated method stub
+		return dao.find_by_id(vo);
+	}
 	//비밀번호 찾기
 	@Override
 	public void findPassword(UserVO user) throws Exception {
+		
 		String key = new TempKey().getKey(8,false);
 		
 		String encPassword = passwordEncoder.encode(key);
@@ -301,9 +314,12 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(encPassword);
 		
 		System.out.println("비밀번호 찾기 서비스 시작 ");
-
+		
+		System.out.println(key+"임시 키 ");
 		dao.createTempPassword(user.getEmail(),encPassword); //인증키 db 저장
-
+		
+		
+		System.out.println(encPassword.toString()+"비번은?? ");
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("[서어비스 센터 비밀번호 찾기 ]");
 		sendMail.setText(new StringBuffer().append("<h1>임시비밀번호</h1>").append(key)
