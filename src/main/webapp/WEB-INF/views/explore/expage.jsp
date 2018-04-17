@@ -30,6 +30,14 @@
 
 <style>
 
+.cateSection {
+	display: none;
+}
+
+.empty {
+    height: 100px;
+}
+
 article {
 	text-align: center;
 	display: block;
@@ -53,8 +61,6 @@ article {
 	name="${_csrf.parameterName}"
 	value="${_csrf.token}"/>
 <!-- 실시간 -->
-<br/>
-<br/>
 
 <div class="realtime_keywd">
     <div class="wrap_last_date">

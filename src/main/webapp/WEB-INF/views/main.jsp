@@ -273,7 +273,7 @@ height: 560px;
    bottom: 30%;
 }
 .fa{
-   font-size: 35px;
+   font-size: 19px;
    border:0;
 }
 #carousel > article > header{
@@ -347,6 +347,10 @@ background-color:black;
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+.glyphicon {
+	top: -1px;
 }
 </style>
 
