@@ -20,6 +20,15 @@
 
 </head>
 <style>
+a {
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+}
+.hashTag{
+	color: hotpink;
+}
 body{
 	overflow: hidden;
 	}
@@ -345,8 +354,8 @@ background-color:black;
 
 <body>
 
-	<div id="carousel">
-		<c:forEach items="${list}" var="postDTO" varStatus='status'>
+	<div class="row" id="carousel">
+		<c:forEach items="${list}" var="postDTO"  varStatus='status'>
 		<article  data-filter="${postDTO.cateid}"
 		<c:choose>
 		<c:when test="${status.index == 0}">
@@ -374,7 +383,7 @@ background-color:black;
 				<img class="_rewi8" 
 					<c:if test="${postDTO.profilephoto ne null && postDTO.profilephoto != '' }">
 						src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${postDTO.profilephoto}"
-					</c:if>
+					</c:if                                                     >
 					<c:if test="${postDTO.profilephoto eq null || postDTO.profilephoto == '' }">
 						src="../../resources/img/emptyProfile.jpg"
 					</c:if>/>
@@ -447,11 +456,7 @@ background-color:black;
 	 	</article>
 		</c:forEach>
 	</div>
-	<!--버튼  -->
-	    <div class="buttons">
-	    <i  id="prev" class="fa fa-arrow-left"></i>
-	    <i  id="next" class="fa fa-arrow-right"></i>
-    	</div>
+	
 
 </body>
 
@@ -619,6 +624,7 @@ a{ font-weight: bold; }
 .likeContainer{ font-weight: bold; cursor: default; }
 </style>
 </script>
+<!-- 길이제한 함수, 해쉬태그 필터링 -->
 <script>
 //postid 가져와서 댓글달기
 $(document).ready(function(){
@@ -661,13 +667,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	/* prev, next 아이콘 클릭 사진이동  */
-	$('#prev').click(function() {
-	moveToSelected('prev');
-	});
-	$('#next').click(function() {
-	moveToSelected('next');
-	});
+	
 })
 
 //css - 카테고리별 게시물 필터링
