@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 		dao.userBlock(dto);
 	}
 	
-	//차단 해제
+	//차단 해제4
 	@Override
 	public void userUnblock(RelationDTO dto) throws Exception{
 		dao.userUnblock(dto);
