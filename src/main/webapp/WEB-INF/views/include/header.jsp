@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -822,5 +822,85 @@ function searchAjax(){
 }      /* searchAjax() 끝 */
 
 </script>
+
+<!-- 웹 소켓 접속 -->
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.vo" var="login" />
+	<script type="text/javascript">
+		
+		var sock;
+		
+		//웸소켓을 지정한 url로 연결한다.
+		
+		sock = new SockJS("/echo");
+		
+		sock.onopen=function(){
+			console.log("${login.id} 소켓 연결됨");
+			$.ajax({
+				type:"post",
+				url:"/post/detail",
+				headers:{
+				   "X-HTTP-Method-Override" : "POST"
+				},
+				beforeSend : function(xhr)
+				   {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				   },
+				data:{postid:pid},
+				datatype:"json",
+				success:function(data){
+					
+					}
+			})
+		}
+		
+		//자바스크립트 안에 function을 집어넣을 수 있음.
+		
+		//데이터가 나한테 전달되읐을 때 자동으로 실행되는 function
+		
+		sock.onmessage = onMessage;
+		
+		
+		//데이터를 끊고싶을때 실행하는 메소드
+		
+		sock.onclose = onClose;
+		
+		
+		/* sock.onopen = function(){
+		
+		    sock.send($("#message").val());
+		
+		}; */
+		
+		function sendMessage() {
+		
+		    /*소켓으로 보내겠다.  */
+		
+		    sock.send($("#message").val());
+		
+		}
+		
+		//evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
+		
+		function onMessage(evt) {
+		
+		    var data = evt.data;
+		
+		    $("#data").append(data + "<br/>");
+		
+		    //sock.close();
+		
+		}
+		
+		
+		function onClose(evt) {
+		
+		    $("#data").append("연결 끊김");
+		
+		}
+
+	</script>
+</sec:authorize>
+
 </body>
 </html>
