@@ -1,24 +1,22 @@
 package com.faint.dto;
 
 public class ActivityDTO {
-	
+
+
 	private int userid;
 	
-	//올린 post 갯수
 	private int c1PostCnt;
 	private int c2PostCnt;
 	private int c3PostCnt;
 	private int c4PostCnt;
 	private int c5PostCnt;
 	
-	//댓글수
 	private int c1ReplyCnt;
 	private int c2ReplyCnt;
 	private int c3ReplyCnt;
 	private int c4ReplyCnt;
 	private int c5ReplyCnt;
 	
-	//좋아요수
 	private int c1LikeCnt;
 	private int c2LikeCnt;
 	private int c3LikeCnt;

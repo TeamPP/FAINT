@@ -32,6 +32,9 @@ public class ActivityDAOImpl implements ActivityDAO {
 	//추천받는 reId (List형태) 넣고 UserVo객체 받기
 	@Override
 	public List<UserVO> getRecomm2list(ArrayList<Integer> item) throws Exception {
+				if(item.isEmpty()){   //추천할 id가 없음
+					item.add(0);
+				}
 		return sqlSession.selectList(namespace+".getRecomm2list", item);
 	}
 	

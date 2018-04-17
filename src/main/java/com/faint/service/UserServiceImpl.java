@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +21,9 @@ import com.faint.domain.AuthorityId;
 import com.faint.domain.UserVO;
 
 import com.faint.domain.UsersException;
-import com.faint.dto.RelationDTO;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
-
+import com.faint.dto.RelationDTO;
 import com.faint.persistence.AuthorityDao;
 import com.faint.persistence.UserDAO;
 
@@ -297,6 +293,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void findPassword(UserVO user) throws Exception {
 		String key = new TempKey().getKey(8,false);
+		System.out.println("key는?"+key);
 		
 		String encPassword = passwordEncoder.encode(key);
 		
@@ -308,8 +305,8 @@ public class UserServiceImpl implements UserService {
 
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("[서어비스 센터 비밀번호 찾기 ]");
-		sendMail.setText(new StringBuffer().append("<h1>임시비밀번호</h1>").append(key)
-				.append("입니다. 로그인 후 비밀번호를 변경해주세요.</br>").append("<a href='http://localhost:8181/").append("' target='_blank'>Faint  tttt 바로가기</a>").toString());
+		sendMail.setText(new StringBuffer().append("<h1>임시비밀번호</h1>[").append(key)
+				.append("]입니다. 로그인 후 비밀번호를 변경해주세요.</br>").append("<a href='http://localhost:8181/").append("' target='_blank'>Faint  tttt 바로가기</a>").toString());
 		sendMail.setFrom("somony9292@gmail.com", "fififias");
 		//System.out.println("getEmail"+user.getUserEmail());
 		sendMail.setTo(user.getEmail());
@@ -454,7 +451,7 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
-	// 로그아웃
+/*	// 로그아웃
 	@Override
 	public void logout(HttpServletRequest req, HttpServletResponse resp) {
 		
@@ -463,7 +460,7 @@ public class UserServiceImpl implements UserService {
 			new SecurityContextLogoutHandler().logout(req, resp, auth);
 		}
 		
-	}
+	}*/
 	
 	// 패스워드 일치 확인
 	@Override

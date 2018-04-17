@@ -73,7 +73,7 @@ public class similarityTest {
 
 
 	   //코사인유사도
-	  public  double cosineSimilarity(double[] vectorA, double[] vectorB) {
+/*	  public  double cosineSimilarity(double[] vectorA, double[] vectorB) {
 	       double dotProduct = 0.0;  //벡터의 내적 각 원소를 짝지어서 곱한뒤 합산
 	       double normA = 0.0;
 	       double normB = 0.0;
@@ -119,11 +119,11 @@ public class similarityTest {
 			System.out.println(array[i].getUserid()+"   :"+Arrays.toString(t[i]));
 			}
 			return t;
-	  }
+	  }*/
 	  
 	  
 	  //actScore를 유사도 기준으로 정렬하고 추천받는 유저의 번호만 list형식으로 리턴함
-	  public  ArrayList<Integer> sort(double[][] actScore){
+/*	  public  ArrayList<Integer> sort(double[][] actScore){
 		    //배열복사_유사도에 따른 정렬을 위해서
 		    double[][] tmp=new double[1][2]; 
 		    
@@ -148,10 +148,10 @@ public class similarityTest {
 		    
 		    
 		    return reList;
-	  }
+	  }*/
 	  
 	 
-	  //ActivityDTO List를 받는 함수_id값과 유사도를 2차원 배열의 값으로 return 함
+/*	  //ActivityDTO List를 받는 함수_id값과 유사도를 2차원 배열의 값으로 return 함
 	  public  String getRecomId(List<ActivityDTO> activity){
 		  	
 		  //활동점수만 2차원 배열로 넣기
@@ -215,10 +215,10 @@ public class similarityTest {
 		    
 	  }
 	  
-	  
+	  */
 	 
 	  
-	  
+	  /*
 	  @Test
 		public void test()throws Exception{
 		  
@@ -229,7 +229,16 @@ public class similarityTest {
 		  //id:4 ->5,1
 		  //id:5->18,3
 	  }
+*/
 
 	
+
+	  @Test
+		public void test()throws Exception{
+		  ArrayList<Integer> list=new ArrayList<Integer>();
+		  System.out.println(list);
+
+	  }
+
 
 }

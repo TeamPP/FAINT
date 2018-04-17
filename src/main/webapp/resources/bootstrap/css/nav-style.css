@@ -4,62 +4,70 @@ body{
 
 }
 
-.navbar-default{
-    background-color: #fff;
-    height: 75px; 
-    padding: 26px 40px;
-    text-align: center;
+@font-face {
+	font-family: 'logoFont';
+	src: url('resources/fonts/KaushanScript-Regular.ttf');
 }
 
 
+
+.navbar-default{
+	background-color: #f8f8f8;
+    /* background-color: #e7e7e7; */
+    height: 90px;
+    padding: 5px 40px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    border-color: #ddd;
+    opacity: 0.93;
+}
+
+.navbar-default .faintlogo {
+    display: inline-block;
+    background-image: url(/resources/image/faint.png);
+    background-repeat: no-repeat;
+    background-size: 190px;
+    width: 190px;
+    height: 60px;
+    position: fixed;
+    left: 19%;
+    top: 13px;
+}
+
+.navbar-default .category {
+	position: fixed;
+	top: 50px;
+	left: 15%;
+	font-size: 30px;
+	font-family: HelveticaRounded;
+}
+
 .navbar-default .nav-wrap{
-    max-width: 1010px;
+	position: fixed;
+	top: 95px;
+    max-width: 230px;
     width: 100%;
     margin: 0 auto;
     padding: 0 30px; 
+    left: 22%;
 }
 
  .navbar-default .logo{
     width: 160px;
     height: 30px;
     display: inline-block;
-    background-size: 350px;
-    background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
+    background-size: 360px;
+    background-image: url(/resources/image/logo12345.png);
+    /* background-image: url(/resources/image/logo.png); */
     background-position: -149px 0;
-} 
-
-    .navbar-default .new-post{
-    width: 24px;
-    height: 23px;
-    margin-left: 30px;
-    display: inline-block;
-    background-size: 413px 391px;
-    background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-    background-position: -201px -111px;
-} 
-
-.navbar-default .follow-list{
-    width: 24px;
-    height: 23px;
-    margin-left: 30px;
-    display: inline-block;
-    background-size: 413px 391px;
-    background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-    background-position: -192px -283px;
-}
-
-.navbar-default .account{
-    width: 24px;
-    height: 23px;
-    margin-left: 30px;
-    display: inline-block;
-    background-size: 413px 391px;
-    background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
-    background-position: -275px -342px;
 }
 
 .search-form{
-    position: relative;
+    position: fixed;
+    top: 31px;
+    left: 43%;
     width: 215px;
     height: 26px;
     display: inline-block;
@@ -68,7 +76,6 @@ body{
 }
 
 .search-icon{
-
     width: 10px;
     height: 10px;
     position: absolute;
@@ -101,7 +108,9 @@ body{
 }
 
 .pull-right{
-    float: right;
+	position: fixed;
+    top: 25px;
+    left: 65%;
 }
 
 .modal-dialog {

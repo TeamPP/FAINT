@@ -14,8 +14,6 @@
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
-
-
 <!-- 모달 부트스트랩 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -34,147 +32,296 @@
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 
 <!-- 웹소켓 -->
-<script type="text/javascript" src="../../resources/js/scokjs.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
+
+<!-- 아이콘 부트스트랩  -->
+<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+
 <style>
-.pull-right > a {
-   width: 33px;
-   height: 33px;
+
+body {
+	 padding-top: 5px;
+	 background-color: white;
+}
+
+.headerPhoto{
+   width: 38px;
+   height: 38px;
+   display: inline-block;
+   border-radius: 150px;  /* 프사 둥글게 */
+   vertical-align: baseline !important;
+}
+
+.navbar-default .explore {
+   width: 38px;
+   height: 38px;
    margin-left: 30px;
    display: inline-block;
+   background-size: 37px;
+   background-image: url(/resources/image/header_icon/explore_icon.png);
+   background-repeat: no-repeat;
+   position: relative;
 }
-.pull-right > a > i{
-	font-size:33px !important;
-	color: lightcoral !important;
+
+.navbar-default .new-post {
+   width: 40px;
+   height: 40px;
+   margin-left: 30px;
+   display: inline-block;
+   background-size: 36px;
+   background-image: url(/resources/image/header_icon/camera_icon.png);
+   background-repeat: no-repeat;
+   position: relative;
+   top: 3px;
 }
+
+.navbar-default .follow-list {
+    width: 34px;
+    height: 36px;
+    margin-left: 30px;
+    display: inline-block;
+    background-size: 29px;
+    background-image: url(/resources/image/header_icon/heart.png);
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.navbar-default .account {
+   width: 40px;
+   height: 40px;
+   margin-left: 30px;
+   display: inline-block;
+/*    background-size: 40px;
+   background-image: url(/resources/img/emptyProfile.jpg);
+   background-repeat: no-repeat; */
+   border-radius:50%;
+}
+
 .navbar-default .nav-wrap {
    max-width: 1010px;
    width: 100%;
    margin: 0 auto;
    padding: 0 30px;
-   color: gray;
 }
-.headerPhoto{
-	width: 33px;
-	height: 33px;
+
+.empty {
+	height: 80px;
+}
+
+/* 카테고리 시작 */
+.cateSection {
 	display: inline-block;
-	border-radius: 150px;  /* 프사 둥글게 */
-	vertical-align: baseline !important;
+	position: relative;
+	visibility: hidden;
+    width: 341px;
+    top: 0;
+    height: 90px;
 }
 
-.search-form{
-	text-align:center;
-}
-
-
-/* 카테고리 아이콘____ */
 .cateSection ul {
-   height: 150px;
-   position: absolute;
-   top: -30px; /*처음 숨겨지는 부분 */
-   left: 0px;
-   transition: 0.3s;
-   margin: 0;
-   padding: 5px 0;
-   width: 30%;
-   text-decoration: none;
-   font-size: 20px;
-   color: white;
+	height: 150px;
+	transition: 0.3s;
+	margin: 0;
+	padding: 5px 0;
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+	position: fixed;
+    left: 38.5%;
+    width: 385px;
 }
-.cateSection ul:hover {
-   top: 50px; /* mouseenter 시에 이벤트  판넬 내려옴 */
-   left: 0px;
-}
+
 #categoryList {
-   list-style: none; /* 리스트 쩜 없애기 */
+    list-style: none;
+    position: relative;
+    visibility: visible;
+    left: 12.5%;
+    width: 385px;
+    top: 0;
 }
+
 li.cate {
-   list-style: none; /* 리스트 쩜모양 없애기 */
-   font-family: 'Raleway', Arial, sans-serif;
-   position: relative;
-   float: left;
-   overflow: hidden;
-   margin: 20px 1% 0 1%;
-   width: 50px;
-   height: 50px;
-   background: #000000;
-   color: #ffffff;
-   text-align: center;
-   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-   border-radius: 150px; /*사진 둥글게 */
-   border: 2px solid black;
+	list-style: none; /* 리스트 쩜모양 없애기 */
+	font-family: 'Raleway', Arial, sans-serif;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 20px 1% 0 1%;
+	width: 34px;
+	height: 50px;
+	color: #ffffff;
+	text-align: center;
+	outline: 0;
 }
+
 li.cate * {
-   /* 쩜쩜하면서 천천히 바뀜 */
-   -webkit-transition: all 0.45s ease-in-out;
-   transition: all 0.45s ease-in-out;
+	/* 쩜쩜하면서 천천히 바뀜 */
+	-webkit-transition: all 0.45s ease-in-out;
+	transition: all 0.45s ease-in-out;
 }
+
 li.cate img {
-   height: 100%;
-   width: 100%;
-   position: relative;
-   opacity: 1; /* 투명도 */
-   border-radius: 150px; /*사진 둥글게 */
+	height: 100%;
+	width: 100%;
+	position: relative;
+	opacity: 1; /* 투명도 */
+
 }
+
 li.cate .caption {
-   overflow: hidden;
-   -webkit-transform: translateY(20%); /* "일상" Y위치 */
-   transform: translateY(20%);
-   transform: translateX(2%);
-   -webkit-transform: translateX(2%); /* "일상" X위치 */
-   position: absolute;
-   width: 100%;
-   bottom: 0;
+	overflow: hidden;
+	-webkit-transform: translateY(20%); /* "일상" Y위치 */
+	transform: translateY(20%);
+	transform: translateX(2%);
+	-webkit-transform: translateX(2%); /* "일상" X위치 */
+	position: absolute;
+	width: 100%;
+	bottom: 0;
 }
+
 li.cate p {
-   display: table;
-   margin: 0 auto;
-   padding: 0 10px;
-   position: relative;
-   text-align: center;
-   width: auto;
-   text-transform: uppercase;
-   font-weight: 400;
+	display: table;
+	margin: 0 auto;
+	padding: 0 10px;
+	position: relative;
+	text-align: center;
+	width: auto;
+	text-transform: uppercase;
+	font-weight: 400;
 }
+
 /* "일상" 글자크기 & 글자 하얀테두리 감싸기 */
 li.cate p {
-   font-size: 0.8em;
-   font-weight: 500;
-   color: black;
-   /* 글씨에 하얀 테두리 감싸기 */
-   text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
-      #F2F1F6;
-   -moz-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
-      #F2F1F6;
-   -webkit-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0
-      -1px #F2F1F6;
+	font-size: 0.8em;
+	font-weight: 500;
+	color: black;
+	/* 글씨에 하얀 테두리 감싸기 */
+	text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
+		#F2F1F6;
+	-moz-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0 -1px
+		#F2F1F6;
+	-webkit-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0
+		-1px #F2F1F6;
 }
+
 /* a링크가 전체 이미지 크기만큼 */
 li.cate a {
-   left: 0;
-   right: 0;
-   top: 0;
-   bottom: 0;
-   position: absolute;
-   z-index: 1;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	position: absolute;
+	z-index: 1;
 }
+
 /*이미지 변경 스타일 */
 li.cate:hover img, li.cate.hover img {
-   opacity: 0.35;
-   -webkit-transform: scale(1.15);
-   transform: scale(1.15);
+	opacity: 0.35;
+	-webkit-transform: scale(1.15);
+	transform: scale(1.15);
 }
-/* 화살표 아이콘 */
-.arrow {
-   padding:5px;
-    border: solid black;
-    border-width: 0 2px 2px 0; /*아이콘 밑 화살표모양으로 만들기 */
-   position: absolute;
-   left: 4px;
-   bottom: 30px;
-   transform: rotate(45deg);
-   -webkit-transform: rotate(45deg);
+
+.one{
+	border: solid #ddd;
+	border-width: 0 5px 5px 0;
+	display: inline-block;
+	padding: 5px;
+	top: 8px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.two{
+	border: solid #ddd;
+	border-width: 0 5px 5px 0;
+	display: inline-block;
+	padding: 5px;
+	top: 21px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.modal-i {
+	top: 5px;
+	position: absolute;
+	left: 50%;
+	bottom: 30px;
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);	
+}
+
+.empty {
+	height: 220px;
+}
+
+.dropbtn {
+    background-color: #f8f8f8;
+    color: #999;
+    width: 109px;
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    font-family: Arial;
+    position: fixed;
+    top: 22.8px;
+}
+
+.dropbtn:hover {
+	color: black;
+    background-color: #f8f8f8;
+    border: 1px solid #f8f8f8;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-top: 1px solid #f1f1f1;
+    min-width: 109px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    font-family: Arial;
+}
+
+.dropdown a:hover {background-color: #f1f1f1; cursor:pointer;}
+.dropdown a:visited {color: black;}
+
+.show {display:block;}
+
+.modal-content::after {
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    height: 0;
+    left: 98px;
+    top: -10px;
+    width: 0;
+    z-index: 3;
+	content: " ";
+	position: absolute;
 }
 
 </style>
@@ -182,115 +329,100 @@ li.cate:hover img, li.cate.hover img {
 </head>
 <body>
 
-<!--카테고리 아이콘  -->
-<!-- 카테고리 버튼 -->
-<section class="cateSection">
-<ul id="categoryList">
-    <!-- ALL 여행 영화 음악 음식 글귀 -->
-        <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://pbs.twimg.com/profile_images/892243625198755842/X1n8LRQH_400x400.jpg" alt="sample22" />
-              <div class="caption"><p>ALL</p></div>
-        </li>
-   
-        <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src=https://post-phinf.pstatic.net/MjAxNzExMzBfMTQx/MDAxNTEyMDI5ODQxMTM5.sdeLNBYNUgcXjghC6MTd1IZAH5OWJKds9qWnSdByBCQg.VjtqfFZ_074J9dsv6qN3DD2f51O03av1gw9K_BL4UN8g.GIF/emot_020_x3.gif?type=w1200 alt="sample22" />
+   <nav class="navbar navbar-default" style="z-index: 1;">
+
+   <a href="/main"><div class="faintlogo"></div></a>
+   <div class="nav-wrap" style="display: block;">
+      <form class="search-form" action="/search/search" method="get">
+         <input class="textInput" type="text" name='inputKeyword' id='keywordInput' value="${keyword}" placeholder="검색"
+            title="사람검색@ 태그검색# 위치검색*" list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+         <span class="search-icon"></span>
+      </form>
+	
+		<div class="cateSection" id="1">   
+        	<ul id="categoryList">
+ 		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
-                <p>여행</p>
+              	<img src="/resources/image/cate_icon/microsoft.svg" style="width:21px; height:45px;">
+              	<!-- <p>ALL</p> -->
+              </div>
+        </li>
+	
+		  <li class="cate"  data-filter="1" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+		  		<img src="/resources/image/cate_icon/plane.svg" style="width:27px; height:45px;">
+                <!-- <p>여행</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="2" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="http://kstatic.inven.co.kr/upload/2017/10/24/bbs/i16627999197.gif" alt="sample22" />
               <div class="caption">
-                <p>영화</p>
+              	<img src="/resources/image/cate_icon/film.svg" style="width:28px; height:45px;">
+                <!-- <p>영화</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="3" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNkYEtCWfkb94vsBBh_O_-9rvPsW7DcE70k4THgoCHYHH0wN_yBw" alt="sample22" />
               <div class="caption">
-                <p>음악</p>
+              	<img src="/resources/image/cate_icon/music.svg" style="width:19px; height:46px;">
+                <!-- <p>음악</p> -->
               </div>
         </li>
         
           <li class="cate"  data-filter="4" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="https://i.pinimg.com/originals/8d/6a/86/8d6a867e299c5cb6bef1eb33bfe9791b.gif" alt="sample22" />
               <div class="caption">
-                <p>음식</p>
+              	<img src="/resources/image/cate_icon/food.svg" style="width:19px; height:46px;">
+                <!-- <p>음식</p> -->
               </div>
         </li>
+ 		
+ 		          <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
+              <div class="caption">
+              	<img src="/resources/image/cate_icon/write.svg" style="width:24px; height:49px;">
+                <!-- <p>글귀</p> -->
+              </div>
+        </li>
+	</ul>
+	</div>
       
-       
-                 <li class="cate"  data-filter="5" tabindex="-1"  onclick="cateClick(this)">
-            <img class ="cateIcon" src="http://upload2.inven.co.kr/upload/2017/07/01/bbs/i16284189296.gif" alt="sample22" />
-              <div class="caption">
-                <p>글귀</p>
-              </div>
-        </li>
-         <!--화살표 아이콘  -->
-         <i class="arrow"></i>
-</ul>
-</section>
-
-
-
-   <nav class="navbar navbar-default" style="z-index: 1;">
-   <div class="nav-wrap" style="display: block;">
-      <a class="logo pull-left" href="/">나와라 로고!</a>
-      <form class="search-form" action="/search/search" method="get">
-         <input class="textInput" type="text" name='inputKeyword'
-            id='keywordInput' value="${keyword}" placeholder="검색"
-            title="사람검색@ 태그검색# 위치검색*" list="results" data-toggle="modal"
-            data-target="#searchModal" data-backdrop="true" autocomplete="off">
-         <span class="search-icon"></span>
-      </form>
       <span class="pull-right">
-      <a class="explore" href="/explore/expage"><i class="material-icons">explore</i></a>
-      <a class="new-post" href="/post/register"><i class="material-icons">create</i></a>
-       <a class="follow-list" href="javascript:;"><i class="material-icons">insert_comment</i></a>
+      <a class="explore" href="/explore/expage"></a> 
+      <a class="new-post" href="/post/register"></a>
+      <a class="follow-list" href="javascript:;"></a>
       <a class="account" href="/member/${login.nickname}">
-		<c:choose>
-			<c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
-				<img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" /> 
-			</c:when>
-			<c:otherwise>
-				<img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
-			</c:otherwise>
-		</c:choose>
+      <c:choose>
+         <c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+            <img class="headerPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" /> 
+         </c:when>
+         <c:otherwise>
+            <img class="headerPhoto" src="/resources/img/emptyProfile.jpg" />
+         </c:otherwise>
+      </c:choose>
       </a>
-      			<sec:authorize access="hasRole('ROLE_USER')">
-				<form action="<c:url value='/logout'/>" method="post">
-
-					<button type="submit" class="btn btn-default">로그아웃</button>
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-				</form>
-			</sec:authorize>
-      
-      </span>
-   </div>
-    <div class="top-menu">
-            	<ul class="nav pull-right top-menu">
-          <%--     <security:authorize access="isAnonymous()"><li><a class="login" href="login_view">login</a></li></security:authorize> --%>
-       <%--        <security:authorize access="hasRole('ROLE_USER')">
-              <form action="<c:url value='/logout'/>" method="post">
-               
-                              <button type="submit" class="btn btn-default">로그아웃</button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div class="dropdown">
+		<div class="dropbtn" onclick="myFunction()">${login.nickname}</div>
+		<div id="myDropdown" class="dropdown-content">
+		
+          <sec:authorize access="hasRole('ROLE_USER')">
+            <form action="<c:url value='/logout'/>" method="post" class="logoutForm">
+            	<a class="logout">LOGOUT</a>
+               <button type="submit" class="btn btn-default" style="display:none;">로그아웃</button>
+               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
-        </security:authorize> --%>
-        		<sec:authorize access="!hasRole('ROLE_USER') ">
-		<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
-	</sec:authorize>
+         </sec:authorize>
+		
+		</div>
+		</span>
+		
+   </div>
 
-
-
-			<%-- 	 <form>
-	            	  <a class="logout" href="<c:url value='/logout'/>">logout</a>
-	            	   
-	              </form> --%>
-            	</ul>
-            </div>
+   <div class="top-menu">
+           <ul class="nav pull-right top-menu">
+	          <sec:authorize access="!hasRole('ROLE_USER') ">
+	  			<a href="<c:url value='/login.do'/>">로그인좀해 임마 </a>
+			  </sec:authorize>
+           </ul>
+        </div>
    </nav>
 
    <!-- Modal -->
@@ -303,30 +435,75 @@ li.cate:hover img, li.cate.hover img {
          </div>
       </div>
    </div>
+   <div class="empty"></div>
 
-   <script>
+<script>
+
+// 로그아웃 버튼 클릭 애벤트
+$(".logout").click(function() {
+	$(".logoutForm").submit();
+})
+
+
+// 로그아웃 메뉴 펼치기
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+$(".cateslide").click(function() {
+	if($(".cateSection").attr("id")=="1"){
+		$(".cateSection").fadeIn();
+		$(".cateSection").css("visibility", "visible");
+		$(".cateSection").attr("id", "2");
+	}
+	
+	else if($(".cateSection").attr("id")=="2") {
+		$(".cateSection ").fadeOut();
+		$(".cateSection").css("visibility", "hidden");
+		$(".cateSection").attr("id", "1");
+	}
+})
+
+
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
    if($("._oznku").text()=="검색 결과가 없습니다.") {
       return false;
       }
    
+   // enter치면 목록에서 첫번째꺼로 페이지 이동
    else if($("._ndl3t").length>=1) {
       document.getElementsByClassName("_ndl3t _4jr79")[0].click();
       return false;
-      } 
+      }
    
    return true;
    }); 
+   
 </script>
 
-   <script>
+<script>
 searchAjax();
 function searchAjax(){
    
    if($("#keywordInput").val()=="") {
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-      
+      $("#header-modal").css("height", "51px");
    }
    
    $("#keywordInput").keyup(function(){
@@ -335,7 +512,7 @@ function searchAjax(){
        //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
        
       // 키워드 받아서 공백 제거하고 저장
-      var chgwords = words;keywordInput
+      var chgwords = words;
       var splitArray = chgwords.split(' ');
       var searchwords = '';
       for(i in splitArray) {
@@ -345,7 +522,7 @@ function searchAjax(){
          }
          searchwords += chgwords;
       }
-      console.log("searchwords : -----------" + searchwords);
+      console.log("searchwords-----------> " + searchwords);
       
       /* 검색 단어가 있으면 일치하는 것 출력 */
       if(searchwords!=''){
@@ -364,66 +541,69 @@ function searchAjax(){
             },
             //dataType: "text",
             success: function(result){
-               
-               console.log("결과값 :"+JSON.stringify(result));
-               
+            	
                 for(var i=0; i<result.length; i++) {
-                   
                     if(searchwords.length>0) {
                         for(var a=0; a<searchwords.length; a++) {
-                           
                             if(result[i].type==0 && result[i].tagname!=null){
-                               for(var b=a; b<result[i].tagname.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].tagname.charAt(b)) {
-                                     if(a==b) {
-                                        result[i].score += 2;
-                                     } else {
-                                        result[i].score++;
-                                        }
+                            	// 특수문자 자르고
+                            	tagname=result[i].tagname.substring(1);
+                            	
+                               for(var b=a; b<tagname.length; b++) {
+                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
+                                     if(a==b && tagname.indexOf(searchwords)==0) {
+                                        result[i].score += 3;
+                                     } else if(a==b) {
+                                    	 result[i].score += 2;
+                                     }
+                                    	 result[i].score += 1;
                                      }
                                   }
                                } /* tagname if문 끝 */
                             
-                            else if(result[i].nickname!=null && result[i].nickname!=null) {
-                               var nickscore = result[i].score;
-                                  var namescore = result[i].score;
-                               for(var b=a; b<result[i].nickname.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].nickname.charAt(b)) {
-                                      if(a==b) {
-                                         nickscore += 2;
-                                      } else {
-                                         nickscore++;
-                                         }
-                                     } /* nickname if문 끝 */
-                                  
-                                  if(searchwords.charAt(a)==result[i].name.charAt(b)) {
-                                      if(a==b) {
-                                         namescore += 2;
-                                      } else {
-                                         namescore++;
-                                         }
-                                     } /* naem if문 끝 */
-                                  
-                                  }
+                            else if(result[i].nickname!=null) {
+                            	// 특수문자 자르고
+                               nickname = result[i].nickname.substring(1);
                                
-                                  if(nickscore<namescore) {
-                                     result[i].score = namescore;
-                                     } else if(nickscore>namescore){
-                                     result[i].score=nickscore;
-                                  } else {
-                                     result[i].score = nickscore+namescore;
-                                  }
-                            }/* elseif끝 */
-                            
+                               // nickname O name O => 둘 다 있는 경우
+                              if(result[i].name!=null) {
+                            	// 특수문자 자르고
+                            	name = result[i].name.substring(1);
+                               for(var b=a; b<name.length; b++) {
+                                  if(searchwords.charAt(a)==name.charAt(b)) {
+                                      if(a==b && name.indexOf(searchwords)==0) {
+                                    	  result[i].score += 3;
+                                       } else if(a==b) {
+                                    	   result[i].score += 2;
+                                      } 
+                                    	  result[i].score += 1;
+                                     }
+                               } /* name for문 끝 */
+                             }
+                              
+                               // nickname O name X => nickname만 있을 경우
+                               for(var b=a; b<nickname.length; b++) {
+                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
+                                      if(a==b && nickname.indexOf(searchwords)==0) {
+                                    	  result[i].score += 3;
+                                       } else if(a==b) {
+                                    	   result[i].score += 2;
+                                      } else {
+                                    	  result[i].score += 1;
+                                         }
+                                     } 
+                                  } /* nickname for문 끝 */
+                                  
+                            }/* nickname&name elseif끝 */
                             
                             else if(result[i].type==2 && result[i].location!=null) {
+                            	
                                for(var b=a; b<result[i].location.length; b++) {
                                   if(searchwords.charAt(a)==result[i].location.charAt(b)) {
-                                      if(a==b) {
-                                         result[i].score += 2; 
-                                      } else {
-                                         result[i].score++;
-                                         }
+										if(a==b) {
+                                        	result[i].score += 2;
+                                       }
+                                    	   result[i].score += 1;
                                      }
                                   }
                             } /* location elseif문 끝 */
@@ -436,18 +616,19 @@ function searchAjax(){
                      }
                 }/* for문 끝 */
                 
+               // score를 비교하여 점수 높은 순으로 출력하기
                 for(var i=0;i<result.length;i++) {
-                  for(var j=i; j<result.length-1-i; j++) {
-                     if(result[j].score<result[j+1].score) {
-                        var temp = result[j];
-                        result[j] = result[j+1];
-                        result[j+1] = temp;
+                  for(var j=i+1; j<result.length; j++) {
+                     if(result[j].score>result[i].score) {
+                        var temp = result[i];
+                        result[i] = result[j];
+                        result[j] = temp;
                       }
                     }
                }
-                 
-                console.log("바뀐결과값 :"+JSON.stringify(result));
                 
+                console.log("결과값--- "+JSON.stringify(result));
+                 
                 // 검색 첫 글자가 문자일 때
                 if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
                    var count = 0;
@@ -457,7 +638,7 @@ function searchAjax(){
                           console.log("태그다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.jpg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].tagname+"</span>"
@@ -499,7 +680,7 @@ function searchAjax(){
                           console.log("지역이다");
                           str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
                                 +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/location.jpg' style='height:23px; width:23px;'></span>"
+                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
                                 +"<div class='_poxna'>"
                                 +"<div class='_lv0uf'>"
                                 +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
@@ -510,30 +691,33 @@ function searchAjax(){
                        
                        else if(result[i].score==0){
                           count ++;
-                       }
+                     	  }
                        
                        else {
                           $("#results").html("");
-                       }
+                      	 }
                        
                        if(count>=3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                          $("#header-modal").css("height", "51px");
                        } else {
+                          $("#header-modal").css("height", "196px");
                           $("#results").html(str);
-                       }
+                      	 }
+                      	
                    }/* for문 끝 */
                    
                 } /* 문자 검색 끝 */
                 // 검색 문자 첫 글자가 #인 경우
                else if(searchwords[0]=="#") {
                   var count = 0;
-                  var str = ' ';
+                  var str = '';
                   for(i=0; i<result.length; i++) {
                         if(result[i].type==0 && result[i].tagname!=null) {
                             console.log("태그다");
                             str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
                                   +"<div class='_o92vn'>"
-                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/hashtag.jpg' style='height:23px; width:23px;'></span>"
+                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
                                   +"<div class='_poxna'>"
                                   +"<div class='_lv0uf'>"
                                   +"<span class='_b01op'>"+result[i].tagname+"</span>"
@@ -542,18 +726,22 @@ function searchAjax(){
                                   +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
                                   +"</div></div></div></a>"
                                   }
-                           
-                           else if(result[i].score==0){
-                             result[i] = null;
+                           else if(result[i].tagname==null){
                              count ++;
+                             $("#results").html("");
                           }
-                       if(count>=3) {
+                 	 }
+                 		
+                       if(count>=3 && result.length==3) {
+                    	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                       } else {
-                          $("#results").html(str);
-                       }
-                  }
+                          $("#header-modal").css("height", "51px");
+                     	  } else {
+                     		 $("#header-modal").css("height", "196px");
+                     		 $("#results").html(str);
+                     	  }
                } /* #검색 끝 */
+               
                 // 검색 첫 글자가 @인 경우
                else if(searchwords[0]=="@") {
                  var count = 0;
@@ -563,7 +751,7 @@ function searchAjax(){
                           console.log("이름이다");
                         str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
                                    +"<div class='_o92vn'>";
-                             
+                                   
                              //프로필사진
                              //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
                              if(result[i].profilephoto == null){
@@ -585,55 +773,54 @@ function searchAjax(){
                           str+="</div></div></div></a>";
                     }
                         
-                     else if(result[i].score==0){
-                         result[i] = null;
+                     else if(result[i].nickname==null){
                          count ++;
-                        console.log("여기갔지?");
-                        console.log(count);
+                         $("#results").html("");
                       }
-                   if(count>=3) {
-                      console.log("총카운트:"+count);
-                      $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                   } else {
-                      $("#results").html(str);
-                   }
                  }
+                    if(count>=3 && result.length==3) {
+                 	   console.log(">>>"+result.length);
+                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                       $("#header-modal").css("height", "51px");
+                  	  } else {
+                  		$("#header-modal").css("height", "196px");
+                  		 $("#results").html(str);
+                  	  }
                } /* @ 검색 끝 */
                 
                else {
                   console.log("검색문else로왔다");
                   $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                  $("#header-modal").css("height", "51px");
                }
                
             }, /* success  끝 */
+            
             error: function(e){
                if(e.status==500) {
                   console.log("에러로갓니?");
                   $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+                  $("#header-modal").css("height", "51px");
                //throw e.responseText;
                }
             }/* error 끝 */
-            
             
          }); /* ajax 끝 */
       }      /* if 끝 */
       
       // enter 안 먹음
+      else if(searchwords=="") {
+          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+          $("#header-modal").css("height", "51px");
+       }
+      
       else{
          console.log("그럼여기구나");
-         //$("#results").html("");
       }
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-function show(str){
-   searchAjax();
-    $("#searchModal").modal('show');
-}
-  
+
 </script>
-
-
-
 </body>
 </html>

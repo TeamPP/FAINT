@@ -1,5 +1,11 @@
 @CHARSET "UTF-8";
 
+body {
+	background-color: white;
+}
+
+
+
 /* 시간, 날짜 css */
 .realtime_keywd {
 	position: relative;
@@ -38,7 +44,8 @@
 
 .realtime_keywd .wrap_last_date .last_date {
 	/* color: #bbc8cd; */
-	color: black; font-size : 14px;
+	color: #676767;
+	font-size : 14px;
 	line-height: 16px;
 	font-family: Arial, "Apple Gothic", sans-serif;
 	font-size: 14px;
@@ -47,7 +54,7 @@
 .realtime_keywd .wrap_last_date .last_time {
 	margin-left: 7px;
 	/* color: #bbc8cd; */
-	color: black;
+	color: #676767;
 	font-size: 14px;
 	line-height: 16px;
 	font-family: Arial, "Apple Gothic", sans-serif;
@@ -372,12 +379,13 @@ a:-webkit-any-link {
 .realtime_keywd li .realtime_rank:hover {
 	background:
 		/* url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) */
-		url(/resources/image/그림2.png) no-repeat 0 0;
+		url(/resources/image/realtimeon.png) no-repeat 0 0;
+		background-size: 278px 28px;
 }
 
 .realtime_keywd li.on .realtime_rank {
 	background:
 		/* url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) */
-		url(/resources/image/그림2.png) no-repeat 0 0;
+		url(/resources/image/realtimeon.png) no-repeat 0 0;
 		background-size: 278px 28px;
 }

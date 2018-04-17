@@ -48,7 +48,7 @@ article {
 
 
 /* 추천계정 스타일 */
-.recommContainer{
+ .recommContainer{
  width: 100%;
  height: 250px;
   text-align:center;
@@ -72,11 +72,11 @@ border-radius: 50%;
 .nickname {
     font-weight: 600;
 
-}
+} 
 
 
 /* 팔로우버튼 */
-.isFlw{
+.isFlw2{
 font-size: 12px;
 font-weight: 400;
 cursor: pointer;
@@ -87,15 +87,15 @@ border-style: solid;
 border-width: 1px;
 line-height: 26px;
 border-radius: 2px;
-}
+} 
 
 
 /*추천리스트 프사 */
-.recommPhoto{
+ .recommPhoto{
 width:80px;
 height:80px;
 margin: 5% auto;
-}
+} 
 
 </style>
 </head>
@@ -271,13 +271,9 @@ $(document).ready(function() {
 </br>
 
 <div class="recommContainer">
-<ul="recommendList">
+<ul class="recommendList">
 <c:forEach items="${recommList}" var="userVO">   
 <li class="chip">
-<a href="#">
-<img src='${userVO.profilephoto}' alt="Person" width="96" height="96" style="margin: 5% auto;">
-</a>
-
 <a href="#">
 			<c:choose>
 				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
@@ -288,42 +284,40 @@ $(document).ready(function() {
 				</c:otherwise>
 			</c:choose>
 </a>
-
-
 	<div>
   <a  class="nickname" href="#">${userVO.nickname}</a>
   <p class="name" style="magin:0;">${userVO.name}</p>
-  <button class="isFlw" title='this.id'>팔로우</button>
+  <button class="isFlw2" title='this.id'>팔로우</button>
 	</div>
 </li>
 </c:forEach>
 </ul>
-<div>
+</div>
 
 <script>
-$(document).ready(function(){
+/* $(document).ready(function(){
 	follow();
 })
 
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
-   $(".isFlw").on("click", function(){
+   $(".isFlw2").on("click", function(){
       var userid=$(this).attr("title");
-      var isFlw=this;
+      var isFlw2=this;
       if(followFlg){return;};
       followFlg=true;
       if(($(this).html()=="팔로우")){
          var type="post";
          var url ="/member/follow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw).html("팔로잉");
+         $(isFlw2).html("팔로잉");
          
       }else if(($(this).html()=="팔로잉")){
          var type="delete";
          var url ="/member/unfollow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw).html("팔로우");
+         $(isFlw2).html("팔로우");
       }
       $.ajax({
          type: type,
@@ -343,7 +337,7 @@ function follow(){
          }
       });
    });
-};
+}; */
 
 </script> 
 

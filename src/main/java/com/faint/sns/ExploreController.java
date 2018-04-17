@@ -65,8 +65,7 @@ public class ExploreController {
 		//친구추천 계정
 		UserVO vo = (UserVO) request.getSession().getAttribute("login");
 		int loginid = vo.getId();
-		
-		List<UserVO> recommList=activityservice.recomm(loginid);  //로그인 id에 따른 추천계정_추천계정이 없으면 지금 쿼리 에러남
+		List<UserVO> recommList=activityservice.recomm(loginid);  
 		model.addAttribute("recommList",recommList);
 		
 		

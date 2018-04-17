@@ -88,8 +88,8 @@ public interface UserService {
 	
 	public Authority getAuthority(Integer id) throws UsersException; // 사용자 권한 가져오기
 	
-	public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃
-
+	/*public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃*/
+	
 	public UserDetails getPrincipal(); // Principal 객체 가져오기 (*Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자))
 	
 	public boolean isPasswordMatched(String oldPassword) throws UsersException; // 비밀번호 일치 여부 확인하는 메소드

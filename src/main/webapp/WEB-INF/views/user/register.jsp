@@ -1,18 +1,17 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <meta name="_csrf" content="${_csrf.token}"/>
-   <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
+
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!--   모달 부트스트랩-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
+<!--제이쿼리 라이브러리  -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <style>
 
 	td {
@@ -96,6 +95,7 @@
 </script>
 <script>
     $(document).on('click','#authenticate',function(){
+    	console.log("asdfasdf");
         var email = $('#email').val();
 
         var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
