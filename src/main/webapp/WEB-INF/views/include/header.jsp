@@ -835,23 +835,7 @@ function searchAjax(){
 		sock = new SockJS("/echo");
 		
 		sock.onopen=function(){
-			console.log("${login.id} 소켓 연결됨");
-			$.ajax({
-				type:"post",
-				url:"/post/detail",
-				headers:{
-				   "X-HTTP-Method-Override" : "POST"
-				},
-				beforeSend : function(xhr)
-				   {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-				       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-				   },
-				data:{postid:pid},
-				datatype:"json",
-				success:function(data){
-					
-					}
-			})
+			console.log("${login.email} 소켓 연결됨");
 		}
 		
 		//자바스크립트 안에 function을 집어넣을 수 있음.
