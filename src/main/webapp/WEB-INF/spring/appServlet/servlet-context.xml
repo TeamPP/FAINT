@@ -62,18 +62,18 @@
 	
 	
 	<!-- auth interceptor : 로그인 안한 유저의 경우 login창으로 이동시킴 -->
-	<beans:bean id="authInterceptor" class="com.faint.interceptor.AuthInterceptor" ></beans:bean>
-	<!-- 로그인 interceptor bean 생성(session에 uservo저장) -->
+<!-- 	<beans:bean id="authInterceptor" class="com.faint.interceptor.AuthInterceptor" ></beans:bean>
+	로그인 interceptor bean 생성(session에 uservo저장)
 	<beans:bean id="loginInterceptor" class="com.faint.interceptor.LoginInterceptor" ></beans:bean>
 	<interceptors>
 		<interceptor>
 			<mapping path="/user/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
-		<!-- <interceptor>
+		<interceptor>
 			<mapping path="/main" />
 			<beans:ref bean="authInterceptor" />
-		</interceptor> -->
-	</interceptors>
+		</interceptor>
+	</interceptors> -->
 
  </beans:beans>

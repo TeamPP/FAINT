@@ -255,102 +255,7 @@
 	
 
 	
-	<!-- <select id="myActivity" resultType="com.faint.dto.ActivityDTO">
-			select
-			a1.id as userid
-			,IFNULL(a1.cate1PostCnt, 0) as c1PostCnt
-			,IFNULL(a1.cate2PostCnt, 0) as c2PostCnt
-			,IFNULL(a1.cate3PostCnt, 0) as c3PostCnt
-			,IFNULL(a1.cate4PostCnt, 0) as c4PostCnt
-			,IFNULL(a1.cate5PostCnt, 0) as c5PostCnt
-		
-			,IFNULL(a2.cate1ReplyCnt, 0) as c1ReplyCnt
-			,IFNULL(a2.cate2ReplyCnt, 0) as c2ReplyCnt
-			,IFNULL(a2.cate3ReplyCnt, 0) as c3ReplyCnt
-			,IFNULL(a2.cate4ReplyCnt, 0) as c4ReplyCnt
-			,IFNULL(a2.cate5ReplyCnt, 0) as c5ReplyCnt
-		
-			,IFNULL(a3.cate1LikeCnt, 0) as c1LikeCnt
-			,IFNULL(a3.cate2LikeCnt, 0) as c2LikeCnt
-			,IFNULL(a3.cate3LikeCnt, 0) as c3LikeCnt
-			,IFNULL(a3.cate4LikeCnt, 0) as c4LikeCnt
-			,IFNULL(a3.cate5LikeCnt, 0) as c5LikeCnt
-		
-		
-			from
-			(select 
-			u.id
-			,cate1PostCnt
-			,cate2PostCnt
-			,cate3PostCnt
-			,cate4PostCnt
-			,cate5PostCnt
-		
-			from 
-			(SELECT
-			    p.userid,  p.regdate as postDate,
-			    SUM(CASE WHEN (cateid='1') THEN 1 ELSE 0 END) AS cate1PostCnt,  
-			    SUM(CASE WHEN (cateid='2') THEN 1 ELSE 0 END) AS cate2PostCnt,
-			    SUM(CASE WHEN (cateid='3') THEN 1 ELSE 0 END) AS cate3PostCnt,
-			    SUM(CASE WHEN (cateid='4') THEN 1 ELSE 0 END) AS cate4PostCnt,
-			    SUM(CASE WHEN (cateid='5') THEN 1 ELSE 0 END) AS cate5PostCnt
-			FROM 
-			  tbl_post as p   
-			WHERE p.regdate BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() 
-			GROUP BY p.userid
-			) as aa
-			right outer join
-			  tbl_user u
-			on aa.userid=u.id
-			order by u.id asc
-			) a1
-			
-			left join(
-			select
-			j.userid,
-			SUM(CASE WHEN (j.cateid='1') THEN 1 ELSE 0 END) AS cate1ReplyCnt,
-			SUM(CASE WHEN (j.cateid='2') THEN 1 ELSE 0 END) AS cate2ReplyCnt,
-			SUM(CASE WHEN (j.cateid='3') THEN 1 ELSE 0 END) AS cate3ReplyCnt,
-			SUM(CASE WHEN (j.cateid='4') THEN 1 ELSE 0 END) AS cate4ReplyCnt,
-			SUM(CASE WHEN (j.cateid='5') THEN 1 ELSE 0 END) AS cate5ReplyCnt
-			from
-			(
-			select
-			r.postid, r.userid, r.regdate as replyDate, p.cateid
-			from tbl_reply as r  
-			join tbl_post as p
-			on r.postid=p.id
-			WHERE r.regdate BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() 
-			) as j
-			GROUP BY 
-			userid
-			) a2
-			on a1.id=a2.userid
-			
-			
-			left join (
-			select
-			j2.userid,
-			SUM(CASE WHEN (j2.cateid='1') THEN 1 ELSE 0 END) AS cate1LikeCnt, 
-			SUM(CASE WHEN (j2.cateid='2') THEN 1 ELSE 0 END) AS cate2LikeCnt,
-			SUM(CASE WHEN (j2.cateid='3') THEN 1 ELSE 0 END) AS cate3LikeCnt,
-			SUM(CASE WHEN (j2.cateid='4') THEN 1 ELSE 0 END) AS cate4LikeCnt,
-			SUM(CASE WHEN (j2.cateid='5') THEN 1 ELSE 0 END) AS cate5LikeCnt
-			from
-			(
-			select
-			l.postid, l.userid, l.regdate as likeDate , p.cateid
-			from tbl_post_like as l
-			join tbl_post as p
-			on l.postid=p.id
-			WHERE l.regdate BETWEEN DATE_SUB(NOW(), INTERVAL 90 DAY) AND NOW() 
-			) as j2
-			GROUP BY 
-			userid
-			) a3
-			on a1.id=a3.userid
-			where id =#{userid}
-	</select> -->
+	
 	
 	<!-- 로그인한 user의 친구의 친구들 데려오기 -->
 	<!--#{userid}는 로그인한 id  -->
@@ -689,4 +594,3 @@
 	</select>
 	
 	</mapper>
-	

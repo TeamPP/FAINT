@@ -1,6 +1,18 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
+<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
+
+<!--제이쿼리 라이브러리  -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!--   모달 부트스트랩-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
 
 	td {
@@ -107,7 +119,11 @@
                 data: {'email' : email},
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType : "json",
-
+				
+            	beforeSend : function(xhr)
+  	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+  	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+  	          },
                 success:function(data){
                     console.log("success")
                     alert(decodeURIComponent(data.msg))
@@ -141,7 +157,11 @@
                 data: {'nickname' : nickname},
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType : "json",
-
+				
+            	beforeSend : function(xhr)
+  	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+  	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+  	          },
                 success:function(data){
                     console.log("success")
                     alert(decodeURIComponent(data.msg))
@@ -176,6 +196,7 @@
 				<%--</div>--%>
 
 				<form role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<table>
 						<tr>
 							<div class="control-group">

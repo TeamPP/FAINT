@@ -111,6 +111,8 @@ public class UserDAOImpl implements UserDAO {
 	// ======================로그인======================
 
 	public UserVO login(LoginDTO dto) throws Exception {
+		
+		System.out.println("로그인 ");
 		return session.selectOne(namespace + ".login", dto);
 	}
 
@@ -129,16 +131,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserVO selectByEmail(String email) throws UsersException {
 		
-		System.out.println("daoimpl "+email);
 		UserVO users = null;
 		
 		try {
-			
-			System.out.println(""+email+"try임플리 ");
 			users = session.selectOne(namespace + ".select-users-by-email", email);
-			
-			System.out.println("userDAO 로그인 ");
-			
 		} catch (Exception e) {
 			throw new UsersException(e.getMessage());
 		}
@@ -155,6 +151,19 @@ public class UserDAOImpl implements UserDAO {
 		} catch (Exception e) {
 			throw new UsersException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public Integer selectLastInsertId() throws UsersException {
+		Integer lastInsertId = null;
+		try {
+			lastInsertId = session.selectOne(namespace + ".select-last-insert-id");
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+		
+		return lastInsertId;
 	}
 
 

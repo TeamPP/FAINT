@@ -377,7 +377,7 @@
 				console.log( this.fileUrl);
 				str += "<input type='hidden' name='files' value='" + this.fileUrl
 				+ "'> ";
-				var filter ="";
+				var filter =" ";
 				if(typeof this.filter == "undefined" || this.filter == null) {
 					filter = " ";
 				}else{
@@ -473,9 +473,10 @@
 			nextObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.next("video").length == 1){
+			if(nextObj.is("video")){
 				nextObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			
@@ -511,9 +512,10 @@
 			prevObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.prev("video").length == 1){
+			if(prevObj.is("video")){
 				prevObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			

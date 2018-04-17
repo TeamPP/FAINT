@@ -232,19 +232,12 @@ public class UserController {
     		System.out.println("에러가 안남 ");
 		return "redirect:/";
 	}
-
-//	@RequestMapping(value = "/loginTest", method = RequestMethod.GET)
-//	public void loginGET(Model model ,Principal principal) {
-//		System.out.println("스미마");
-//	}
 	
-	@RequestMapping(value="/login_view")
+	@RequestMapping(value="/loginTest")
 	public String login_view(Model model, Principal principal, HttpSession session) {
 		model.addAttribute("principal", principal);
-		System.out.println(principal);
-		
-		UserVO vo = (UserVO)session.getAttribute("principal");
-		System.out.println("asd");
+		System.out.println("여기는 UC loginTest1: "+principal);
+		System.out.println("여기는 UC loginTest2: ");
 		return "user/loginTest";
 	}
 	
@@ -315,36 +308,6 @@ public class UserController {
         session.setAttribute("socialID","true");
         session.setAttribute("modify","true");
 	}
-	
-	
-
-
-	@RequestMapping (value="/logout",method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
-    	Object obj = session.getAttribute("login");
-
-    	if(obj !=null){
-    		UserVO vo=(UserVO) obj;
-
-    		session.removeAttribute("login");
-    		session.invalidate();
-
-    		Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
-    		
-    		System.out.println("로그인쿠"+loginCookie);
-    		if(loginCookie !=null){
-    			System.out.println("로그아웃시 세션 아");
-    			loginCookie.setPath("/");
-    			loginCookie.setMaxAge(0);
-    			response.addCookie(loginCookie);
-    			service.keepLogin(vo.getEmail(), session.getId(), new Date());
-			}
-		}
-		return "/user/logout";
-	}
-	//mypage 페이지
-   
-	
 
     //유저 정보변경 권한 체크
 	@RequestMapping(value = "/modifyAuthCheck", method = RequestMethod.GET)

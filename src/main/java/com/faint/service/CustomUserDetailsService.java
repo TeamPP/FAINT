@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.faint.domain.Authority;
 import com.faint.domain.UserVO;
 import com.faint.domain.UsersException;
-import com.faint.dto.LoginDTO;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -27,43 +26,36 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) 
 			throws UsernameNotFoundException {
 		
-		System.out.println("야야야야ㅑ야야야ㅑ ");
 		
 		try {
-			
-			/* * 로그인할 때 클라이언트로부터 전달받은 아이디(email) 값을 넘겨 받아
-			 * 해당 사용자의 정보를 불러온다.*/
-			 
-			System.out.println(email+"이메일 123asd123");
+
+			/*
+			 * 로그인할 때 클라이언트로부터 전달받은 아이디(email) 값을 넘겨 받아
+			 * 해당 사용자의 정보를 불러온다.
+			 */
+
 			UserVO users = service.detailByEmail(email);
-			System.out.println("야야야야ㅑ야야야ㅑ111 ");
-			
 			
 			
 			/* *  해당 사용자가 존재하지 않으면
 			 *  이미 정의된 UsernameNotFoundException을 이용하여
-			 *  예외를 생성해서 던져주면 스프링이 알아서 예외처리를 하게 된다. */
-			 
-			
-			
-		
+			 */
+
 			if (users == null) {
-			System.out.println("asdasdas");
 				throw new UsernameNotFoundException("해당 사용자를 찾지 못했습니다.");
-				
 			}
 
-			System.out.println("users"+users.toString());
-			System.out.println(this.getGrantedAuthorities(users));
+			System.out.println("userDetailService의 userVO값: "+users.toString());
+			System.out.println("userDetailService인스턴스의 getGrantedAuthorities(권한값): "+this.getGrantedAuthorities(users));
 			
 			
 			return new User(users.getEmail(),
 					users.getPassword(),
 					
-					true,
-					true,
-					true,
-					true,
+					true, //enabled
+					true, //accountNonExpired
+					true, //credentialsNonExpired
+					true, //accountNonLocked
 			
 					this.getGrantedAuthorities(users));
 			

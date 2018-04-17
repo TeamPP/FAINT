@@ -67,14 +67,16 @@ function initMap(){
 	marker = new google.maps.Marker();	
 } 
 var keyword="${keyword}";
-keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
-console.log("keyword %빼고:      "+keyword);
+console.log(keyword);
+//keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
+//console.log("keyword %빼고:      "+keyword);
 geocoding(keyword);
 //지오코딩
 //이름으로 gps위치 얻기
 function geocoding(str) {
 	if(str == null || str =="" || typeof str == "undefined") return;
 	var modalAddress = str;
+	console.log(modalAddress);
 	geocoder.geocode({
 		'address' : modalAddress
 	}, function(results, status) {

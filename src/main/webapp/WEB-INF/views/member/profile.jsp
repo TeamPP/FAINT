@@ -561,7 +561,7 @@ var uid=${userVO.id};
 
 
 //======================팔로우 관련 메서드======================
-function followed(){
+function {
    $.getJSON("/member/followed/" + ${userVO.id}, function(data){
       var data=$(data)
       if(data.length!=0){
