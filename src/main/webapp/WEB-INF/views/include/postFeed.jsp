@@ -151,12 +151,20 @@ span{
             </div>
          </div>
             
-         <div class="s2_2">
+          <div class="s2_2">
             <div class="s2_2_1" id="post{{postid}}">
-               <a href="/member/{{usernickname}}"><span class="nickname">{{usernickname}}</span></a>  <!-- 닉네임 -->
-               <span class="caption">{{caption}}</span>
-               <div class="replyContainer" title="{{postid}}" data-limit=0>
-               </div>
+				<div class="row">
+               		<div class="col-xs-4">
+						<a href="/member/{{usernickname}}"><span class="nickname">{{usernickname}}</span></a>  <!-- 닉네임 -->
+					</div>
+					<div class="col-xs-8">
+               			<span class="caption">{{caption}}</span>
+					</div>
+				</div>
+				<div class="row">
+               		<div class="col-xs-12 replyContainer" data-postid="{{postid}}" data-limit=0>
+               		</div>
+				</div>
             </div> 
          </div>
  
@@ -197,7 +205,7 @@ span{
 .s2_1_1_2{ width: 235px; margin-left: 10px; display: inline-block; }
 .nickname{ font-weight: bold; }
 .s2_2{ width: 100%; height: auto; padding-top: 16px; padding-bottom: 16px; text-align: left; border-bottom: 1.3px solid #efefef; }
-.s2_2_1{ width: 100%; height: 352px; overflow-y: auto; }
+.s2_2_1{ width: 100%; height: 352px; overflow-y: auto; overflow-x: hidden;}
 .replyContainer{ margin-top: 20px; bottom: 0; }
 .reply{ margin-bottom: 4px; }
 .s2_3{ width: 100%; height: 85px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -317,9 +325,10 @@ function getPostList(){
              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
          },
          success:function(userdata){
+        	 console.log(userdata);
             data=$(userdata);
          }
-      })
+      });
       
       //게시물이 없을 때
       if($(data).length==0 && uid!=${login.id}){
@@ -343,7 +352,7 @@ function getPostList(){
       }
    }
    
-   $("#keywordTitle").after("<h5>게시물 "+data.length+" 개</h5>")
+   $("#keywordTitle").after("<h5>게시물 "+data.length+" 개</h5>");
    
    //게시물이 있을 때
    if(data.length%3==0){
@@ -367,7 +376,8 @@ function getPostList(){
    }
    
    $(data).each(function(index){
-      var url=this.url.split('|').reverse(); //쿼리문에서 역순으로 붙어오기때문에 reverse사용
+     // var url=this.url.split('|').reverse(); //쿼리문에서 역순으로 붙어오기때문에 reverse사용
+      var url=this.url.split('|'); //쿼리문에서 역순으로 붙어오기때문에 reverse사용
       
       console.log("url[0]:               "+url[0]);
       
@@ -535,7 +545,7 @@ function postModal(){
 	            like();
 	            likerList();
 	            store();
-	            searchFilter();
+	            searchFilter($(".s2_2_1"));
 	         }
 	      }
 	   })
@@ -605,7 +615,7 @@ function callRemoveDialog(event){
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
    $(".replyContainer").each(function(){
-      var pid=$(this).attr("title"); //게시물 id값 title에 넣어서 이동
+      var pid=$(this).data("postid"); //게시물 id값 title에 넣어서 이동
       var limit = $(this).data("limit"); //댓글 출력제한자
       var replyContainer = this;
       
@@ -624,14 +634,14 @@ function reply(){
         $(rpldata).each(function(index){
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
-               replystr +="<div class='reply' title='"+this.id+"'>"+
-                  "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
-               
-               if(this.userid==${login.id} || this.postwriter==${login.id}){
-                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li>";
-               }else{
-                  replystr+="</div>";
-               };
+            	replystr +="<div class='row reply' data-replyid='"+this.id+"'>"+
+                "<div class='col-xs-4'> <a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a></div>\t<div class='col-xs-8'><span>"+this.comment+"</span>";
+             
+             if(this.userid==${login.id} || this.postwriter==${login.id}){
+                replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li></div></div>";
+             }else{
+                replystr+="</div></div>";
+             };
                
                $(replyContainer).html(replystr);
             }
@@ -650,7 +660,7 @@ function reply(){
             reply();
          })
          //댓글 및 게시물에 태그 검색 필터
-         searchFilter();
+         searchFilter($(".replyContainer"));
       });
    });
 }

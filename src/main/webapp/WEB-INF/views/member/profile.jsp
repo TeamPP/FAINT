@@ -756,7 +756,7 @@ $(document).ready(function(){
    followed();
    following();
    follow();
-   searchFilter();
+   searchFilter($(".intro"));
 })
 
 //body로딩 후

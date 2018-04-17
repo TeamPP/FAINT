@@ -12,25 +12,21 @@ function lengthCheck(obj, limit) {
 	return true;
 }
 //searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리
-function searchFilter(){
-   $(".intro, .s2_2_1, .replyContainer").find("span").each(function(){
-      
+function searchFilter(obj){
+	obj.find("span").each(function(){
+      console.log(this);
       //1. 텍스트 가져오기 & 처리한 새로운 문자
       var text = $(this).text();
-      
       //2. split() 함수처리하기
       text = split(text);
-      
       //3. 공백으로 나누기
       var splitArray = text.split(" ");
-      
       //4. 특수문자 
       var special = "!$%^&*()-=+<>?_";
       
       //5. 링크처리
       for(var i in splitArray){
          var word = splitArray[i];
-         
          //두글자 이상이면서, 첫글자가 #이면서 , 두번째글자가 특수문자가 아니면 링크처리
          if(splitArray[i].length!=1 && (word.indexOf("#")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
             var hash=word.substring(word.lastIndexOf("#")+1);
@@ -46,7 +42,6 @@ function searchFilter(){
       
       //6. 한문장으로 합치기
       var splitMerge = splitArray.join(" ");
-      
       $(this).html(splitMerge);
    });
 }
@@ -55,7 +50,6 @@ function split(text){
     
     //1. 공백기준으로 나누기
     var splitArray = text.split(" ");
-    
     //2. 처리될 특수문자 
     var special="!$%^&*()-=+<>?_";
     

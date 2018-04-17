@@ -428,7 +428,7 @@ background-color:black;
 		</header>
 		<c:forEach items="${fileInfoList[status.index]}" var="fileInfo" varStatus='fileInfoListStatus'>
 						<c:if test="${fileInfoListStatus.index eq 0}">
-						<div class="imgDiv" data-postid="${postDTO.postid}" >
+						<div class="imgDiv ${fileInfo.filter }" data-postid="${postDTO.postid}" >
 						<c:if test ="${fileInfo.fileType eq 'image'}" >
 							<img id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
 								data-postid="${postDTO.postid}" />
@@ -570,10 +570,18 @@ a{ font-weight: bold; }
             
          <div class="s2_2">
             <div class="s2_2_1" id="post{{postid}}">
-               <a href="/member/{{usernickname}}"><span class="nickname">{{usernickname}}</span></a>  <!-- 닉네임 -->
-               <span class="caption">{{caption}}</span>
-               <div class="replyContainer" data-postid="{{postid}}" data-limit=0>
-               </div>
+				<div class="row">
+               		<div class="col-xs-4">
+						<a href="/member/{{usernickname}}"><span class="nickname">{{usernickname}}</span></a>  <!-- 닉네임 -->
+					</div>
+					<div class="col-xs-8">
+               			<span class="caption">{{caption}}</span>
+					</div>
+				</div>
+				<div class="row">
+               		<div class="col-xs-12 replyContainer" data-postid="{{postid}}" data-limit=0>
+               		</div>
+				</div>
             </div> 
          </div>
  
@@ -606,6 +614,7 @@ a{ font-weight: bold; }
 .section1{width: 600px; height: 600px; display: inline-block; float: left; position: relative; background-color: black; }
 #moveLeft > i{ border-radius: 150px; border: none; margin: 8px 8px 8px; left:0; margin-top: 48%; position: absolute; font-size: 30px; color: white; opacity: 0.7;}
 #moveRight > i{ border-radius: 150px; border: none; margin: 8px 8px 8px 0; right:0; margin-top: 48%; position: absolute; font-size: 30px; color: white; opacity: 0.8;}    
+.popImgDiv{ position: static;}
 .popPostImage{ position: absolute; max-width: 100%; max-height: 100%; width: auto; height: auto; margin: auto; top: 0; bottom: 0; left: 0; right: 0; }
 .section2{ width: 335px; height: 100%; display: inline-block; text-align: center; padding-left: 20px; padding-right: 20px; }
 .s2_1{ padding-top: 20px; padding-bottom: 20px; height: 78px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -614,7 +623,7 @@ a{ font-weight: bold; }
 .s2_1_1_2{ width: 235px; margin-left: 10px; display: inline-block; }
 .nickname{ font-weight: bold; }
 .s2_2{ width: 100%; height: auto; padding-top: 16px; padding-bottom: 16px; text-align: left; border-bottom: 1.3px solid #efefef; }
-.s2_2_1{ width: 100%; height: 352px; overflow-y: auto; }
+.s2_2_1{ width: 100%; height: 352px; overflow-y: auto; overflow-x: hidden; }
 .replyContainer{ margin-top: 20px; bottom: 0; }
 .reply{ margin-bottom: 4px; }
 .s2_3{ width: 100%; height: 85px; text-align: left; border-bottom: 1.3px solid #efefef; }
@@ -637,10 +646,8 @@ $(document).ready(function(){
 	//changeClass();
 	postModal();
 	$("#carousel").on("mousewheel", function(e){
-		console.log(e);
 		var event = e.originalEvent;
 		var delta = event.wheelDelta;
-		console.log(event.wheelDelta);
 		
 		if(delta>0){//휠 위로 하면 delta >0
 			moveToSelected('prev');
@@ -826,39 +833,42 @@ function postModal(){
 	            
 		        //이미지 배열화
 		        var urlList=data.url.split('|');
-	        	
+	        	var filterList = data.filter.split('|');
 				//이미지 잘라서 삽입
 	          	for (var i in urlList) {
-	           	
+	          		//필터 설정
 		           	//이미지일 경우(upload.js func)
 		           	if(checkImageType(urlList[i])){
-	                	$(".popImageContainer[data-postid="+ pid+ "]").append("<img class='popPostImage' data-postid='"+pid+"' id='image"+i+"' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>");
-	                	if(i!=0){ $(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i).css("display", "none"); }
+	                	$(".popImageContainer[data-postid="+ pid+ "]").append("<div class='popImgDiv' data-postid='"+pid+"' data-idx='"+i+"'><img class='popPostImage' data-postid='"+pid+"' id='image"+i+"' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/></div>");
+		           		
+	                	if(i!=0){ $(".popImgDiv[data-postid="+ pid+ "][data-idx="+ i+ "]").css("display", "none"); }
 	                	else{
 	                		//처음 컨텐츠만 길이 조정
-	                		if($(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i)[0].naturalWidth <= $(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i)[0].naturalHeight){
-	                			$(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i).css("min-height", "100%");
-	    					}else if($(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i)[0].naturalWidth > $(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i)[0].naturalHeight){
-	    						$(".popImageContainer[data-postid="+ pid+ "]").children("#image"+i).css("min-width", "100%");
+	                		if($(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i)[0].naturalWidth <= $(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i)[0].naturalHeight){
+	                			$(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i).css("min-height", "100%");
+	    					}else if($(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i)[0].naturalWidth > $(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i)[0].naturalHeight){
+	    						$(".popImgDiv[data-postid="+ pid+ "]").children("#image"+i).css("min-width", "100%");
 	    					}
 	                	}
+                		
 	                	
 					//영상일 경우(upload.js func)
 	           		}else if(checkVideoType(urlList[i])){
-		           		$(".popImageContainer[data-postid="+ pid+ "]").append("<video class='popPostImage' data-postid='"+pid+"' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/>");
-		           		if(i!=0){$(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i).css("display", "none"); $(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i).autoplay=false; }
+		           		$(".popImageContainer[data-postid="+ pid+ "]").append("<div class='popImgDiv' data-postid='"+pid+"'  data-idx='"+i+"'><video class='popPostImage' data-postid='"+pid+"' id='video"+i+"' loop='true' autoplay src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+urlList[i]+"'/></div>");
+		           		if(i!=0){$(".popImgDiv[data-postid="+ pid+ "][data-idx="+ i+ "]").css("display", "none"); $(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i).autoplay=false; }
 		           		else{
 		           			//처음 컨텐츠만 길이 조정
-		           			if($(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i)[0].videoWidth <= $("#video"+i+"[data-postid="+ pid+ "]")[0].videoHeight){
-		           				$(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i).css("min-height", "100%");
-	    					}else if($(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i)[0].videoWidth > $(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i)[0].videoHeight){
-	    						$(".popImageContainer[data-postid="+ pid+ "]").children("#video"+i).css("min-width", "100%");
+		           			if($(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i)[0].videoWidth <= $(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i)[0].videoHeight){
+		           				$(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i).css("min-height", "100%");
+	    					}else if($(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i)[0].videoWidth > $(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i)[0].videoHeight){
+	    						$(".popImgDiv[data-postid="+ pid+ "]").children("#video"+i).css("min-width", "100%");
 	    					}
 		           		}
 					//이미지나 영상타입이 아닐경우	
 	           		}else{
 	           			alert("지원하지 않는 타입의 파일형식을 포함하고 있음");
 	           		}
+		           	$(".popImgDiv[data-postid="+ pid+ "][data-idx="+ i+ "]").removeClass().addClass("popImgDiv " + filterList[i]);
 	          	}
 	          	//첨부 이미지or영상 수
 	          	if(urlList.length == 1){
@@ -916,7 +926,7 @@ function postModal(){
 	            like();
 	            likerList();
 	            store();
-	            searchFilter();
+	           	searchFilter($(".s2_2_1"));
 	            
 	            $(".postModal").not("#myModal[data-postid="+ pid+ "]").remove();
 		       //modal창 보이기
@@ -1025,13 +1035,13 @@ function reply(){
         $(rpldata).each(function(index){
         	//댓글 최신 4개까지만 우선 출력 및 제한자에 따른 댓글 출력
             if( $(rpldata).length-(replyLimit+replyMore*limit) <= index && index < $(rpldata).length ){ //10개씩 더 출력
-               replystr +="<div class='reply' data-replyid='"+this.id+"'>"+
-                  "<a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a>\t<span>"+this.comment+"</span>";
+               replystr +="<div class='row reply' data-replyid='"+this.id+"'>"+
+                  "<div class='col-xs-4'> <a href='/member/"+this.username+"'><span class='nickname'>" + this.username +"</span></a></div>\t<div class='col-xs-8'><span>"+this.comment+"</span>";
                
                if(this.userid==${login.id} || this.postwriter==${login.id}){
-                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li>";
+                  replystr+="<a class='replyDelete' onclick='javascript:deleteReply(this);' style='cursor:pointer; float:right;' ><i class='material-icons' style='color:lightgray; font-size:18px;'>clear</i></a></li></div></div>";
                }else{
-                  replystr+="</div>";
+                  replystr+="</div></div>";
                };
                
                $(replyContainer).html(replystr);
@@ -1051,7 +1061,7 @@ function reply(){
             reply();
          })
          //댓글 및 게시물에 태그 검색 필터
-         searchFilter();
+         searchFilter($(".replyContainer"));
       });
    });
 }
@@ -1270,25 +1280,25 @@ function likerList(){
 		
 //오른쪽으로 넘기기
 function moveRight(){
-	var len = $(".popPostImage").length-1;
-	var curIdx = parseInt($(".popPostImage:visible").index());
-	var curObj = $(".popPostImage:visible");
+	var len = $(".popImgDiv").length-1;
+	var curIdx = parseInt($(".popImgDiv:visible").index());
+	var curObj = $(".popImgDiv:visible");
 	var nextObj = curObj.next();
 
 	////다음객체 비율 조정
-	if(nextObj.is("video")){
+	if(nextObj.children().is("video")){
 		//다음 비디오 플레이
-		nextObj.get(0).play();
-		if(nextObj[0].videoWidth <= nextObj[0].videoHeight){
-      			$(nextObj).css("min-height", "100%");
-		}else if(nextObj[0].videoWidth > nextObj[0].videoHeight){
-			$(nextObj).css("min-width", "100%");
+		nextObj.children().get(0).play();
+		if(nextObj.children()[0].videoWidth <= nextObj[0].videoHeight){
+      			$(nextObj.children()).css("min-height", "100%");
+		}else if(nextObj.children()[0].videoWidth > nextObj.children()[0].videoHeight){
+			$(nextObj.children()).css("min-width", "100%");
 		}
 	}else{	//이미지면
-		if(nextObj[0].naturalWidth <= nextObj[0].naturalHeight){
-      			$(nextObj).css("min-height", "100%");
-		}else if(nextObj[0].naturalWidth > nextObj[0].naturalHeight){
-			$(nextObj).css("min-width", "100%");
+		if(nextObj.children()[0].naturalWidth <= nextObj.children()[0].naturalHeight){
+      			$(nextObj.children()).css("min-height", "100%");
+		}else if(nextObj.children()[0].naturalWidth > nextObj.children()[0].naturalHeight){
+			$(nextObj.children()).css("min-width", "100%");
 		}
 	}
 	//이미지 전환
@@ -1296,8 +1306,8 @@ function moveRight(){
 	nextObj.css("display","block");
 	
 	//현재 비디오면 정지
-	if(curObj.is("video")){
-		curObj.get(0).pause();
+	if(curObj.children().is("video")){
+		curObj.children().get(0).pause();
 	}
 	//버튼 보이기
 	$("#moveLeft").css("display","block");
@@ -1308,35 +1318,34 @@ function moveRight(){
 
 //이미지 왼쪽으로 넘기기
 function moveLeft(){
-	var len = $(".popPostImage").length-1;
-	var curIdx = parseInt($(".popPostImage:visible").index());
-	var curObj = $(".popPostImage:visible");
+	var len = $(".popImgDiv").length-1;
+	var curIdx = parseInt($(".popImgDiv:visible").index());
+	var curObj = $(".popImgDiv:visible");
 	var prevObj = curObj.prev();
 
 	//이전객체 비율 조정
-	if(prevObj.is("video")){
+	if(prevObj.children().is("video")){
 		//다음 비디오 플레이
-		prevObj.get(0).play();
-		if(prevObj[0].videoWidth <= prevObj[0].videoHeight){
-      			$(prevObj).css("min-height", "100%");
-		}else if(prevObj[0].videoWidth > prevObj[0].videoHeight){
-			$(prevObj).css("min-width", "100%");
+		prevObj.children().get(0).play();
+		if(prevObj.children()[0].videoWidth <= prevObj.children()[0].videoHeight){
+      			$(prevObj.children()).css("min-height", "100%");
+		}else if(prevObj.children()[0].videoWidth > prevObj.children()[0].videoHeight){
+			$(prevObj.children()).css("min-width", "100%");
 		}
 	}else{	//이미지면
-		if(prevObj[0].naturalWidth <= prevObj[0].naturalHeight){
-      			$(prevObj).css("min-height", "100%");
-		}else if(prevObj[0].naturalWidth > prevObj[0].naturalHeight){
-			$(prevObj).css("min-width", "100%");
+		if(prevObj.children()[0].naturalWidth <= prevObj.children()[0].naturalHeight){
+      			$(prevObj.children()).css("min-height", "100%");
+		}else if(prevObj.children()[0].naturalWidth > prevObj.children()[0].naturalHeight){
+			$(prevObj.children()).css("min-width", "100%");
 		}
 	}
-	
 	//이미지 전환
 	curObj.css("display","none");
 	prevObj.css("display","block");
 	
 	//현재 비디오 정지
-	if(curObj.is("video")){
-		curObj.get(0).pause();
+	if(curObj.children().is("video")){
+		curObj.children().get(0).pause();
 	}
 	
 	//버튼 보이기

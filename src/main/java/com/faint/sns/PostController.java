@@ -114,6 +114,9 @@ public class PostController {
 				jsonObj.put("fileType", type);
 				jArray.add(jsonObj);
 			}
+			
+			//캡션 <br> \n 으로 치환
+			post.setCaption(post.getCaption().replaceAll(" <br> ", "\n"));
 			logger.info(jArray.toJSONString());
 			model.addAttribute("files", jArray);
 			model.addAttribute("postVO", post);

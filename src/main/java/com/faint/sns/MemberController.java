@@ -46,6 +46,7 @@ public class MemberController {
 	public String read(@PathVariable("nickname") String nickname, Model model, HttpServletRequest request) throws Exception{
 		
 		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		System.out.println(vo.toString());
 		RelationDTO dto=new RelationDTO();
 		
 		dto.setLoginid(vo.getId());

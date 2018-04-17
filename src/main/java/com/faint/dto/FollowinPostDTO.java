@@ -11,6 +11,7 @@ public class FollowinPostDTO {
 	private int cateid;
 	private String location;
 	private String url; //모든 첨부파일 통합 String '|'로 파일명 구분
+	private String filter; //모든 첨부파일 통합 String '|'로 파일명 구분
 	private String usernickname;
 	private String profilephoto;
 	private Date regdate;
@@ -19,6 +20,12 @@ public class FollowinPostDTO {
 	
 	public int getPostid() {
 		return postid;
+	}
+	public String getFilter() {
+		return filter;
+	}
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 	public void setPostid(int postid) {
 		this.postid = postid;
@@ -86,9 +93,9 @@ public class FollowinPostDTO {
 	@Override
 	public String toString() {
 		return "FollowinPostDTO [postid=" + postid + ", userid=" + userid + ", caption=" + caption + ", cateid="
-				+ cateid + ", location=" + location + ", url=" + url + ", usernickname=" + usernickname
-				+ ", profilephoto=" + profilephoto + ", regdate=" + regdate + ", isLike=" + isLike + ", isStore="
-				+ isStore + "]";
+				+ cateid + ", location=" + location + ", url=" + url + ", filter=" + filter + ", usernickname="
+				+ usernickname + ", profilephoto=" + profilephoto + ", regdate=" + regdate + ", isLike=" + isLike
+				+ ", isStore=" + isStore + "]";
 	}
 	
 }

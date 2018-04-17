@@ -13,7 +13,7 @@
 
 
 </head>
-
+<link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
 <style>
 h2 {
 	margin: 0;
@@ -63,8 +63,8 @@ border-radius: 150px;  /* 프사 둥글게 */
 }
 
 </style>
-<body class style="">
 	<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"></jsp:include>
+<body class style="">
 	<span id="react-root" aria-hidden="false"> 
 	<section class="_sq4bv _29u45"> 
 		<main class="_8fi2q _2v79o">
@@ -102,7 +102,6 @@ border-radius: 150px;  /* 프사 둥글게 */
 
 			</article>
 		</div>
-		</main> <jsp:include page="../../common/footer.jsp" flush="false"></jsp:include>
 		</section>
 	</span>
 </body>
@@ -111,7 +110,6 @@ border-radius: 150px;  /* 프사 둥글게 */
 <!-- 공통 처리 import -->
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 <script type="text/javascript" src="../../resources/js/upload.js"></script>
-<link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
 <script>
 
 
