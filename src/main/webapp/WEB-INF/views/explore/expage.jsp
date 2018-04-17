@@ -30,12 +30,8 @@
 
 <style>
 
-.cateSection {
-	display: none;
-}
-
 .empty {
-    height: 100px;
+	height: 150px;
 }
 
 article {

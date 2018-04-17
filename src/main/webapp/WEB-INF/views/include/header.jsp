@@ -105,10 +105,6 @@ body {
    padding: 0 30px;
 }
 
-.empty {
-	height: 80px;
-}
-
 /* 카테고리 시작 */
 .cateSection {
 	display: inline-block;
@@ -257,10 +253,6 @@ li.cate:hover img, li.cate.hover img {
 	-webkit-transform: rotate(90deg);	
 }
 
-.empty {
-	height: 220px;
-}
-
 .dropbtn {
     background-color: #f8f8f8;
     color: #999;
@@ -324,6 +316,10 @@ li.cate:hover img, li.cate.hover img {
 	position: absolute;
 }
 
+.empty {
+	height: 220px; !important
+}
+
 </style>
 
 </head>
@@ -339,7 +335,9 @@ li.cate:hover img, li.cate.hover img {
          <span class="search-icon"></span>
       </form>
 	
-		<div class="cateSection" id="1">   
+		<div class="cateSection">   
+		<c:choose>
+			<c:when test="${reqURL == '/main'}">
         	<ul id="categoryList">
  		 <li class="cate"  data-filter="all" tabindex="-1"  onclick="cateClick(this)">
               <div class="caption">
@@ -383,6 +381,9 @@ li.cate:hover img, li.cate.hover img {
               </div>
         </li>
 	</ul>
+	</c:when>
+	<c:otherwise></c:otherwise>
+	</c:choose>
 	</div>
       
       <span class="pull-right">

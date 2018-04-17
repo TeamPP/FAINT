@@ -88,6 +88,8 @@ public class MainController {
 			
 			model.addAttribute("list", list); //세션 아이디값을 통해 현재 팔로우중인 유저들의 게시물정보 및 유저정보 등을 받아옴
 			model.addAttribute("fileInfoList", fileInfoList); //게시글별 파일 정보 리스트 
+			model.addAttribute("reqURL", request.getRequestURI());
+			System.out.println(">>>>>>>>"+request.getRequestURI());
 		}
 	}
 	

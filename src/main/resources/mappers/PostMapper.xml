@@ -309,16 +309,27 @@
 		<!-- 태그검색으로 게시물 목록 ajax 조회 (무한 스크롤) -->
 	<select id="tagsAjax" parameterType="com.faint.domain.SearchCriteria" resultType="com.faint.domain.PostVO">
      	<![CDATA[
-			select distinct topT.*, (@rank := @rank +1) as row
+		select distinct topT.*, (@rank := @rank +1) as row
 	        from
-	        ( select pa.* , likeCount, replyCount from
+	        ( select pa.* ,bl.blockedid, likeCount, replyCount from
 	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
 	        from tbl_post as p
+            
 	        join tbl_attach as a
 	        on p.id = a.postid
+            
 	        join tbl_user as u
 	        on p.userid = u.id
+            
 	        group by p.id ) as pa
+             left join
+    
+			( SELECT b.userid as userid, b.blockedid as blockedid, u.nickname as nickname, u.name as name
+			from tbl_block b 
+			join tbl_user u
+			on b.blockedid = u.id
+			where b.userid = #{loginid} ) as bl
+			on pa.userid = bl.blockedid
 	            
 	        left join
 	            
@@ -349,10 +360,11 @@
 	        tag.id=ptag.tagid
 	        and
 	        tag.name=#{keyword}
+            and topT.blockedid is null
 	        )
 	      
 	        order by likeCount desc, replyCount desc, id
-	        limit 0,10 
+	        limit 0,10 ;
 	    ]]>
 	</select>
 	

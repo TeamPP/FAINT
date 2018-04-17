@@ -7,6 +7,11 @@
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
+
+.empty {
+    height: 150px;
+}
+
 span{
 	display: inline-block;
 }

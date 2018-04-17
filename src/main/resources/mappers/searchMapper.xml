@@ -9,14 +9,32 @@
 <select id="listKeyword" resultType="com.faint.dto.SearchDTO">
 <![CDATA[
 
-select * from tbl_search
+	select * from tbl_search
     
     left outer join
     
-    ( select concat('#', t.name) as tagname, count(*) as postedtagCnt
-    from tbl_tag t, tbl_posted_tag pt
-    where t.id=pt.tagid
-    and t.name like concat('%', #{keyword} ,'%') group by t.name) as tag
+    ( select concat('#', t.name) as tagname, count(*) as postedtagCnt from tbl_tag t
+    
+    left join (select * from tbl_posted_tag as pt
+    
+    join (select * from tbl_post as p
+   
+    left outer join
+	
+    (SELECT b.userid as b_userid, b.blockedid as blockedid, u.nickname as nickname, u.name as name
+	 from tbl_block b 
+     join tbl_user u
+     on b.blockedid = u.id
+     where b.userid = #{loginid}) as bu
+     
+    on p.userid = bu.blockedid
+    where bu.blockedid is null) as pbu
+    
+    on pt.postid = pbu.id) as ptpbu
+    
+    on t.id = ptpbu.tagid
+    where t.name like concat('%', #{keyword} ,'%')
+    group by t.name ) as tag
     
     on type=0
     
