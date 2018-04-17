@@ -20,9 +20,18 @@
 
 </head>
 <style>
+a {
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+}
+.hashTag{
+	color: hotpink;
+}
 body{
-   overflow: hidden;
-   }
+	overflow: hidden;
+	}
 .likeModal {
    display: none; /* Hidden by default */
    position: fixed; /* Stay in place */
@@ -65,42 +74,42 @@ body{
 
 /*id는 스타일 최우선으로 적용됨 그 다음에 class */
 #carousel {
-   position: relative;
-   height: 600px;
-   top: 50%;
-   /* transform: translateY(-50%); */
-   overflow: hidden;
+	position: relative;
+	height: 600px;
+	top: 50%;
+	/* transform: translateY(-50%); */
+	overflow: hidden;
 }
 #carousel article{
 height: 560px;
-   width: 500px;
-   position: absolute;
-   /*  transition 변경되는 부분 width 1s만 쓰면 어색함 왜냐하면 width랑 height랑 2가지 요소가 바뀜 */
-   transition: transform 1s, left 1s, opacity 1s, z-index 0s, width 1s, height 1s;
-   opacity: 1;
+	width: 500px;
+	position: absolute;
+	/*  transition 변경되는 부분 width 1s만 쓰면 어색함 왜냐하면 width랑 height랑 2가지 요소가 바뀜 */
+	transition: transform 1s, left 1s, opacity 1s, z-index 0s, width 1s, height 1s;
+	opacity: 1;
 }
 #carousel .imgDiv {
-   height: 500px;
-   width: 500px;
-   transition: transform 1s, left 1s, opacity 1s, z-index 0s, width 1s, height 1s;
+	height: 500px;
+	width: 500px;
+	transition: transform 1s, left 1s, opacity 1s, z-index 0s, width 1s, height 1s;
 }
-#carousel .imgDiv img {
-   height: 100%;
-   width: 100%;
-   object-fit: cover;
+#carousel .imgDiv img{
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
 }
 #carousel .hideLeft {
-   height: 260px;
-   width: 200px;
-   left: 0%; /* 왼쪽 0으로 빠지는 애니메이션 효과 */
-   opacity: 0; /*투명도 0으로 숨김처리 */
-   transform: translateY(75%) translateX(-75%); /*부모기준으로 위치지정 */
+	height: 260px;
+	width: 200px;
+	left: 0%; /* 왼쪽 0으로 빠지는 애니메이션 효과 */
+	opacity: 0; /*투명도 0으로 숨김처리 */
+	transform: translateY(75%) translateX(-75%); /*부모기준으로 위치지정 */
 }
 #carousel .hideLeft header{
-   height: 60px;
-   width: 200px;
-   left: 0%; /* 왼쪽 0으로 빠지는 애니메이션 효과 */
-   opacity: 0; /*투명도 0으로 숨김처리 */
+	height: 60px;
+	width: 200px;
+	left: 0%; /* 왼쪽 0으로 빠지는 애니메이션 효과 */
+	opacity: 0; /*투명도 0으로 숨김처리 */
 }
 #carousel .hideLeft .imgDiv{
    height: 200px;
@@ -114,17 +123,17 @@ height: 560px;
    object-fit: cover;
 }
 #carousel .hideRight {
-   height: 260px;
-   width: 200px;
-   left: 100%;
-   opacity: 0;
-   transform: translateY(75%) translateX(-75%);
+	height: 260px;
+	width: 200px;
+	left: 100%;
+	opacity: 0;
+	transform: translateY(75%) translateX(-75%);
 }
 #carousel .hideRight header{
-   height: 60px;
-   width: 200px;
-   left: 100%;
-   opacity: 0;
+	height: 60px;
+	width: 200px;
+	left: 100%;
+	opacity: 0;
 }
 #carousel .hideRight .imgDiv{
    height: 200px;
@@ -138,17 +147,17 @@ height: 560px;
    object-fit: cover;
 }
 #carousel .prev {
-   height: 460px; 
-   width: 400px;
-   z-index: 5;
-   left: 30%;
-   transform: translateY(50px) translateX(-50%);
+	height: 460px; 
+	width: 400px;
+	z-index: 5;
+	left: 30%;
+	transform: translateY(50px) translateX(-50%);
 }
 #carousel .prev header{
-   height: 60px; 
-   width: 400px;
-   z-index: 5;
-   left: 30%;
+	height: 60px; 
+	width: 400px;
+	z-index: 5;
+	left: 30%;
 }
 #carousel .prev .imgDiv{
    height: 400px; 
@@ -156,25 +165,25 @@ height: 560px;
    z-index: 5;
    left: 30%;
 }
-#carousel .prev img {
+#carousel .prev img{
    height: 100%;
    width: 100%;
    object-fit: cover;
 }
 #carousel .prevLeftSecond {
-   height: 360px;
-   width: 300px;
-   z-index: 4;
-   left: 20%;
-   opacity: .7;
-   transform: translateY(33%) translateX(-50%);
+	height: 360px;
+	width: 300px;
+	z-index: 4;
+	left: 20%;
+	opacity: .7;
+	transform: translateY(33%) translateX(-50%);
 }
 #carousel .prevLeftSecond header{
-   height: 60px;
-   width: 300px;
-   z-index: 4;
-   left: 20%;
-   opacity: .7;
+	height: 60px;
+	width: 300px;
+	z-index: 4;
+	left: 20%;
+	opacity: .7;
 }
 #carousel .prevLeftSecond .imgDiv{
    height: 300px;
@@ -183,24 +192,24 @@ height: 560px;
    left: 20%;
    opacity: .7;
 }
-#carousel .prevLeftSecond img {
+#carousel .prevLeftSecond img{
    height: 100%;
    width: 100%;
    object-fit: cover;
 }
 /*가운데 이미지 */
 #carousel .selected {
-   height: 560px;
-   width: 500px; 
-   z-index: 10;
-   left: 50%;
-   transform: translateY(0px) translateX(-50%);
+	height: 560px;
+	width: 500px; 
+	z-index: 10;
+	left: 50%;
+	transform: translateY(0px) translateX(-50%);
 }
 #carousel .selected header{
-   height: 60px;
-   width: 500px; 
-   z-index: 10;
-   left: 50%;
+	height: 60px;
+	width: 500px; 
+	z-index: 10;
+	left: 50%;
 }
 #carousel .selected .imgDiv{
    height: 500px;
@@ -214,17 +223,17 @@ height: 560px;
    object-fit: cover;
 }
 #carousel .next {
-   height: 460px;
-   width: 400px;
-   z-index: 5;
-   left: 70%;
-   transform: translateY(50px) translateX(-50%);
+	height: 460px;
+	width: 400px;
+	z-index: 5;
+	left: 70%;
+	transform: translateY(50px) translateX(-50%);
 }
 #carousel .next header{
-   height: 60px;
-   width: 400px;
-   z-index: 5;
-   left: 70%;
+	height: 60px;
+	width: 400px;
+	z-index: 5;
+	left: 70%;
 }
 #carousel .next .imgDiv{
    height: 400px;
@@ -238,19 +247,19 @@ height: 560px;
    object-fit: cover;
 }
 #carousel .nextRightSecond {
-   height: 360px;
-   width: 300px;
-   z-index: 4;
-   left: 80%;
-   transform: translateY(33%) translateX(-50%);
-   opacity: .7;
+	height: 360px;
+	width: 300px;
+	z-index: 4;
+	left: 80%;
+	transform: translateY(33%) translateX(-50%);
+	opacity: .7;
 }
 #carousel .nextRightSecond header{
-   height: 60px;
-   width: 300px;
-   z-index: 4;
-   left: 80%;
-   opacity: .7;
+	height: 60px;
+	width: 300px;
+	z-index: 4;
+	left: 80%;
+	opacity: .7;
 }
 #carousel .nextRightSecond .imgDiv{
    height: 300px;
@@ -271,7 +280,7 @@ height: 560px;
    bottom: 30%;
 }
 .fa{
-   font-size: 35px;
+   font-size: 19px;
    border:0;
 }
 #carousel > article > header{
@@ -290,9 +299,9 @@ a,a:visited{
 ._pg23k{background-color:#fafafa;border-radius:50%;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;-webkit-box-flex:0;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;overflow:hidden;position:relative}._pg23k::after{border:1px solid rgba(0,0,0,.0975);border-radius:50%;bottom:0;content:"";left:0;pointer-events:none;position:absolute;right:0;top:0}._jpwof{cursor:pointer}._rewi8{height:100%;width:100%}
 ._2g7d5{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:5px;margin-left:-5px}
 
-header{-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;border:0 solid #000;-webkit-box-sizing:border-box;box-sizing:border-box;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin:0;padding:0;}
+header, header>div{-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;border:0 solid #000;-webkit-box-sizing:border-box;box-sizing:border-box;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin:0;padding:0;}
 span{
-   display: inline-block;
+	display: inline-block;
 }
 .postModal {
     display: none; /* Hidden by default */
@@ -306,6 +315,49 @@ span{
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+	.btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 18px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+      }
+      label.btn.btn-default.btn-circle.focus {
+	    outline: none;
+	}
+	.multiFile{
+	position: absolute;
+	height: 39px;
+	width: 39px;
+	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
+	background-position: -360px -104px;
+	right: 8px;
+	top: 8px; 
+}
+.imgDiv{
+position: relative;
+background-color:black;
+}
+.imgDiv > video{
+	position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.glyphicon {
+	top: -1px;
 }
 </style>
 
@@ -396,7 +448,7 @@ span{
       <button class="_dcj9f"  onclick="callRemoveDialog(event)">닫기</button>
    </div>
 <style>
-._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:3}
+._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:20}
 ._dcj9f{background:0 0;border:0;cursor:pointer;height:36px;outline:0;overflow:hidden;position:absolute;right:0;top:0;z-index:4}
 ._dcj9f::before{color:#fff;content:'\00D7';display:block;font-size:36px;font-weight:600;line-height:36px;padding:0;margin:0}
 ._784q7{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;margin:auto;max-width:935px;pointer-events:auto;width:100%}
@@ -420,11 +472,11 @@ span{
   <!-- 좋아요 list Modal -->
 <script id="modalLiker" type="text/x-handlebars-template">
 <section class="section3">
-   <div class="likersTitle">
-      <div class="likersClose"><i class="material-icons">clear</i></div>
-      <strong>좋아요</strong>
-   </div>
-   <ul id="likersContainer"></ul>
+	<div class="likersTitle">
+		<div class="likersClose"><i class="material-icons">clear</i></div>
+		<strong>좋아요</strong>
+	</div>
+	<ul id="likersContainer"></ul>
 </section>
 
 <style>
@@ -434,14 +486,14 @@ span{
 .oneofList{ border-bottom: solid 1px #efefef; width: 100%; height: 53px; padding: 10px 16px; float: left; }
 #likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
 .isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
-   border-width: 1px; line-height: 26px; border-radius: 2px; }
+	border-width: 1px; line-height: 26px; border-radius: 2px; }
 .followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
 a{ font-weight: bold; }
 </style>
 </script>
 <!-- post개별 게시물 모달팝업 -->
 <script id="modalPost" type="text/x-handlebars-template">
-<div id="myModal" class="postModal" >
+<div id="myModal" class="postModal" data-postid="{{postid}}" >
    <span class="close">&times;</span>
    <div class="postModal-content">
       
@@ -454,21 +506,21 @@ a{ font-weight: bold; }
             <i class="fa fa-chevron-circle-left"></i>
          </a>
 
-         <!-- 오른쪽 이미지 이동 버튼 -->
-         <a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
-            <i class="fa fa-chevron-circle-right"></i>
-         </a>
+			<!-- 오른쪽 이미지 이동 버튼 -->
+			<a class="_5wmqs _by8kl coreSpriteRightChevron" role="button" id="moveRight" onclick="moveRight()">
+				<i class="fa fa-chevron-circle-right"></i>
+			</a>
 
-         <!-- 사진 몇개인지 표시 -->
-         <div class=" _g5463"> 
-            <table class="positionDot">
-               <tbody>
-                  <tr>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-      </section>
+			<!-- 사진 몇개인지 표시 -->
+			<div class=" _g5463"> 
+				<table class="positionDot">
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
 
       <section class="section2">
          <div class="s2_1">
@@ -491,30 +543,30 @@ a{ font-weight: bold; }
             <div class="s2_2_1" id="post{{postid}}">
                <a href="/member/{{usernickname}}"><span class="nickname">{{usernickname}}</span></a>  <!-- 닉네임 -->
                <span class="caption">{{caption}}</span>
-               <div class="replyContainer" title="{{postid}}" data-limit=0>
+               <div class="replyContainer" data-postid="{{postid}}" data-limit=0>
                </div>
             </div> 
          </div>
  
          <div class="s2_3">
             <div class="s2_3_1">
-               <div class="btnContainer" title="{{postid}}">
+               <div class="btnContainer" data-postid="{{postid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
-               <a class="likeContainer" title="{{postid}}">좋아요 <span>0</span>개</a>
+               <a class="likeContainer" data-postid="{{postid}}">좋아요 <span>0</span>개</a>
             </div>
          </div>
 
          <div class="s2_4">
-            <div class="s2_4_1" title="{{postid}}">
+            <div class="s2_4_1" data-postid="{{postid}}">
                <!-- 댓글달기 -->
                <input class="replyRegist" onkeypress="registReply(this, event);" type="textarea" placeholder="댓글 달기..." name="replyCaption">
             </div>
          </div>
         </section>
-      <!-- 포스트 이동 버튼 -->
-      <i class="postLeft material-icons">keyboard_arrow_left</i>
-      <i class="postRight material-icons">keyboard_arrow_right</i>
+		<!-- 포스트 이동 버튼 -->
+		<i class="postLeft material-icons">keyboard_arrow_left</i>
+		<i class="postRight material-icons">keyboard_arrow_right</i>
    </div>
 </div>
 <style>
@@ -547,6 +599,7 @@ a{ font-weight: bold; }
 .likeContainer{ font-weight: bold; cursor: default; }
 </style>
 </script>
+<!-- 길이제한 함수, 해쉬태그 필터링 -->
 <script>
 //postid 가져와서 댓글달기
 $(document).ready(function(){
@@ -598,7 +651,7 @@ $(document).ready(function(){
 })
 
 //css - 카테고리별 게시물 필터링
-  var all=$("#carousel").children(); //초기값
+var all=$("#carousel").children(); //초기값
 function cateClick(thisTag){
      var customType=$(thisTag).data("filter");
      console.log(customType);
@@ -625,13 +678,13 @@ function cateClick(thisTag){
          moveToSelected($(this));
       }
     });
-   
-   //이전 선택한 이미지가 있을 경우
-   if($(".post>div>img[data-postid="+currentTitle+"]")[0]!=undefined){
-      $(".post>div>img[data-postid="+currentTitle+"]").parent().parent().trigger("click");
-   }
+	
+	//이전 선택한 이미지가 있을 경우
+	if($(".post>div>img[data-postid="+currentTitle+"]")[0]!=undefined){
+		$(".post>div>img[data-postid="+currentTitle+"]").parent().parent().trigger("click");
+	}
 }
-   
+	
 //슬라이드 이미지 div 클래스 추가
 function changeClass(){
       //클래스명 추가하기
@@ -646,21 +699,22 @@ function changeClass(){
       //$("div.nextRightSecond").nextAll().addClass("post hideRight"); //6번사진이후로
       $("article.nextRightSecond").nextAll().addClass("post hideRight"); //6번사진이후로
 }    
-    
-   
+ 	
+	
 function moveToSelected(element) {
-   if (element == "next") {
-      var selected = $(".selected").next();
-   } else if (element == "prev") {
-      var selected = $(".selected").prev();
-   } else {
-      var selected = element;
-   }
-   
-   var next = $(selected).next();
-   var prev = $(selected).prev();
-   var prevSecond = $(prev).prev();
-   var nextSecond = $(next).next();
+	console.log("moveToSelected");
+	if (element == "next") {
+		var selected = $(".selected").next();
+	} else if (element == "prev") {
+		var selected = $(".selected").prev();
+	} else {
+		var selected = element;
+	}
+	
+	var next = $(selected).next();
+	var prev = $(selected).prev();
+	var prevSecond = $(prev).prev();
+	var nextSecond = $(next).next();
 
    
    //기존 클래스 삭제, post클래스와 새로운 클래스 추가(2개 추가 구분은 공백)
@@ -673,9 +727,23 @@ function moveToSelected(element) {
    $(prevSecond).prevAll().removeClass().addClass('post hideLeft');
    
    postModal();
+	$('#carousel article').not(".selected").click(function(e) {
+		if($(this).hasClass("hideLeft")){
+			moveToSelected($(".hideLeft:eq(0)"));	
+		}else{
+			moveToSelected($(this));
+		}
+	});
+	
+	/* prev, next 아이콘 클릭 사진이동  */
+	$('#prev').click(function() {
+	moveToSelected('prev');
+	});
+	$('#next').click(function() {
+	moveToSelected('next');
+	});
 }
-    
-
+var modalFlg = false;
 function postModal(){
    //포스트 모달 팝업 창
    $(".selected").on("click", function(){
@@ -845,9 +913,12 @@ function postEdit(){
 function postDelete(thisTag){
    var postid=$(thisTag).data("post");
    $.ajax({
-      type: "delete",
-      url: "/post/"+postid+"/delete",
-      headers: "{'X-HTTP-Method-Override' : 'DELETE'}",
+      type:"delete",
+      url:"/reply/"+rid,
+      headers:{
+         "Content-Type" : "application/json",
+         "X-HTTP-Method-Override" : "DELETE"
+      },
       beforeSend : function(xhr)
       {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
           xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");

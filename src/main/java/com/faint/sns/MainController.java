@@ -1,6 +1,10 @@
 package com.faint.sns;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -8,17 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.faint.domain.UserVO;
+import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.CustomUserDetails;
 import com.faint.service.CustomUserDetailsService;
 import com.faint.service.PostService;
@@ -86,15 +95,11 @@ public class MainController {
 		return "access-denied";
 	}*/
 
-   
-   @RequestMapping(value = "/chatTest", method = RequestMethod.GET)
-   public void chatTest(ModelAndView mv, Model model, HttpServletRequest request)throws Exception{
-      mv.setViewName("/chatTest");
-      User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      System.out.println(user.getUsername());
-      //mv.addObject("userid", user.getUsername());
-      
-      model.addAttribute("userid", user.getUsername());
-   }
+	
+	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
+	public void chatTest(Model model)throws Exception{
+		
+		
+	}
 
 }
