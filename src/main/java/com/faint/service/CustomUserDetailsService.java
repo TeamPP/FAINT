@@ -32,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			//이메일 값을 통해 유저정보 가져옴 UserVO형식
 			UserVO users = service.detailByEmail(email);
 			
+			System.out.println(users.toString()+"이건뭐게??? ");
 			/* *  해당 사용자가 존재하지 않으면
 			 *  이미 정의된 UsernameNotFoundException을 이용하여
 			 *  예외를 생성해서 던져주면 스프링이 알아서 예외처리를 하게 된다. 

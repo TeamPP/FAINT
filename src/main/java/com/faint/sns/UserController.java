@@ -480,7 +480,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/googleSignInCallback")
-    public String doSessionAssignActionPage(HttpServletRequest request, Model model)throws Exception{
+    public String doSessionAssignActionPage(HttpServletRequest request, Model model,Principal principal)throws Exception{
      //System.out.println("/user/googleLogincallback");
     System.out.println("야 왜 안되냐 뒤질래 가자1");
         String code = request.getParameter("code");
@@ -520,7 +520,9 @@ public class UserController {
 //		System.out.println("controller dto: "+dto);
 
 		UserVO vo = new UserVO();
-
+		
+	//	vo = service.detailByEmail(dto.getEmail());
+		System.out.println("vo");
 		try {
 			vo = service.googleLogin(dto);
 
@@ -544,6 +546,7 @@ public class UserController {
 			}
 		}else{
 			session.setAttribute("dest","/user/loginTest");
+			System.out.println("11");
 		}
 
 

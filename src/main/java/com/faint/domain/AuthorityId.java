@@ -9,7 +9,8 @@ package com.faint.domain;
  */
 public enum AuthorityId {
 	ADMIN(10),
-	USER(20);
+	USER(20),
+	WAIT(30);
 	
 	private Integer id;
 	

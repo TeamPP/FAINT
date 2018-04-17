@@ -245,7 +245,11 @@ public class UserServiceImpl implements UserService {
   public UserVO googleLogin(LoginDTO dto) throws Exception {
   	System.out.println("구글 로그인을 시작한다. ");
   	UserVO vo =new UserVO();
-      vo=dao.naverReadUser(dto);
+  	System.out.println(vo.toString()+"sd1wd");
+  	System.out.println(dto.getEmail());
+  	
+  	vo =dao.selectByEmail(dto.getEmail());
+//      vo=dao.naverReadUser(dto);
       if(vo==null){
           try{
               dao.naverInsertUser(dto);
@@ -253,7 +257,7 @@ public class UserServiceImpl implements UserService {
               // TODO Auto-generated catch block
               e.printStackTrace();
           }}
-      return dao.naverReadUser(dto);
+      return dao.selectByEmail(dto.getEmail());
   }
 	
 	//이메일 아이디 중복 관련 코드 전송
@@ -312,6 +316,8 @@ public class UserServiceImpl implements UserService {
 		String key = new TempKey().getKey(8,false);
 		
 		String encPassword = passwordEncoder.encode(key);
+		
+		
 		
 		user.setPassword(encPassword);
 		
