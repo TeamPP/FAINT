@@ -218,4 +218,13 @@ public class PostServiceImpl implements PostService {
         
 	}
 	
+	
+	
+	// =================== 카테고리 필터링 ====================
+		// 카테고리 번호로 필터링
+	@Override
+	public List<PostVO> cateAjax(int cateid) throws Exception {
+		return dao.cateAjax(cateid);
+	}
+	
 }

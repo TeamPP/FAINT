@@ -370,14 +370,13 @@
 			var form = $("#registerForm");
 			//파일 개수
 			var files = ${files};
-			console.log(files);
 			var str = "";
-
+			
 			$(files).each(function(){
 				console.log( this.fileUrl);
 				str += "<input type='hidden' name='files' value='" + this.fileUrl
 				+ "'> ";
-				var filter ="";
+				var filter =" ";
 				if(typeof this.filter == "undefined" || this.filter == null) {
 					filter = " ";
 				}else{
@@ -394,7 +393,8 @@
 				alert("카테고리를 선택하세요.");
 				return false;
 			}
-			
+			//캡션 '\n' <br>로 변환
+			$("._bilrf").val($("._bilrf").val().replace('\n', '<br>'));
 			//카테고리 추가
 			$("#cateid").val($(':radio[name="categorys"]:checked').val());
 			//위치 추가
@@ -473,9 +473,10 @@
 			nextObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.next("video").length == 1){
+			if(nextObj.is("video")){
 				nextObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			
@@ -511,9 +512,10 @@
 			prevObj.css("display","block");
 			
 			//비디오 재생
-			if(curObj.prev("video").length == 1){
+			if(prevObj.is("video")){
 				prevObj.get(0).play();
-			}else if(curObj.is("video")){
+			}
+			if(curObj.is("video")){
 				curObj.get(0).pause();
 			}
 			

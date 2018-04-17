@@ -2,7 +2,7 @@
 
 /* 검색창 스타일 */
 #header-modal {
-	padding: 0px;
+   padding: 0px;
     overflow-y: auto;
     height: 220px;
 } /* 모달 스크롤 창 */
@@ -15,10 +15,11 @@
 
 ._4jr79:hover {
     background: #efefef;
+    text-decoration: none;
 }
 
 ._4jr79:active {
-	text-decoration: none; ! important
+   text-decoration: none; ! important
 }
 
 ._ndl3t _4jr79:-webkit-any-link {
@@ -82,7 +83,7 @@
 }
 
 ._etpgz {
-	max-height: 362px;
+   max-height: 362px;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -96,7 +97,7 @@
     flex-shrink: 0;
     margin: 0;
     position: relative;
-	font: inherit;
+   font: inherit;
     vertical-align: baseline;
 
 }
@@ -107,7 +108,7 @@
     white-space: nowrap;
     width: 100%;
     -webkit-box-orient: horizontal;
-	flex-direction: row;
+   flex-direction: row;
     display: flex;
     -webkit-box-direction: normal;
     box-sizing: border-box;
@@ -128,9 +129,9 @@
     -webkit-box-pack: center;
     justify-content: center;
     min-width: 0;
-	display: flex;
+   display: flex;
     -webkit-box-direction: normal;
-	-webkit-box-align: stretch;
+   -webkit-box-align: stretch;
     align-items: stretch;
     border: 0 solid #000;
     margin: 0;
@@ -146,13 +147,13 @@
     color: #262626;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-	flex-direction: row;
+   flex-direction: row;
     font-size: 14px;
     text-align: left;
-	-webkit-box-align: stretch;
+   -webkit-box-align: stretch;
     align-items: stretch;
     border: 0 solid #000;
-	box-sizing: border-box;
+   box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
     margin: 0;
@@ -173,13 +174,13 @@
     font-size: 14px;
     text-align: left;
     -webkit-box-align: stretch;
-	align-items: stretch;
+   align-items: stretch;
     border: 0 solid #000;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-	flex-shrink: 0;
+   flex-shrink: 0;
     margin: 0;
     padding: 0;
     position: relative;
@@ -204,7 +205,7 @@
      flex-shrink: 0;
     margin: 0;
     position: relative;
-	
+   
 }
 
 ._oznku{
@@ -227,8 +228,8 @@
 
 
 span {
-	display: inline-block;
-	margin: 0;
+   display: inline-block;
+   margin: 0;
     padding: 0;
     border: 0;
     font: inherit;
@@ -239,6 +240,16 @@ span {
 /* modal 배경 지우기 갓명호!!!!!!쏴리질러 */
 /* 이 주석 머얔ㅋㅋㅋㅋ 웃김 */
 .modal-backdrop{
-	background-color: transparent !important;
+   background-color: transparent !important;
+}
 
+.modal-content {
+	width: 215px;
+    position: fixed;
+    right: 9.2%;
+    top: 12px;
+    border: solid 1px #e6e6e6;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px rgba(0,0,0,.0975);
 }
