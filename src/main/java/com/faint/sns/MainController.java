@@ -33,9 +33,6 @@ public class MainController {
 	@Inject
 	PasswordEncoder passwordEncoder;
 	
-	@Autowired
-	private CustomUserDetailsService uService;
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, Principal principal, HttpServletRequest req, ModelAndView mv) {
 		
@@ -57,7 +54,7 @@ public class MainController {
 		
 		System.out.println("인증받고 '/'들렀다가 'main'들어옴");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails user=(CustomUserDetails)uService.loadUserByUsername(authentication.getName());
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
 		
 		//세션 생성 및 메인 피드 생성
 		if(user!=null){
