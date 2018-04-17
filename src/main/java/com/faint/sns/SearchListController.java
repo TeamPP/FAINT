@@ -56,7 +56,7 @@ public class SearchListController {
 		System.out.println("앞한자빼기 type: " + type);
 		System.out.println("앞한자빼기 keyword: " + keyword);
 
-		// type이 @이라면 유저
+		// type이 @이라면 유저..
 		// type이 #이라면 태그
 		// type이 %이라면 위치
 		// 나머지는 그냥 통합
