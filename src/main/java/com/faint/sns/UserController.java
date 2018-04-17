@@ -477,7 +477,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/googleSignInCallback")
-    public String doSessionAssignActionPage(HttpServletRequest request, Model modell)throws Exception{
+    public String doSessionAssignActionPage(HttpServletRequest request, Model model)throws Exception{
      //System.out.println("/user/googleLogincallback");
     System.out.println("야 왜 안되냐 뒤질래 가자1");
         String code = request.getParameter("code");
