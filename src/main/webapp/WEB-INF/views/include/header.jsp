@@ -256,7 +256,7 @@ li.cate:hover img, li.cate.hover img {
 			</c:otherwise>
 		</c:choose>
       </a>
-      			<sec:authorize access="hasRole('ROLE_USER')">
+      		<sec:authorize access="hasRole('ROLE_USER')">
 				<form action="/logout" method="post">
 
 					<button type="submit" class="btn btn-default">로그아웃</button>

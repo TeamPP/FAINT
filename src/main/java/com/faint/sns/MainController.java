@@ -5,9 +5,11 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -71,18 +73,18 @@ public class MainController {
    @RequestMapping(value = "/empty", method = RequestMethod.GET)
    public void empty(Model model)throws Exception{
 
-   }
-   
-/*   // 접근 제한 페이지
-   @RequestMapping(value="/access-denied", method=RequestMethod.GET)
-   public String accessDenied(Model model) {
-      
-      System.out.println("sasdsadasdsad");
-      
-      model.addAttribute("email", uService.getUsername());
-      
-      return "access-denied";
-   }*/
+	}
+	
+/*	// 접근 제한 페이지
+	@RequestMapping(value="/access-denied", method=RequestMethod.GET)
+	public String accessDenied(Model model) {
+		
+		System.out.println("sasdsadasdsad");
+		
+		model.addAttribute("email", uService.getUsername());
+		
+		return "access-denied";
+	}*/
 
    
    @RequestMapping(value = "/chatTest", method = RequestMethod.GET)

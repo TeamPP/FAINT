@@ -2,12 +2,10 @@ package com.faint.sns;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.security.Principal;
 import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,7 +34,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import com.faint.domain.UserVO;
 import com.faint.dto.LoginDTO;
@@ -181,7 +178,7 @@ public class UserController {
     }
 	//이메일 확인 후
     @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
-    public String findPasswordPost(UserVO user,Model model,RedirectAttributes rttr) throws Exception{
+    public String findPasswordPost(UserVO user, Model model,RedirectAttributes rttr) throws Exception{
         System.out.println("find passwordPost 진입 ");
 		//userEmail 값으로 회원 여부 확인 requestparam 으로 변경??
         String str= user.getEmail();
@@ -280,12 +277,12 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/loginTest")
-	public String login_view(Model model, Principal principal, HttpSession session) {
-		model.addAttribute("principal", principal);
+	@RequestMapping(value="/loginTest", method = {RequestMethod.GET, RequestMethod.POST} )
+	public void login_view(Model model) {
+/*		model.addAttribute("principal", principal);
 		System.out.println("여기는 UC loginTest1: "+principal);
 		System.out.println("여기는 UC loginTest2: ");
-		return "user/loginTest";
+		return "user/loginTest";*/
 	}
 	
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
@@ -480,7 +477,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/googleSignInCallback")
-    public String doSessionAssignActionPage(HttpServletRequest request, Model model,Principal principal)throws Exception{
+    public String doSessionAssignActionPage(HttpServletRequest request, Model modell)throws Exception{
      //System.out.println("/user/googleLogincallback");
     System.out.println("야 왜 안되냐 뒤질래 가자1");
         String code = request.getParameter("code");
