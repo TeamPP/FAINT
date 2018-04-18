@@ -39,18 +39,6 @@ public class ActivityDAOImpl implements ActivityDAO {
 	}
 	
 	
-	//나의 활동표
-	@Override
-	public ActivityDTO myActivity(int userid) throws Exception {
-		return sqlSession.selectOne(namespace+".myActivity", userid);
-	}
-
-	//내친구의 친구 활동표
-	@Override
-	public List<ActivityDTO> friendsActivity(int userid) throws Exception {
-		return sqlSession.selectList(namespace+".friendsActivity", userid);
-	}
-
 
 	
 

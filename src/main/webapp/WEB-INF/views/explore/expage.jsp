@@ -55,7 +55,7 @@ article {
 }
 
 .recommendList{
-display: inline-block;
+/* display: inline-block; */
 }
 
 .chip {
@@ -76,7 +76,7 @@ border-radius: 50%;
 
 
 /* 팔로우버튼 */
-.isFlw2{
+.isFlw{
 font-size: 12px;
 font-weight: 400;
 cursor: pointer;
@@ -87,6 +87,7 @@ border-style: solid;
 border-width: 1px;
 line-height: 26px;
 border-radius: 2px;
+margin-bottom: 10%;
 } 
 
 
@@ -108,10 +109,6 @@ margin: 5% auto;
 <!-- 실시간 -->
 <br/>
 <br/>
-
-
-
-
 
 
 
@@ -274,7 +271,7 @@ $(document).ready(function() {
 <ul class="recommendList">
 <c:forEach items="${recommList}" var="userVO">   
 <li class="chip">
-<a href="#">
+<a href="/member/${userVO.nickname}">
 			<c:choose>
 				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
 					<img class="recommPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
@@ -285,9 +282,9 @@ $(document).ready(function() {
 			</c:choose>
 </a>
 	<div>
-  <a  class="nickname" href="#">${userVO.nickname}</a>
+  <a  class="nickname" href="/member/${userVO.nickname}">${userVO.nickname}</a>
   <p class="name" style="magin:0;">${userVO.name}</p>
-  <button class="isFlw2" title='this.id'>팔로우</button>
+  <button class="isFlw" title='${userVO.id}'>팔로우</button>
 	</div>
 </li>
 </c:forEach>
@@ -295,29 +292,73 @@ $(document).ready(function() {
 </div>
 
 <script>
-/* $(document).ready(function(){
+ $(document).ready(function(){
 	follow();
 })
 
 //follow여부확인하여 팔로우/팔로우취소
+
 function follow(){
+	 var followFlg=false;
+	 
+	 $(".isFlw").on("click", function(){
+		
+		 var userid=$(this).attr("title");
+		 var isFlw=this;
+		 
+		 if(followFlg){return;};
+		 
+		 followFlg=true;
+		 if($(this).html()=="팔로우"){
+			 var type="post";
+			 var url="/member/follow/"+userid;
+			 var header="{'X-HTTP-Method-Overrid' : 'POST'}";
+			 $(isFlw).html("팔로잉"); 
+		 } else if($(this).html()=="팔로잉"){
+			 var type="delete";
+			 var url="/member/unfollow/"+userid;
+			 var header="{'X-HTTP-Method-Overrid' : 'DELETE'}";
+			 $(isFlw).html("팔로우");
+		 }
+		 
+		 $.ajax({
+			type:type,
+			url:url,
+			headers:header,
+			dataType:"text",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+			},
+			
+			success:function(result){
+				if(result=="SUCCESS"){
+					followFlg=false;
+				};
+			}
+		 });
+	 });
+ };
+
+
+/* function follow(){
 	var followFlg=false;
-   $(".isFlw2").on("click", function(){
+   $(".isFlw").on("click", function(){
       var userid=$(this).attr("title");
-      var isFlw2=this;
+      var isFlw=this;
       if(followFlg){return;};
       followFlg=true;
       if(($(this).html()=="팔로우")){
          var type="post";
          var url ="/member/follow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw2).html("팔로잉");
+         $(isFlw).html("팔로잉");
          
       }else if(($(this).html()=="팔로잉")){
+    	  console.log("팔로잉 눌렀다눌렀다");
          var type="delete";
          var url ="/member/unfollow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw2).html("팔로우");
+         $(isFlw).html("팔로우");
       }
       $.ajax({
          type: type,
@@ -326,18 +367,18 @@ function follow(){
          dataType:"text",
          beforeSend : function(xhr)
          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+        	 /*
              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
          },
          success:function(result){
             if(result=="SUCCESS"){
             	
-                following();
                 followFlg=false;
             };
          }
       });
    });
-}; */
+};  */
 
 </script> 
 

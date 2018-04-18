@@ -82,7 +82,7 @@ public class Simility {
 		    //추천할 유저의 id를 리스트에 넣기
 		    ArrayList<Integer> reList=new ArrayList<Integer>();
 		    for(int i=0; i<actScore.length; i++){
-		    	if(actScore[i][1]>0.3)  {    //유사도가 0.3이상만 추천받도록
+		    	if(actScore[i][1]>0.1)  {    //유사도가 0.1이상만 추천받도록(테스트 유저가 넘 적음 ㅠㅠ)
 		    		reList.add((int)actScore[i][0]);      		
 		    	}
 		    }
@@ -132,28 +132,7 @@ public class Simility {
 		    System.out.println("추천할 아이디 번호:        " +reList);
 		    
 		    return reList;
-		    //() 괄호안에 추천 아이디를 넣는 String으로 변환
-		    // id값이 ()에 담긴 String 만들기
-		    // ex.(1,2,3)
-/*			  String reListString="(";
-			  
-			  Iterator it=reList.iterator();
-			  while(it.hasNext()){
-				  reListString+=it.next()+",";
-			  }
 
-			  
-			  //마지막 글자가 , 일때만 , 지우기   ex. (1,2,
-			  String lastCha=reListString.charAt(reListString.length()-1)+"";
-			  if(lastCha.equals(",")){
-				  reListString=reListString.substring(0,reListString.length()-1);			  
-			  }
-			  reListString+=")";
-			  System.out.println("reListString :  "+reListString); 
-		    
-		    
-		    
-		    return reListString;*/
 		    
 	  }
 	  
