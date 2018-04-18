@@ -23,7 +23,7 @@
     padding: 0px 16px;
 	z-index: 11;
 	background-color: #7c6868;
-	border-radius: 0px 0px 0px 10px;
+	border-radius: 0px 0px 0px 15px;
 	color:#f8f8f8;
 	text-align: center;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -50,6 +50,7 @@
 #scroll{
 	bottom: 0;
 	width:255px;
+	border-radius: 15px 0px 0px 0px;
 	max-height: 799px;
 	overflow-y: scroll;
 }
