@@ -1,12 +1,10 @@
 package com.faint.util;
  
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -60,8 +58,7 @@ public class EchoHandler extends TextWebSocketHandler{
         //logger.info("{}로부터 {}받음", new String[]{session.getId(),message.getPayload()});
         
         String name = session.getPrincipal().getName();
-        logger.info(session.toString());
-        logger.info(session.getPrincipal().toString());
+        session.getPrincipal();
         
         
         //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법

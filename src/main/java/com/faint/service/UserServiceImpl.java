@@ -313,7 +313,8 @@ public class UserServiceImpl implements UserService {
 		String key = new TempKey().getKey(8,false);
 		System.out.println("key는?"+key);
 		
-		String encPassword = passwordEncoder.encode(key);
+		String encPassword = passwordEncoder.encode("qwer1234");
+		//String encPassword = passwordEncoder.encode(key);
 		
 		
 		

@@ -8,11 +8,13 @@
 	
 	<!-- 비밀번호 인코더 -->
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!-- <beans:bean id="NoOpPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" /> -->
 	
 	<!-- 인증매니저 customUserDetailsService를 통해 작업 수행(상기 비밀번호 인코더 참조)-->
 	<authentication-manager>
 		<authentication-provider user-service-ref ="customUserDetailsService">
 			<password-encoder ref="bcryptPasswordEncoder"/>
+			<!-- <password-encoder ref="NoOpPasswordEncoder"/> -->
 		</authentication-provider>
 	</authentication-manager>
      
