@@ -188,7 +188,7 @@ table{
 		    
 			$(".switch").each(function(){
 				if(jQuery.inArray($(this).attr("id"), curUserList) != -1){
-					$(this).css("background-color", "#3fbf3a");
+					$(this).css("background-color", "springgreen");
 				}else if(jQuery.inArray($(this).attr("id"), curUserList) == -1){
 					$(this).css("background-color", "lightgray");
 				}
