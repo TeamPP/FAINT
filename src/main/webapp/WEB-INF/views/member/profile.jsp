@@ -162,7 +162,7 @@ div.secondLine span {
 </head>
 <body>
 
-<article>
+<article class ="row">
 	<div class="photo-profile">
 		<section id="proPhoto">
 			<div style="width:170px; height:100%; margin:auto;">
@@ -194,10 +194,10 @@ div.secondLine span {
 								<span><button class='btnUserUnblock' onclick="userUnblock()">차단 해제</button></span>
 							</c:when>
 							<c:when test="${userVO.isFollow > 0}">
-								<span><button class='isFlw' title="${userVO.id}">팔로잉</button></span>
+								<span><button class='isFlw' data-uid="${userVO.id}">팔로잉</button></span>
 							</c:when>
 							<c:otherwise>
-								<span><button class='isFlw' title="${userVO.id}">팔로우</button></span>
+								<span><button class='isFlw' data-uid="${userVO.id}">팔로우</button></span>
 							</c:otherwise>
 						</c:choose>
 						<span><button id="moreAction">...</button></span>
@@ -322,7 +322,7 @@ border-radius: 150px;  /* 프사 둥글게 */
       <button class="_dcj9f"  onclick="callRemoveDialog(event)">닫기</button>
    </div>
 <style>
-._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:1}
+._pfyik{background-color:rgba(0,0,0,.5);bottom:0;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;left:0;overflow-y:auto;-webkit-overflow-scrolling:touch;position:fixed;right:0;top:0;z-index:20}
 ._dcj9f{background:0 0;border:0;cursor:pointer;height:36px;outline:0;overflow:hidden;position:absolute;right:0;top:0;z-index:2}
 ._dcj9f::before{color:#fff;content:'\00D7';display:block;font-size:36px;font-weight:600;line-height:36px;padding:0;margin:0}
 ._784q7{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;margin:auto;max-width:935px;pointer-events:auto;width:100%}
@@ -558,193 +558,6 @@ function userUnblock(){
 //======================postFeed.jsp관련======================
 var jsonList="profile";
 var uid=${userVO.id};
-
-
-//======================팔로우 관련 메서드======================
-function followed(){
-   $.getJSON("/member/followed/" + ${userVO.id}, function(data){
-      var data=$(data)
-      if(data.length!=0){
-         $("#followed").html("<a href='javascript:;' id='flwr'>팔로워 "+data.length+"</a>");
-         //followed onclick 메서드 적용(follow리스트뜨도록)
-         $("#flwr").on("click", function(){
-            var followedList="";
-            data.each(function(){
-            
-               followedList+="<li class='oneofList'> <a href='/member/"+this.nickname+"'> <img class='followPhoto' ";
-                
-               	// 프로필 사진이 있는경우 | 없는 경우
-				if(this.profilephoto != null){
-					followedList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
-            	}else{
-					followedList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
-            	}
-               	// 이름이 있는 경우 | 없는 경우
-               	if(this.name != null){
-               		followedList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
-               	}else{
-               		followedList+="<a style='font-weight:bold; line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
-               	}
-            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
-            	if(this.isFollow > 0){
-					followedList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
-               
-            }else if(this.isFollow==0 && this.id!=${login.id}){
-               followedList+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
-               
-            }else{
-               followedList+="</li>";
-            }
-               
-            })
-            
-            //모달창 불러오기
-            var source=$("#modalFollow").html();
-            var likers=Handlebars.compile(source);
-            var likersModal=likers(data);
-            $("body").append(likersModal);
-            $("#followsContainer").html(followedList);
-            
-            //팔로우 + 언팔로우
-            follow();
-            
-            //modal창 보이기
-            $("#myFollowModal").css("display","block");
-             $(".followTitle strong").text("팔로워");
-             
-            //modal끄기 메서드-바깥부분
-            $("#myFollowModal").click(function(event){
-               if(event.target==this){
-                  $("#myFollowModal").css("display","none");
-                  $("#myFollowModal").remove();   
-               }
-            })
-            
-            
-            //modal끄기 메서드-버튼부분
-            $(".close:eq(0)").on("click", function(){
-               $("#myFollowModal").css("display","none");
-               $("#myFollowModal").remove();
-            })
-            
-         });
-      }else{
-         $("#followed").html("팔로워 0");
-      }
-   });
-};
-
-//followList 에 followingList부여 및 팔로우 수 갱신
-function following(){
-   $.getJSON("/member/following/" + ${userVO.id}, function(data){
-      var data=$(data)
-      if(data.length!=0){
-         $("#following").html("<a href='javascript:;' id='flw'>팔로우 "+data.length+"</a>");
-         //following onclick 메서드 적용(follow리스트뜨도록)
-         $("#flw").on("click", function(){
-         var followingList="";
-            data.each(function(){
-               
-               followingList+="<li class='oneofList'> <a href='/member/"+this.nickname+"'> <img class='followPhoto' ";
-               	// 프로필 사진이 있는경우 | 없는 경우
-            	if(this.profilephoto != null){
-            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
-            	}else{
-            		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
-            	}
-               	// 이름이 있는 경우 | 없는 경우
-               	if(this.name != null){
-               		followingList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='/member/"+this.nickname+"'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
-               	}else{
-               		followingList+="<a style='font-weight:bold; line-height: 28px;' href='/member/"+this.nickname+"'>" + this.nickname + "</a>"
-               	}
-            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
-            	if(this.isFollow > 0){
-                  followingList+="<button class='isFlw' title='"+this.id+"'>팔로잉</button></li>";
-               
-               }else if(this.isFollow==0 && this.id!=${login.id}){
-                  followingList+="<button class='isFlw' title='"+this.id+"'>팔로우</button></li>";
-               
-               }else{
-                  followingList+="</li>";
-               }
-            })
-            
-            //모달창 불러오기
-            var source=$("#modalFollow").html();
-            var likers=Handlebars.compile(source);
-            var likersModal=likers(data);
-            $("body").append(likersModal);
-            $("#followsContainer").html(followingList);
-            
-            //팔로우 + 언팔로우
-            follow();
-            
-            //modal창 보이기
-            $("#myFollowModal").css("display","block");
-            $(".followTitle strong").text("팔로우");
-            
-            //modal끄기 메서드-바깥부분
-            $("#myFollowModal").click(function(event){
-               if(event.target==this){
-                  $("#myFollowModal").css("display","none");
-                  $("#myFollowModal").remove();   
-               }
-            })
-            
-            //modal끄기 메서드-버튼부분
-            $(".close:eq(0)").on("click", function(){
-               $("#myFollowModal").css("display","none");
-               $("#myFollowModal").remove();
-            })
-            
-         });
-      }else{
-         $("#following").html("팔로우 0");
-      }
-   });
-};
-
-//follow여부확인하여 팔로우/팔로우취소
-function follow(){
-	var followFlg=false;
-   $(".isFlw").on("click", function(){
-      var userid=$(this).attr("title");
-      var isFlw=this;
-      if(followFlg){return;};
-      followFlg=true;
-      if(($(this).html()=="팔로우")){
-         var type="post";
-         var url ="/member/follow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw).html("팔로잉");
-         
-      }else if(($(this).html()=="팔로잉")){
-         var type="delete";
-         var url ="/member/unfollow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw).html("팔로우");
-      }
-      $.ajax({
-         type: type,
-         url: url,
-         headers:header,
-         dataType:"text",
-         beforeSend : function(xhr)
-         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-         },
-         success:function(result){
-            if(result=="SUCCESS"){
-            	followed();
-                following();
-                followFlg=false;
-            };
-         }
-      });
-   });
-};
-
 
 </script>
 

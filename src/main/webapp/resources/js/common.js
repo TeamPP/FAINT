@@ -14,7 +14,6 @@ function lengthCheck(obj, limit) {
 //searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리
 function searchFilter(obj){
 	obj.find("span").each(function(){
-      console.log(this);
       //1. 텍스트 가져오기 & 처리한 새로운 문자
       var text = $(this).text();
       //2. split() 함수처리하기

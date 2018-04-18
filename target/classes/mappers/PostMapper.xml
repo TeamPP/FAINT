@@ -43,7 +43,7 @@
 	<!-- 유저 게시글 읽기 -->
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from
-			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.regdate as p_regdate
 			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) pa
 		left join
 			(select p.id, count(*) as likeCount from tbl_post p right join tbl_post_like l on p.id=l.postid group by p.id) pl
@@ -312,7 +312,7 @@
 			select distinct topT.*, (@rank := @rank +1) as row
 	        from
 	        ( select pa.* , likeCount, replyCount from
-	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
 	        from tbl_post as p
 	        join tbl_attach as a
 	        on p.id = a.postid
@@ -352,7 +352,7 @@
 	        )
 	      
 	        order by likeCount desc, replyCount desc, id
-	        limit 0,10 
+	        limit 0,30 
 	    ]]>
 	</select>
 	
@@ -361,7 +361,7 @@
             select distinct topT.*, (@rank := @rank +1) as row
          from
             ( select pa.* , likeCount, replyCount from
-            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
             from tbl_post as p
             join tbl_attach as a
             on p.id = a.postid
@@ -413,7 +413,7 @@
             select topT.*, (@rank := @rank +1) as rank
 			from
             ( select pa.* , likeCount, replyCount from
-            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
             from tbl_post as p
             join tbl_attach as a
             on p.id = a.postid
@@ -441,7 +441,7 @@
             
             order by likeCount desc, replyCount desc
             
-            limit 0,10
+            limit 0,30
 	    ]]>
 	</select> 
 	
@@ -451,7 +451,7 @@
             select topT.*, (@rank := @rank +1) as rank
 			from
             ( select pa.* , likeCount, replyCount from
-            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
             from tbl_post as p
             join tbl_attach as a
             on p.id = a.postid
@@ -489,7 +489,7 @@
             select topT.*, (@rank := @rank +1) as rank
 			from
             ( select pa.* , likeCount, replyCount from
-            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
             from tbl_post as p
             join tbl_attach as a
             on p.id = a.postid
@@ -517,7 +517,7 @@
             
             order by likeCount desc, replyCount desc
             
-            limit 0,10;
+            limit 0,30;
 		 ]]>
 	</select>
 	

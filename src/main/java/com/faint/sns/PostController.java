@@ -99,9 +99,11 @@ public class PostController {
 			return "forward:/empty";
 		}else{
 			String[] url = post.getUrl().split("\\|");
+			String[] filter = post.getFilter().split("\\|");
 			JSONArray jArray = new JSONArray();
 			for(int i =0; i<url.length;i++){
 				String tmp = url[i].substring(url[i].lastIndexOf('.')+1);
+				
 				String type ="";
 				//파일 타입체크
 				if(imageType.contains(tmp.toLowerCase())){
@@ -112,6 +114,7 @@ public class PostController {
 				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("fileUrl", url[i]);
 				jsonObj.put("fileType", type);
+				jsonObj.put("filter", filter[i]);
 				jArray.add(jsonObj);
 			}
 			
