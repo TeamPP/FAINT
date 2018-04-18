@@ -35,6 +35,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 			 *  예외를 생성해서 던져주면 스프링이 알아서 예외처리를 하게 된다. 
 			 */
 			//사용자 존재하지 않을 경우
+			System.out.println("여기는 customservice");
+			
 			if (users == null) {
 				throw new UsernameNotFoundException("해당 사용자를 찾지 못했습니다.");
 			}

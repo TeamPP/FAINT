@@ -11,6 +11,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import net.sf.json.JSONArray;
+
  
 @Repository
 public class EchoHandler extends TextWebSocketHandler{
@@ -21,19 +23,29 @@ public class EchoHandler extends TextWebSocketHandler{
        
     //방법 2 : 전체 채팅
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+    private List<String> emailList = new ArrayList<String>();
     
     private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
     
     //클라이언트 연결 이후에 실행되는 메소드
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //맵을 쓸때 방법
-//        sessions.put(session.getId(), session);
-        //List쓸때 방법
+    	
+    	
+    	/*sessions.put(session.getId(), session);*/
 
         sessionList.add(session);
+        
+        JSONArray jsonArray=new JSONArray();
+        emailList.add(session.getPrincipal().getName());
+        
+        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
+        for(WebSocketSession sess : sessionList){
+            sess.sendMessage(new TextMessage(jsonArray.fromObject(emailList).toString()));
+        }
+
          //0번째 중괄호에 session.getId()을 넣으라는뜻
-        logger.info("{} 연결됨", session.getId()); 
+        logger.info("{} 연결됨", session.getPrincipal().getName()); 
         logger.info("연결 IP : " + session.getRemoteAddress().getHostName());
         
     }
@@ -87,6 +99,16 @@ public class EchoHandler extends TextWebSocketHandler{
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         //List 삭제
         sessionList.remove(session);
+        
+        JSONArray jsonArray=new JSONArray();
+        emailList.remove(session.getPrincipal().getName());
+        System.out.println("어디에 있니?"+emailList.toString());
+        
+        
+        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
+        for(WebSocketSession sess : sessionList){
+            sess.sendMessage(new TextMessage(jsonArray.fromObject(emailList).toString()));
+        }
         
         //Map 삭제
 //        sessions.remove(session.getId());
