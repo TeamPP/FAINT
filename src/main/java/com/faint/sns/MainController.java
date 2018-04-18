@@ -31,6 +31,7 @@ import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.CustomUserDetails;
 import com.faint.service.CustomUserDetailsService;
 import com.faint.service.PostService;
+import com.faint.service.UserService;
 
 @Controller
 public class MainController {
@@ -43,6 +44,9 @@ public class MainController {
 	
 	@Autowired
 	private CustomUserDetailsService uService;
+	
+	@Autowired
+	private UserService uuservice;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, Principal principal, HttpServletRequest req, ModelAndView mv) {
@@ -120,16 +124,16 @@ public class MainController {
 
 	}
 	
-/*	// 접근 제한 페이지
+	// 접근 제한 페이지
 	@RequestMapping(value="/access-denied", method=RequestMethod.GET)
 	public String accessDenied(Model model) {
 		
 		System.out.println("sasdsadasdsad");
 		
-		model.addAttribute("email", uService.getUsername());
+		model.addAttribute("email", uuservice.getPrincipal().getUsername());
 		
 		return "access-denied";
-	}*/
+	}
 
 	
 	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
