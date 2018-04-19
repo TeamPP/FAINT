@@ -144,6 +144,17 @@ margin: 5% auto;
 .allRecomm{
 
 }
+
+
+.getShow{
+display: block;
+	display: inline-block;
+}
+
+.getHidden{
+display: none;
+}
+
 </style>
 </head>
 
@@ -203,7 +214,7 @@ margin: 5% auto;
 	<div>
   
   <c:choose>
-  <c:when test="${userVO.name eq null}">
+  <c:when test="${userVO.name eq null}"> 
   <a  class="nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
   <p class="name">${userVO.name}</p>
   </c:when>
@@ -223,18 +234,24 @@ margin: 5% auto;
 
 <script>
 
+var startInd=$(".recommendList").children().eq(0).index(); // start부분의 인덱스 처음엔 0
+var totalChild=$(".recommendList").children().length;
+
+
+
+
 /* 추천계정 */
  function changeClass(){
-	$(".recommendList").children().css("background-color","gray");
+	 console.log("totalChild:   "+totalChild);
 	
-	var startInd=$(".start").index();
-	$(".recommendList").children().eq(0).addClass("start"); //클래스추가
-	var startInd=$(".start").index();  // start부분의 인덱스
-	$(".recommendList").children().eq($(".start").index()+0).css("background-color", "yellow");
-	$(".recommendList").children().eq($(".start").index()+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-	$(".recommendList").children().eq($(".start").index()+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-	$(".recommendList").children().eq($(".start").index()+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-	$(".recommendList").children().eq($(".start").index()+4).css("background-color", "yellow");  //첫번째요소+인덱스4
+	
+	//클래스명 추가하기
+	$(".recommendList").children().eq(startInd).addClass("getShow");
+	$(".recommendList").children().eq(startInd+1).addClass("getShow");
+	$(".recommendList").children().eq(startInd+2).addClass("getShow");
+	$(".recommendList").children().eq(startInd+3).addClass("getShow");
+	$(".recommendList").children().eq(startInd+4).addClass("getShow");
+	$(".recommendList").children().eq(startInd+4).nextAll().addClass("getHidden");
 } 
 
 
@@ -256,38 +273,50 @@ margin: 5% auto;
 
 //추천계정 넘기기
 function moveToSelected(element) {
-	console.log("moveToStart");
-	if (element == "next") { 
-		$(".recommendList").children().eq(startInd).removeClass(); //start클래스 제거
-		
-		startInd+=1; //스타트 인덱스 1추가
-		$(".recommendList").children().eq(startInd).addClass("start"); //idx+1에 클래스 추가
-		
-		
-		$(".recommendList").children().eq(startInd+0).css("background-color", "yellow");
-		$(".recommendList").children().eq(startInd+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-		$(".recommendList").children().eq(startInd+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-		$(".recommendList").children().eq(startInd+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-		$(".recommendList").children().eq(startInd+4).css("background-color", "yellow");  //첫번째요소+인덱스4
+	console.log("moveToSelected");
+	if (element == "next") {
+		console.log("->화살표누름!!!!")
+		//->화살표누름
+		if(startInd>=totalChild-5){ //5개만 보여주기
+			 console.log("멈췄다 기능 멈췄다");
+			//비었다
+		} else {
+		console.log("처음 startInd"+startInd);
+		$(".recommendList").children().eq(startInd).removeClass("getShow");
+		$(".recommendList").children().eq(startInd).addClass("getHidden");
+		startInd= startInd+1;
+		console.log("변경된 스타트 인덱스:    "+startInd);
+		$(".recommendList").children().eq(startInd+4).removeClass("getHidden");	
+		$(".recommendList").children().eq(startInd+4).addClass("getShow");	
+		}
 		
 		
 	} else if (element == "prev") {
-		$(".recommendList").children().eq(startInd).removeClass(); //start클래스 제거
+		console.log("<-화살표누름!!!!")
+		console.log("totalChild-5:      "+totalChild-5);
 		
-		startInd-=1; //스타트 인덱스 1추가
-		$(".recommendList").children().eq(startInd).addClass("start"); //idx+1에 클래스 추가
+		  if(startInd==0){  
+			  
+			  console.log("멈췄다 기능 멈췄다");
+			  //비었다
+		  } else {
+			console.log("처음 startInd:    " +startInd);
+		$(".recommendList").children().eq(startInd+4).removeClass("getShow");
+		$(".recommendList").children().eq(startInd+4).addClass("getHidden");
+		// <-- 화살표누름
+		startInd= startInd-1;
+		console.log("변경된 startInd" +startInd);		
+		$(".recommendList").children().eq(startInd).removeClass("getHidden");
+		$(".recommendList").children().eq(startInd).addClass("getShow");
+			  
+		  }
 		
-		
-		$(".recommendList").children().eq(startInd+0).css("background-color", "yellow");
-		$(".recommendList").children().eq(startInd+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-		$(".recommendList").children().eq(startInd+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-		$(".recommendList").children().eq(startInd+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-		$(".recommendList").children().eq(startInd+4).css("background-color", "yellow");  //첫번째요소+인덱스4
-		
-	} else {
-		var start = element;
-	}	
+	} 
 	
+	
+
+	
+
 	/* prev, next 아이콘 클릭 사진이동  */
 	$('#prev').click(function() {
 	moveToSelected('prev');

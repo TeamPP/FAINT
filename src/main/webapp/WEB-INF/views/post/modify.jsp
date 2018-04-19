@@ -280,10 +280,8 @@
       </section>
 	  		<section class="_km7ip _ti7l3" style="display:inline-block">
                <div class="_b6i0l" >
-               		<textarea aria-label="설명 입력..." placeholder="설명 입력..." class="_bilrf" name="caption" autocomplete="off" autocorrect="off" style="height:36px; width:100%" maxlength="250"></textarea>
-               		<script>
-               		$("._bilrf").val("${postVO.caption}")
-               		</script>
+               		<textarea aria-label="설명 입력..." placeholder="설명 입력..." class="_bilrf" name="caption" autocomplete="off" autocorrect="off" style="height:36px; width:100%" maxlength="250">${postVO.caption}</textarea>
+               		
                </div>
                <button type="button" class="btn btn-default btn-circle" id="btnSubmit" style="position:  absolute;top: 10px;right:  0;">
 	       			<i class="glyphicon glyphicon-floppy-disk"></i>
@@ -399,6 +397,8 @@
 			$("#cateid").val($(':radio[name="categorys"]:checked').val());
 			//위치 추가
 			$("#location").val($("#address").text());
+			//캡션 '\n' <br>로 변환
+			$("._bilrf").val($("._bilrf").val().replace(/\n/g, ' <br> '));
 			form.attr("action", "/post/modify");
 			form.submit(); 
 		});

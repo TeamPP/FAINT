@@ -8,15 +8,34 @@
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
+
 </head>
 <body>
+
+<img src="https://wallpaperbrowse.com/media/images/4643298-images.jpg" alt="" />
 	<%-- <div>${userVO.id}</div>
 	<div>${userVO.nickname}</div>
 	<div>${userVO.name}</div>
 	<div>${userVO.email}</div> --%>
 	hi nontarget
+	
+	<div class="mouse tooltip" >Mouse-tracking HTML Tip</div>
 
 <style>
+
+.tooltip {
+    pointer-events:none; /*let mouse events pass through*/
+    opacity:0;
+    transition: opacity 0.3s;
+}
+
+div.tooltip {
+    background: lightblue;
+    border:solid gray;
+    position: absolute;
+    max-width: 8em;
+    text-align:center;
+}
 
 .links line {
   stroke: #999;
@@ -374,6 +393,16 @@ var svg = d3.select("svg");
 var width = +svg.attr("width");
 var height = +svg.attr("height");
 
+svg
+.append('defs')
+	.append('pattern')
+	    .attr('id', "profilePhoto")
+	    .attr('width', "100%")
+	    .attr('height', "100%")
+	    .attr('patternContentUnits', "objectBoundingBox")
+	    	.append("image")
+	        .attr("xlink:href", "https://wallpaperbrowse.com/media/images/4643298-images.jpg")
+
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var simulation = d3.forceSimulation()
@@ -393,15 +422,33 @@ var node = svg.append("g")
   .selectAll("circle")
   .data(abc.nodes)
   .enter().append("circle")
-    .attr("r", 5)
-    .attr("fill", function(d) { return color(d.group); })
-    .call(d3.drag()
+    .attr("r", 9)
+    .attr("fill", "url(#profilePhoto)")
+    
+    .on("click", function() { window.open("http://google.com", "_self"); })
+    //툴팁생성
+    .on("mouseover", function () {
+        tooltip.style("opacity", "1"); //툴팁 투명도 변환
+        tooltip.style("color", this.getAttribute("fill") ); //툴팁 글자 색변환
+    })
+    
+    //툴팁 위치 변경
+    .on("mousemove", function () {
+        HTMLmouseTip
+            .style("left", Math.max(0, d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY + 20) + "px");
+    })
+    
+    //툴팁 opacity 변경
+    .on("mouseout", function () {
+        return tooltip.style("opacity", "0");
+    })
+    
+      .call(d3.drag()
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended));
 
-node.append("title")
-    .text(function(d) { return d.id; });
 
 simulation
     .nodes(abc.nodes)
@@ -439,7 +486,15 @@ function dragended(d) {
   d.fy = null;
 }
 
-$("circle").html("<a href='http://naver.com'></a>")
+
+var tooltip = d3.selectAll(".tooltip:not(.css)");
+var HTMLmouseTip = d3.select("div.tooltip.mouse");
+
+d3.select("svg").select("g")
+    .selectAll("circle")
+
+    
+
 
 
 /* var jsonCircles = [

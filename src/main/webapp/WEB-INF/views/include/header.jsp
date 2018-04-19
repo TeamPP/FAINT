@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,13 +38,13 @@
 <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
 
+<!-- 이미지 필터 -->
+<!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
-
 body {
 	 padding-top: 5px;
 	 background-color: white;
 }
-
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -52,7 +52,6 @@ body {
    border-radius: 150px;  /* 프사 둥글게 */
    vertical-align: baseline !important;
 }
-
 .navbar-default .explore {
    width: 38px;
    height: 38px;
@@ -63,7 +62,6 @@ body {
    background-repeat: no-repeat;
    position: relative;
 }
-
 .navbar-default .new-post {
    width: 40px;
    height: 40px;
@@ -75,7 +73,6 @@ body {
    position: relative;
    top: 3px;
 }
-
 .navbar-default .follow-list {
     width: 34px;
     height: 36px;
@@ -86,7 +83,6 @@ body {
     background-repeat: no-repeat;
     position: relative;
 }
-
 .navbar-default .account {
    width: 40px;
    height: 40px;
@@ -97,18 +93,15 @@ body {
    background-repeat: no-repeat; */
    border-radius:50%;
 }
-
 .navbar-default .nav-wrap {
    max-width: 1010px;
    width: 100%;
    margin: 0 auto;
    padding: 0 30px;
 }
-
 .empty {
 	height: 80px;
 }
-
 /* 카테고리 시작 */
 .cateSection {
 	display: inline-block;
@@ -118,7 +111,6 @@ body {
     top: 0;
     height: 90px;
 }
-
 .cateSection ul {
 	height: 150px;
 	transition: 0.3s;
@@ -131,7 +123,6 @@ body {
     left: 38.5%;
     width: 385px;
 }
-
 #categoryList {
     list-style: none;
     position: relative;
@@ -140,7 +131,6 @@ body {
     width: 385px;
     top: 0;
 }
-
 li.cate {
 	list-style: none; /* 리스트 쩜모양 없애기 */
 	font-family: 'Raleway', Arial, sans-serif;
@@ -154,21 +144,17 @@ li.cate {
 	text-align: center;
 	outline: 0;
 }
-
 li.cate * {
 	/* 쩜쩜하면서 천천히 바뀜 */
 	-webkit-transition: all 0.45s ease-in-out;
 	transition: all 0.45s ease-in-out;
 }
-
 li.cate img {
 	height: 100%;
 	width: 100%;
 	position: relative;
 	opacity: 1; /* 투명도 */
-
 }
-
 li.cate .caption {
 	overflow: hidden;
 	-webkit-transform: translateY(20%); /* "일상" Y위치 */
@@ -179,7 +165,6 @@ li.cate .caption {
 	width: 100%;
 	bottom: 0;
 }
-
 li.cate p {
 	display: table;
 	margin: 0 auto;
@@ -190,7 +175,6 @@ li.cate p {
 	text-transform: uppercase;
 	font-weight: 400;
 }
-
 /* "일상" 글자크기 & 글자 하얀테두리 감싸기 */
 li.cate p {
 	font-size: 0.8em;
@@ -204,7 +188,6 @@ li.cate p {
 	-webkit-text-shadow: -1px 0 #F2F1F6, 0 1px #F2F1F6, 1px 0 #F2F1F6, 0
 		-1px #F2F1F6;
 }
-
 /* a링크가 전체 이미지 크기만큼 */
 li.cate a {
 	left: 0;
@@ -214,14 +197,12 @@ li.cate a {
 	position: absolute;
 	z-index: 1;
 }
-
 /*이미지 변경 스타일 */
 li.cate:hover img, li.cate.hover img {
 	opacity: 0.35;
 	-webkit-transform: scale(1.15);
 	transform: scale(1.15);
 }
-
 .one{
 	border: solid #ddd;
 	border-width: 0 5px 5px 0;
@@ -234,7 +215,6 @@ li.cate:hover img, li.cate.hover img {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 }
-
 .two{
 	border: solid #ddd;
 	border-width: 0 5px 5px 0;
@@ -247,7 +227,6 @@ li.cate:hover img, li.cate.hover img {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 }
-
 .modal-i {
 	top: 5px;
 	position: absolute;
@@ -256,11 +235,9 @@ li.cate:hover img, li.cate.hover img {
 	transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);	
 }
-
 .empty {
 	height: 220px;
 }
-
 .dropbtn {
     background-color: #f8f8f8;
     color: #999;
@@ -274,18 +251,15 @@ li.cate:hover img, li.cate.hover img {
     position: fixed;
     top: 22.8px;
 }
-
 .dropbtn:hover {
 	color: black;
     background-color: #f8f8f8;
     border: 1px solid #f8f8f8;
 }
-
 .dropdown {
     position: relative;
     display: inline-block;
 }
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -296,7 +270,6 @@ li.cate:hover img, li.cate.hover img {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -305,12 +278,9 @@ li.cate:hover img, li.cate.hover img {
     font-size: 13px;
     font-family: Arial;
 }
-
 .dropdown a:hover {background-color: #f1f1f1; cursor:pointer;}
 .dropdown a:visited {color: black;}
-
 .show {display:block;}
-
 .modal-content::after {
     border-color: transparent transparent #fff;
     border-style: solid;
@@ -323,7 +293,6 @@ li.cate:hover img, li.cate.hover img {
 	content: " ";
 	position: absolute;
 }
-
 </style>
 
 </head>
@@ -438,21 +407,16 @@ li.cate:hover img, li.cate.hover img {
    <div class="empty"></div>
 
 <script>
-
 // 로그아웃 버튼 클릭 애벤트
 $(".logout").click(function() {
 	$(".logoutForm").submit();
 })
-
-
 // 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
-
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
-
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -463,8 +427,6 @@ window.onclick = function(event) {
     }
   }
 }
-
-
 $(".cateslide").click(function() {
 	if($(".cateSection").attr("id")=="1"){
 		$(".cateSection").fadeIn();
@@ -478,8 +440,6 @@ $(".cateslide").click(function() {
 		$(".cateSection").attr("id", "1");
 	}
 })
-
-
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
    if($("._oznku").text()=="검색 결과가 없습니다.") {
@@ -820,7 +780,9 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
 </script>
+
+<jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" />
+
 </body>
 </html>

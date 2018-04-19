@@ -37,7 +37,6 @@ h1, h5 {
 
 <!-- 메인피드 -->
 <jsp:include page="/WEB-INF/views/include/postFeed.jsp" flush="false" />
-
 </body>
 
 </html>
