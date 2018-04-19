@@ -7,6 +7,11 @@
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
+
+.empty {
+    height: 150px;
+}
+
 span{
 	display: inline-block;
 }
@@ -230,7 +235,7 @@ function getPostList(){
 
 
 //css - 카테고리별 게시물 필터링
-$("#categoryList li a").click(function(){
+$(".cate-option input").click(function(){
    var customType=$(this).data("filter");
    $(".post").hide().filter(function(){
       return $(this).data("filter") === customType || customType==="all";

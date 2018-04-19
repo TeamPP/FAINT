@@ -45,6 +45,7 @@ body{
 }
 
 .navbar-default .nav-wrap{
+	height: 0px;
 	position: fixed;
 	top: 95px;
     max-width: 230px;
