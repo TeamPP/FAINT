@@ -364,7 +364,7 @@
 	        )
 	      
 	        order by likeCount desc, replyCount desc, id
-	        limit 0,10 ;
+	        limit 0,30 ;
 	    ]]>
 	</select>
 	

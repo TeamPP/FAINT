@@ -370,9 +370,8 @@
 			var form = $("#registerForm");
 			//파일 개수
 			var files = ${files};
-			console.log(files);
 			var str = "";
-
+			
 			$(files).each(function(){
 				console.log( this.fileUrl);
 				str += "<input type='hidden' name='files' value='" + this.fileUrl
@@ -394,11 +393,12 @@
 				alert("카테고리를 선택하세요.");
 				return false;
 			}
-			
 			//카테고리 추가
 			$("#cateid").val($(':radio[name="categorys"]:checked').val());
 			//위치 추가
 			$("#location").val($("#address").text());
+			//캡션 '\n' <br>로 변환
+			$("._bilrf").val($("._bilrf").val().replace(/\n/g, ' <br> '));
 			form.attr("action", "/post/register/submit");
 			form.submit(); 
 		});
