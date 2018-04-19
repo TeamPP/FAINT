@@ -8,11 +8,13 @@
 	
 	<!-- 비밀번호 인코더 -->
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!-- <beans:bean id="NoOpPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" /> -->
 	
 	<!-- 인증매니저 customUserDetailsService를 통해 작업 수행(상기 비밀번호 인코더 참조)-->
 	<authentication-manager>
 		<authentication-provider user-service-ref ="customUserDetailsService">
 			<password-encoder ref="bcryptPasswordEncoder"/>
+			<!-- <password-encoder ref="NoOpPasswordEncoder"/> -->
 		</authentication-provider>
 	</authentication-manager>
      
@@ -51,8 +53,6 @@
 		<!-- 로그아웃 단계 1. 세션 초기화 / 2. SecurityContext초기화 / 3. url redirect -->
 		<logout logout-url="/logout" logout-success-url="/?logout=true" invalidate-session="true"/>
 		
-		   
-				
 		<access-denied-handler error-page="/access-denied"/>
 		
 	</http>

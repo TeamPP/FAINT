@@ -3,7 +3,6 @@ package com.faint.sns;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,11 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.CustomUserDetails;
-import com.faint.service.CustomUserDetailsService;
 import com.faint.service.PostService;
 
 @Controller
@@ -40,9 +33,6 @@ public class MainController {
 	
 	@Inject
 	PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private CustomUserDetailsService uService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, Principal principal, HttpServletRequest req, ModelAndView mv) {
@@ -62,8 +52,10 @@ public class MainController {
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model, Authentication authentication)throws Exception{
+		
 		System.out.println(authentication.getPrincipal());
 		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		
 		//이미지 확장자 리스트
 		List<String> imageType = Arrays.asList("jpg", "bmp", "gif", "png", "jpeg");
 		//비디오 확장자 리스트
@@ -71,6 +63,7 @@ public class MainController {
 				
 		List<FollowinPostDTO> list = service.mainRead(user.getVo().getId());
 		List<JSONArray> fileInfoList = new ArrayList<JSONArray>();
+
 		if(user!=null){
 			for(int i =0; i< list.size(); i++){
 				String[] url = list.get(i).getUrl().split("\\|");
@@ -100,9 +93,8 @@ public class MainController {
 			HttpSession session=request.getSession();
 			session.setAttribute("login", user.getVo());
 			
-		}else{
-			System.out.println("안들어가나요?");
 		}
+		
 	}
 	
 	@RequestMapping(value = "/login-processing", method = RequestMethod.GET)
