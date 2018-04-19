@@ -311,8 +311,8 @@
      	<![CDATA[
 		select distinct topT.*, (@rank := @rank +1) as row
 	        from
-	        ( select pa.* , likeCount, replyCount from
-	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, a.filter, p.location
+	        ( select pa.* ,bl.blockedid, likeCount, replyCount from
+	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
 	        from tbl_post as p
             
 	        join tbl_attach as a
@@ -364,7 +364,8 @@
 	        )
 	      
 	        order by likeCount desc, replyCount desc, id
-	        limit 0,30 
+	        limit 0,30 ;
+            
 	    ]]>
 	</select>
 	
