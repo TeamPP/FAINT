@@ -94,7 +94,7 @@ body {
                     <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
                      list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
                  <button type="submit" class="search-button">
-                     <img class="searchbtn" src="../resources/image/search_icon/search.png">
+                     <img class="searchbtn" src="/resources/image/search_icon/search.png">
                  </button>
                                  <div class="search-option">
                      <div>
