@@ -6,6 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+<style>
+main >div, article div {
+display:flex;
+}
+</style>
 <body>
 <div class="_mleeu">
 	<ul>
