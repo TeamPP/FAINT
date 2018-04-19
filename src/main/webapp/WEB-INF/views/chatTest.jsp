@@ -175,7 +175,7 @@ table{
 			
 		});
 		
-		function sendMessage() {
+ 		function sendMessage() {
 			sock.send($("#message").val());
 		}
 		
@@ -201,7 +201,7 @@ table{
 		
 		function msgPopup(){
 			$(".followWrp").toggleClass("followHide");
-		}
+		} 
 
 	</script>
 </sec:authorize>
