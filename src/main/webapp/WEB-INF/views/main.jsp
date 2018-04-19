@@ -195,7 +195,7 @@ height: 560px;
 }
 /*가운데 이미지 */
 #carousel .selected {
-	height: 560px;
+	height: 560 px;
 	width: 500px; 
 	z-index: 10;
 	left: 50%;

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.faint.domain.PostVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.ActivityDTO;
 import com.faint.persistence.ActivityDAO;
@@ -32,6 +33,15 @@ public class ActivityServiceImpl implements ActivityService {
 		ArrayList<Integer> reList=Simility.getRecomId(activity);
 		return dao.getRecomm2list(reList);
 	
+	}
+	
+	
+	//list타입의 uerid를 토대로 PostVO 객체 가져오기(추천계정들의 게시글)
+	@Override
+	public List<PostVO> RecommPost(int userid) throws Exception {
+		List<ActivityDTO> activity=dao.activityTbl(userid);
+		ArrayList<Integer> reList=Simility.getRecomId(activity);
+		return dao.getRecommPost(reList);
 	}
 
 }
