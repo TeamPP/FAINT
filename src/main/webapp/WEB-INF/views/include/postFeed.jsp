@@ -202,8 +202,6 @@ function getPostList(){
 		}else if(checkVideoType(url[0])){
 			tagStr ="<video class='postImage' data-postid='"+this.id+"' style='height:100%; width:100%; object-fit:fill;' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+url[0]+"' ></video>";
  		}
-      
-      
       //이미지 많을때 아이콘
       if(url.length>1){ tagStr += "<i class='multiFile'></i>"; }
       

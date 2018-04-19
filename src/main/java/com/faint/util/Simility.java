@@ -1,79 +1,21 @@
-package com.faint.sns;
-
-import static org.junit.Assert.*;
+package com.faint.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.faint.dto.ActivityDTO;
-import com.faint.persistence.ActivityDAO;
-import com.faint.persistence.TagDAO;
 
-
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-	locations ={"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
-
-
-public class similarityTest2 {
+/*
+ * 유사도를 구하는 함수
+ */
+public class Simility {
    
-	@Inject
-	private ActivityDAO dao;
-   
-	
-	@Inject
-	private TagDAO tagDao;
-
-   
-   
-   //corr 상관계수
-/*     public static double Correlation(int[] xs, int[] ys) {
-          //TODO: check here that arrays are not null, of the same length etc
-
-          double sx = 0.0;
-          double sy = 0.0;
-          double sxx = 0.0;
-          double syy = 0.0;
-          double sxy = 0.0;
-
-          int n = xs.length;
-
-          for(int i = 0; i < n; ++i) {
-            double x = xs[i];
-            double y = ys[i];
-
-            sx += x;
-            sy += y;
-            sxx += x * x;
-            syy += y * y;
-            sxy += x * y;
-          }
-
-          // covariation
-          double cov = sxy / n - sx * sy / n / n;
-          // standard error of x
-          double sigmax = Math.sqrt(sxx / n -  sx * sx / n / n);
-          // standard error of y
-          double sigmay = Math.sqrt(syy / n -  sy * sy / n / n);
-
-          // correlation is just a normalized covariation
-          return cov / sigmax / sigmay;
-        }*/
-   
-
-
+        
+      
 	   //코사인유사도
-	  public  double cosineSimilarity(double[] vectorA, double[] vectorB) {
+	  public  static double cosineSimilarity(double[] vectorA, double[] vectorB) {
 	       double dotProduct = 0.0;  //벡터의 내적 각 원소를 짝지어서 곱한뒤 합산
 	       double normA = 0.0;
 	       double normB = 0.0;
@@ -87,7 +29,7 @@ public class similarityTest2 {
 	  
 	  
 	  //활동표 점수를 2차원 배열로 넣기
-	  public double[][] getActScore(List<ActivityDTO> activity){
+	  public static double[][] getActScore(List<ActivityDTO> activity){
 		  	
 		  	//list-->array 변경
 			ActivityDTO[] array=activity.toArray(new ActivityDTO[activity.size()]);
@@ -113,13 +55,17 @@ public class similarityTest2 {
 			t[i][12]=array[i].getC3LikeCnt();
 			t[i][13]=array[i].getC4LikeCnt();
 			t[i][14]=array[i].getC5LikeCnt();
+			
+			
+			//활동표 출력
+			System.out.println(array[i].getUserid()+"   :"+Arrays.toString(t[i]));
 			}
 			return t;
 	  }
 	  
 	  
 	  //actScore를 유사도 기준으로 정렬하고 추천받는 유저의 번호만 list형식으로 리턴함
-	  public  List<Integer> sort(double[][] actScore){
+	  public static  ArrayList<Integer> sort(double[][] actScore){
 		    //배열복사_유사도에 따른 정렬을 위해서
 		    double[][] tmp=new double[1][2]; 
 		    
@@ -134,19 +80,21 @@ public class similarityTest2 {
 		    }
 		    
 		    //추천할 유저의 id를 리스트에 넣기
-		    List<Integer> reList=new ArrayList<Integer>();
+		    ArrayList<Integer> reList=new ArrayList<Integer>();
 		    for(int i=0; i<actScore.length; i++){
-		    	if(actScore[i][1]>0.3)  {    //유사도가 0.3이상만 추천받도록
+		    	if(actScore[i][1]>0.1)  {    //유사도가 0.1이상만 추천받도록(테스트 유저가 넘 적음 ㅠㅠ)
 		    		reList.add((int)actScore[i][0]);      		
 		    	}
 		    }
+		    
+		    
 		    
 		    return reList;
 	  }
 	  
 	 
-	  //ActivityDTO List를 받는 함수_id값과 유사도를 2차원 배열의 값으로 return 함
-	  public  List<Integer> getActTable(List<ActivityDTO> activity){
+	  //ActivityDTO 추천받을 Id값을 (1,2,3) 형식의 String값으로 반환, 없으면 () 으로 반환
+	  public static ArrayList<Integer> getRecomId(List<ActivityDTO> activity){
 		  	
 		  //활동점수만 2차원 배열로 넣기
 			double[][] t=getActScore(activity);
@@ -173,26 +121,26 @@ public class similarityTest2 {
 		        }
 			}
 		    
+		    //유사도 결과 출력
+		    System.out.println("유사도 결과");
+		    for(int i=0; i<actScore.length; i++){
+		    	System.out.println("id: "+(int)actScore[i][0] +"          코사인유사도: "+actScore[i][1] );		    	
+		    }
+		    
 		    //유사도 내림차순 정렬하고 0.3이상 id만 reList로 반환
-		    List<Integer> reList=sort(actScore);
+		    ArrayList<Integer> reList=sort(actScore);
+		    System.out.println("추천할 아이디 번호:        " +reList);
+		    
 		    return reList;
+
+		    
 	  }
 	  
 	  
 	  
-	  @Test
-		public void test()throws Exception{
-		  List<ActivityDTO> activity=dao.activityTbl(6);   //아이디 7번
-		  
-		  
-		  //추천받는 유저 id
-		  List<Integer> reList=getActTable(activity);
-		  System.out.println(reList);
-		  
-	  }
 	  
 	  
-
-	
-
+	  
+   
+   
 }
