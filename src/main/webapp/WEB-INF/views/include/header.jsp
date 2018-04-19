@@ -94,7 +94,7 @@ body {
                     <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
                      list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
                  <button type="submit" class="search-button">
-                     <img class="searchbtn" src="../resources/image/search_icon/search.png">
+                     <img class="searchbtn" src="/resources/image/search_icon/search.png">
                  </button>
                                  <div class="search-option">
                      <div>
@@ -187,7 +187,7 @@ body {
  <div class="col-sm-12">
          <div class="row" style="width:100%; height:70px;">
              <div class="col-sm-4"></div>
-             <div class="col-sm-4">
+             <div class="col-sm-4" style="height:70px; border: 1px solid black;">
              <c:choose>
 				<c:when test="${reqURL == '/main'}">
                     <span class="catefilter" id="1">CATEGORY FILTER</span>
@@ -652,7 +652,7 @@ function searchAjax(){
                           $("#results").html("");
                       	 }
                        
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
                        } else {
@@ -687,7 +687,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
@@ -733,7 +733,7 @@ function searchAjax(){
                          $("#results").html("");
                       }
                  }
-                    if(count>=3) {
+                    if(count>=3 && result.length==3) {
                  	   console.log(">>>"+result.length);
                        $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                        $("#header-modal").css("height", "51px");
@@ -766,7 +766,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
