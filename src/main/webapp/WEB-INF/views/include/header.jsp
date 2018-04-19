@@ -57,10 +57,6 @@ body {
    vertical-align: baseline !important;
 }
 
-.empty {
-	height: 220px; !important
-}
-
 .show {display:block;}
 
 .modal-content::after {
@@ -187,7 +183,7 @@ body {
  <div class="col-sm-12">
          <div class="row" style="width:100%; height:70px;">
              <div class="col-sm-4"></div>
-             <div class="col-sm-4" style="height:70px; border: 1px solid black;">
+             <div class="col-sm-4">
              <c:choose>
 				<c:when test="${reqURL == '/main'}">
                     <span class="catefilter" id="1">CATEGORY FILTER</span>
@@ -325,7 +321,17 @@ body {
     </symbol>
 
   </svg>
-  <div class="empty"></div>
+  
+  <c:choose>
+		<c:when test="${reqURL == '/main'}">
+			<div class="empty" style="height:220px;"></div>
+		</c:when>
+		<c:otherwise>
+			<div class="empty" style="height:150px;"></div>
+		</c:otherwise>
+	</c:choose>
+  
+  
 
 <script>
 
