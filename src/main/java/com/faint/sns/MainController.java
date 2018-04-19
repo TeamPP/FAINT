@@ -79,6 +79,7 @@ public class MainController {
 		if(user!=null){
 			for(int i =0; i< list.size(); i++){
 				String[] url = list.get(i).getUrl().split("\\|");
+				String[] filter = list.get(i).getFilter().split("\\|");
 				JSONArray jArray = new JSONArray();
 				for(int j =0; j<url.length;j++){
 					String tmp = url[j].substring(url[j].lastIndexOf('.')+1);
@@ -93,9 +94,9 @@ public class MainController {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("fileUrl", url[j]);
 					jsonObj.put("fileType", type);
+					jsonObj.put("filter", filter[j]);
 					jArray.add(jsonObj);
 				}
-				
 				fileInfoList.add(jArray);
 			}
 			model.addAttribute("list", list); //세션 아이디값을 통해 현재 팔로우중인 유저들의 게시물정보 및 유저정보 등을 받아옴

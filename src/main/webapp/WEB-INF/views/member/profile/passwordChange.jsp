@@ -81,7 +81,6 @@ h2{
 	</div>
 	</article> 
 	</main>
-	<jsp:include page="../../common/footer.jsp" flush="false"></jsp:include>
 	</section>
 	</span>
 	<input type="file" name="file" id="inputfile" accept="image/*"

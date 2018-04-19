@@ -54,8 +54,6 @@
 		<!-- 로그아웃 단계 1. 세션 초기화 / 2. SecurityContext초기화 / 3. url redirect -->
 		<logout logout-url="/logout" logout-success-url="/?logout=true" invalidate-session="true"/>
 		
-		   
-				
 		<access-denied-handler error-page="/access-denied"/>
 	</http>
 
