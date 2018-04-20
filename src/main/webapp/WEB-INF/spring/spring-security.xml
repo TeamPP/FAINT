@@ -19,7 +19,7 @@
 	</authentication-manager>
      
 	<!-- 인증실패 핸들러 -->
-	<beans:bean id="customAuthenticationFailHandler" class="handler.CustomAuthenticationFailHandler"/>
+	 <beans:bean id="customAuthenticationFailHandler" class="handler.CustomAuthenticationFailHandler"/>
       
     
     <!-- 시큐리티 기본 세팅 사용 -->
@@ -34,7 +34,7 @@
 		<!-- 인터셉터 -->
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/user/**" access="permitAll" />
-		
+		<intercept-url pattern="/admin/**" access="hasAuthority('ADMIN_USER')" /> 
 		<intercept-url pattern="/explore/**" access="hasAuthority('ROLE_USER')" /> 
 		<intercept-url pattern="/member/**" access="hasAuthority('ROLE_USER')" /> 
 		<intercept-url pattern="/post/**" access="hasAuthority('ROLE_USER')" />  
@@ -47,14 +47,14 @@
 					default-target-url="/"
 					username-parameter="email"
 					password-parameter="password"
-					authentication-failure-handler-ref="customAuthenticationFailHandler"/>
+					 authentication-failure-handler-ref="customAuthenticationFailHandler" 
+					/>
 					
 		<!-- 로그아웃 설정 -->
 		<!-- 로그아웃 단계 1. 세션 초기화 / 2. SecurityContext초기화 / 3. url redirect -->
 		<logout logout-url="/logout" logout-success-url="/?logout=true" invalidate-session="true"/>
 		
 		<access-denied-handler error-page="/access-denied"/>
-		
 	</http>
 
 </beans:beans>

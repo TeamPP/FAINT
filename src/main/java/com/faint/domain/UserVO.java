@@ -14,6 +14,7 @@ public class UserVO {
 	private int sex;
 	private String website;
 	private String intro;
+	private String snsID;
 	
 	private int prilevel; //userState
 	private int userlevel; //비공개여부
@@ -38,6 +39,15 @@ public class UserVO {
 
 	public int getId() {
 		return id;
+	}
+
+	
+	public String getSnsID() {
+		return snsID;
+	}
+
+	public void setSnsID(String snsID) {
+		this.snsID = snsID;
 	}
 
 	public void setId(int id) {

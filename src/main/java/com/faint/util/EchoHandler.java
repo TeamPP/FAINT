@@ -59,7 +59,12 @@ public class EchoHandler extends TextWebSocketHandler{
     	//for (WebSocketSession webSocketSession : sessionList) {
 		//	
 		//}
-    	
+    		
+    		logger.info("for debugging handleTextMessage()*****************************************************************"); // 디버그용
+    		
+    		String bNick=message.getPayload();
+    		
+    		System.out.println("bnick"+bNick);
         //0번째에 session.getId() 1번째에 message.getPayload() 넣음
         logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
         //logger.info("{}로부터 {}받음", new String[]{session.getId(),message.getPayload()});
