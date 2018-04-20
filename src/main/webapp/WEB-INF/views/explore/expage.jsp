@@ -17,9 +17,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   
-<!--검색창 부트스트랩  -->  
-<link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
 
 <!-- expage.css -->
 <link rel="stylesheet" href="/resources//css/expage.css"> 
@@ -29,6 +26,10 @@
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
 <style>
+
+.empty {
+	height: 150px;
+}
 
 article {
 	text-align: center;
@@ -45,9 +46,15 @@ article {
     height: 35px;
 }
 
+<<<<<<< HEAD
+.pull-right {
+	float: left !important;
+}
+=======
 
 
 
+>>>>>>> branch 'oolong' of https://github.com/TeamPP/FAINT.git
 </style>
 </head>
 

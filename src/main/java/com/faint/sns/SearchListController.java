@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
+import com.faint.domain.UserVO;
 import com.faint.service.PostService;
-import com.faint.service.UserService;
 
 import net.sf.json.JSONArray;
 
@@ -87,12 +87,19 @@ public class SearchListController {
 
 	// 키워드받는 태그 게시물목록 무한스크롤 (처음 10개 목록)
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
-	public String tagsSearch(@RequestParam("name") String name, Model model) throws Exception {
+	public String tagsSearch(@RequestParam("name") String name, Model model, HttpServletRequest request) throws Exception {
+		
 
 		SearchCriteria cri = new SearchCriteria();
+		
+		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		int loginid = vo.getId();
+		cri.setLoginid(loginid);
+		
 		cri.setKeyword(name);
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
+
 		
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);

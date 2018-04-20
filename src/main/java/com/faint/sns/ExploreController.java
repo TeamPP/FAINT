@@ -85,7 +85,6 @@ public class ExploreController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		System.out.println(entity);
 		return entity;
 	}
 
@@ -112,9 +111,6 @@ public class ExploreController {
 		else {
 			cri.setKeyword(words);
 		}
-
-		System.out.println(cri.getLoginid());
-		System.out.println(">>>>>" + cri.toString());
 
 		try {
 			entity = new ResponseEntity<List<SearchDTO>>(searchservice.listKeyword(cri), HttpStatus.OK);

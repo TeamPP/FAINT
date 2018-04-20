@@ -397,6 +397,7 @@ function postModal(str){
 		       
 		       modalFlg = false;
 	         }//if end
+	         
 	      }	//success end
 	   });
 	});

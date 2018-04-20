@@ -18,11 +18,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    
-<!--검색창 부트스트랩  -->  
-<link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
 
-<!-- expage.css -->
-<link rel="stylesheet" href="/resources//css/expage.css"> 
   
 <title>Insert title here</title>
 <!-- jquery 2.1.4. -->
@@ -48,59 +44,41 @@ article {
 
 
 /* 추천계정 스타일 */
- .recommContainer{
+.recommContainerWrp{
  width: 100%;
- height: 250px;
-  text-align:center;
+ height: 100%;
+ text-align:center;
+}
+
+
+ .recommContainer{
+ width: 935px;
+ max-width: 935px;
+display: inline-block;
+ /* height: 100%; */
+ /* height: 250px; */
+ /*  text-align:center; */
 }
 
 .recommendList{
+padding-left:0;
 overflow: hidden;
 }
 
 .recommendList li{
-/* transition: transform 1s, left 1s ;
- */
+/* 	display: inline-block;
+	display: block; */
+/*  transition: transform 1s, left 1s ; */
+
  }
 
 #chip {
- width: 13%;
+ width: 23%;
  border: solid 1px #efefef;
  margin-left: 1%;
 } 
 
-.hideLeft{
-display: none;
-}
 
- .prev{
-	display: block;
-	display: inline-block;
-}
-
-.prevLeftSecond{
-display: block;
-display: inline-block;
-}
-
-.selected{
-	display: block;
-	display: inline-block;
-}
-
-.next{
-display: block;
-display: inline-block;
-}
-
-.nextRightSecond{
-display: block;
-display: inline-block;
-}
-
-.hideRight{
-display: none;
-}
 
 #chip img {
 border-radius: 50%;
@@ -140,21 +118,20 @@ height:80px;
 margin: 5% auto;
 } 
 
-/*모두보기 버튼 */
-.allRecomm{
 
+/*왼쪽 오른쪽 버튼  */
+.prev{
+margin-left:1%;
+color: #999;
+border: 0;
+background-color: white;
 }
 
-
-.getShow{
-display: block;
-	display: inline-block;
+.next{
+color: #999;
+border: 0;
+background-color: white;
 }
-
-.getHidden{
-display: none;
-}
-
 </style>
 </head>
 
@@ -166,11 +143,12 @@ display: none;
 
 
 <!--친구추천  -->
+<div class="recommContainerWrp">
 <div class="recommContainer">
 <ul class="recommendList">
 
 <c:forEach items="${recommList}" var="userVO">   
-<li id="chip">
+<li id="chip" style="display:none;" >
 <a href="/member/${userVO.nickname}">
 			<c:choose>
 				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
@@ -193,14 +171,14 @@ display: none;
     <p class="name">${userVO.name}</p>
   </c:otherwise>
   </c:choose>
-  <button class="isFlw" title='${userVO.id}'>팔로우</button>
+  <button class="isFlw" data-uid='${userVO.id}'>팔로우</button>
 	</div>
 </li>
 </c:forEach>
 
 
-<c:forEach items="${recommList}" var="userVO">   
-<li id="chip">
+<%-- <c:forEach items="${recommList}" var="userVO">   
+<li id="chip"  style="display:none;" >
 <a href="/member/${userVO.nickname}">
 			<c:choose>
 				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
@@ -223,52 +201,46 @@ display: none;
     <p class="name">${userVO.name}</p>
   </c:otherwise>
   </c:choose>
-  <button class="isFlw" title='${userVO.id}'>팔로우</button>
+  <button class="isFlw" data-uid='${userVO.id}'>팔로우</button>
 	</div>
 </li>
 </c:forEach>
+</ul> --%>
 
-
-</ul>
+	<div class="slideBtnContainer">
+  <button class="prev">prev</button>
+  <button class="next" >next</button>
+	</div>
+</div>
 </div>
 
 <script>
+$(document).ready(function(){
+	follow();
+	changeClass();
+	 hideBtn();
+})
 
+
+/* =============================== */
+/* 추천계정 슬라이드 처리 */
 var startInd=$(".recommendList").children().eq(0).index(); // start부분의 인덱스 처음엔 0
-var totalChild=$(".recommendList").children().length;
+var totalChild=$(".recommendList").children().length;  //총 추천계정의 수
+var viewCnt=4; //보여주고 싶은 계정 수 
 
-
-
-
-/* 추천계정 */
  function changeClass(){
 	 console.log("totalChild:   "+totalChild);
-	
-	
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
 	//클래스명 추가하기
-	$(".recommendList").children().eq(startInd).addClass("getShow");
-	$(".recommendList").children().eq(startInd+1).addClass("getShow");
-	$(".recommendList").children().eq(startInd+2).addClass("getShow");
-	$(".recommendList").children().eq(startInd+3).addClass("getShow");
-	$(".recommendList").children().eq(startInd+4).addClass("getShow");
-	$(".recommendList").children().eq(startInd+4).nextAll().addClass("getHidden");
+	for(var i=0; i<viewCnt; i++){
+		console.log("함수가 돌아가요 돌아돌아");
+		$(".recommendList").children().eq(startInd+i).css("display","inline-block");
+	}
+	$(".recommendList").children().eq(startInd+viewCnt-1).nextAll().css("display","none");
+	
+	
 } 
-
-
-//   <- , -> 키보드 화살표로 이동
-	$(document).keydown(function(e) {
-  switch(e.which) {
-      case 37: // left
-      moveToSelected('prev');
-      break;
-      case 39: // right
-      moveToSelected('next');
-      break;
-      default: return;
-  }
-  e.preventDefault();
-}); 
-
 
 
 //추천계정 넘기기
@@ -282,104 +254,56 @@ function moveToSelected(element) {
 			//비었다
 		} else {
 		console.log("처음 startInd"+startInd);
-		$(".recommendList").children().eq(startInd).removeClass("getShow");
-		$(".recommendList").children().eq(startInd).addClass("getHidden");
+		
+		$(".recommendList").children().eq(startInd).css("display","none");
+		
 		startInd= startInd+1;
 		console.log("변경된 스타트 인덱스:    "+startInd);
-		$(".recommendList").children().eq(startInd+4).removeClass("getHidden");	
-		$(".recommendList").children().eq(startInd+4).addClass("getShow");	
+		$(".recommendList").children().eq(startInd+viewCnt-1).css("display","inline-block");
+		
 		}
 		
 		
 	} else if (element == "prev") {
 		console.log("<-화살표누름!!!!")
-		console.log("totalChild-5:      "+totalChild-5);
+		console.log("totalChild-viewCnt:      "+totalChild-viewCnt);
 		
 		  if(startInd==0){  
-			  
 			  console.log("멈췄다 기능 멈췄다");
 			  //비었다
 		  } else {
 			console.log("처음 startInd:    " +startInd);
-		$(".recommendList").children().eq(startInd+4).removeClass("getShow");
-		$(".recommendList").children().eq(startInd+4).addClass("getHidden");
+			$(".recommendList").children().eq(startInd+viewCnt-1).css("display","none");
+			
 		// <-- 화살표누름
 		startInd= startInd-1;
 		console.log("변경된 startInd" +startInd);		
-		$(".recommendList").children().eq(startInd).removeClass("getHidden");
-		$(".recommendList").children().eq(startInd).addClass("getShow");
-			  
+		$(".recommendList").children().eq(startInd).css("display","inline-block");
 		  }
 		
 	} 
-	
-	
-
-	
-
-	/* prev, next 아이콘 클릭 사진이동  */
-	$('#prev').click(function() {
-	moveToSelected('prev');
-	});
-	$('#next').click(function() {
-	moveToSelected('next');
-	});
 } 
 
+/* prev, next 버튼 클릭 사진이동  */
+$('.prev').click(function() {
+	console.log("왼쪽왼쪽왼쪽")
+moveToSelected('prev');
+});
+$('.next').click(function() {
+	console.log("왼쪽왼쪽왼쪽")
+moveToSelected('next');
+});
 
 
+//totalChild가 viewCnt보다 작거나 같으면 prev, next 버튼 숨김
+function hideBtn(){
 
-
-
-
- $(document).ready(function(){
-	follow();
-	changeClass();
-})
-
-//follow여부확인하여 팔로우/팔로우취소
-
-function follow(){
-	 var followFlg=false;
-	 
-	 $(".isFlw").on("click", function(){
-		
-		 var userid=$(this).attr("title");
-		 var isFlw=this;
-		 
-		 if(followFlg){return;};
-		 
-		 followFlg=true;
-		 if($(this).html()=="팔로우"){
-			 var type="post";
-			 var url="/member/follow/"+userid;
-			 var header="{'X-HTTP-Method-Overrid' : 'POST'}";
-			 $(isFlw).html("팔로잉"); 
-		 } else if($(this).html()=="팔로잉"){
-			 var type="delete";
-			 var url="/member/unfollow/"+userid;
-			 var header="{'X-HTTP-Method-Overrid' : 'DELETE'}";
-			 $(isFlw).html("팔로우");
-		 }
-		 
-		 $.ajax({
-			type:type,
-			url:url,
-			headers:header,
-			dataType:"text",
-			beforeSend: function(xhr){
-				xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
-			},
-			
-			success:function(result){
-				if(result=="SUCCESS"){
-					followFlg=false;
-				};
-			}
-		 });
-	 });
- };
-
+	if(totalChild<=viewCnt){
+		$(".prev").css("display","none");
+		$(".next").css("display","none");
+	}
+	
+}
 
 
 
