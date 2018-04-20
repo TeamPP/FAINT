@@ -11,8 +11,6 @@
 <head>
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<!--검색창 부트스트랩  -->  
-<link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>

@@ -64,6 +64,7 @@ border-radius: 150px;  /* 프사 둥글게 */
 
 </style>
 	<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"></jsp:include>
+
 <body class style="">
 	<span id="react-root" aria-hidden="false"> 
 	<section class="_sq4bv _29u45"> 
@@ -105,7 +106,11 @@ border-radius: 150px;  /* 프사 둥글게 */
 		</section>
 	</span>
 </body>
-
+<style>
+article div{
+	display: block;
+}
+</style>
 
 <!-- 공통 처리 import -->
 <script type="text/javascript" src="../../resources/js/common.js"></script>

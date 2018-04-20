@@ -1,4 +1,4 @@
-
+/* 
 body{
     background-color: #f8f8f8;
 
@@ -45,6 +45,7 @@ body{
 }
 
 .navbar-default .nav-wrap{
+	height: 0px;
 	position: fixed;
 	top: 95px;
     max-width: 230px;
@@ -89,7 +90,7 @@ body{
 
 .textInput{
     width: 215px;
-    /* height: 28px; */
+    height: 28px;
     height: 28px;
     background: #fafafa;
     border: solid 1px #dbdbdb;
@@ -121,3 +122,4 @@ body{
 
 
 
+ */

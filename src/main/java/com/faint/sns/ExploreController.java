@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,8 @@ import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
-import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
+import com.faint.service.ActivityService;
 import com.faint.service.PostService;
 import com.faint.service.SearchService;
 import com.faint.service.TagService;
@@ -47,9 +46,12 @@ public class ExploreController {
 	@Inject
 	private SearchService searchservice;
 
+	@Inject
+	private ActivityService activityservice;
+	
 	// 인기검색어, 인기게시글 출력
 	@RequestMapping(value = "/expage", method = RequestMethod.GET)
-	public void getPost(Model model) throws Exception {
+	public void getPost(Model model , HttpServletRequest request) throws Exception {
 
 		// model.addAttribute("topTag", tagservice.topTag()); // 상위10개 태그목록 출력
 		List<PostVO> topPostList = postservice.topPost();
@@ -58,6 +60,15 @@ public class ExploreController {
 
 		JSONArray jsonArray = new JSONArray();
 		model.addAttribute("jsonList", jsonArray.fromObject(topPostList));
+		
+		
+		//친구추천 계정
+		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		int loginid = vo.getId();
+		List<UserVO> recommList=activityservice.recomm(loginid);  
+		model.addAttribute("recommList",recommList);
+		
+		
 	}
 
 	// 인기검색어, 인기게시글 출력
@@ -74,7 +85,6 @@ public class ExploreController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		System.out.println(entity);
 		return entity;
 	}
 
@@ -101,9 +111,6 @@ public class ExploreController {
 		else {
 			cri.setKeyword(words);
 		}
-
-		System.out.println(cri.getLoginid());
-		System.out.println(">>>>>" + cri.toString());
 
 		try {
 			entity = new ResponseEntity<List<SearchDTO>>(searchservice.listKeyword(cri), HttpStatus.OK);

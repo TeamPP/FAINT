@@ -29,7 +29,7 @@ margin:0;
 			">
 		</button>
 	</div>
-		<div class="_ax54t">
+		<div class="_ax54t" style="display: block;">
 			<h1 class="_gvhl0" title="${userVO.nickname}">${userVO.nickname}</h1> 
 			<a class="_5aav8 linkChangeProfilePotho" href="javascript:;">프로필
 				사진 수정</a>

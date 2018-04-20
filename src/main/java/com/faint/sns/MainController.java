@@ -105,8 +105,9 @@ public class MainController {
 			HttpSession session=request.getSession();
 			session.setAttribute("login", user.getVo());
 			
-		}else{
-			System.out.println("안들어가나요?");
+	
+			model.addAttribute("reqURL", request.getRequestURI());
+			System.out.println(">>>>>>>>"+request.getRequestURI());
 		}
 	}
 	
