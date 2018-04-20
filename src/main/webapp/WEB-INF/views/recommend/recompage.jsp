@@ -233,6 +233,8 @@ var viewCnt=4; //보여주고 싶은 계정 수
 	 console.log("totalChild:   "+totalChild);
 	 console.log("totalChild:   "+totalChild);
 	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
 	//클래스명 추가하기
 	for(var i=0; i<viewCnt; i++){
 		console.log("함수가 돌아가요 돌아돌아");
