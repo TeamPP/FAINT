@@ -41,14 +41,12 @@
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
-
 body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
 					"Segoe UI Symbol" !important;
 	background-color: white;
 }
-
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -58,7 +56,6 @@ body {
 }
 
 .show {display:block;}
-
 .modal-content::after {
     border-color: transparent transparent #fff;
     border-style: solid;
@@ -146,7 +143,7 @@ body {
                  <a class="new-post" href="/post/register">
                      <img src="/resources/image/header_icon/newpost-icon.png">
                  </a>
-                 <a class="recommend" href="javascript:;">
+                 <a class="recommend" href="/recommend/recompage">
                      <img src="/resources/image/header_icon/recommend-icon.png">
                  </a>
                  <a class="follow-list" href="javascript:;">
@@ -335,6 +332,7 @@ body {
 
 <script>
 
+
 $("search-form").click(function() {
 	searchAjax();
 })
@@ -345,9 +343,11 @@ $(".search-option input").click(function() {
 })
 
 // 로그아웃 버튼 클릭 이벤트
+
 $(".logout").click(function() {
 	$(".logoutForm").submit();
 })
+
 
 //검색창 그림자
 $('.search-input').focus(function () {
@@ -359,12 +359,15 @@ $('.search-input').focus(function () {
 // 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
+
     if($("#myDropdown").attr("class")=="dropdown-content show") {
         $(".dropbtn").css("color", "black");
     } else {
         $(".dropbtn").css("color", "lightgray");
+
     }
 }
+
 
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
@@ -394,9 +397,8 @@ $(".catefilter").click(function() {
         $(".catefilter").attr("id", "1")
         $(".catefilter").css("color", "#999");
     }
+
 })
-
-
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
    if($("._oznku").text()=="검색 결과가 없습니다.") {
@@ -814,7 +816,6 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
 </script>
 
 <jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" />

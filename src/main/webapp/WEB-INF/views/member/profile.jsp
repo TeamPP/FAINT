@@ -558,6 +558,7 @@ function userUnblock(){
 //======================postFeed.jsp관련======================
 var jsonList="profile";
 var uid=${userVO.id};
+
 </script>
 
 <jsp:include page="/WEB-INF/views/include/postFeed.jsp" flush="false" />
