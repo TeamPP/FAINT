@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.faint.mapper.AdminMapper">
+
+	<!-- 관리자페이지 회원 리스트 가져오기 -->
+	<select id="getSearchMemberList" resultType="UserVO">
+        SELECT
+        		ID	,
+            nickname,
+            EMAIL,
+            Profilephoto,
+            prilevel,
+            regdate
+        FROM tbl_user
+	</select>
+
+	<!-- 페이징 처리용 total count -->
+	<select id="getTotalMemberCount" resultType="Integer">
+	<![CDATA[  
+	   select count(*) from faint.tbl_user
+		  where id > 0
+	]]>
+	</select>
+	
+	<delete id="deleteMember">
+ 		DELETE  from faint.tbl_user WHERE Email  =#{email}
+ 	</delete>
+	
+	<!-- 유저 관리 리스트 페이징 처리-->
+	<select id="AUList" resultType="com.faint.domain.AdminUserVO">
+	<![CDATA[
+		SELECT id, email, name, nickname, phonenumber, website, sex, intro, prilevel, regdate
+		FROM tbl_user
+		where id > 0
+		order by id desc, regdate desc limit #{pageStart}, #{perPageNum} 
+	]]>
+	</select>
+	<select id="AULCount" resultType="int">
+  	<![CDATA[
+  		select count(id) from tbl_user where id > 0  
+  	]]>
+  	</select>
+	
+	<!-- 유저 관리 리스트 삭제 -->
+	<delete id="AUDelete" parameterType="String">
+		DELETE
+		from faint.tbl_user
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</delete>
+	
+	<!-- 유저 영구 정지  -->
+	<update id="AUPStop" parameterType="String">
+		update from faint.tbl_user set prilevel = 5 
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</update>
+	
+	<!-- 유저 정지 -->
+	<update id="AUStop" parameterType="String">
+		update from faint.tbl_user set prilevel = 4
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</update>
+
+ 	
+	<!-- 게시물 관리 리스트 -->
+	<select id="APList" resultType="com.faint.domain.AdminPostVO">
+		select p.id as postid , u.email, u.name, u.nickname,
+		p.cateid, p.caption, p.regdate
+		from tbl_post as p
+		left join tbl_user as u
+		on p.userid = u.id
+		order by postid desc, regdate desc limit #{pageStart}, #{perPageNum} 
+	</select>
+	<select id="APLCount" resultType="int">
+  	<![CDATA[
+  		select count(id) from tbl_post where id > 0  
+  	]]>
+  	</select>
+	
+	<!-- 게시물 관리 리스트 삭제 -->
+	<delete id="APDelete" parameterType="String">
+		DELETE
+		from faint.tbl_post
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</delete>
+	
+	<!-- 관리자 외 게시물 비공개 -->
+	<update id="APBlock" parameterType="String">
+		update tbl_post set level = 1
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</update>
+	
+	
+	<!-- 댓글 관리 리스트 -->
+	<select id="ARList" resultType="com.faint.domain.AdminReplyVO">
+		select r.id as replyid, p.id as postid, u.email, u.nickname, r.comment, r.regdate
+		from tbl_reply as r
+		left join tbl_post as p
+		on r.postid = p.id
+		left join tbl_user as u
+		on r.userid = u.id
+		order by r.id desc, r.regdate desc limit #{pageStart}, #{perPageNum} 
+	</select>
+	<select id="ARLCount" resultType="int">
+  	<![CDATA[
+  		select count(id) from tbl_reply where id > 0  
+  	]]>
+  	</select>
+	
+	<!-- 댓글 관리 리스트 삭제 -->
+	<delete id="ARDelete" parameterType="String">
+		DELETE
+		from faint.tbl_reply
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</delete>
+	
+
+	<!-- 유저 신고  -->
+	<insert id="ARUCreate">
+		insert into tbl_report_user (cateid, nickname, writer, title, caption)
+		values(#{cateid}, #{nickname}, #{writer}, #{title}, #{caption})
+	</insert>
+
+	<!-- 유저 신고 리스트 -->
+	<select id="ARUList" resultType="com.faint.domain.AdminReportVO">
+	 <![CDATA[
+	 select r.id, r.cateid, r.title, r.nickname, r.writer, r.caption, r.regdate, c.reportid, c.userid as isRead
+	 from tbl_report_user as r
+	 left join tbl_report_user_check as c
+	 on r.id = c.reportid and c.userid =#{loginid}
+	 order by r.id desc, r.regdate desc limit #{pageStart}, #{perPageNum} 
+	 ]]>
+	</select>
+	<select id="ARULCount" resultType="int">
+  	<![CDATA[
+  		select count(id) from tbl_report_user where id > 0  
+  	]]>
+  	</select>
+
+	<!-- 유저 신고 리스트 상세 페이지 -->
+	<select id="ARURead" resultType="com.faint.domain.AdminReportVO">
+	 <![CDATA[
+	 select id, cateid, title, nickname, writer, caption, regdate
+	 from 
+	   tbl_report_user
+	 where id = #{id} 
+	 ]]>
+	</select>
+
+	<!-- 유저 신고 리스트 삭제 -->
+	<delete id="ARUDelete" parameterType="String">
+		DELETE
+		FROM faint.tbl_report_user
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</delete>
+	
+	<!-- 유저 신고 게시글 읽은 관리자 체크 -->
+	<insert id="ARUCheck">
+		insert into tbl_report_user_check (reportid, userid)
+		values(#{reportid}, #{userid})
+	</insert>
+
+
+
+
+	<!-- 게시물 신고  -->
+	<insert id="ARPCreate">
+		insert into tbl_report_post (postid, cateid, nickname, writer, title, caption)
+		values(#{postid}, #{cateid}, #{nickname}, #{writer}, #{title}, #{caption})
+	</insert>
+
+	<!-- 게시물 신고 리스트 -->
+	<select id="ARPList" resultType="com.faint.domain.AdminReportVO">
+	 <![CDATA[
+	 select r.id, r.postid, r.cateid, r.title, r.nickname, r.writer, r.caption, r.regdate, c.reportid, c.userid as isRead
+	 from tbl_report_post as r
+	 left join tbl_report_post_check as c
+	 on r.id = c.reportid and c.userid =#{loginid}
+	 order by r.id desc, r.regdate desc limit #{pageStart}, #{perPageNum} 
+	 ]]>
+	</select>
+	<select id="ARPLCount" resultType="int">
+  	<![CDATA[
+  		select count(id) from tbl_report_post where id > 0  
+  	]]>
+  	</select>
+
+	<!-- 게시물 신고 리스트 상세 페이지 -->
+	<select id="ARPRead" resultType="com.faint.domain.AdminReportVO">
+	 <![CDATA[
+	 select id, title, nickname, writer, caption, regdate
+	 from 
+	   tbl_report_post
+	 where id = #{id} 
+	 ]]>
+	</select>
+
+	<!-- 게시물 신고 리스트 삭제 -->
+	<delete id="ARPDelete" parameterType="String">
+		DELETE
+		FROM faint.tbl_report_post
+		<where>
+			FIND_IN_SET(id, #{values})
+		</where>
+	</delete>
+	
+	<!-- 게시물 신고 게시글 읽은 관리자 체크 -->
+	<insert id="ARPCheck">
+		insert into tbl_report_post_check (reportid, userid)
+		values(#{reportid}, #{userid})
+	</insert>
+
+</mapper>

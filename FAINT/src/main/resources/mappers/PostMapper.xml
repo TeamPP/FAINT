@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.faint.mapper.postMapper">
+	<!-- 게시글 작성 -->
+	<insert id="create">
+		insert into tbl_post (userid, cateid, caption, location)
+		values(#{userid}, #{cateid}, #{caption}, #{location})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			<!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+			select last_insert_id() as id
+		</selectKey> 
+	</insert>
+	
+	<!-- 	첨부파일 추가 -->
+	<!-- 게시글에 이미지,동영상추가 -->
+	<insert id="addAttach">
+		insert into tbl_attach (postid, url, filter) values (LAST_INSERT_ID(), #{url}, #{filter})
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="modify">
+	UPDATE tbl_post SET cateid=#{cateid}
+		, caption=#{caption}
+		, location=#{location}
+		, moddate=NOW()
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteOne">
+		DELETE
+		FROM faint.tbl_post
+		WHERE id=#{postid}
+	</delete>
+	
+	<select id="readOne" resultType="com.faint.domain.PostVO">
+		select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+		from tbl_post p left join tbl_attach a on p.id = a.POSTID where p.id=#{postid}  group by postid order by a.url;
+	</select>
+	
+	<!-- 유저 게시글 읽기 -->
+	<select id="read" resultType="com.faint.domain.PostVO">
+		select pa.*, likeCount, replyCount from
+			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.regdate as p_regdate
+			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid order by a.url) pa
+		left join
+			(select p.id, count(*) as likeCount from tbl_post p right join tbl_post_like l on p.id=l.postid group by p.id) pl
+		on
+		pa.id=pl.id
+		left join
+			(select p.id, count(*) as replyCount from tbl_post p right join tbl_reply r on p.id=r.postid group by p.id) pr
+		on
+		pa.id=pr.id
+		where userid=#{userid}
+		order by p_regdate desc
+	</select>
+	
+	<!-- 로그인한 유저가 저장한 게시글 읽기 -->
+	<select id="storeRead" resultType="com.faint.domain.PostVO">
+		select psa.*, likeCount, replyCount from
+		(select pa.*, s.regdate from
+			(select p.id as ID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url
+			from tbl_post p left join tbl_attach a on p.id = a.POSTID group by postid) pa
+			join
+			tbl_store s
+			on
+			pa.id=s.POSTID and s.USERID=#{userid}) psa
+		left join
+			(select p.id, count(*) as likeCount from tbl_post p right join tbl_post_like l on p.id=l.postid group by p.id) pl
+		on
+		psa.id=pl.id
+		left join
+			(select p.id, count(*) as replyCount from tbl_post p right join tbl_reply r on p.id=r.postid group by p.id) pr
+		on
+		psa.id=pr.id
+        left join
+		(select userid from tbl_block where blockedid=#{userid}) bu
+		on psa.userid = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=#{userid}) ub
+        on psa.userid = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
+		order by psa.regdate desc
+	</select>
+	
+	<!-- 메인 피드용 게시글 읽기 (팔로우하는 사람의 게시글 정보 / 최신 등록 순)-->
+	<select id="mainRead" resultType="com.faint.dto.FollowinPostDTO">
+		select * from
+        (select pa.postid as postid, pa.userid, pa.caption, pa.cateid, pa.url, pa.location, a_regdate, p_regdate, isLike, isStore  from
+        
+			(select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.location, a.REGDATE as a_regdate, p.regdate as p_regdate
+			 from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) as pa
+			join
+			(select pl.postid, isLike, isStore from
+				(select distinct(p.id) as postid, l.userid as isLike from tbl_post p left join tbl_post_like l on p.id = l.POSTID and l.userid = #{userid}) pl
+				join
+				(select p.id as postid, s.userid as isStore from tbl_post p left join tbl_store s on p.id = s.POSTID and s.userid = #{userid}) ps
+				on pl.postid=ps.postid) as pls
+			on
+			pa.postid = pls.postid) plsa
+			
+        join
+			(select u.id, u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
+			from tbl_follow f join tbl_user u on f.FOLLOWEDID = u.ID and f.userid = #{userid} or u.id = #{userid} group by u.id) as uf
+		on
+			plsa.USERID = uf.id
+		order by p_regdate DESC, a_regdate DESC
+	</select>
+	
+	<!-- 세부 게시글 정보  (모달팝업용) -->
+	<select id="detailRead" resultType="com.faint.dto.FollowinPostDTO">
+		select * from
+        (select pa.postid as postid, pa.userid, pa.caption, pa.cateid, pa.url, pa.location, a_regdate, p_regdate, isLike, isStore  from
+        
+			(select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, p.location, a.REGDATE as a_regdate, p.regdate as p_regdate
+			 from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) as pa
+			join
+			(select pl.postid, isLike, isStore from
+				(select distinct(p.id) as postid, l.userid as isLike from tbl_post p left join tbl_post_like l on p.id = l.POSTID and l.userid = #{loginid}) pl
+				join
+				(select distinct(p.id) as postid, s.userid as isStore from tbl_post p left join tbl_store s on p.id = s.POSTID and s.userid = #{loginid}) ps
+				on pl.postid=ps.postid) as pls
+			on
+			pa.postid = pls.postid) plsa
+			
+        join
+			(select p.id as pid, u.id, u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
+			from tbl_post p join tbl_user u on p.userid = u.ID and p.id=#{postid}) as pu
+		on
+		plsa.USERID = pu.id
+        and plsa.postid = pu.pid
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="update">
+		UPDATE faint.tbl_post
+		SET caption=#{caption},
+		<!-- regdate=now() 넣을 경우 프로필 피드에서 위치변경됨-->
+		WHERE id=#{id}
+	</update>
+	
+
+	
+	<!--post 전체목록 -->
+	<select id="listAllPost" resultType="com.faint.domain.PostVO">
+	 <![CDATA[
+	 select 
+	    *
+	 from 
+	   tbl_post
+	 where id > 0 
+	 ]]>
+	</select>
+	
+		<!-- 인기 post 전체목록 -->
+	<select id="topPost" resultType="com.faint.domain.PostVO">
+	 <![CDATA[
+          	select topT.*, (@rank := @rank +1) as rank
+        	from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            on p.userid = u.id
+            group by p.id
+            ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
+            
+            order by likeCount desc, replyCount desc;
+	 ]]>
+	</select>
+	
+		<!-- post키워드목록 -->
+	<!-- nickname 또는 name이 키워드랑 부분일치하면 검색됨 -->
+	<!-- 키워드 일치 리스트 가져오고 , tag의 count+1해주기 -->
+	<select id="listPostKeyword" resultType="com.faint.domain.PostVO">
+	 <![CDATA[
+		select
+		*
+		from
+		tbl_post
+		where id=
+		any
+		(
+		select
+		 ptag.postid as postid
+		from tbl_tag tag, tbl_posted_tag ptag
+		where
+		tag.id=ptag.tagid
+		and
+		tag.name=#{keyword}
+		)
+		;
+	 ]]>
+	</select> 
+	
+	
+	
+	<!--                    tag 관련                  -->	
+	<!--Tag 삽입  -->
+	<insert id="insertTag">
+		insert into tbl_tag (name, tagcount)
+		values (#{name}, #{tagcount})
+	
+		<selectKey keyProperty="id" resultType="int" order="AFTER"> 
+		<!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+            select last_insert_id() as id
+        </selectKey> 
+	</insert>
+	
+	<!-- 태그 name으로 찾기 -->
+	<select id="selectTagByName" resultType="com.faint.domain.TagVO">
+		 <![CDATA[
+			 select 
+			    *
+			 from 
+			   tbl_tag
+			 where  name =#{name}
+		 ]]>
+	</select>
+	
+	<!-- tagcount 1증가 -->
+	<update id="plusTagCount">
+		<![CDATA[
+			update 
+			tbl_tag 
+			set
+			tagcount=tagcount+1
+			where
+			name=#{ keyword}
+		]]>
+	</update>
+
+	<!--postid , tagid 넣기  -->
+	<insert id="insertPostedTag">
+		insert into tbl_posted_tag (postid, tagid)
+		values(#{postid}, #{tagid})
+	</insert>
+	
+	<!-- post&like -->
+	<insert id="postLike">
+		INSERT INTO tbl_post_like (postid, userid)
+		SELECT #{postid}, #{loginid}
+	</insert>
+	
+	<delete id="postUnlike">
+		DELETE
+		FROM tbl_post_like
+		WHERE postid=#{postid}
+		AND
+		userid=#{loginid}
+	</delete>
+	
+	<select id="postLiker" resultType="com.faint.domain.UserVO">
+		SELECT DISTINCT * from
+		(SELECT u.id, u.nickname, u.profilephoto, u.name
+		FROM tbl_post_like l JOIN tbl_user u
+		ON l.postid=#{postid} AND l.userid=u.id
+		ORDER BY l.regdate DESC) pl
+        left join
+        (SELECT followedid as isFollow
+		FROM
+		tbl_follow
+		WHERE userid=#{loginid}) lf
+        on lf.isFollow=pl.id
+        left join
+		(select userid from tbl_block where blockedid=#{loginid}) bu
+		on pl.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=#{loginid}) ub
+        on pl.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
+	</select>
+	
+	<!-- store -->
+	<insert id="postStore">
+		INSERT INTO tbl_store (postid, userid)
+		SELECT #{postid}, #{loginid}
+	</insert>
+	
+	<delete id="postTakeaway">
+		DELETE
+		FROM tbl_store
+		WHERE postid=#{postid}
+		AND
+		userid=#{loginid}
+	</delete>
+	
+		<!--태그 검색 무한스크롤  -->
+		<!-- 태그검색으로 게시물 목록 ajax 조회 (무한 스크롤) -->
+	<select id="tagsAjax" parameterType="com.faint.domain.SearchCriteria" resultType="com.faint.domain.PostVO">
+     	<![CDATA[
+			select distinct topT.*, (@rank := @rank +1) as row
+	        from
+	        ( select pa.* , likeCount, replyCount from
+	        (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+	        from tbl_post as p
+	        join tbl_attach as a
+	        on p.id = a.postid
+	        join tbl_user as u
+	        on p.userid = u.id
+	        group by p.id ) as pa
+	            
+	        left join
+	            
+	        (select p.id, count(*) as likeCount from tbl_post as p
+	        join tbl_post_like as l
+	        on p.id = l.postid
+	        group by p.id) as pl
+	        on pa.id = pl.id
+	        
+	        left join
+	        
+	        (select p.id, count(*) as replyCount from tbl_post as p
+	        join tbl_reply as r
+	        on p.id = r.postid
+	        group by p.id) as pr
+	        on pa.id = pr.id 
+	      
+	        ) as topT, (select @rank := 0) as rowT
+	            
+	            
+	        where topT.id=
+	        any
+	        (
+	        select
+	        ptag.postid as postid
+	        from tbl_tag tag, tbl_posted_tag ptag
+	        where
+	        tag.id=ptag.tagid
+	        and
+	        tag.name=#{keyword}
+	        )
+	      
+	        order by likeCount desc, replyCount desc, id
+	        limit 0,10 
+	    ]]>
+	</select>
+	
+	<select id="infiniteScrollTags" resultType="com.faint.domain.PostVO">
+     	<![CDATA[
+            select distinct topT.*, (@rank := @rank +1) as row
+         from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            on p.userid = u.id
+             group by p.id ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id 
+      
+            ) as topT, (select @rank := 0) as rowT
+            
+            
+          where topT.id=
+             any
+             (
+            select
+            ptag.postid as postid
+            from tbl_tag tag, tbl_posted_tag ptag
+            where
+            tag.id=ptag.tagid
+            and
+            tag.name=#{keyword}
+             )
+      
+            order by likeCount desc, replyCount desc, id
+            where row <=#{row}+10
+            and row >#{row}
+	    ]]>
+	</select>
+	
+	<!-- 위치 무한스크롤 -->
+		<!-- loaction 목록 ajax 조회 (무한 스크롤) -->
+		<select id="locationsAjax" resultType="com.faint.domain.PostVO">
+     	<![CDATA[
+            select topT.*, (@rank := @rank +1) as rank
+			from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            on p.userid = u.id
+            group by p.id ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
+            
+            where location =#{keyword}
+            
+            order by likeCount desc, replyCount desc
+            
+            limit 0,10
+	    ]]>
+	</select> 
+	
+		<!-- location 목록 추가로 ajax 조회 (무한 스크롤) -->
+		<select id="infiniteScrollLocations" resultType="com.faint.domain.PostVO">
+     	<![CDATA[
+            select topT.*, (@rank := @rank +1) as rank
+			from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            group by p.id ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
+            
+            where location =#{keyword}
+            
+            order by likeCount desc, replyCount desc
+            
+         	where row <=#{row}+10
+		    and row >#{row}
+	    ]]>
+	    </select>
+	
+		<!-- 카테고리 번호로 필터링 -->
+	<select id="cateFilter" resultType="com.faint.domain.PostVO">
+		 <![CDATA[
+            select topT.*, (@rank := @rank +1) as rank
+			from
+            ( select pa.* , likeCount, replyCount from
+            (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
+            from tbl_post as p
+            join tbl_attach as a
+            on p.id = a.postid
+            join tbl_user as u
+            on p.userid = u.id
+            group by p.id ) as pa
+            
+            left join
+            
+            (select p.id, count(*) as likeCount from tbl_post as p
+            join tbl_post_like as l
+            on p.id = l.postid
+            group by p.id) as pl
+            on pa.id = pl.id
+            
+            left join
+            
+            (select p.id, count(*) as replyCount from tbl_post as p
+            join tbl_reply as r
+            on p.id = r.postid
+            group by p.id) as pr
+            on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
+            
+            where cateid =#{cateid}
+            
+            order by likeCount desc, replyCount desc
+            
+            limit 0,10;
+		 ]]>
+	</select>
+	
+	
+	
+</mapper>

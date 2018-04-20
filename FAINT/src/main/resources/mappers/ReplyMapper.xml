@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.faint.mapper.replyMapper">
+	<insert id="create">
+		INSERT INTO faint.tbl_reply
+		(
+		postid
+		,userid
+		,comment
+		)
+		VALUES
+		(
+		#{postid}
+		,#{userid}
+		,#{comment}
+		)
+	</insert>
+	
+	<select id="read" resultType="com.faint.domain.ReplyVO">
+	    SELECT 
+	        r.ID AS id,
+	        u.ID AS userid,
+	        r.POSTID AS postid,
+            p.userid AS postwriter,
+	        u.NICKNAME AS username,
+	        r.COMMENT AS comment,
+	        r.REGDATE AS REGDATE
+	    FROM
+	        tbl_reply r
+		JOIN
+			tbl_user u
+		ON
+	    r.USERID = u.ID
+			left join
+		(select userid from tbl_block where blockedid=#{loginid}) bu
+		on u.id = bu.userid
+		left join
+		(select blockedid from tbl_block where userid=#{loginid}) ub
+		on u.id = ub.blockedid
+        left join
+			tbl_post p
+        on r.postid = p.id
+		where bu.userid is null and ub.blockedid is null
+	    and r.postid=#{postid}
+	</select>
+	
+	<update id="update">
+		UPDATE faint.tbl_reply
+		SET caption=#{caption},
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE
+		FROM faint.tbl_reply
+		WHERE id=#{id}
+	</delete>
+	
+	<select id="count" resultType="Integer">
+		SELECT count(*)
+		from
+		faint.tbl_reply
+		where postid=#{postid}
+		and userid=#{userid}
+	</select>
+
+</mapper>

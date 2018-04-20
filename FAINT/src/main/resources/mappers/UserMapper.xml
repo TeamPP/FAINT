@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.faint.mapper.userMapper">
+
+  	<resultMap type="com.faint.domain.UserVO" id="UsersResultMap">
+  		<id property="id" column="id" />
+  		<result property="email" column="email"/>
+  		<result property="password" column="password"/>
+  		<result property="name" column="name"/>
+  		<result property="nickname" column="nickname"/>
+  		<result property="profilephoto" column="profilephoto"/>
+  		<collection property="authorities" ofType="Authority">
+  			<id property="id" column="id" />
+  			<result property="name" column="aname"/>
+  		</collection>
+  	</resultMap>
+  	
+  	<select id="select-users" parameterType="int" resultMap="UsersResultMap">
+  		SELECT u.id, u.email, u.password, u.name, u.profilephoto, ua.id, ua.name as "aname"
+		FROM tbl_user u,
+			(SELECT users_authority.user_id, authority.id, authority.name
+			FROM users_authority, authority
+			WHERE users_authority.authority_id = authority.id) ua
+		WHERE u.id = ua.users_id AND u.id = #{id}
+  	</select>
+  	
+  	<select id="select-users-by-email" parameterType="String" resultMap="UsersResultMap">
+  		SELECT u.id, u.email, u.password, u.name, u.profilephoto, ua.id, ua.name as 'aname', u.nickname
+		FROM tbl_user u,
+			(SELECT users_authority.user_id, authority.id, authority.name
+			FROM users_authority, authority
+			WHERE users_authority.authority_id = authority.id) ua
+		WHERE u.id = ua.user_id AND u.email = #{email}
+  	</select>
+ 
+  	
+<!--   	<select id="select-last-insert-id" resultType="int">
+  		SELECT LAST_INSERT_ID() as #{id}
+  	</select> -->
+  	
+  	<insert id="insert-users" parameterType="com.faint.dto.LoginDTO">
+  		INSERT INTO users (email, password, nickename, profilephoto)
+  		VALUES (#{email}, #{password}, #{nickename}, #{profilephoto})
+  	</insert>
+  	
+  	<insert id="insert-authority" parameterType="com.faint.domain.UserVO">
+  		INSERT INTO users_authority(user_id, authority_id) VALUES
+  		<foreach collection="authorities" item="item" separator=", ">
+  			(#{id}, #{item.id})
+  		</foreach>
+  	</insert>
+	
+	<!-- 특정 유저데이터 읽기 -->
+	<select id="userRead" resultType="com.faint.domain.UserVO">
+        select u.id, u.email, u.name, u.nickname, u.website, u.profilephoto, u.intro, p.postCount, lf.isFollow, ub.Blocked, bu.isBlock from
+        (SELECT id, email, name, nickname, website, profilephoto, intro
+		FROM
+		tbl_user
+		WHERE nickname=#{nickname}) u
+        left join
+        (select count(*) as postCount, userid from tbl_post group by userid) p
+        on
+        u.id=p.userid
+        left join
+        (SELECT followedid as isFollow
+		FROM
+		tbl_follow
+		WHERE userid=#{loginid}) lf
+        on lf.isFollow=u.id
+        left join
+        (select u.id, count(*) as Blocked from
+			faint.tbl_block b
+			join
+			(select id from faint.tbl_user where nickname=#{nickname}) u
+			on u.id=b.userid and blockedid=#{loginid}) ub
+		on u.id=ub.id
+		left join
+        (select u.id, count(*) as isBlock from
+			faint.tbl_block b
+			join
+			(select id from faint.tbl_user where nickname=#{nickname}) u
+			on u.id=b.blockedid and userid=#{loginid}) bu
+		on u.id=bu.id;
+	</select>
+
+	<!-- 유저데이터 수정 -->
+	<update id="update">
+		UPDATE tbl_user SET name=#{name}
+		, nickname=#{nickname}
+		, phonenumber=#{phonenumber}
+		, sex=#{sex}
+		, website=#{website}
+		, intro=#{intro}
+		, userlevel=#{userlevel}
+		WHERE id=#{id}
+	</update>
+
+	<!-- 유저데이터 삭제 -->
+	<delete id="delete">
+		DELETE
+		FROM tbl_user
+		WHERE id=#{id}
+	</delete>
+
+	<!-- 리스트형식으로 모든 유저 읽기 -->
+	<select id="listAll" resultType="com.faint.domain.UserVO">
+	<![CDATA[
+		SELECT *
+		FROM
+			tbl_user
+		WHERE id>0
+		ORDER BY id ASC
+	]]>
+	</select>
+	
+	<!-- block -->
+	<!-- 차단등록 -->
+	<insert id="userBlock">
+		INSERT INTO tbl_block (userid, blockedid)
+		SELECT #{loginid}, #{userid}
+	</insert>
+	
+	<!-- 차단해제 -->
+	<delete id="userUnblock">
+		DELETE
+		FROM tbl_block
+		WHERE userid=#{loginid}
+		AND
+		blockedid=#{userid}
+	</delete>
+	
+	<!-- 차단 리스트 출력 -->
+	<select id="readblocked" resultType="com.faint.dto.BlockedUserDTO">
+		SELECT bl.USERID as userid
+		, bl.BLOCKEDID as blockedid
+	    , u.NICKNAME as nickname
+	    , u.name as name
+	    , u.PROFILEPHOTO as profilephoto
+	    FROM 
+		faint.tbl_block bl 
+		join faint.tbl_user u
+	    on bl.BLOCKEDID = u.id
+	    where bl.USERID = #{uid}
+	</select>
+	<!-- follow -->
+	<!-- 팔로우등록 -->
+	<insert id="flwCreate">
+		INSERT INTO tbl_follow (userid, followedid)
+		SELECT #{loginid}, #{userid}
+	</insert>
+
+	<!-- 팔로우해제 -->
+	<delete id="flwDelete">
+		DELETE
+		FROM tbl_follow
+		WHERE userid=#{loginid}
+		AND
+		followedid=#{userid}
+	</delete>
+
+	<!-- 해당 유저가 팔로우하는 사람 리스트 -->
+	<select id="flwnList" resultType="com.faint.domain.UserVO">
+		SELECT DISTINCT uf.*, lf.isFollow from
+		(SELECT u.id, u.email, u.name, u.nickname, u.profilephoto, u.intro
+		FROM tbl_user u join tbl_follow f
+		ON f.followedid=u.id and f.userid=#{userid}) uf
+		left join
+		(SELECT followedid as isFollow
+		FROM
+		tbl_follow
+		WHERE userid=#{loginid}) lf
+		on lf.isFollow=uf.id
+		left join
+		(select userid from tbl_block where blockedid=#{loginid}) bu
+		on uf.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=#{loginid}) ub
+        on uf.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
+	</select>
+
+	<!-- 해당 유저를 팔로우 중인 사람 리스트 -->
+	<select id="flwdList" resultType="com.faint.domain.UserVO">
+		select DISTINCT uf.*, lf.isFollow from
+		(SELECT u.id, u.email, u.name, u.nickname, u.profilephoto, u.intro
+		FROM tbl_user u join tbl_follow f
+		ON f.userid=u.id and f.followedid=#{userid}) uf
+        left join
+        (SELECT followedid as isFollow
+		FROM
+		tbl_follow
+		WHERE userid=#{loginid}) lf
+        on lf.isFollow=uf.id
+        left join
+		(select userid from tbl_block where blockedid=#{loginid}) bu
+		on uf.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=#{loginid}) ub
+        on uf.id = ub.blockedid
+		where bu.userid is null and ub.blockedid is null
+	</select>
+	
+	<!-- PageRank 필터링을 위한 follow 및 user리스트 추출 -->
+	<select id="rank" resultType="java.lang.String">
+		select concat(u.ID, '-', ifnull(followedid, '')) as follow from tbl_user u left join tbl_follow f on id=f.USERID
+	</select>
+
+	<!-- =================회원가입 및 정보수정================== -->
+	<insert id="insertUser">
+        INSERT INTO tbl_user (EMAIL, PASSWORD, NICKNAME)
+        VALUES (#{email}, #{password}, #{nickname})
+        
+          <selectKey keyProperty="id" resultType="int" order="AFTER"> 
+      <!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+            select last_insert_id() as id
+        </selectKey>
+    </insert>
+	
+	<!-- 네이버 -->
+	<insert id="naverInsertUser">
+		INSERT INTO tbl_user (EMAIL, SNSID, NICKNAME)
+		VALUES (#{email}, #{snsID}, #{nickname})
+	</insert>
+	
+	<!-- 네이버 -->
+	<select id="naverReadUser" resultType="com.faint.domain.UserVO">
+		SELECT
+		ID ,
+		NICKNAME ,
+		EMAIL ,
+		PROFILEPHOTO
+		FROM tbl_user
+		WHERE SNSID = #{snsID}
+	</select>
+
+    <!-- email중복 확인 -->
+    <select id="checkdupl" resultType="com.faint.domain.UserVO">
+        SELECT
+            ID,
+            PRILEVEL
+        FROM tbl_user
+        WHERE EMAIL = #{email}
+    </select>
+    
+    <!-- 닉네임 중복 확인 -->
+    <select id="checkduplName" resultType="com.faint.domain.UserVO">
+        SELECT
+            ID,
+            PRILEVEL
+        FROM tbl_user
+        WHERE NICKNAME = #{nickname}
+    </select>
+	
+	<!-- =================로그인================== -->
+    <select id="login" resultType="com.faint.domain.UserVO">
+        SELECT
+            EMAIL,
+            ID,
+            NICKNAME,
+            PROFILEPHOTO,
+            PRILEVEL
+        FROM tbl_user
+        WHERE EMAIL = #{email}
+              AND PASSWORD = #{password}
+    </select>
+    
+	<!-- 암호화비밀번호 가져오기 -->
+    <select id="getUserPassword" resultType="com.faint.domain.UserVO">
+	    select PASSWORD
+	    FROM  tbl_user
+	    WHERE EMAIL = #{email}
+    </select>
+
+	<!-- 비밀번호 찾기 임시 비밀번호 생성 -->
+	<update id="createTempPassword">
+		update tbl_user
+		set password = #{password}
+		where email = #{email}
+	</update>
+    
+    <!-- 인증키 생성 -->
+    <update id="createAuthKey">
+        UPDATE tbl_user
+        SET AUTHKEY = #{memberAuthKey}
+        WHERE EMAIL = #{email}
+    </update>
+    
+    <!-- 인증키 업데이트 -->
+    <update id="userAuth">
+        UPDATE tbl_user
+        SET
+            PRILEVEL = 1
+        where EMAIL = #{email}
+    </update>
+    
+    <!-- 인증키 확인여부 -->
+    <select id="chkAuth" resultType="com.faint.domain.UserVO">
+        SELECT
+            ID,
+            NICKNAME,
+            EMAIL
+        FROM tbl_user
+        WHERE AUTHKEY = #{memberAuthKey}
+    </select>
+    
+    <!-- 비밀번호 변경 -->
+   	<update id="updatePassword">
+        UPDATE tbl_user
+        SET
+            PASSWORD = #{password}
+        WHERE ID = #{id}
+    </update>
+	
+	<!-- 사용자가 인증키 확인시 -->
+	<update id="successAuth">
+        UPDATE tbl_user
+        SET
+            AUTHKEY = NULL,
+            prilevel =1
+        WHERE ID = #{id}
+    </update>
+	
+	<!-- 세션키 확인 로그인 유지 -->
+<!-- 	<update id="keepLogin">
+		update tbl_user
+		set sessionkey = #{sessionKey}
+		   ,sessionlimit = #{next}
+		where ID = #{id} -->
+
+
+	  	<!-- sessionKey로 로그인 여부 판단  -->
+  	<update id="keepLogin" parameterType="map">
+  		update tbl_user
+  		 set sessionkey = #{sessionId}, sessionLimit = #{next} where email=#{email};
+  	</update>
+	
+ 	<!-- 세션키 체크 -->
+	<select id="checkSessionKey" resultType="com.faint.domain.UserVO">
+	<![CDATA[  
+	select
+		ID,
+		SessionKey
+	from faint.tbl_user
+	where SessionKey = #{value}
+	  and SessionLimit > now()
+	  ]]>
+	</select>
+	
+	<!-- 특정 유저데이터 읽기 -->
+	<select id="read" resultType="com.faint.domain.UserVO">
+		SELECT *
+		FROM
+		tbl_user
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 닉네임 중복 여부 -->
+	<select id="chkNick" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM
+		tbl_user
+		WHERE BINARY nickname=#{nickname}
+	</select>
+	
+	<!-- 프로필 사진 수정 -->
+	<update id="updatePhoto">
+		UPDATE tbl_user
+	    <set>
+	      <if test="profilephoto.length == 0 ">profilephoto=null</if>
+	      <if test="profilephoto.length > 0">profilephoto=#{profilephoto}</if>
+	    </set>
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 이전 비번 확인 -->
+	<select id="checkPassWord" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM
+		tbl_user
+		WHERE id=#{id}
+		AND BINARY password=#{password}
+	</select>
+	<!-- 암호화비밀번호 가져오기 2-->
+    <select id="getUserPassword1" resultType="com.faint.domain.UserVO">
+	    select PASSWORD
+	    FROM  tbl_user
+	    WHERE ID = #{id}
+    </select>
+	<!-- ====================ip차단==================== -->
+	<insert id="insert_ip_ban" parameterType="String">
+		INSERT INTO IPBANLIST (IP) VALUES(#{param1})
+	</insert>
+	<select id="find_ip_ban_list" resultType="String">
+		SELECT * FROM IPBANLIST WHERE DATE(BANDATE) = CURDATE()
+	</select>
+	
+</mapper>

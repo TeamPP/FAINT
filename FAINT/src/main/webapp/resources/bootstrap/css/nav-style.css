@@ -1,0 +1,123 @@
+
+body{
+    background-color: #f8f8f8;
+
+}
+
+@font-face {
+	font-family: 'logoFont';
+	src: url('resources/fonts/KaushanScript-Regular.ttf');
+}
+
+
+
+.navbar-default{
+	background-color: #f8f8f8;
+    /* background-color: #e7e7e7; */
+    height: 90px;
+    padding: 5px 40px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    border-color: #ddd;
+    opacity: 0.93;
+}
+
+.navbar-default .faintlogo {
+    display: inline-block;
+    background-image: url(/resources/image/faint.png);
+    background-repeat: no-repeat;
+    background-size: 190px;
+    width: 190px;
+    height: 60px;
+    position: fixed;
+    left: 19%;
+    top: 13px;
+}
+
+.navbar-default .category {
+	position: fixed;
+	top: 50px;
+	left: 15%;
+	font-size: 30px;
+	font-family: HelveticaRounded;
+}
+
+.navbar-default .nav-wrap{
+	position: fixed;
+	top: 95px;
+    max-width: 230px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30px; 
+    left: 22%;
+}
+
+ .navbar-default .logo{
+    width: 160px;
+    height: 30px;
+    display: inline-block;
+    background-size: 360px;
+    background-image: url(/resources/image/logo12345.png);
+    /* background-image: url(/resources/image/logo.png); */
+    background-position: -149px 0;
+}
+
+.search-form{
+    position: fixed;
+    top: 31px;
+    left: 43%;
+    width: 215px;
+    height: 26px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-icon{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    display: inline-block;
+    background-size: 413px 391px;
+    background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/abfe22.png");
+    background-position: -402px -22px;
+}
+
+.textInput{
+    width: 215px;
+    /* height: 28px; */
+    height: 28px;
+    background: #fafafa;
+    border: solid 1px #dbdbdb;
+    border-radius: 3px;
+    padding: 3px 30px 3px 30px;
+    color: #999;
+    font-weight: 400;
+    text-align: center;
+    font-size: 14px;
+    outline: none;
+}
+
+
+.pull-left{
+    float: left;
+}
+
+.pull-right{
+	position: fixed;
+    top: 25px;
+    left: 65%;
+}
+
+.modal-dialog {
+	top: 30px;
+	width: 215px;
+	right: 5px;
+}
+
+
+

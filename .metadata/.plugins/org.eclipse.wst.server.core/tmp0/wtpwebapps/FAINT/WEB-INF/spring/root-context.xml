@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://faint.c6kv0m0reijx.ap-northeast-2.rds.amazonaws.com/faint?useSSL=false"></property>
+		<property name="username" value="faint"></property>
+		<property name="password" value="faint1122"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" >
+		<list>
+			<value>classpath:mappers/**/*Mapper.xml</value>
+		</list>
+				
+		</property>
+		
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<!-- 트랜잭션 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven />
+	
+	<context:component-scan base-package="com.faint.persistence"></context:component-scan>
+	<context:component-scan base-package="com.faint.service"></context:component-scan>
+	
+	<!-- 자동으로 AspectJ 라이브러리 이용해서 Proxy 생성 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- 메일 보내기 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	   <property name="host" value="smtp.gmail.com" />
+	   <property name="port" value="587" />
+	   <property name="username" value="somony9292@gmail.com" />
+	   <property name="password" value="Alstjr920722!" />
+	
+	
+	   <!-- email 요청시는 SMTP -->
+	   <property name="javaMailProperties">
+	      <props>
+	         <prop key="mail.transport.protocol">smtp</prop>
+	         <prop key="mail.smtp.auth">true</prop>
+	         <prop key="mail.smtp.starttls.enable">true</prop>
+	         <prop key="mail.debug">true</prop>
+	      </props>
+	   </property>
+	</bean>
+	
+	<!-- 클라이언트ID와 보안비밀 세팅 -->
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	  <constructor-arg value="34138722145-j8upnor2ujj5hmquiraaflo7au4uu1l3.apps.googleusercontent.com" />
+	  <constructor-arg value="PaD2YF9RmeH96TbdexDgI1XX" />
+	</bean>
+	
+	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+	  <property name="scope" value="https://www.googleapis.com/auth/plus.login" />
+	  <property name="redirectUri" value="http://localhost:8181/user/googleSignInCallback" />
+	</bean>
+</beans>
