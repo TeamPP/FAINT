@@ -46,8 +46,16 @@ margin-bottom:4%;
 <!-- 구글지도 넣기  -->
 <script>
 $(document).ready(function() {
-//맵초기화
-initMap(); 
+	//맵초기화
+	initMap(); 
+	
+	var keyword="${keyword}";
+	console.log(keyword);
+	//keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
+	//console.log("keyword %빼고:      "+keyword);
+	geocoding(keyword);
+});
+
 var map, geocoder, marker;
 function initMap(){
 	var mapObj = document.getElementById('map');
@@ -63,11 +71,6 @@ function initMap(){
 	});
 	marker = new google.maps.Marker();	
 } 
-var keyword="${keyword}";
-console.log(keyword);
-//keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
-//console.log("keyword %빼고:      "+keyword);
-geocoding(keyword);
 //지오코딩
 //이름으로 gps위치 얻기
 function geocoding(str) {
@@ -84,9 +87,8 @@ function geocoding(str) {
 		} else {
 			alert('검색결과가 없습니다.');
 		}
-	})
-	}
-});
+	});
+}
 </script>
 
 <script type="text/javascript">
