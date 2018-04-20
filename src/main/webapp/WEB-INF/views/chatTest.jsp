@@ -166,7 +166,7 @@ display:none;
 </head>
 
 <body>
-
+	
 	<div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
     <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
 	<sec:authorize access="isAuthenticated()">
@@ -175,12 +175,11 @@ display:none;
 
 	
 	<script type="text/javascript">
-		console.log("!23");
+		
 		followList();
 		function followList(){
 			 $.getJSON("/member/following/" + ${login.id}, function(data){
 			      var data=$(data)
-			      console.log(data);
 			      if(data.length!=0){
 			         //following onclick 메서드 적용(follow리스트뜨도록)
 			        var followingList="";
@@ -218,7 +217,10 @@ display:none;
 						console.log("연결됨");
 					}
 			        
+					var accessUserList;
+					
 					//메세지 핸들링
+					
 					sock.onmessage = onMessage;
 			        
 					//종료 핸들링
@@ -250,20 +252,24 @@ display:none;
 		}
 		
 		function onMessage(evt) {
-			
-		    var data = evt.data;
 		    
-			var curUserList = JSON.parse(data);
+			data = JSON.parse(evt.data);
 			
-			console.log("curUserList"+curUserList)
-		    
-			$(".switch").each(function(){
-				if(jQuery.inArray($(this).attr("id"), curUserList) != -1){
-					$(this).css("background-color", "springgreen");
-				}else if(jQuery.inArray($(this).attr("id"), curUserList) == -1){
-					$(this).css("background-color", "lightgray");
-				}
-			})
+			//접속과 함께 메신저의 유저정보 확인
+			if(data.initUserList!=null){
+				//accessUserList에 팔로우하고 있는 사람중 접속자 리스트 받아옴
+				accessUserList = data.initUserList;
+				
+				console.log(accessUserList);
+				
+				$(".switch").each(function(){
+					if(jQuery.inArray($(this).attr("id"), curUserList.accessList) != -1){
+						$(this).css("background-color", "springgreen");
+					}else if(jQuery.inArray($(this).attr("id"), curUserList.accessList) == -1){
+						$(this).css("background-color", "lightgray");
+					}
+				})
+			}
 
 		}
 
@@ -284,7 +290,7 @@ display:none;
 <!-- =============== 채팅 모달 시작 ====================== -->
 
 
-<div id="chatClick" onclick="getChat()" style="cursor:pointer;"></div> 
+<%-- <div id="chatClick" onclick="getChat()" style="cursor:pointer;"></div> 
 
 <div class="chatNone" id="chat">      
     <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
@@ -469,7 +475,7 @@ $(document).on('click', '#new_chat', function (e) {
     clone.css("margin-left", size_total);
 });
 
-</script>  
+</script>   --%>
 </body>
 
 </html>
