@@ -8,12 +8,25 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+	<beans:bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" />
 	<beans:bean id="echoHandler" class="com.faint.util.EchoHandler"/>
+	
 	
 	<websocket:handlers>
 	    <websocket:mapping handler="echoHandler" path="/echo"/>
+	      <websocket:mapping handler="chatHandler" path="/chat" />
 	    <!-- 인터넷 익스플로러 구버전 사용자들은 브라우저의 Websocket사용불가, 따라서 sock.js를 이용 -->
+	    	  <websocket:handshake-interceptors>
+         <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+      </websocket:handshake-interceptors>
 	    <websocket:sockjs/>    
 	</websocket:handlers>
+	
+	 <mvc:default-servlet-handler />
 </beans:beans>
+
+
+
+
 

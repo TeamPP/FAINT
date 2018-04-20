@@ -33,7 +33,7 @@ public class MessageController {
 		ResponseEntity<List<String>> entity=null;
 		
 		logger.info(loginid+"");
-		
+	System.out.println("이거 뭐ㄱ[???/ ");
 		//temp
 		List list=new ArrayList();
 		list.add("123");

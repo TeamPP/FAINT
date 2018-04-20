@@ -11,6 +11,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Inject
 	private MessageDAO dao;
+	
+	
+	
 
 	//=================알림 관련=================
 	
