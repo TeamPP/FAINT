@@ -1,53 +1,105 @@
 package com.faint.util;
  
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import net.sf.json.JSONArray;
+import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
+import com.faint.dto.RelationDTO;
+import com.faint.service.UserService;
+
+import net.sf.json.JSONObject;
 
  
 @Repository
 public class EchoHandler extends TextWebSocketHandler{
+	
+	//로그
+	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
+	
+	@Inject
+    UserService userService;
     
-    //세션을 모두 저장한다.
-    //방법 1 :  1:1 채팅
-//    private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
-       
-    //방법 2 : 전체 채팅
-    private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-    private List<String> emailList = new ArrayList<String>();
+    //전체 접속 유저 소켓
+	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
+
+	//접속자 이메일 리스트
+    private Map<String, List> userList = new HashMap<String, List>();
+  
+    //접속 유저값
+    private Map<String, String> userOn = new HashMap<String, String>();
     
-    private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
+    //접속해제 유저값
+    private Map<String, String> userOff = new HashMap<String, String>();
     
-    //클라이언트 연결 이후에 실행되는 메소드
+    
+    //클라이언트 접속 이후 실행 메서드
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
     	
-    	
-    	/*sessions.put(session.getId(), session);*/
-
-        sessionList.add(session);
+    	//세션맵에 (이메일, 소켓 세션)으로 저장
+    	sessions.put(session.getPrincipal().getName(), session);
+    	logger.info("1");
+    	//JSONobject로 만들기 위한 인스턴스값 생성
+    	JSONObject jsonObj=new JSONObject();
+    	logger.info("2");
+        //인증키를 통해 팔로우하고 있는 리스트 호출
+        Authentication auth=SecurityContextHolder.getContext().getAuthentication();
+        logger.info((auth==null) + "");
+        CustomUserDetails user=(CustomUserDetails)auth.getPrincipal();
+        RelationDTO dto=new RelationDTO();
+		dto.setLoginid(user.getVo().getId());
+		dto.setUserid(user.getVo().getId());
+		
+		logger.info("3");
+		//팔로우하고 있는 사람들의 email리스트
+		List<UserVO> users=userService.flwnList(dto);
+		List<String> emails=new ArrayList();
+		for(UserVO vo : users){
+			emails.add(vo.getEmail());
+		}
+		
+		logger.info("4");
+		//email리스트가 map의 key에 있을 경우 userList에 메일 넣어줌
+		userList.put("initUserList", emails);
+		
+		logger.info("5");
+		//팔로우하고 있는 사람들의 리스트를 받아옴
+        sessions.get(session.getPrincipal().getName()).sendMessage(new TextMessage(jsonObj.fromObject(userList).toString()));
+        logger.info(jsonObj.fromObject(userList).toString());
+        logger.info("안들어오나?");
         
-        JSONArray jsonArray=new JSONArray();
-        emailList.add(session.getPrincipal().getName());
+        //===================================================
         
-        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
-        for(WebSocketSession sess : sessionList){
-            sess.sendMessage(new TextMessage(jsonArray.fromObject(emailList).toString()));
-        }
-
-         //0번째 중괄호에 session.getId()을 넣으라는뜻
-        logger.info("{} 연결됨", session.getPrincipal().getName()); 
-        logger.info("연결 IP : " + session.getRemoteAddress().getHostName());
-        
+		//나를 팔로우하고 있는 사람들의 email리스트
+		users = userService.flwdList(dto);
+		emails.clear();
+		for(UserVO vo : users){
+			emails.add(vo.getEmail());
+		}
+		
+		//나를 팔로우하고 있는 사람들에게 userOn을 보내줌
+		userOn.put("userOn", user.getVo().getEmail());
+		for (String email : emails) {
+			if(sessions.containsKey(email)){
+				sessions.get(email).sendMessage(new TextMessage(jsonObj.fromObject(userOn).toString()));
+			}
+		}
+			
     }
     
     
@@ -73,11 +125,11 @@ public class EchoHandler extends TextWebSocketHandler{
         session.getPrincipal();
         
         
-        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
-        for(WebSocketSession sess : sessionList){
+/*        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
+        for(WebSocketSession sess : sessions){
             sess.sendMessage(new TextMessage(name + ":" + message.getPayload()));
         }
-        
+        */
         
         // 맵 방법.
 /*        Iterator<String> sessionIds = sessions.ketSet().iterator();
@@ -97,24 +149,34 @@ public class EchoHandler extends TextWebSocketHandler{
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        //List 삭제
-        sessionList.remove(session);
-        
-        JSONArray jsonArray=new JSONArray();
-        emailList.remove(session.getPrincipal().getName());
-        System.out.println("어디에 있니?"+emailList.toString());
-        
-        
-        //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
-        for(WebSocketSession sess : sessionList){
-            sess.sendMessage(new TextMessage(jsonArray.fromObject(emailList).toString()));
-        }
-        
-        //Map 삭제
-//        sessions.remove(session.getId());
-        
-        logger.info("{} 연결 끊김.", session.getId());
-        
+    	
+    	//세션맵에 나간사람 삭제
+    	sessions.remove(session.getPrincipal().getName());
+
+    	//JSONobject로 만들기 위한 인스턴스값 생성
+    	JSONObject jsonObj=new JSONObject();
+    	
+        //인증키를 통해 팔로우하고 있는 리스트 호출
+        UserVO user = userService.detailByEmail(session.getPrincipal().getName());
+        RelationDTO dto = new RelationDTO();
+		dto.setLoginid(user.getId());
+		dto.setUserid(user.getId());
+		
+        //나를 팔로우 하고 있는 사람들의 리스트
+		//나를 팔로우하고 있는 사람들의 email리스트
+		List<UserVO> users = userService.flwdList(dto);
+		List<String> emails = new ArrayList();
+		for(UserVO vo : users){
+			emails.add(vo.getEmail());
+		}
+		//나를 팔로우하고 있는 사람들에게 userOn을 보내줌
+		userOff.put("userOff", session.getPrincipal().getName());
+		for (String email : emails) {
+			if(sessions.containsKey(email)){
+				sessions.get(email).sendMessage(new TextMessage(jsonObj.fromObject(userOff).toString()));
+			}
+		}
+
     }
  
 }

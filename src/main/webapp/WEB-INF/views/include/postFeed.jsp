@@ -73,20 +73,6 @@ span{
 	right: 8px;
 	top: 8px; 
 }
-.likeIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -156px;
-	color: rgba(0,0,0,0);
-}
-.replyIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -115px;
-	color: rgba(0,0,0,0);
-}
 </style>
 
 <jsp:include page="/WEB-INF/views/include/postModal.jsp" flush="false" />
@@ -210,7 +196,7 @@ function getPostList(){
       //필터 적용
       $(".imageContainer:eq("+index+")").removeClass().addClass("imageContainer " + filterList[0]);
       
-      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span>\t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='fas fa-heart'></i><span>&nbsp;"+this.likeCount+"개 </span>&nbsp;\t&nbsp;<i class='fas fa-comment'></i>&nbsp;<span>"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
