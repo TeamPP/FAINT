@@ -142,7 +142,7 @@
         var nickname = $('#nickname').val();
         console.log(nickname);
 
-        if(nickname.trim().length >20){
+        if(nickname.trim().length >15){
             alert("이름을 20자 이내로 입력해 주세요.");
             return false;
         }
