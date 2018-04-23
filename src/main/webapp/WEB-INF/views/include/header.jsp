@@ -258,7 +258,7 @@ body {
     </div>
 </div>
 
-<div class="row">
+ <div class="row" style="width:100%">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
