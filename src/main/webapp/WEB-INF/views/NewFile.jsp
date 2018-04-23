@@ -168,78 +168,80 @@ display:none;
 
 <body>
 	
-	<div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
-    <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
+<div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
+<div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
 	
-	<sec:authorize access="isAuthenticated()">
+<sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.vo" var="login" />
-	
+
 	<script type="text/javascript">
 		
-		followList();
-		function followList(){
-			 $.getJSON("/member/following/" + ${login.id}, function(data){
-			      var data=$(data)
-			      if(data.length!=0){
-			         //following onclick 메서드 적용(follow리스트뜨도록)
-			        var followingList="";
-		            data.each(function(){
-		            	
-		               
-		               followingList+="<li class='messengerUser'> <a href='javascript:;'> <img class='followPhoto' ";
-		               	// 프로필 사진이 있는경우 | 없는 경우
-		            	if(this.profilephoto != null){
-		            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
-		            	}else{
-		            		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
-		            	}
-		               	// 이름이 있는 경우 | 없는 경우
-		               	if(this.name != null){
-		               		followingList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='javascript:;'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
-		               	}else{
-		               		followingList+="<a style='font-weight:bold; line-height: 28px;' href='javascript:;'>" + this.nickname + "</a>"
-		               	}
-		               	
-		               	followingList+="<table><tbody style='display:table-cell;'><td class='switch' id="+this.email+"></td></tbody></table></li>";
-		            })
-		            //모달창 불러오기
-		            $("#followList").append(followingList);
-			            
-			        };
-			        
-					
-					//웸소켓을 '/hello' end point로 연결한다.
-					var socket = new SockJS('/hello');
-					var stompClient = Stomp.over(socket);
-					stompClient.connect({}, function(frame) {
-				        console.log('Connected: ' + frame);
-				        //접속시 이름값 넣어 줌
-				        sendName();
-				        //팔로우 유저중 접속자 확인
-				        stompClient.subscribe('/access/greetings', function(greeting){
-				            console.log('Response: ' + greeting);
-				        });
-				    });
-					
-					function sendName() {
-				        stompClient.send("/app/hi", {}, JSON.stringify({ 'id': '${login.id}' }));
-				    }
-					
-					function disconnect() {
-				        if (stompClient != null) {
-				            stompClient.disconnect();
-				        }
-				        console.log("Disconnected");
-				    }
-					
-			      });
-			   };
+		
+	//웸소켓을 '/hello' end point로 연결한다.
+	var socket = new SockJS('/hello');
+	var stompClient = Stomp.over(socket);
+	stompClient.connect({}, function(frame) {
+        console.log('Connected: ' + frame);
+        //접속시 이름값 넣어 줌
+        sendName();
+        //팔로우 유저중 접속자 확인
+        stompClient.subscribe('/access/followers', function(greeting){
+            console.log('Response: ' + greeting);
+        });
+    });
+	
+	//접속시 app/hi에 id값 전달 => access/greetings를 통해 값 받아옴
+	function sendName() {
+        stompClient.send("/app/hi", {}, JSON.stringify({ 'id': '${login.id}' }));
+    }
+	
+	function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        console.log("Disconnected");
+    }
+		
+	
+	followList();
+	function followList(){
+		 $.getJSON("/member/following/" + ${login.id}, function(data){
+		      var data=$(data)
+		      if(data.length!=0){
+		         //following onclick 메서드 적용(follow리스트뜨도록)
+		        var followingList="";
+	            data.each(function(){
+	            	
+	               
+	               followingList+="<li class='messengerUser'> <a href='javascript:;'> <img class='followPhoto' ";
+	               	// 프로필 사진이 있는경우 | 없는 경우
+	            	if(this.profilephoto != null){
+	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
+	            	}else{
+	            		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
+	            	}
+	               	// 이름이 있는 경우 | 없는 경우
+	               	if(this.name != null){
+	               		followingList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='javascript:;'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
+	               	}else{
+	               		followingList+="<a style='font-weight:bold; line-height: 28px;' href='javascript:;'>" + this.nickname + "</a>"
+	               	}
+	               	
+	               	followingList+="<table><tbody style='display:table-cell;'><td class='switch' id="+this.email+"></td></tbody></table></li>";
+	            })
+	            //모달창 불러오기
+	            $("#followList").append(followingList);
+		            
+		        };
+
+		      });
+		   };
 			   
 			   
 		
-		function msgPopup(){
-			$(".followWrp").toggleClass("followHide");
-		} 
+	function msgPopup(){
+		$(".followWrp").toggleClass("followHide");
+	} 
 		
 	</script>
 </sec:authorize>
