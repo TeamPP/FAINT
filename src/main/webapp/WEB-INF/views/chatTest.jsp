@@ -9,6 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
@@ -49,6 +52,19 @@
 	z-index: 11;
 	overflow: hidden;
 }
+.chatNone{
+	float: right;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 232px;
+	margin: 90px 0 30px 0;
+	z-index: 11;
+	
+}
+.textMessage{
+	posistion:relative;
+}
 #scroll{
 	bottom: 0;
 	width:255px;
@@ -71,12 +87,10 @@
 	font-size: 14px;
 	box-sizing: content-box;
 }
-
 .messengerUser:hover{
 	background-color: rgba(255, 255, 255, 0.5);
 	cursor: pointer;
 }
-
 .followPhoto{
 	width: 33px;
 	height: 33px;
@@ -114,6 +128,7 @@ table{
     -webkit-border-radius: 8px 8px 0px 8px;
     color: #fff;
     border-bottom:1px solid #6799FF;
+    width:70px;
     position: right;
 }
 #chat .base_sent::after{
@@ -140,21 +155,20 @@ table{
     border-right: 10px solid #9DC8C8;
     border-bottom: 10px solid transparent;
 }
-
 #chat .msg_container_base{
     background:#fff;
+    height: 300px;
+    overflow:auto;
+    
 }
 #chat time{ color:#fff; font-style: oblique; }
-
 .chatBlock{
 display:block;
 }
-.chatNone{
+ .chatHide{
 display:none;
 }
-
   
-
 #btn-chat{
 	background: #FFE400;
 	border: none;
@@ -166,27 +180,31 @@ display:none;
 </head>
 
 <body>
-	
+
 	<div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
-    <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
+    <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList"></ul></div></div>
+
 	<sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.vo" var="login" />
 	
 
-	
+	  <script src="/resources/js/sockjs.js"></script>
+<script src="/resources/js/sockjs.min.js"></script>
 	<script type="text/javascript">
-		
+	
+		console.log("!23");
 		followList();
 		function followList(){
 			 $.getJSON("/member/following/" + ${login.id}, function(data){
 			      var data=$(data)
+			      console.log(data);
 			      if(data.length!=0){
 			         //following onclick 메서드 적용(follow리스트뜨도록)
 			        var followingList="";
 		            data.each(function(){
 		            	
 		               
-		               followingList+="<li class='messengerUser'> <a href='javascript:;'> <img class='followPhoto' ";
+		               followingList+="<li class='messengerUser' onclick='msgPopup1()'> <a href='javascript:;'> <img class='followPhoto' ";
 		               	// 프로필 사진이 있는경우 | 없는 경우
 		            	if(this.profilephoto != null){
 		            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
@@ -207,6 +225,53 @@ display:none;
 			            
 			        };
 			        
+			        
+			        function getChat(){
+			        	$.ajax({ 
+			        		type:'POST',
+			        		url:'/chatting/chatView22',
+			        			headers : {
+			        			"Content-Type" : "application/json",
+			        			"X-HTTP-Method-Override" : "POST"}, 
+			        		dataType:'json',
+			        		beforeSend : function(xhr)
+			                {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			                    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			                },
+			        		data:JSON.stringify({
+			        			
+			        		}),
+			        		success:function(result){ 
+			        			console.log("채팅을 시작하지 ");
+			        			console.log(result+"result 타입은??");
+			        			
+			        			//console.log(result[0].msgRegist);
+			        			
+			        			var message = "";
+			        			
+			        		 	console.log(message+"11message");
+			        			for(var i=0;i<result.length;i++){
+			        				if(result != null){
+			        					console.log("result11"+result)
+			        					message = "<div class='row msg_container base_receive'><div class='col-md-10 col-xs-10' style='padding:0;'>12313<div class='messages msg_receive'>"
+			        						+ result[i].message + "<br><time>"
+			        						+ result[i].msgRegist + "</time>111</div></div></div>";
+			        					$('.msg_container_base').append(message);
+			        				}else{
+			        					message = "<div class='#'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_sent'>"
+			        						+ result[i].message + "<br>11<time>"
+			        						+ result[i].msgRegist + "</time></div></div></div>";
+			        					$('.msg_container_base').append(message);
+			        				}
+			        				
+			        				$('.msg_container_base').scrollTop(9999);
+			        			}
+			        		}
+			                
+			        	}); //$.ajax 끝
+			        }
+			        
+			        
 			        //소켓 생성
 					var sock;
 					
@@ -217,10 +282,7 @@ display:none;
 						console.log("연결됨");
 					}
 			        
-					var accessUserList;
-					
 					//메세지 핸들링
-					
 					sock.onmessage = onMessage;
 			        
 					//종료 핸들링
@@ -249,39 +311,35 @@ display:none;
 		
  		function sendMessage() {
 			sock.send($("#message").val());
+		
 		}
 		
 		function onMessage(evt) {
-		    
-			data = JSON.parse(evt.data);
 			
-			//접속과 함께 메신저의 유저정보 확인
-			if(data.initUserList!=null){
-				//accessUserList에 팔로우하고 있는 사람중 접속자 리스트 받아옴
-				accessUserList = data.initUserList;
-				
-				console.log(accessUserList);
-				
-				$(".switch").each(function(){
-					if(jQuery.inArray($(this).attr("id"), curUserList.accessList) != -1){
-						$(this).css("background-color", "springgreen");
-					}else if(jQuery.inArray($(this).attr("id"), curUserList.accessList) == -1){
-						$(this).css("background-color", "lightgray");
-					}
-				})
-			}
-
+		    var data = evt.data;
+		    
+			var curUserList = JSON.parse(data);
+			
+			console.log("curUserList"+curUserList)
+		    
+			$(".switch").each(function(){
+				if(jQuery.inArray($(this).attr("id"), curUserList) != -1){
+					$(this).css("background-color", "springgreen");
+				}else if(jQuery.inArray($(this).attr("id"), curUserList) == -1){
+					$(this).css("background-color", "lightgray");
+				}
+			})
 		}
-
 		function onClose(evt) {
 		    $("#data").append("연결 끊김");
 		}
 		
 		function msgPopup(){
 			$(".followWrp").toggleClass("followHide");
+		}
+		function msgPopup1(){
+			$(".chatNone").toggleClass("chatHide");
 		} 
-
-		
 		
 	</script>
 </sec:authorize>
@@ -290,23 +348,24 @@ display:none;
 <!-- =============== 채팅 모달 시작 ====================== -->
 
 
-<%-- <div id="chatClick" onclick="getChat()" style="cursor:pointer;"></div> 
+<div id="chatClick" onclick="getChat()" style="cursor:pointer;"></div> 
 
-<div class="chatNone" id="chat">      
-    <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
-        <div class="col-xs-12 col-md-12">
+<div class="chatNone chatHide" id="chat" >      
+    <div class="#" id="chat_window_1" style="margin-left:;">
+        <div class="TextMessage">
          	<div class="panel panel-default">
                 <div class="panel-heading top-bar">
                 	<div style="display:inline;">
-                		<h4 class="panel-title" style="display:inline;"><span class="glyphicon glyphicon-comment"></span>&nbsp;${login.nickname }대화</h4>
+                		<h4 class="panel-title" style="display:inline;"><span class="glyphicon glyphicon-comment"></span>&nbsp;DIRECT MESSAGE</h4>
                 	</div>
+                	
             	</div>
             	
             	<!-- 내용이당 -->
             	<div class="panel-body msg_container_base">
           <!-- ===========이전 대화창가져 오기인데 아직 안된다 ============ -->  		
             	
-          <!--========== 다 가져왓땅 =============-->  
+          <!--========== 다 가져왓땅 =============-->    
                 </div>
                 <!-- 내용끝났땅 -->
                 
@@ -329,8 +388,6 @@ display:none;
   <script src="/resources/js/sockjs.js"></script>
 <script src="/resources/js/sockjs.min.js"></script>
 <script>
-
-
 //Get the modal
 var modal = document.getElementById('id01');
 // When the user clicks anywhere outside of the modal, close it
@@ -339,7 +396,18 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
+/* $.getJSON("/member/following/" + ${login.id}, function(data){
+    var data=$(data)
+    console.log(data);
+followList(data);
+console.log(followList);
+console.log("das"+this.name);
+console.log("das"+this.name);
+console.log("das"+this.email);
+console.log("das"+this.nickname);
+data.each(function(){
+	console.log("das"+this.name);
+}); */
 function getChat(){
 	$.ajax({ 
 		type:'POST',
@@ -357,21 +425,22 @@ function getChat(){
 		}),
 		success:function(result){ 
 			console.log("채팅을 시작하지 ");
-			console.log(result);
+			console.log(result+"result 타입은??");
 			
-			console.log(result[0].msgRegist);
+			//console.log(result[0].msgRegist);
 			
 			var message = "";
 			
+		 	console.log(message+"11message");
 			for(var i=0;i<result.length;i++){
-				if(result[i].email == "admin"){
+				if(result != null){
 					message = "<div class='row msg_container base_receive'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_receive'>"
 						+ result[i].message + "<br><time>"
 						+ result[i].msgRegist + "</time></div></div></div>";
 					$('.msg_container_base').append(message);
 				}else{
 					message = "<div class='row msg_container base_sent'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_sent'>"
-						+ result[i].message + "<br><time>"
+						+ result[i].message + "<br>11<time>"
 						+ result[i].msgRegist + "</time></div></div></div>";
 					$('.msg_container_base').append(message);
 				}
@@ -381,11 +450,8 @@ function getChat(){
 		}
 	}); //$.ajax 끝
 }
-
-
 var sock = null;
 var message = {};
-
 $(document).ready(function(){
 	
 	
@@ -421,7 +487,6 @@ $(document).ready(function(){
            $("#btn-chat").click();
         }
     });
-
 	$('#btn-chat').click(function(){
 		
 		if($('#btn-input').val() != ""){
@@ -432,7 +497,7 @@ $(document).ready(function(){
 			message.receiver = "admin";
 			message.email = "${login.email}";
 			
-			console.log(message.email+"이건 뭐지????")
+			console.log(message.email+"이건 뭐지????1asd")
 			
 			var time = new Date();
 			
@@ -458,7 +523,6 @@ $(document).ready(function(){
 		}
 	});
 })
-
 $(document).on('focus', '.panel-footer input.chat_input', function (e) {
     var $this = $(this);
     if ($('#minim_chat_window').hasClass('panel-collapsed')) {
@@ -474,8 +538,6 @@ $(document).on('click', '#new_chat', function (e) {
     var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
     clone.css("margin-left", size_total);
 });
-
-</script>   --%>
+</script>  
 </body>
-
 </html>
