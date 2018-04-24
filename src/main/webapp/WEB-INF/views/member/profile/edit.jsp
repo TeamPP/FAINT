@@ -208,7 +208,7 @@ h2{
 			});
 			if(errFlg) return;
 			var form = $("#profileForm");
-
+			$("#intro").val($("#intro").val().replace(/\n/g, ' <br> '));
 			//비공개 체크 데이터 입력
 			if ($("#chkPri").is(":checked")) {
 				//비공개 체크 되어있으면 1
@@ -240,7 +240,7 @@ h2{
 			break;
 		//사용자이름
 		case "nickname":
-			maxLen = 30;
+ 			maxLen = 10;
 			var orgNick = "${userVO.nickname}";
 			var nick = obj.value;
 			//입력 가능 형식 문자, 숫자, 밑줄, 마침표

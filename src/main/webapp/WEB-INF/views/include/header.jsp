@@ -266,7 +266,10 @@ body {
     </div>
 </div>
 
+<<<<<<< HEAD
 <div class="row" style="width:100%;">
+=======
+ <div class="row" style="width:100%">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	

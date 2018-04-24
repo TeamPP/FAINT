@@ -411,7 +411,7 @@ $(document).ready(function() {
 	   }
    });
     
-	$(".explore, .new-post, .follow-list, .account, .logo").on("click", function(event){
+	$(".explore, .new-post, .follow-list, .account, #logo").on("click", function(event){
 		unloadCheck();
 	});
 });
