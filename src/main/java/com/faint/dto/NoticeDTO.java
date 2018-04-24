@@ -13,7 +13,8 @@ public class NoticeDTO {
 	
 	private Date regdate;
 	
-	private String postPic; //null가능
+	private String profilePhoto; //null가능
+	private String postPhoto; //null가능
 	private String filter; //null가능
 	
 	public String getFromid() {
@@ -52,11 +53,17 @@ public class NoticeDTO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public String getPostPic() {
-		return postPic;
+	public String getProfilePhoto() {
+		return profilePhoto;
 	}
-	public void setPostPic(String postPic) {
-		this.postPic = postPic;
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+	public String getPostPhoto() {
+		return postPhoto;
+	}
+	public void setPostPhoto(String postPhoto) {
+		this.postPhoto = postPhoto;
 	}
 	public String getFilter() {
 		return filter;
@@ -64,12 +71,12 @@ public class NoticeDTO {
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
+	
 	@Override
 	public String toString() {
 		return "NoticeDTO [fromid=" + fromid + ", targetid=" + targetid + ", type=" + type + ", postid=" + postid
-				+ ", isFlw=" + isFlw + ", regdate=" + regdate + ", postPic=" + postPic + ", filter=" + filter + "]";
+				+ ", isFlw=" + isFlw + ", regdate=" + regdate + ", profilePhoto=" + profilePhoto + ", postPhoto="
+				+ postPhoto + ", filter=" + filter + "]";
 	}
 	
-	
-
 }

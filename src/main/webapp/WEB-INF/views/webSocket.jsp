@@ -185,8 +185,11 @@ display:none;
         
       	//나에대한 follow,reply,like알림 구독
       	stompClient.subscribe('/notify/${login.id}', function(message){
-            
-            	console.log(message.body);
+            console.log("123");
+      		$.getJSON("/getNotice/", function(data){
+      			console.log(data);
+      		});
+            console.log("456");
             
         });
       	//나에대한 tagging알림 구독

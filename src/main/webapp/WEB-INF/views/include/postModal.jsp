@@ -882,11 +882,15 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
-                followFlg=false;
+              
+                //팔로우할경우 소켓 알림
                 if($(isFlw).html()=="팔로잉"){
-                    //팔로우할경우 소켓 알림
                     notifyFollow(userid);
+                    console.log("123");
                 }
+                
+                followFlg=false;
+
             }
          }
       });
