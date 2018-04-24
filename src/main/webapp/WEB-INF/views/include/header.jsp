@@ -71,14 +71,18 @@ body {
 	content: " ";
 	position: absolute;
 }
+
+.modal.fade.in {
+	top: 8%;
+}
 </style>
 
 </head>
 <body>
-<div class="row" id="header">
-    <div class="col-sm-12" style="height: 100px;">
-        <div class="row" id="col2">
-            
+<div class="row" id="header" style="width:100%;">
+    <div class="col-sm-12" style="height: 100px; background-color: white;">
+        <div class="row" id="col2" style="width:100%;">
+
             <div class="col-sm-4" id="logo" style="height: 100%;">
                 <a href="/main">
                     <img class="faintlogo" src="/resources/image/realogo.png">
@@ -94,7 +98,7 @@ body {
                  </button>
                                  <div class="search-option">
                      <div>
-                         <input class="type-all" name="type" type="radio" value="" id="type-all">
+                         <input class="type-all" data-filter="all" name="type" type="radio" value="" id="type-all">
                          <label for="type-all">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#all"></use>
@@ -104,7 +108,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-users" name="type" type="radio" value="" id="type-users">
+                         <input class="type-users" data-filter="@" name="type" type="radio" value="" id="type-users">
                          <label for="type-users">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
@@ -114,7 +118,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-hashtags" name="type" type="radio" value="" id="type-hashtags">
+                         <input class="type-hashtags" data-filter="#" name="type" type="radio" value="" id="type-hashtags">
                          <label for="type-hashtags">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hashtag"></use>
@@ -124,7 +128,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-locations" name="type" type="radio" value="" id="type-locations">
+                         <input class="type-locations" data-filter="%" name="type" type="radio" value="" id="type-locations">
                          <label for="type-locations">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#locations"></use>
@@ -138,6 +142,8 @@ body {
 		
          </div>
 
+<sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal.vo" var="login" />
          <div class="col-sm-4" id="menu" style="height: 100%;">
              <div class="pull-right">
                  <a class="explore" href="/explore/expage">
@@ -177,6 +183,8 @@ body {
                  </div>
              </div>
          </div>
+       </sec:authorize>
+         
      </div>
  </div>
  
@@ -258,19 +266,17 @@ body {
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="width:100%;">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
 	             <!-- Modal -->
 		<div class="modal fade" id="searchModal" role="dialog" aria-hidden="false">
-		    <div class="modal-dialog modal-sm">
 		        <div class="modal-content">
 		            <div class="modal-header" id="header-modal">
 		                <div id="results"></div>
 		            </div>
 		        </div>
-		    </div>
 		</div>
 		
 	</div>
@@ -335,15 +341,6 @@ body {
 
 <script>
 
-$("search-form").click(function() {
-	searchAjax();
-})
-
-$(".search-option input").click(function() {
-	$(".search-option input").attr("value", "0");
-	$(this).attr("value", "1");
-})
-
 // 로그아웃 버튼 클릭 이벤트
 $(".logout").click(function() {
 	$(".logoutForm").submit();
@@ -359,13 +356,9 @@ $('.search-input').focus(function () {
 // 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
-    if($("#myDropdown").attr("class")=="dropdown-content show") {
-        $(".dropbtn").css("color", "black");
-    } else {
-        $(".dropbtn").css("color", "lightgray");
-    }
 }
 
+// 이름 누르면 메뉴 dropdown
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
 
@@ -380,6 +373,7 @@ window.onclick = function (event) {
     }
 }
 
+// 카테고리 움직이기
 $(".catefilter").click(function() {
     if($(".catefilter").attr("id")=="1"){
         $(".catefilter").animate({"left": "-=85px"}, "slow");
@@ -412,6 +406,12 @@ $(".search-form").submit(function(event) {
    return true;
    }); 
    
+/* $(".search-form").keydown(function(event) {
+	 if (event.keyCode == '40' && $(".results").length!=null) {
+		 console.log("아래로눌럿다");
+	 }
+})  */
+   
 </script>
 
 <script>
@@ -422,395 +422,447 @@ function searchAjax(){
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
       $("#header-modal").css("height", "51px");
    }
-   
-   $("#keywordInput").keyup(function(){
-      
-      var words = $("#keywordInput").val();
-       //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
-       
-      // 키워드 받아서 공백 제거하고 저장
-      var chgwords = words;
-      var splitArray = chgwords.split(' ');
-      var searchwords='';
-      var bfsearchwords = '';
-      
-      for(i in splitArray) {
-         chgwords = splitArray[i];
-         if(chgwords.indexOf(" ")==0) {
-            var chgwords = words.substring(chgwords.lastIndexOf(" "));
-         }
-         bfsearchwords += chgwords;
-      }
-      console.log("searchwords----------->" + bfsearchwords);
-      
-      if(bfsearchwords=="") {
-    		if($("#type-all").attr("value")=="1") {
-    			searchwords +='';
-    		} else if($("#type-users").attr("value")=="1") {
-    			searchwords +='@';
-    		} else if($("#type-hashtags").attr("value")=="1") {
-    			searchwords +='#';
-    		} else if($("#type-locations").attr("value")=="1") {
-    			searchwords += '%';
-    		}
-    		searchwords += bfsearchwords;
-      } else {
-    	  if(bfsearchwords.charAt(0)=="#" || bfsearchwords.charAt(0)=="@" || bfsearchwords.charAt(0)=="%") {
-      		if($("#type-all").attr("value")=="1") {
-      			bfsearchwords.charAt(0)='';
-    		} else if($("#type-users").attr("value")=="1") {
-    			bfsearchwords.charAt(0)='@';
-    		} else if($("#type-hashtags").attr("value")=="1") {
-    			bfsearchwords.charAt(0)='#';
-    		} else if($("#type-locations").attr("value")=="1") {
-    			bfsearchwords.charAt(0)='%';
-    		}
-      		
-      		searchwords=bfsearchwords;
-    	  } else {
-      		if($("#type-all").attr("value")=="1") {
-    			searchwords +='';
-    		} else if($("#type-users").attr("value")=="1") {
-    			searchwords +='@';
-    		} else if($("#type-hashtags").attr("value")=="1") {
-    			searchwords +='#';
-    		} else if($("#type-locations").attr("value")=="1") {
-    			searchwords += '%';
-    		}
-      		
-    		searchwords += bfsearchwords;
-    	  }
-      }
 
-      console.log("searchwords----------->>>" + searchwords);
+	$(".search-option input").click(function() {
+		console.log("누른거성공함?")
+		$(".search-option input").attr("value", "0");
+		$(this).attr("value", "1");
+	})
+   
+   $("#keywordInput").keyup(function(event){
+	   
+   function setvalue(i) {
+	   var obj = $("._ndl3t _4jr79");
+	      obj.value = i;
+	      console.log("뀨!!!!"+i);
+	   return false;
+	  }
+   
+   var y = 0;
+   
+   function teclaPulsada() {
+	   //행(리스트) 전체 숫자에서 하나를 뺀다 (0부터 시작하게 때문에)
+	   var listnum = $(".results").length;
+	   switch (event.keyCode) {
+	    case 40:
+	     document.getElementById('tabla').rows[y].bgColor='#FFFFFF';
+	     if (y==listnum){y=0;} else {y++;} 
+	     document.getElementById('tabla').rows[y].bgColor='#CC66FF';
+	     setvalue(y);
+	    break
+	    case 38:
+	     document.getElementById('tabla').rows[y].bgColor='#FFFFFF';
+	     if (y==0){y=listnum;} else {y--;}
+	     document.getElementById('tabla').rows[y].bgColor='#CC66FF';
+	     setvalue(y);
+	    break
+	   }
+	  }
+   
+   
+   
+	   
+	 if (event.keyCode == '40' && $(".results").length!=null) {
+		 console.log("아래로눌럿다");
+	 } else if(event.keyCode == '38' && $(".results").length!=null) {
+		 console.log("위로눌럿다");
+	 } else if(event.keyCode == '37' && $(".results").length!=null) {
+		 //왼쪽 방향키 막기
+	 } else if(event.keyCode == '39' && $(".results").length!=null) {
+		 //오른쪽 방향키 막기
+	 }
       
-      /* 검색 단어가 있으면 일치하는 것 출력 */
-      if(searchwords!=''){
-    	  console.log("찾아지는데이터----------->>>" + searchwords);
-         $.ajax({
-            type:"POST",
-            url: "/explore/searchData/",
-            headers:{
-               "Content-Type" : "application/json",
-               "X-HTTP-Method-Override" : "POST"
-            },
-            async: false,
-            data: searchwords,
-            beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-            //dataType: "text",
-            success: function(result){
-            	
-                for(var i=0; i<result.length; i++) {
-                    if(searchwords.length>0) {
-                        for(var a=0; a<searchwords.length; a++) {
-                            if(result[i].type==0 && result[i].tagname!=null){
-                            	// 특수문자 자르고
-                            	tagname=result[i].tagname.substring(1);
-                            	
-                               for(var b=a; b<tagname.length; b++) {
-                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
-                                     if(a==b && tagname.indexOf(searchwords)==0) {
-                                        result[i].score += 3;
-                                     } else if(a==b) {
-                                    	 result[i].score += 2;
-                                     }
-                                    	 result[i].score += 1;
-                                     }
-                                  }
-                               } /* tagname if문 끝 */
-                            
-                            else if(result[i].nickname!=null) {
-                            	// 특수문자 자르고
-                               nickname = result[i].nickname.substring(1);
-                               
-                               // nickname O name O => 둘 다 있는 경우
-                              if(result[i].name!=null) {
-                            	// 특수문자 자르고
-                            	name = result[i].name.substring(1);
-                               for(var b=a; b<name.length; b++) {
-                                  if(searchwords.charAt(a)==name.charAt(b)) {
-                                      if(a==b && name.indexOf(searchwords)==0) {
-                                    	  result[i].score += 3;
-                                       } else if(a==b) {
-                                    	   result[i].score += 2;
-                                      } 
-                                    	  result[i].score += 1;
-                                     }
-                               } /* name for문 끝 */
-                             }
-                              
-                               // nickname O name X => nickname만 있을 경우
-                               for(var b=a; b<nickname.length; b++) {
-                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
-                                      if(a==b && nickname.indexOf(searchwords)==0) {
-                                    	  result[i].score += 3;
-                                       } else if(a==b) {
-                                    	   result[i].score += 2;
-                                      } else {
-                                    	  result[i].score += 1;
-                                         }
-                                     } 
-                                  } /* nickname for문 끝 */
-                                  
-                            }/* nickname&name elseif끝 */
-                            
-                            else if(result[i].type==2 && result[i].location!=null) {
-                            	
-                               for(var b=a; b<result[i].location.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].location.charAt(b)) {
-										if(a==b) {
-                                        	result[i].score += 2;
-                                       }
-                                    	   result[i].score += 1;
-                                     }
-                                  }
-                            } /* location elseif문 끝 */
-                            
-                            else {
-                               result[i].score=0;
-                            }
-                            
-                        }/* for문 끝 */
-                     }
-                }/* for문 끝 */
-                
-               // score를 비교하여 점수 높은 순으로 출력하기
-                for(var i=0;i<result.length;i++) {
-                  for(var j=i+1; j<result.length; j++) {
-                     if(result[j].score>result[i].score) {
-                        var temp = result[i];
-                        result[i] = result[j];
-                        result[j] = temp;
-                      }
-                    }
-               }
-                
-                console.log("결과값--- "+JSON.stringify(result));
-                 
-                // 검색 첫 글자가 문자일 때
-                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
-                   var count = 0;
-                   var str = ' ';
-                   for(var i=0; i<result.length; i++) {
-                       if(result[i].type==0 && result[i].tagname!=null) {
-                          console.log("태그다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
-                                +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
-                                +"<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].tagname+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>"
-                                +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
-                                +"</div></div></div></a>";
-                       }
-                                         
-                       // 사람 검색
-                       else if(result[i].type==1 && result[i].nickname!=null) {
-                          console.log("이름이다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
-                                +"<div class='_o92vn'>";
-                                
-                                //프로필사진
-                                //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
-                                if(result[i].profilephoto == null){
-                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                }else{
-                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                }
-                                
-                          str+="<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].nickname+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>";
-                                if(result[i].name!=null) {
-                                   str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
-                                } else {
-                                   str+="<span class=''><span class=''></span></span>";
-                                }
-                           str+="</div></div></div></a>";
-                       }
-                                         
-                        // 로케이션 검색
-                       else if(result[i].type==2 && result[i].location!=null) {
-                          console.log("지역이다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
-                                +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
-                                +"<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>"
-                                +"</div></div></div></a>";
-                       } 
-                       
-                       else if(result[i].score==0){
-                          count ++;
-                     	  }
-                       
-                       else {
-                          $("#results").html("");
-                      	 }
-                       
-                       if(count>=3 && result.length==3) {
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                       } else {
-                          $("#header-modal").css("height", "196px");
-                          $("#results").html(str);
-                      	 }
-                      	
-                   }/* for문 끝 */
-                   
-                } /* 문자 검색 끝 */
-                // 검색 문자 첫 글자가 #인 경우
-               else if(searchwords[0]=="#") {
-                  var count = 0;
-                  var str = '';
-                  for(i=0; i<result.length; i++) {
-                        if(result[i].type==0 && result[i].tagname!=null) {
-                            console.log("태그다");
-                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
-                                  +"<div class='_o92vn'>"
-                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
-                                  +"<div class='_poxna'>"
-                                  +"<div class='_lv0uf'>"
-                                  +"<span class='_b01op'>"+result[i].tagname+"</span>"
-                                  +"</div>"
-                                  +"<div class='_2ph7c'>"
-                                  +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
-                                  +"</div></div></div></a>"
-                                  }
-                           else if(result[i].tagname==null){
-                             count ++;
-                             $("#results").html("");
-                          }
-                 	 }
-                 		
-                       if(count>=3 && result.length==3) {
-                    	   console.log(">>>"+result.length);
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                     	  } else {
-                     		 $("#header-modal").css("height", "196px");
-                     		 $("#results").html(str);
-                     	  }
-               } /* #검색 끝 */
-               
-                // 검색 첫 글자가 @인 경우
-               else if(searchwords[0]=="@") {
-                 var count = 0;
-                 var str = ' ';
-                 for(var i=0; i<result.length; i++) {
-                    if(result[i].type==1 && result[i].nickname!=null) {
-                          console.log("이름이다");
-                        str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
-                                   +"<div class='_o92vn'>";
-                                   
-                             //프로필사진
-                             //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
-                             if(result[i].profilephoto == null){
-                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                } else{
-                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                   }
-                             
-                       str+="<div class='_poxna'>"
-                             +"<div class='_lv0uf'>"
-                             +"<span class='_b01op'>"+result[i].nickname+"</span>"
-                             +"</div>"
-                             +"<div class='_2ph7c'>";
-                             if(result[i].name!=null) {
-                                str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
-                             } else {
-                                str+="<span class=''><span class=''></span></span>";
-                             }
-                          str+="</div></div></div></a>";
-                    }
-                        
-                     else if(result[i].nickname==null){
-                         count ++;
-                         $("#results").html("");
-                      }
-                 }
-                    if(count>=3 && result.length==3) {
-                 	   console.log(">>>"+result.length);
-                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                       $("#header-modal").css("height", "51px");
-                  	  } else {
-                  		$("#header-modal").css("height", "196px");
-                  		 $("#results").html(str);
-                  	  }
-               } /* @ 검색 끝 */
-               
-               // 검색 문자 첫 글자가 %인 경우
-               else if(searchwords[0]=="%") {
-                  var count = 0;
-                  var str = '';
-                  for(i=0; i<result.length; i++) {
-                        if(result[i].type==2 && result[i].location!=null) {
-                            console.log("지역이다");
-                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
-	                            +"<div class='_o92vn'>"
-	                            +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
-	                            +"<div class='_poxna'>"
-	                            +"<div class='_lv0uf'>"
-	                            +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
-	                            +"</div>"
-	                            +"<div class='_2ph7c'>"
-	                            +"</div></div></div></a>";
-                                  }
-                           else if(result[i].location==null){
-                             count ++;
-                             $("#results").html("");
-                          }
-                 	 }
-                 		
-                       if(count>=3 && result.length==3) {
-                    	   console.log(">>>"+result.length);
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                     	  } else {
-                     		 $("#header-modal").css("height", "196px");
-                     		 $("#results").html(str);
-                     	  }
-               } /* %검색 끝 */
-                
-               else {
-                  console.log("검색문else로왔다");
-                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                  $("#header-modal").css("height", "51px");
-               }
-               
-            }, /* success  끝 */
-            
-            error: function(e){
-               if(e.status==500) {
-                  console.log("에러로갓니?");
-                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                  $("#header-modal").css("height", "51px");
-               //throw e.responseText;
-               }
-            }/* error 끝 */
-            
-         }); /* ajax 끝 */
-      }      /* if 끝 */
-      
-      // enter 안 먹음
-      else if(searchwords=="") {
-          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-          $("#header-modal").css("height", "51px");
-       }
-      
-      else{
-         console.log("그럼여기구나");
-      }
+	 // 방향키를 제외한 다른 키 눌렀을 때
+	 else {
+	      var words = $("#keywordInput").val();
+	       //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
+	       
+	      // 키워드 받아서 공백 제거하고 저장
+	      var chgwords = words;
+	      var splitArray = chgwords.split(' ');
+	      var searchwords='';
+	      var bfsearchwords = '';
+	      
+	      for(i in splitArray) {
+	         chgwords = splitArray[i];
+	         if(chgwords.indexOf(" ")==0) {
+	            var chgwords = words.substring(chgwords.lastIndexOf(" "));
+	         }
+	         bfsearchwords += chgwords;
+	      }
+	      console.log("searchwords----------->" + bfsearchwords);
+
+	             if(bfsearchwords=="") {
+	    		if($("#type-all").attr("value")=="1") {
+	    			searchwords +='';
+	    		} else if($("#type-users").attr("value")=="1") {
+	    			searchwords +='@';
+	    		} else if($("#type-hashtags").attr("value")=="1") {
+	    			searchwords +='#';
+	    		} else if($("#type-locations").attr("value")=="1") {
+	    			searchwords += '%';
+	    		}
+	    		searchwords += bfsearchwords;
+	      } else {
+	    	  if(bfsearchwords.charAt(0)=="#" || bfsearchwords.charAt(0)=="@" || bfsearchwords.charAt(0)=="%") {
+	      		if($("#type-all").attr("value")=="1") {
+	      			bfsearchwords.charAt(0)='';
+	    		} else if($("#type-users").attr("value")=="1") {
+	    			bfsearchwords.charAt(0)='@';
+	    		} else if($("#type-hashtags").attr("value")=="1") {
+	    			bfsearchwords.charAt(0)='#';
+	    		} else if($("#type-locations").attr("value")=="1") {
+	    			bfsearchwords.charAt(0)='%';
+	    		}
+	      		searchwords=bfsearchwords;
+	      		
+	    	  } else {
+	      		if($("#type-all").attr("value")=="1") {
+	    			searchwords +='';
+	    		} else if($("#type-users").attr("value")=="1") {
+	    			searchwords +='@';
+	    		} else if($("#type-hashtags").attr("value")=="1") {
+	    			searchwords +='#';
+	    		} else if($("#type-locations").attr("value")=="1") {
+	    			searchwords += '%';
+	    		}
+	      		
+	    		searchwords += bfsearchwords;
+	    	  }
+	      } 
+	      
+//	      searchwords = bfsearchwords;
+
+	      console.log("searchwords----------->>>" + searchwords);
+	      
+	      /* 검색 단어가 있으면 일치하는 것 출력 */
+	      if(searchwords!=''){
+	    	  console.log("찾아지는데이터----------->>>" + searchwords);
+	         $.ajax({
+	            type:"POST",
+	            url: "/explore/searchData/",
+	            headers:{
+	               "Content-Type" : "application/json",
+	               "X-HTTP-Method-Override" : "POST"
+	            },
+	            async: false,
+	            data: searchwords,
+	            beforeSend : function(xhr)
+	            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
+	            //dataType: "text",
+	            success: function(result){
+	            	
+	                for(var i=0; i<result.length; i++) {
+	                    if(searchwords.length>0) {
+	                        for(var a=0; a<searchwords.length; a++) {
+	                            if(result[i].type==0 && result[i].tagname!=null){
+	                            	// 특수문자 자르고
+	                            	tagname=result[i].tagname.substring(1);
+	                            	
+	                               for(var b=a; b<tagname.length; b++) {
+	                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
+	                                     if(a==b && tagname.indexOf(searchwords)==0) {
+	                                        result[i].score += 3;
+	                                     } else if(a==b) {
+	                                    	 result[i].score += 2;
+	                                     }
+	                                    	 result[i].score += 1;
+	                                     }
+	                                  }
+	                               } /* tagname if문 끝 */
+	                            
+	                            else if(result[i].nickname!=null) {
+	                            	// 특수문자 자르고
+	                               nickname = result[i].nickname.substring(1);
+	                               
+	                               // nickname O name O => 둘 다 있는 경우
+	                              if(result[i].name!=null) {
+	                            	// 특수문자 자르고
+	                            	name = result[i].name.substring(1);
+	                               for(var b=a; b<name.length; b++) {
+	                                  if(searchwords.charAt(a)==name.charAt(b)) {
+	                                      if(a==b && name.indexOf(searchwords)==0) {
+	                                    	  result[i].score += 3;
+	                                       } else if(a==b) {
+	                                    	   result[i].score += 2;
+	                                      } 
+	                                    	  result[i].score += 1;
+	                                     }
+	                               } /* name for문 끝 */
+	                             }
+	                              
+	                               // nickname O name X => nickname만 있을 경우
+	                               for(var b=a; b<nickname.length; b++) {
+	                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
+	                                      if(a==b && nickname.indexOf(searchwords)==0) {
+	                                    	  result[i].score += 3;
+	                                       } else if(a==b) {
+	                                    	   result[i].score += 2;
+	                                      } else {
+	                                    	  result[i].score += 1;
+	                                         }
+	                                     } 
+	                                  } /* nickname for문 끝 */
+	                                  
+	                            }/* nickname&name elseif끝 */
+	                            
+	                            else if(result[i].type==2 && result[i].location!=null) {
+	                            	
+	                               for(var b=a; b<result[i].location.length; b++) {
+	                                  if(searchwords.charAt(a)==result[i].location.charAt(b)) {
+											if(a==b) {
+	                                        	result[i].score += 2;
+	                                       }
+	                                    	   result[i].score += 1;
+	                                     }
+	                                  }
+	                            } /* location elseif문 끝 */
+	                            
+	                            else {
+	                               result[i].score=0;
+	                            }
+	                            
+	                        }/* for문 끝 */
+	                     }
+	                }/* for문 끝 */
+	                
+	               // score를 비교하여 점수 높은 순으로 출력하기
+	                for(var i=0;i<result.length;i++) {
+	                  for(var j=i+1; j<result.length; j++) {
+	                     if(result[j].score>result[i].score) {
+	                        var temp = result[i];
+	                        result[i] = result[j];
+	                        result[j] = temp;
+	                      }
+	                    }
+	               }
+	                
+	                console.log("결과값--- "+JSON.stringify(result));
+	                 
+	                // 검색 첫 글자가 문자일 때
+	                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
+	                   var count = 0;
+	                   var str = ' ';
+	                   for(var i=0; i<result.length; i++) {
+	                       if(result[i].type==0 && result[i].tagname!=null) {
+	                          console.log("태그다");
+	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+	                                +"<div class='_o92vn'>"
+	                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
+	                                +"<div class='_poxna'>"
+	                                +"<div class='_lv0uf'>"
+	                                +"<span class='_b01op'>"+result[i].tagname+"</span>"
+	                                +"</div>"
+	                                +"<div class='_2ph7c'>"
+	                                +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
+	                                +"</div></div></div></a>";
+	                       }
+	                                         
+	                       // 사람 검색
+	                       else if(result[i].type==1 && result[i].nickname!=null) {
+	                          console.log("이름이다");
+	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+	                                +"<div class='_o92vn'>";
+	                                
+	                                //프로필사진
+	                                //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
+	                                if(result[i].profilephoto == null){
+	                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
+	                                }else{
+	                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
+	                                }
+	                                
+	                          str+="<div class='_poxna'>"
+	                                +"<div class='_lv0uf'>"
+	                                +"<span class='_b01op'>"+result[i].nickname+"</span>"
+	                                +"</div>"
+	                                +"<div class='_2ph7c'>";
+	                                if(result[i].name!=null) {
+	                                   str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
+	                                } else {
+	                                   str+="<span class=''><span class=''></span></span>";
+	                                }
+	                           str+="</div></div></div></a>";
+	                       }
+	                                         
+	                        // 로케이션 검색
+	                       else if(result[i].type==2 && result[i].location!=null) {
+	                          console.log("지역이다");
+	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+	                                +"<div class='_o92vn'>"
+	                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
+	                                +"<div class='_poxna'>"
+	                                +"<div class='_lv0uf'>"
+	                                +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
+	                                +"</div>"
+	                                +"<div class='_2ph7c'>"
+	                                +"</div></div></div></a>";
+	                       } 
+	                       
+	                       else if(result[i].score==0){
+	                          count ++;
+	                     	  }
+	                       
+	                       else {
+	                          $("#results").html("");
+	                      	 }
+	                       
+	                       if(count>=3 && result.length==3) {
+	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                          $("#header-modal").css("height", "51px");
+	                       } else {
+	                          $("#header-modal").css("height", "196px");
+	                          $("#results").html(str);
+	                      	 }
+	                      	
+	                   }/* for문 끝 */
+	                   
+	                } /* 문자 검색 끝 */
+	                // 검색 문자 첫 글자가 #인 경우
+	               else if(searchwords[0]=="#") {
+	                  var count = 0;
+	                  var str = '';
+	                  for(i=0; i<result.length; i++) {
+	                        if(result[i].type==0 && result[i].tagname!=null) {
+	                            console.log("태그다");
+	                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+	                                  +"<div class='_o92vn'>"
+	                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
+	                                  +"<div class='_poxna'>"
+	                                  +"<div class='_lv0uf'>"
+	                                  +"<span class='_b01op'>"+result[i].tagname+"</span>"
+	                                  +"</div>"
+	                                  +"<div class='_2ph7c'>"
+	                                  +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
+	                                  +"</div></div></div></a>"
+	                                  }
+	                           else if(result[i].tagname==null){
+	                             count ++;
+	                             $("#results").html("");
+	                          }
+	                 	 }
+	                 		
+	                       if(count>=3 && result.length==3) {
+	                    	   console.log(">>>"+result.length);
+	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                          $("#header-modal").css("height", "51px");
+	                     	  } else {
+	                     		 $("#header-modal").css("height", "196px");
+	                     		 $("#results").html(str);
+	                     	  }
+	               } /* #검색 끝 */
+	               
+	                // 검색 첫 글자가 @인 경우
+	               else if(searchwords[0]=="@") {
+	                 var count = 0;
+	                 var str = ' ';
+	                 for(var i=0; i<result.length; i++) {
+	                    if(result[i].type==1 && result[i].nickname!=null) {
+	                          console.log("이름이다");
+	                        str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+	                                   +"<div class='_o92vn'>";
+	                                   
+	                             //프로필사진
+	                             //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
+	                             if(result[i].profilephoto == null){
+	                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
+	                                } else{
+	                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
+	                                   }
+	                             
+	                       str+="<div class='_poxna'>"
+	                             +"<div class='_lv0uf'>"
+	                             +"<span class='_b01op'>"+result[i].nickname+"</span>"
+	                             +"</div>"
+	                             +"<div class='_2ph7c'>";
+	                             if(result[i].name!=null) {
+	                                str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
+	                             } else {
+	                                str+="<span class=''><span class=''></span></span>";
+	                             }
+	                          str+="</div></div></div></a>";
+	                    }
+	                        
+	                     else if(result[i].nickname==null){
+	                         count ++;
+	                         $("#results").html("");
+	                      }
+	                 }
+	                    if(count>=3 && result.length==3) {
+	                 	   console.log(">>>"+result.length);
+	                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                       $("#header-modal").css("height", "51px");
+	                  	  } else {
+	                  		$("#header-modal").css("height", "196px");
+	                  		 $("#results").html(str);
+	                  	  }
+	               } /* @ 검색 끝 */
+	               
+	               // 검색 문자 첫 글자가 %인 경우
+	               else if(searchwords[0]=="%") {
+	                  var count = 0;
+	                  var str = '';
+	                  for(i=0; i<result.length; i++) {
+	                        if(result[i].type==2 && result[i].location!=null) {
+	                            console.log("지역이다");
+	                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+		                            +"<div class='_o92vn'>"
+		                            +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
+		                            +"<div class='_poxna'>"
+		                            +"<div class='_lv0uf'>"
+		                            +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
+		                            +"</div>"
+		                            +"<div class='_2ph7c'>"
+		                            +"</div></div></div></a>";
+	                                  }
+	                           else if(result[i].location==null){
+	                             count ++;
+	                             $("#results").html("");
+	                          }
+	                 	 }
+	                 		
+	                       if(count>=3 && result.length==3) {
+	                    	   console.log(">>>"+result.length);
+	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                          $("#header-modal").css("height", "51px");
+	                     	  } else {
+	                     		 $("#header-modal").css("height", "196px");
+	                     		 $("#results").html(str);
+	                     	  }
+	               } /* %검색 끝 */
+	                
+	               else {
+	                  console.log("검색문else로왔다");
+	                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                  $("#header-modal").css("height", "51px");
+	               }
+	               
+	            }, /* success  끝 */
+	            
+	            error: function(e){
+	               if(e.status==500) {
+	                  console.log("에러로갓니?");
+	                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	                  $("#header-modal").css("height", "51px");
+	               //throw e.responseText;
+	               }
+	            }/* error 끝 */
+	            
+	         }); /* ajax 끝 */
+	      }      /* if 끝 */
+	      
+	      // enter 안 먹음
+	      else if(searchwords=="") {
+	          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+	          $("#header-modal").css("height", "51px");
+	       }
+	      
+	      else{
+	         console.log("그럼여기구나");
+	      }
+	 }
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */

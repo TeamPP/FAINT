@@ -24,7 +24,7 @@
 
 <style>
 h1, h5 {
-	text-align: center;
+   text-align: center;
 }
 #map{
 width: 100%;
@@ -37,7 +37,7 @@ margin-bottom:4%;
 
 </head>
 <body>
-		
+      
 <!-- 구글 지도 -->
 <div id="map" ></div>
 <h1 id="keywordTitle">${keyword}</h1>
@@ -46,58 +46,60 @@ margin-bottom:4%;
 <!-- 구글지도 넣기  -->
 <script>
 $(document).ready(function() {
-//맵초기화
-initMap(); 
+   //맵초기화
+   initMap(); 
+   
+   var keyword="${keyword}";
+   console.log(keyword);
+   //keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
+   //console.log("keyword %빼고:      "+keyword);
+   geocoding(keyword);
+});
+
 var map, geocoder, marker;
 function initMap(){
-	var mapObj = document.getElementById('map');
-	//맵 객체 없을땐 리턴
-	if(mapObj == null || typeof mapObj == "undefined"){
-		return;
-	}
-	geocoder = new google.maps.Geocoder();
-	map = new google.maps.Map(mapObj, {
-		center : {
-		lat : -34.397, lng : 150.644},
-		zoom : 14
-	});
-	marker = new google.maps.Marker();	
+   var mapObj = document.getElementById('map');
+   //맵 객체 없을땐 리턴
+   if(mapObj == null || typeof mapObj == "undefined"){
+      return;
+   }
+   geocoder = new google.maps.Geocoder();
+   map = new google.maps.Map(mapObj, {
+      center : {
+      lat : -34.397, lng : 150.644},
+      zoom : 14
+   });
+   marker = new google.maps.Marker();   
 } 
-var keyword="${keyword}";
-console.log(keyword);
-//keyword=keyword.substring(1,keyword.length);  //%빼고 keyword값 가져옥;
-//console.log("keyword %빼고:      "+keyword);
-geocoding(keyword);
 //지오코딩
 //이름으로 gps위치 얻기
 function geocoding(str) {
-	if(str == null || str =="" || typeof str == "undefined") return;
-	var modalAddress = str;
-	console.log(modalAddress);
-	geocoder.geocode({
-		'address' : modalAddress
-	}, function(results, status) {
-		if (status == 'OK') {
-			marker.setPosition(results[0].geometry.location);
-			marker.setMap(map);
-			map.setCenter(results[0].geometry.location);
-		} else {
-			alert('검색결과가 없습니다.');
-		}
-	})
-	}
-});
+   if(str == null || str =="" || typeof str == "undefined") return;
+   var modalAddress = str;
+   console.log(modalAddress);
+   geocoder.geocode({
+      'address' : modalAddress
+   }, function(results, status) {
+      if (status == 'OK') {
+         marker.setPosition(results[0].geometry.location);
+         marker.setMap(map);
+         map.setCenter(results[0].geometry.location);
+      } else {
+         alert('검색결과가 없습니다.');
+      }
+   });
+}
 </script>
 
 <script type="text/javascript">
-	//postFeed로 전달될 데이터
-	var jsonList = ${jsonList};
-	var uid=null;
+   //postFeed로 전달될 데이터
+   var jsonList = ${jsonList};
+   var uid=null;
 </script>
 
 <!-- 메인피드 -->
 <jsp:include page="/WEB-INF/views/include/postFeed.jsp" flush="false" />
-	
-	
+   
+   
 </body>
 </html>
