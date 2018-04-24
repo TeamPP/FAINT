@@ -801,7 +801,8 @@ function searchAjax(){
 }      /* searchAjax() 끝 */
 </script>
 
-<jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" />
+<%-- <jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" /> --%>
+<jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
 
 </body>
 </html>

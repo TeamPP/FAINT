@@ -11,6 +11,7 @@
 
 	<bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" />
 	<bean id="echoHandler" class="com.faint.util.EchoHandler"/>
+	<bean id="customHandshakeHandler" class="com.faint.util.HttpHandshakeInterceptor"/>
 	
 	
 <!-- 	<websocket:handlers>
@@ -25,9 +26,28 @@
 	
 	<websocket:message-broker application-destination-prefix="/app">
        	<websocket:stomp-endpoint path="/hello">
+       		<websocket:handshake-interceptors>
+       			<bean class="com.faint.util.HttpHandshakeInterceptor"/>
+       		</websocket:handshake-interceptors>
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/chat, /notify, /access"/>
+        
+<!--         <websocket:client-inbound-channel>
+			<websocket:executor core-pool-size="100" max-pool-size="200" keep-alive-seconds="600"/>
+			<websocket:interceptors>
+				<ref bean="myInterceptor"/>
+			</websocket:interceptors>
+		</websocket:client-inbound-channel>
+		
+		<websocket:client-outbound-channel>
+			<websocket:executor core-pool-size="101" max-pool-size="201" keep-alive-seconds="601"/>
+			<websocket:interceptors>
+				<ref bean="myInterceptor"/>
+				<bean class="org.springframework.web.socket.config.TestChannelInterceptor"/>
+			</websocket:interceptors>
+		</websocket:client-outbound-channel> -->
+		
     </websocket:message-broker>
 	
 </beans>
