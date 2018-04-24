@@ -13,6 +13,7 @@ import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
+import com.faint.persistence.NoticeDAO;
 import com.faint.persistence.PostDAO;
 import com.faint.util.HashTagHelper;
 import com.faint.util.S3Util;
@@ -21,6 +22,9 @@ import com.faint.util.S3Util;
 public class PostServiceImpl implements PostService {
 	@Inject
 	private PostDAO dao;
+	
+	@Inject
+	private NoticeDAO nDao;
 
 	//==============post 등록(사진등록+태그등록)==============
 	// post등록 (registPostAndTag method 사용)
@@ -150,9 +154,11 @@ public class PostServiceImpl implements PostService {
 	
 	//==============like==============
 	
+	@Transactional
 	@Override
 	public void postLike(RelationDTO dto) throws Exception{
 		dao.postLike(dto);
+		nDao.createLikeNotice(dto);
 	}
 	
 	@Override

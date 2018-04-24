@@ -284,8 +284,8 @@ public class PostController {
 	}
 	
 	//like 등록 - rest방식
-	@RequestMapping(value="/{postid}/like", method=RequestMethod.POST)
-	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
+	@RequestMapping(value="/{postid}/like/{writer}", method=RequestMethod.POST)
+	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, @PathVariable("writer") Integer userid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -293,6 +293,7 @@ public class PostController {
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
 		dto.setLoginid(userVO.getId());
+		dto.setUserid(userid);
 		
 		try{
 			service.postLike(dto);
