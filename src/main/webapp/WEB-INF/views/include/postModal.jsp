@@ -559,6 +559,9 @@ function registReply(thisTag, key){
          success:function(result){
             if(result=="SUCCESS"){
                reply();
+               //태그할 경우 웹소켓 알림
+               notifyTagging(comment);
+               
                $(thisTag).val("");
                //댓글 창 스크롤 아래로
                $(".s2_2_1").scrollTop($(".s2_2_1").height());
@@ -848,6 +851,7 @@ function follow(){
          var url ="/member/follow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'POST'}";
          $(isFlw).html("팔로잉");
+
          
       }else if(($(this).html()=="팔로잉")){
          var type="delete";
@@ -869,6 +873,10 @@ function follow(){
             	followed();
                 following();
                 followFlg=false;
+                if($(isFlw).html()=="팔로잉"){
+                    //팔로우할경우 소켓 알림
+                    notifyFollow(userid);
+                }
             }
          }
       });

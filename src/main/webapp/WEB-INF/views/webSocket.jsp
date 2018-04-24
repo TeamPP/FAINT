@@ -176,30 +176,74 @@ display:none;
 
 	<script type="text/javascript">
 		
-		
 	//웸소켓을 '/hello' end point로 연결한다.
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        //접속시 이름값 넣어 줌
-        sendName();
-        //팔로우 유저중 접속자 확인
-        stompClient.subscribe('/access/followers', function(greeting){
-            console.log('Response: ' + greeting);
+        
+      	//나에대한 follow알림 구독
+      	stompClient.subscribe('/notify/${login.id}/follow', function(message){
+            console.log(message.body);
         });
+      	//나에대한 tagging알림 구독
+      	stompClient.subscribe('/notify/${login.nickname}/tagging', function(message){
+            console.log(message.body);
+        });
+      	//내 게시물에 대한 좋아요 알림 구독
+      	stompClient.subscribe('/notify/${login.id}/like', function(message){
+            console.log(message.body);
+        });
+      	//내 게시물에 대한 reply알림 구독
+        stompClient.subscribe('/notify/${login.id}/reply', function(message){
+            console.log(message.body);
+        });
+      	
     });
 	
-	//접속시 app/hi에 id값 전달 => access/greetings를 통해 값 받아옴
-	function sendName() {
-        stompClient.send("/app/hi", {}, JSON.stringify({ 'id': '${login.id}' }));
-    }
+	
+	//1. 팔로우 알림
+	function notifyFollow(userid){
+		stompClient.send("/app/notify/" + userid + "/follow", {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+	}
+	
+	//2. 태깅 알림 (등록되는 포스트/댓글일때만 (자기소개는 가지않음)) -replyRegist() , post/register.jsp
+	function notifyTagging(text){
+		
+      //2-1. split() 함수처리하기 (from common.js)
+      text = split(text);
+      //2-2. 공백으로 나누기
+      var splitArray = text.split(" ");
+      //2-3. 특수문자 
+      var special = "!$%^&*()-=+<>?_";
+      
+      //2-5. 알람처리
+      for(var i in splitArray){
+         var word = splitArray[i];
+         //두글자 이상이면서, 첫글자가 @이면서 , 두번째글자가 특수문자가 아니면 링크처리
+         if(splitArray[i].length!=1 && (word.indexOf("@")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
+            var person=word.substring(word.lastIndexOf("@")+1);
+            stompClient.send("/app/notify/" + person + "/tagging", {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));            
+         }
+      }
+      
+	}
+	
+	//좋아요 알림
+	function notifyLike(userid, postid){
+		stompClient.send("/app/notify/" + userid + "/like/" + postid, {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+	}
+	
+	//댓글 알림
+	function notifyReply(userid, postid){
+		stompClient.send("/app/notify/" + userid + "/reply/" + postid, {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+	}
+	
 	
 	function disconnect() {
         if (stompClient != null) {
             stompClient.disconnect();
         }
-        console.log("Disconnected");
     }
 		
 	

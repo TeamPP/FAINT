@@ -18,7 +18,6 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map attributes) throws Exception {
 		
-		
 		if (request instanceof ServletServerHttpRequest) {
 			Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
 			CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
