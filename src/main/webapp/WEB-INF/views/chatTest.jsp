@@ -538,6 +538,7 @@ $(document).on('click', '#new_chat', function (e) {
     var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
     clone.css("margin-left", size_total);
 });
+
 </script>  
 </body>
 </html>
