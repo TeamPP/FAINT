@@ -127,7 +127,7 @@ public class MainController {
 	}
 
 	
-	@RequestMapping(value = "/webSocket", method = RequestMethod.GET)
+	@RequestMapping(value = "/messenger", method = RequestMethod.GET)
 	public void chatTest(Model model)throws Exception{
 		
 		

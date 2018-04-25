@@ -10,7 +10,6 @@
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
@@ -168,10 +167,6 @@ display:none;
 
 <body>
 
-<ul class="notice"></ul>
-<div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
-<div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
-	
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.vo" var="login" />
 
@@ -221,10 +216,10 @@ display:none;
                		list += "src='/resources/img/emptyProfile.jpg' /></a>";
                	}
                 
-   				list += "<a href='/member/"+this.fromid+"' style='font-weight:600;'>" + this.fromid + "</a>님이";
+   				list += "<a href='/member/"+this.fromid+"' style='font-weight:600;'>" + this.fromid + "</a><span>님이";
                	
                 if(this.type=="F"){
-                	list += "회원님을 팔로우하였습니다";
+                	list += "회원님을 팔로우하였습니다</span>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -238,13 +233,13 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += "회원님을 태그하였습니다";
+                	list += "회원님을 태그하였습니다</span>";
                 	
                 }else if(this.type=="L"){
-                	list += "회원님의 게시물에 좋아요를 눌렀습니다";
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다</span>";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다";
+                	list += "회원님의 게시물에 댓글을 남겼습니다</span>";
                 }
                 
                 if(this.type!="F"){
@@ -252,9 +247,9 @@ display:none;
                 	if(this.filter==""){
                 		list += "<img style='border-radius:0px' class='followPhoto' "; 
                 	}else{
-                		list += "<img style='border-radius:0px' class='followPhoto _" + this.filter + "' "; 
+                		list += "<img style='border-radius:0px' class='followPhoto " + this.filter + "' ";
                 	}
-                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></div>";
+                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></li>";
                 	
                 }
 
@@ -307,47 +302,6 @@ display:none;
             stompClient.disconnect();
         }
     }
-		
-	
-	followList();
-	function followList(){
-		 $.getJSON("/member/following/" + ${login.id}, function(data){
-		      var data=$(data)
-		      if(data.length!=0){
-		         //following onclick 메서드 적용(follow리스트뜨도록)
-		        var followingList="";
-	            data.each(function(){
-	            	
-	               
-	               followingList+="<li class='messengerUser'> <a href='javascript:;'> <img class='followPhoto' ";
-	               	// 프로필 사진이 있는경우 | 없는 경우
-	            	if(this.profilephoto != null){
-	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
-	            	}else{
-	            		followingList+="src='/resources/img/emptyProfile.jpg' /></a>&nbsp &nbsp";
-	            	}
-	               	// 이름이 있는 경우 | 없는 경우
-	               	if(this.name != null){
-	               		followingList+="<div style='display:inline-block; line-height:16px;'><a style='font-weight:bold;' href='javascript:;'>" + this.nickname + "</a><p style='margin:0;'>"+this.name+"</p></div>"
-	               	}else{
-	               		followingList+="<a style='font-weight:bold; line-height: 28px;' href='javascript:;'>" + this.nickname + "</a>"
-	               	}
-	               	
-	               	followingList+="<table><tbody style='display:table-cell;'><td class='switch' id="+this.email+"></td></tbody></table></li>";
-	            })
-	            //모달창 불러오기
-	            $("#followList").append(followingList);
-		            
-		        };
-
-		      });
-		   };
-			   
-			   
-		
-	function msgPopup(){
-		$(".followWrp").toggleClass("followHide");
-	}
 		
 	</script>
 </sec:authorize>
