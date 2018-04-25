@@ -106,6 +106,8 @@ public class ExploreController {
 			cri.setKeyword(words.substring(1, words.length()));
 		} else if (words.substring(0, 1).equals("@") && words.length() > 1) {
 			cri.setKeyword(words.substring(1, words.length()));
+		} else if (words.substring(0, 1).equals("%") && words.length() > 1) {
+			cri.setKeyword(words.substring(1, words.length()));
 		}
 		// 아닌 경우 그냥 검색
 		else {

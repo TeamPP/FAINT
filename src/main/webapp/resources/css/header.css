@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 /* 검색창 스타일 */
-#header-modal {
+#searchHeader-modal {
    padding: 0px;
     overflow-y: auto;
     height: 220px;
@@ -244,7 +244,7 @@ span {
    display: none;
 }
 
-.modal-content {
+#searchModal-content {
     width: 11%;
     left: 43%;
     position: relative;
@@ -686,4 +686,37 @@ span {
 .catefilter:hover {
 	cursor: pointer;
 	color: black;
+}
+
+.heart-svg {
+	fill: #555;
+    width: 33px;
+    position: relative;
+    top: -186px;
+}
+
+.heart-svg:hover {
+	fill: #e24040;
+	cursor: pointer;
+}
+
+#followModal {
+	
+}
+
+#followModal-content {
+	width: 15%;
+    right: -70%;
+    position: relative;
+    top: 1%;
+    border: solid 1px #e6e6e6;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px rgba(0,0,0,.0975);
+}
+
+#followHeader-modal {
+    padding: 0px;
+    overflow-y: auto;
+    height: 500px;
 }

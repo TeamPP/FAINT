@@ -59,12 +59,25 @@ body {
 
 .show {display:block;}
 
-.modal-content::after {
+#searchModal-content::after {
     border-color: transparent transparent #fff;
     border-style: solid;
     border-width: 0 10px 10px;
     height: 0;
     left: 98px;
+    top: -10px;
+    width: 0;
+    z-index: 3;
+	content: " ";
+	position: absolute;
+}
+
+#followModal-content::after {
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    height: 0;
+    right: 35%;
     top: -10px;
     width: 0;
     z-index: 3;
@@ -98,7 +111,7 @@ body {
                  </button>
                                  <div class="search-option">
                      <div>
-                         <input class="type-all" data-filter="all" name="type" type="radio" value="" id="type-all">
+                         <input class="type-all" name="type" type="radio" value="" id="type-all">
                          <label for="type-all">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#all"></use>
@@ -108,7 +121,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-users" data-filter="@" name="type" type="radio" value="" id="type-users">
+                         <input class="type-users" name="type" type="radio" value="" id="type-users">
                          <label for="type-users">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
@@ -118,7 +131,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-hashtags" data-filter="#" name="type" type="radio" value="" id="type-hashtags">
+                         <input class="type-hashtags" name="type" type="radio" value="" id="type-hashtags">
                          <label for="type-hashtags">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hashtag"></use>
@@ -128,7 +141,7 @@ body {
                      </div>
 
                      <div>
-                         <input class="type-locations" data-filter="%" name="type" type="radio" value="" id="type-locations">
+                         <input class="type-locations" name="type" type="radio" value="" id="type-locations">
                          <label for="type-locations">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#locations"></use>
@@ -147,17 +160,173 @@ body {
          <div class="col-sm-4" id="menu" style="height: 100%;">
              <div class="pull-right">
                  <a class="explore" href="/explore/expage">
-                     <img src="/resources/image/header_icon/explore-icon.png">
+					<img src="/resources/image/header_icon/explore-icon.png">
                  </a>
                  <a class="new-post" href="/post/register">
-                     <img src="/resources/image/header_icon/newpost-icon.png">
+					<img src="/resources/image/header_icon/newpost-icon.png">
                  </a>
                  <a class="recommend" href="javascript:;">
-                     <img src="/resources/image/header_icon/recommend-icon.png">
+					<img src="/resources/image/header_icon/recommend-icon.png">
                  </a>
-                 <a class="follow-list" href="javascript:;">
-                     <img src="/resources/image/header_icon/follow-icon.png">
+                 <a class="follow-list" list="results" data-toggle="modal" data-target="#followModal" data-backdrop="true" autocomplete="off">
+                    <svg class="hearteffect-svg">
+                    	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#heart-effect"></use>
+                    </svg>
+                 	<svg class="heart-svg">
+                    	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#heart"></use>
+                    </svg>
                  </a>
+                        	             <!--Follow Modal -->
+		<div class="modal fade" id="followModal" role="dialog" aria-hidden="false">
+		        <div class="modal-content" id="followModal-content">
+		            <div class="modal-header" id="followHeader-modal">
+		                <div id="follow-results">
+		                
+		                							<a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/soso">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@soso</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕하세요안녕하세요안녕하세요안녕하세요ㅌㅊㅌㅊㅌㅊㅌㅊㅌ</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/hello">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@hello</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕하다</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/hihi">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@hihi</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/AhnSunYoung">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/displayFile?fileName=/2018/03/28970d287f-ad1c-45d5-83b8-808dee56899c_KakaoTalk.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@AhnSunYoung</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안선영</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+							<a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/soso">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@soso</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕하세요안녕하세요안녕하세요안녕하세요ㅌㅊㅌㅊㅌㅊㅌㅊㅌ</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/hello">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@hello</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕하다</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/hihi">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/resources/img/emptyProfile.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@hihi</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안녕</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
+								href="/member/AhnSunYoung">
+								<div class="_o92vn">
+									<span class="_po4xn coreSpriteHashtag"> <img
+										src="/displayFile?fileName=/2018/03/28970d287f-ad1c-45d5-83b8-808dee56899c_KakaoTalk.jpg"
+										;="" style="height: 24px; width: 24px; border-radius: 50%;">
+									</span>
+									<div class="_poxna">
+										<div class="_lv0uf">
+											<span class="_b01op">@AhnSunYoung</span>
+										</div>
+										<div class="_2ph7c">
+											<span class=""> <span class="">안선영</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+										
+		            </div><!-- follow-results 끝 -->
+		        </div>
+		</div>
+		
                  <a class="account" href="/member/${login.nickname}">
                      <c:choose>
                              <c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
@@ -199,7 +368,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="all" tabindex="-1"  onclick="cateClick(this)" value="type-cateAll" id="type-cateAll">
                             <label for="type-cateAll">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-all-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
                                 </svg>
                                 <span>All</span>
@@ -209,7 +378,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="1" tabindex="-1"  onclick="cateClick(this)" value="type-travel" id="type-travel">
                             <label for="type-travel">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-travel-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
                                 </svg>
                                 <span>Travel</span>
@@ -219,7 +388,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="2" tabindex="-1"  onclick="cateClick(this)" value="type-movie" id="type-movie">
                             <label for="type-movie">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-movie-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
                                 </svg>
                                 <span>Movie</span>
@@ -229,7 +398,7 @@ body {
                         <div>
                             <input name="type" type="radio"  data-filter="3" tabindex="-1"  onclick="cateClick(this)" value="type-music" id="type-music">
                             <label for="type-music">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-music-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
                                 </svg>
                                 <span>Music</span>
@@ -239,7 +408,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="4" tabindex="-1"  onclick="cateClick(this)" value="type-food" id="type-food">
                             <label for="type-food">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-food-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
                                 </svg>
                                 <span>Food</span>
@@ -249,7 +418,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="5" tabindex="-1"  onclick="cateClick(this)" value="type-writing" id="type-writing">
                             <label for="type-writing">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-writing-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
                                 </svg>
                                 <span>Writing</span>
@@ -266,17 +435,14 @@ body {
     </div>
 </div>
 
-<<<<<<< HEAD
-<div class="row" style="width:100%;">
-=======
  <div class="row" style="width:100%">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
-	             <!-- Modal -->
+	             <!--Search Modal -->
 		<div class="modal fade" id="searchModal" role="dialog" aria-hidden="false">
-		        <div class="modal-content">
-		            <div class="modal-header" id="header-modal">
+		        <div class="modal-content" id="searchModal-content">
+		            <div class="modal-header" id="searchHeader-modal">
 		                <div id="results"></div>
 		            </div>
 		        </div>
@@ -328,7 +494,18 @@ body {
     <symbol id="writing" viewBox="0 0 512 512">
         <path xmlns="http://www.w3.org/2000/svg" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/>
     </symbol>
-
+    <symbol id="heart" viewBox="0 0 485.3 485.3">
+    	<path xmlns="http://www.w3.org/2000/svg" d="M349.6,28.95c-36.3,0-70.5,14.2-96.2,39.9l-10.6,10.6L232,68.65c-25.7-25.7-59.9-39.9-96.2-39.9     c-36.2,0-70.3,14.1-96,39.8S0,128.35,0,164.65s14.2,70.4,39.9,96.1l190.5,190.5l0.4,0.4c3.3,3.3,7.7,4.9,12,4.9     c4.4,0,8.8-1.7,12.1-5l190.5-190.5c25.7-25.7,39.9-59.8,39.9-96.1s-14.1-70.5-39.8-96.1C419.9,43.05,385.8,28.95,349.6,28.95z      M421.2,236.75l-178.3,178.4L64.2,236.45c-19.2-19.2-29.8-44.7-29.9-71.9c0-27.1,10.5-52.6,29.7-71.8     c19.2-19.1,44.7-29.7,71.7-29.7c27.2,0,52.7,10.6,72,29.9l22.9,22.9c6.4,6.4,17.8,6.4,24.3,0l22.8-22.8     c19.2-19.2,44.8-29.8,71.9-29.8s52.6,10.6,71.8,29.8c19.2,19.2,29.8,44.7,29.7,71.9C451.1,192.05,440.5,217.55,421.2,236.75z"/>
+    </symbol>
+    <symbol id="heart-effect" viewBox="0 0 219.839 219.839">
+	<g>
+		<path style="fill:#FFC847;" d="M64.92,18.919c-0.663,0-1.2-0.537-1.2-1.2v-5.447c0-0.663,0.537-1.2,1.2-1.2      c0.663,0,1.2,0.537,1.2,1.2v5.447C66.12,18.382,65.583,18.919,64.92,18.919z"/>
+		<path style="fill:#FFC847;" d="M46.858,22.513c-0.471,0-0.917-0.279-1.108-0.741l-2.085-5.033      c-0.254-0.612,0.037-1.314,0.649-1.567c0.608-0.254,1.313,0.038,1.567,0.649l2.085,5.033c0.254,0.612-0.037,1.314-0.65,1.567      C47.167,22.483,47.011,22.513,46.858,22.513z"/>
+		<path style="fill:#FFC847;" d="M31.545,32.744c-0.307,0-0.614-0.117-0.849-0.352l-3.852-3.853c-0.469-0.469-0.469-1.229,0-1.697      c0.469-0.469,1.228-0.469,1.697,0l3.852,3.853c0.469,0.469,0.469,1.229,0,1.697C32.159,32.627,31.852,32.744,31.545,32.744z"/>
+		<path style="fill:#FFC847;" d="M98.295,32.744c-0.307,0-0.614-0.117-0.849-0.352c-0.469-0.469-0.469-1.229,0-1.697l3.853-3.853      c0.469-0.469,1.229-0.469,1.697,0c0.469,0.469,0.469,1.229,0,1.697l-3.853,3.853C98.909,32.627,98.602,32.744,98.295,32.744z"/>
+		<path style="fill:#FFC847;" d="M82.982,22.513c-0.153,0-0.309-0.029-0.459-0.092c-0.612-0.253-0.903-0.955-0.649-1.567      l2.085-5.033c0.254-0.611,0.955-0.903,1.567-0.649c0.612,0.253,0.903,0.955,0.649,1.567l-2.085,5.033      C83.899,22.233,83.453,22.513,82.982,22.513z"/>
+	</g>
+    </symbol>
   </svg>
   
   <c:choose>
@@ -339,8 +516,6 @@ body {
 			<div class="empty" style="height:150px;"></div>
 		</c:otherwise>
 	</c:choose>
-  
-  
 
 <script>
 
@@ -393,7 +568,6 @@ $(".catefilter").click(function() {
     }
 })
 
-
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
    if($("._oznku").text()=="검색 결과가 없습니다.") {
@@ -408,13 +582,13 @@ $(".search-form").submit(function(event) {
    
    return true;
    }); 
-   
-/* $(".search-form").keydown(function(event) {
-	 if (event.keyCode == '40' && $(".results").length!=null) {
-		 console.log("아래로눌럿다");
-	 }
-})  */
-   
+
+// 검색 필터 적용하기 위한 value값
+$('.search-option input').click(function() {
+	$(".search-option input").attr("value", "0");
+	$(this).attr("value", "1");
+});
+
 </script>
 
 <script>
@@ -423,56 +597,21 @@ function searchAjax(){
    
    if($("#keywordInput").val()=="") {
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-      $("#header-modal").css("height", "51px");
+      $("#searchHeader-modal").css("height", "51px");
    }
-
-	$(".search-option input").click(function() {
-		console.log("누른거성공함?")
-		$(".search-option input").attr("value", "0");
-		$(this).attr("value", "1");
-	})
    
    $("#keywordInput").keyup(function(event){
-	   
-   function setvalue(i) {
-	   var obj = $("._ndl3t _4jr79");
-	      obj.value = i;
-	      console.log("뀨!!!!"+i);
-	   return false;
-	  }
-   
-   var y = 0;
-   
-   function teclaPulsada() {
-	   //행(리스트) 전체 숫자에서 하나를 뺀다 (0부터 시작하게 때문에)
-	   var listnum = $(".results").length;
-	   switch (event.keyCode) {
-	    case 40:
-	     document.getElementById('tabla').rows[y].bgColor='#FFFFFF';
-	     if (y==listnum){y=0;} else {y++;} 
-	     document.getElementById('tabla').rows[y].bgColor='#CC66FF';
-	     setvalue(y);
-	    break
-	    case 38:
-	     document.getElementById('tabla').rows[y].bgColor='#FFFFFF';
-	     if (y==0){y=listnum;} else {y--;}
-	     document.getElementById('tabla').rows[y].bgColor='#CC66FF';
-	     setvalue(y);
-	    break
-	   }
-	  }
-   
-   
-   
-	   
+
 	 if (event.keyCode == '40' && $(".results").length!=null) {
 		 console.log("아래로눌럿다");
 	 } else if(event.keyCode == '38' && $(".results").length!=null) {
 		 console.log("위로눌럿다");
 	 } else if(event.keyCode == '37' && $(".results").length!=null) {
 		 //왼쪽 방향키 막기
+		 console.log("왼쪽막았다");
 	 } else if(event.keyCode == '39' && $(".results").length!=null) {
 		 //오른쪽 방향키 막기
+		 console.log("오른쪽막았다");
 	 }
       
 	 // 방향키를 제외한 다른 키 눌렀을 때
@@ -529,18 +668,14 @@ function searchAjax(){
 	    		} else if($("#type-locations").attr("value")=="1") {
 	    			searchwords += '%';
 	    		}
-	      		
 	    		searchwords += bfsearchwords;
 	    	  }
 	      } 
 	      
-//	      searchwords = bfsearchwords;
-
 	      console.log("searchwords----------->>>" + searchwords);
 	      
 	      /* 검색 단어가 있으면 일치하는 것 출력 */
 	      if(searchwords!=''){
-	    	  console.log("찾아지는데이터----------->>>" + searchwords);
 	         $.ajax({
 	            type:"POST",
 	            url: "/explore/searchData/",
@@ -557,6 +692,7 @@ function searchAjax(){
 	            //dataType: "text",
 	            success: function(result){
 	            	
+	            	/* result를 searchwords와 비교해서 score순으로 정렬하기 */
 	                for(var i=0; i<result.length; i++) {
 	                    if(searchwords.length>0) {
 	                        for(var a=0; a<searchwords.length; a++) {
@@ -651,7 +787,7 @@ function searchAjax(){
 	                   for(var i=0; i<result.length; i++) {
 	                       if(result[i].type==0 && result[i].tagname!=null) {
 	                          console.log("태그다");
-	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+	                          str+="<a class='_ndl3t _4jr79 hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
 	                                +"<div class='_o92vn'>"
 	                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
 	                                +"<div class='_poxna'>"
@@ -666,7 +802,7 @@ function searchAjax(){
 	                       // 사람 검색
 	                       else if(result[i].type==1 && result[i].nickname!=null) {
 	                          console.log("이름이다");
-	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+	                          str+="<a class='_ndl3t _4jr79 user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
 	                                +"<div class='_o92vn'>";
 	                                
 	                                //프로필사진
@@ -693,7 +829,7 @@ function searchAjax(){
 	                        // 로케이션 검색
 	                       else if(result[i].type==2 && result[i].location!=null) {
 	                          console.log("지역이다");
-	                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+	                          str+="<a class='_ndl3t _4jr79 location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
 	                                +"<div class='_o92vn'>"
 	                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
 	                                +"<div class='_poxna'>"
@@ -714,9 +850,9 @@ function searchAjax(){
 	                       
 	                       if(count>=3 && result.length==3) {
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                          $("#header-modal").css("height", "51px");
+	                          $("#searchHeader-modal").css("height", "51px");
 	                       } else {
-	                          $("#header-modal").css("height", "196px");
+	                          $("#searchHeader-modal").css("height", "196px");
 	                          $("#results").html(str);
 	                      	 }
 	                      	
@@ -730,7 +866,7 @@ function searchAjax(){
 	                  for(i=0; i<result.length; i++) {
 	                        if(result[i].type==0 && result[i].tagname!=null) {
 	                            console.log("태그다");
-	                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+	                            str+="<a class='_ndl3t _4jr79 hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
 	                                  +"<div class='_o92vn'>"
 	                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
 	                                  +"<div class='_poxna'>"
@@ -750,9 +886,9 @@ function searchAjax(){
 	                       if(count>=3 && result.length==3) {
 	                    	   console.log(">>>"+result.length);
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                          $("#header-modal").css("height", "51px");
+	                          $("#searchHeader-modal").css("height", "51px");
 	                     	  } else {
-	                     		 $("#header-modal").css("height", "196px");
+	                     		 $("#searchHeader-modal").css("height", "196px");
 	                     		 $("#results").html(str);
 	                     	  }
 	               } /* #검색 끝 */
@@ -764,7 +900,7 @@ function searchAjax(){
 	                 for(var i=0; i<result.length; i++) {
 	                    if(result[i].type==1 && result[i].nickname!=null) {
 	                          console.log("이름이다");
-	                        str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+	                        str+="<a class='_ndl3t _4jr79 user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
 	                                   +"<div class='_o92vn'>";
 	                                   
 	                             //프로필사진
@@ -796,9 +932,9 @@ function searchAjax(){
 	                    if(count>=3 && result.length==3) {
 	                 	   console.log(">>>"+result.length);
 	                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                       $("#header-modal").css("height", "51px");
+	                       $("#searchHeader-modal").css("height", "51px");
 	                  	  } else {
-	                  		$("#header-modal").css("height", "196px");
+	                  		$("#searchHeader-modal").css("height", "196px");
 	                  		 $("#results").html(str);
 	                  	  }
 	               } /* @ 검색 끝 */
@@ -810,7 +946,7 @@ function searchAjax(){
 	                  for(i=0; i<result.length; i++) {
 	                        if(result[i].type==2 && result[i].location!=null) {
 	                            console.log("지역이다");
-	                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+	                            str+="<a class='_ndl3t _4jr79 location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
 		                            +"<div class='_o92vn'>"
 		                            +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
 		                            +"<div class='_poxna'>"
@@ -826,12 +962,12 @@ function searchAjax(){
 	                          }
 	                 	 }
 	                 		
-	                       if(count>=3 && result.length==3) {
+	                       if(count>=3) {
 	                    	   console.log(">>>"+result.length);
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                          $("#header-modal").css("height", "51px");
+	                          $("#searchHeader-modal").css("height", "51px");
 	                     	  } else {
-	                     		 $("#header-modal").css("height", "196px");
+	                     		 $("#searchHeader-modal").css("height", "196px");
 	                     		 $("#results").html(str);
 	                     	  }
 	               } /* %검색 끝 */
@@ -839,7 +975,7 @@ function searchAjax(){
 	               else {
 	                  console.log("검색문else로왔다");
 	                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                  $("#header-modal").css("height", "51px");
+	                  $("#searchHeader-modal").css("height", "51px");
 	               }
 	               
 	            }, /* success  끝 */
@@ -848,7 +984,7 @@ function searchAjax(){
 	               if(e.status==500) {
 	                  console.log("에러로갓니?");
 	                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	                  $("#header-modal").css("height", "51px");
+	                  $("#searchHeader-modal").css("height", "51px");
 	               //throw e.responseText;
 	               }
 	            }/* error 끝 */
@@ -859,7 +995,7 @@ function searchAjax(){
 	      // enter 안 먹음
 	      else if(searchwords=="") {
 	          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-	          $("#header-modal").css("height", "51px");
+	          $("#searchHeader-modal").css("height", "51px");
 	       }
 	      
 	      else{
