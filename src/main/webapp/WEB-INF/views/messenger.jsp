@@ -188,6 +188,7 @@ canvas {
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: 30;
 }
 #hangout.collapsed {
   height: 55px;
