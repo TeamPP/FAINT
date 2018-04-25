@@ -14,7 +14,7 @@
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+  <link href="/resources/bootstrap-social.css" rel="stylesheet">
 <!-- 모달 부트스트랩 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <!-- 아이콘 부트스트랩  -->
-<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
 
 <!-- 이미지 필터 -->
@@ -53,6 +53,9 @@ body {
    display: inline-block;
    border-radius: 150px;  /* 프사 둥글게 */
    vertical-align: baseline !important;
+}
+.empty {
+	height: 220px; !important
 }
 .show {display:block;}
 .modal-content::after {
@@ -254,7 +257,7 @@ body {
     </div>
 </div>
 
- <div class="row" style="width:100%">
+<div class="row" style="width:100%;">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
@@ -317,17 +320,7 @@ body {
     </symbol>
 
   </svg>
-  
-  <c:choose>
-		<c:when test="${reqURL == '/main'}">
-			<div class="empty" style="height:220px;"></div>
-		</c:when>
-		<c:otherwise>
-			<div class="empty" style="height:150px;"></div>
-		</c:otherwise>
-	</c:choose>
-  
-  
+  <div class="empty"></div>
 
 <script>
 $("search-form").click(function() {
@@ -643,7 +636,7 @@ function searchAjax(){
                           $("#results").html("");
                       	 }
                        
-                       if(count>=3 && result.length==3) {
+                       if(count>=3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
                        } else {
@@ -678,7 +671,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3 && result.length==3) {
+                       if(count>=3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
@@ -724,7 +717,7 @@ function searchAjax(){
                          $("#results").html("");
                       }
                  }
-                    if(count>=3 && result.length==3) {
+                    if(count>=3) {
                  	   console.log(">>>"+result.length);
                        $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                        $("#header-modal").css("height", "51px");
@@ -757,7 +750,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3 && result.length==3) {
+                       if(count>=3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");

@@ -7,21 +7,16 @@
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
-
 .empty {
     height: 150px;
 }
-
 span{
 	display: inline-block;
 }
-
 .postContainerWrp{
    text-align : center;
    margin-top: 35px;
 }
-
-
 .postContainer{
    display: inline-block;
    width: 935px;
@@ -80,10 +75,8 @@ span{
 
 <script>
 console.log(jsonList);
-
 //body로딩 후
 $(document).ready(function(){
-
 	//viewport크기 관리
     $(window).resize(function(){
     	if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
@@ -96,9 +89,7 @@ $(document).ready(function(){
     	}
 	});
    getPostList();
-
 });
-
 //포스트 피드 띄우는 함수
 function getPostList(){
    var height=$(window).scrollTop();
@@ -107,7 +98,6 @@ function getPostList(){
    //포스트 피드
    $("body").append("<div class='postContainerWrp' style='width:100%; height:100%;'></div>");
    $(".postContainerWrp").append("<div class='postContainer'></div>");
-
    //데이터 담을 변수
    var data="";
    //태그 or 지역 검색 일때
@@ -208,7 +198,6 @@ function getPostList(){
       
       //이미지에서 벗어날 때
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
-
    });
    
    //포스트 모달
@@ -216,8 +205,6 @@ function getPostList(){
    
    var height=$(window).scrollTop(height);
 };
-
-
 //css - 카테고리별 게시물 필터링
 $(".cate-option input").click(function(){
    var customType=$(this).data("filter");
@@ -229,8 +216,6 @@ $(".cate-option input").click(function(){
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
-
-
 function prevPost(){
 	var curIndex=$(".postModal-content").data("index");
 	$(".imageContainer:eq("+(curIndex-1)+")").click();
