@@ -339,6 +339,15 @@ background-color:black;
 
 <body>
 
+	<c:if test="${msg ne null}">
+		<script>
+		/* post작성후 태깅했을 경우 알림요청 */
+		var tagMessage=${msg};
+		var targetPost=tagMessage.postid;
+		var targetId=tagMessage.targetid;
+		</script>
+	</c:if>
+	
 	<div class="row" id="carousel">
 		<c:forEach items="${list}" var="postDTO"  varStatus='status'>
 		<article  data-filter="${postDTO.cateid}"
@@ -448,6 +457,7 @@ background-color:black;
 <jsp:include page="/WEB-INF/views/include/postModal.jsp" flush="false" />
 <!-- 길이제한 함수, 해쉬태그 필터링 -->
 <script>
+
 //postid 가져와서 댓글달기
 $(document).ready(function(){
 	

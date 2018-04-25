@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,12 @@ public class WebSocketController {
 		return entity;
 	}
 	
+	//알림구독시 메세지 보내기
+	@SubscribeMapping("/notify/{loginid}")
+	public String noticeSubscribe(@DestinationVariable("loginid") int loginid) throws Exception {
+		return "SUCCESS";
+	}
+	
 	//알림메세지 보내기-follow
 	@MessageMapping("/notify/{loginid}/follow")
     @SendTo("/notify/{loginid}")
@@ -70,17 +77,24 @@ public class WebSocketController {
 	}
 	
 	//알림메세지 보내기-tagging
-	@MessageMapping("/notify/{nickname}/tagging/{postid}")
+	@MessageMapping("/notify/{nickname}/tagging/{postid}/{type}")
     @SendTo("/notify/{nickname}")
-	public String tagging(@DestinationVariable("nickname") String userid, @DestinationVariable("postid") int postid, UserVO vo) throws Exception {
+	public String tagging(@DestinationVariable("nickname") String usernickname, @DestinationVariable("postid") int postid, @DestinationVariable("type") String type, UserVO vo) throws Exception {
 		
-		int count = service.createTaggingNotice(vo.getNickname(), userid, postid);
+		String Message="FAIL";
 		
-		if(count==1){
-			return "SUCCESS";
-		}else{
-			return "FAIL";
+		if (type=="reply"){
+			int count = service.createTaggingNotice(vo.getNickname(), usernickname, postid);
+			
+			if(count==1){
+				Message="SUCCESS";
+			}
+			
+		}else if (type=="post"){
+			Message="SUCCESS";
 		}
+		
+		return Message;
 		
 	}
 	
