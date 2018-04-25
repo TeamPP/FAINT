@@ -170,7 +170,7 @@ display:none;
 
 <ul class="notice"></ul>
 <div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
-<div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
+<!-- <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div> -->
 
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.vo" var="login" />
@@ -333,7 +333,7 @@ display:none;
 		
 	</script>
 </sec:authorize>
-<!--  친구 클릭 시 그 팔로우와 대화 시작  -->
+<%-- <!--  친구 클릭 시 그 팔로우와 대화 시작  -->
  <!-- =============== 채팅 모달 시작 ====================== -->
  
  
@@ -546,5 +546,5 @@ data.each(function(){
      clone.css("margin-left", size_total);
  });
  
-</script>  
+</script>  --%> 
 </html>
