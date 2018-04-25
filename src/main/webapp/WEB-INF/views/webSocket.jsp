@@ -183,19 +183,21 @@ display:none;
 	stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         
+        noticeList();
+        
       	//나에대한 follow,reply,like알림 구독
       	stompClient.subscribe('/notify/${login.id}', function(message){
             if(message.body=="SUCCESS"){
-          		$.getJSON("/getNotice/", function(data){
-          			console.log(data);
-          		});
+				noticeList();
             }
         });
       	
-/*       	//나에대한 tagging알림 구독
+       	//나에대한 tagging알림 구독
       	stompClient.subscribe('/notify/${login.nickname}', function(message){
-      		
-        }); */
+            if(message.body=="SUCCESS"){
+				noticeList();
+            }
+        });
       	
       	//게시물 작성시 태깅 알림보내기
       	if(typeof(tagMessage) != "undefined"){
@@ -204,6 +206,62 @@ display:none;
     		}
       	}
     });
+	
+	function noticeList(){
+  		$.getJSON("/getNotice/", function(data){
+  			console.log(data);
+  			var list="";
+  			$(data).each(function(){
+  				list += "<li style='height:50px;' class='oneofList'><a href='/member/"+this.fromid+"'><img class='followPhoto'";
+  				
+                // 프로필 사진이 있는경우 | 없는 경우
+   				if(this.profilephoto != null){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
+               	}else if(this.profilephoto == null){
+               		list += "src='/resources/img/emptyProfile.jpg' /></a>";
+               	}
+                
+   				list += "<a href='/member/"+this.fromid+"' style='font-weight:600;'>" + this.fromid + "</a>님이";
+               	
+                if(this.type=="F"){
+                	list += "회원님을 팔로우하였습니다";
+                	
+                	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
+                	if(this.isFlw > 0){
+                		list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로잉</button></li>";
+                   
+                    }else if(this.isFlw==0 && this.fromUserId!=${login.id}){
+                    	list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로우</button></li>";
+                       
+                    }else{
+                    	list += "</div>";
+                    }
+                	
+                }else if(this.type=="T"){
+                	list += "회원님을 태그하였습니다";
+                	
+                }else if(this.type=="L"){
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다";
+                	
+                }else if(this.type=="R"){
+                	list += "회원님의 게시물에 댓글을 남겼습니다";
+                }
+                
+                if(this.type!="F"){
+                	
+                	if(this.filter==""){
+                		list += "<img style='border-radius:0px' class='followPhoto' "; 
+                	}else{
+                		list += "<img style='border-radius:0px' class='followPhoto _" + this.filter + "' "; 
+                	}
+                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></div>";
+                	
+                }
+
+  			})
+  			$("#follow-results").html(list);
+  		});
+	}
 	
 	
 	//1. 팔로우 알림

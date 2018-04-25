@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 /* 검색창 스타일 */
-#header-modal {
+#searchHeader-modal {
    padding: 0px;
     overflow-y: auto;
     height: 220px;
@@ -241,12 +241,14 @@ span {
 /* 이 주석 머얔ㅋㅋㅋㅋ 웃김 */
 .modal-backdrop{
    background-color: transparent !important;
+   display: none;
 }
 
-.modal-content {
-	width: 215px;
+#searchModal-content {
+    width: 11%;
+    left: 43%;
     position: relative;
-    top: 50px;
+    top: 1%;
     border: solid 1px #e6e6e6;
     border-radius: 3px;
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
@@ -282,7 +284,7 @@ span {
 
 /* 로고부분 */
 .faintlogo {
-    width: 175px;
+    width: 30%;
     position: relative;
     top: 20px;
     left: 50%;
@@ -293,8 +295,8 @@ span {
     position: relative;
     top: 50%;
     left: 50%;
-    width: 350px;
-    height: 40px;
+    width: 60%;
+    height: 40%;
     border-radius: 40px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     transform: translate(-50%, -50%);
@@ -339,7 +341,7 @@ span {
     top: 10px;
     left: 15px;
     height: 20px;
-    width: 20px;
+    width: 7%;
     padding: 0;
     margin: 0;
     border: none;
@@ -449,7 +451,7 @@ span {
 .pull-right {
     height: 75px;
     /* background-color: white; */
-    width: 405px;
+    width: 100%;
     vertical-align: middle;
     position: relative;
     top: 11px;
@@ -460,9 +462,8 @@ span {
 
 .explore {
     display: inline-block;
-    width: 65px;
-    height: 75px;
-    /* background-color: red; */
+    width: 10.5%;
+    height: 100%;
     position: relative;
     float: left;
 }
@@ -475,9 +476,8 @@ span {
 
 .new-post {
     display: inline-block;
-    width: 65px;
+    width: 11%;
     height: 75px;
-    /* background-color: orange; */
     position: relative;
     float: left;
 }
@@ -490,9 +490,8 @@ span {
 
 .recommend {
     display: inline-block;
-    width: 65px;
+    width: 9%;
     height: 75px;
-    /* background-color: yellow; */
     position: relative;
     float: left;
 }
@@ -505,9 +504,8 @@ span {
 
 .follow-list {
     display: inline-block;
-    width: 65px;
+    width: 8.5%;
     height: 75px;
-    /* background-color: green; */
     position: relative;
     float: left;
 }
@@ -520,9 +518,8 @@ span {
 
 .account {
     display: inline-block;
-    width: 65px;
+    width: 8%;
     height: 75px;
-    /* background-color: blue; */
     position: relative;      
     float: left;  
 }
@@ -538,11 +535,10 @@ span {
     float: left;
     top: 20px;
     height: 40px;
-    width: 80px;  
 }
 
 .dropbtn {
-    color: #a8a8ab;
+    color: black;
     text-align: center;
     font-size: 13px;
     border: none;
@@ -690,4 +686,37 @@ span {
 .catefilter:hover {
 	cursor: pointer;
 	color: black;
+}
+
+.heart-svg {
+	fill: #555;
+    width: 33px;
+    position: relative;
+    top: -186px;
+}
+
+.heart-svg:hover {
+	fill: #e24040;
+	cursor: pointer;
+}
+
+#followModal {
+	
+}
+
+#followModal-content {
+	width: 15%;
+    right: -70%;
+    position: relative;
+    top: 1%;
+    border: solid 1px #e6e6e6;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px rgba(0,0,0,.0975);
+}
+
+#followHeader-modal {
+    padding: 0px;
+    overflow-y: auto;
+    height: 500px;
 }
