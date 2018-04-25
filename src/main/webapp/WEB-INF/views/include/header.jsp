@@ -870,6 +870,7 @@ function searchAjax(){
 </script>
 
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
+<jsp:include page="/WEB-INF/views/messenger.jsp" flush="false" />
 
 </body>
 </html>

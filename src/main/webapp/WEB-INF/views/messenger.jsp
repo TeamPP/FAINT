@@ -180,14 +180,12 @@ canvas {
 #hangout {
   background-color: white;
   height: 635px;
-  width: 900px;
+  width: 400px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
   overflow: hidden;
   margin: auto;
   position: absolute;
-  top: 0;
-  left: 0;
   bottom: 0;
   right: 0;
 }
@@ -555,7 +553,7 @@ ul.nav li {
   height: 50px;
   overflow: hidden;
   display: inline-block;
-  width: 33.3%;
+  width: 49%;
   text-align: center;
   font-size: 1.4em;
   color: #676767;
@@ -650,151 +648,173 @@ body {
  <body>
 
      <style id="dynamic-styles"></style>
-<div id="hangout">  
-  <div id="head" class="style-bg"> <i class="mdi mdi-arrow-left"></i> <i class="mdi mdi-fullscreen-exit"></i> <i class="mdi mdi-menu"></i> 
-    <h1>Taras Anichin</h1><i class="mdi mdi-chevron-down"></i></div>
-  <div id="content">
-    <div class="overlay"></div>
-    
-    <div id="floater-position">
-      <div id="add-contact-floater" class="floater control style-bg hidden"><i class="mdi mdi-plus"></i></div>          
-      <div id="chat-floater" class="floater control style-bg hidden"><i class="mdi mdi-comment-text-outline"></i></div>   
-    </div>
-    
-    
-    <div class="card menu">
-      <div class="header">
-      <img src="https://pp.userapi.com/c630420/v630420685/458c3/mFPotaYurhc.jpg" />
-        <h3>Taras Anichin</h3>
-      </div>
-      <div class="content">
-        
-        <div class="i-group">
-    <input type="text" id="username"><span class="bar"></span>
-    <label>Name</label>
-        </div>        
-        <br/>
-        <div class="center"><canvas id="colorpick" width="250" height="220" ></canvas></div>                        
-      </div>
-    </div> 
-    <div class="list-account">
-      <div class="meta-bar"><input class="nostyle search-filter" type="text" placeholder="Search" /></div>
-    <ul class="list mat-ripple">
-      <li><img src="https://pp.vk.me/c633629/v633629797/34a48/XqSmmn8PLRU.jpg"><span class="name">Elena</span><i class="mdi mdi-menu-down"></i> </li>
-      <li><img src="https://pp.userapi.com/c307300/v307300537/84c1/-xELFBxvt7Q.jpg"><span class="name">Neil deGrasse Tyson</span><i class="mdi mdi-menu-down"></i></li>
-      <li><img src="https://pp.vk.me/c628727/v628727631/5c79a/yAtBoYXvlUc.jpg"><span class="name">Vetal</span><i class="mdi mdi-menu-down"></i></li>    
-      <li><img src="https://pp.vk.me/c604319/v604319346/3673/EAGK1PPYTSg.jpg"><span class="name">Dima</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c639620/v639620661/fd56/P6PxyrFvlr0.jpg"><span class="name">Marie Curie</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg"><span class="name">Pavel Durov </span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c622419/v622419432/1b6ab/QuiocdEsyTI.jpg"><span class="name">Stephen Hawking</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c623826/v623826544/1910/Q5QaUBXN5eQ.jpg"><span class="name">Michio Kaku</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c419629/v419629606/1c93/K9Z9BJ9vjWo.jpg"><span class="name">Richard Feynman</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c619731/v619731831/27f8/1jcNxJmUzF0.jpg"><span class="name">Bear Grylls</span><i class="mdi mdi-menu-down"></i></li> 
-      <li><img src="https://pp.userapi.com/c407023/g41447720/d_0996245f.jpg"><span class="name">Mark Zuckerberg</span><i class="mdi mdi-menu-down"></i></li> 
-    </ul> 
-    </div>
-    <div class="list-text">
-    <ul class="list mat-ripple">      
-      <li><img src="https://pp.userapi.com/c626423/v626423797/72515/Q8rsf4m943c.jpg">
-        <div class="content-container">
-          <span class="name">Elena</span>
-          <span class="txt">You complete me. 💋👄</span>
-        </div>
-        <span class="time">
-          14:00
-        </span>
-         </li>    
-      
-      <li><img src="https://pp.userapi.com/c636631/v636631488/36bb3/WeAhU1_YCUI.jpg">
-        <div class="content-container">
-          <span class="name">Stephen Hawking</span>
-        <span class="txt">  
-Nothing cannot exist forever. 🚀🛰</span>
-        </div>
-        <span class="time">
-          16:02
-        </span>
-         </li>  
-      
-      <li><img src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg">
-        <div class="content-container">
-          <span class="name">Pavel Durov</span>
-          <span class="txt"> nice messenger 👸😱🏈</span>
-        </div>
-        <span class="time">
-          16:03
-        </span>
-         </li>  
-    </ul> 
-    </div>
-    <div class="list-phone">
-      <div class="meta-bar"><input class="nostyle search-filter" type="text" placeholder="Name, phone number" /></div>
-    <ul class="list mat-ripple">      
-      <li><img src="https://pp.vk.me/c628727/v628727631/5c79a/yAtBoYXvlUc.jpg">
-        <div class="content-container">
-          <span class="name">Vetal</span>
-          <span class="phone">099-141-7458</span>
-          <span class="meta">Mobile</span>
-        </div>
-        <span class="time">
-          25-07-2016 16:26
-        </span>
-         </li>      
-      <li><img src="https://pp.vk.me/c604319/v604319346/3673/EAGK1PPYTSg.jpg">
-        <div class="content-container">
-          <span class="name">Dima</span>
-          <span class="phone">066-022-0992</span>
-          <span class="meta">Main</span>
-        </div>
-        <span class="time">
-          25-07-2016 16:29
-        </span>
-         </li>   
-    </ul> 
-    </div>
-    <div class="list-chat">
-      <ul class="chat">
-        <li>
-        <img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-          <div class="message">Hi!</div>
-        </li>
-        <li>
-        <img src="http://lorempixel.com/100/100/people/1/">
-          <div class="message"></div>
-        </li>
-        <li>
-        <img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-          <div class="message current">  </div>
-        </li>
-      </ul>
-      <div class="meta-bar chat"><input class="nostyle chat-input" type="text" placeholder="Message..." /> <i class="mdi mdi-send"></i></div>
-    </div>
-    <ul class="nav control mat-ripple tiny">
-      
-      <li data-route=".list-account"><i class="mdi mdi-account-multiple"></i></li><li data-route=".list-text"><i class="mdi mdi-comment-text"></i></li><li data-route=".list-phone"><i class="mdi mdi-phone"></i></li></ul>
-    </div>  
-  
-  <div id="contact-modal" data-mode="add" class="card dialog">
-    <h3>Add Contact</h3>
-      <div class="i-group">
-      <input type="text" id="new-user"><span class="bar"></span>
-      <label>Name</label>
-      </div>
-    
-    <div class="btn-container">
-      <span class="btn cancel">Cancel</span>
-      <span class="btn save">Save</span>      
-    </div>
-    
-    </div>
-  
-</div>
-        
+     
 <sec:authorize access="isAuthenticated()">
 <sec:authentication property="principal.vo" var="login" />
-        
-        <script>
-        
+
+		<div id="hangout" class="collapsed">
+			<!-- 헤드 -->
+			<div id="head" class="style-bg">
+				<i class="mdi mdi-arrow-left"></i>
+				<i class="mdi mdi-fullscreen"></i>
+				<i class="mdi mdi-menu"></i>
+				<h1>${login.nickname}</h1>
+				<i class="mdi mdi-chevron-down"></i>
+			</div>
+			<div id="content">
+				<div class="overlay"></div>
+
+				<div id="floater-position">
+					<div id="add-contact-floater"
+						class="floater control style-bg hidden">
+						<i class="mdi mdi-plus"></i>
+					</div>
+					<div id="chat-floater" class="floater control style-bg hidden">
+						<i class="mdi mdi-comment-text-outline"></i>
+					</div>
+				</div>
+
+
+				<div class="card menu">
+					<div class="header">
+						<img
+							src="https://pp.userapi.com/c630420/v630420685/458c3/mFPotaYurhc.jpg" />
+						<h3>${login.nickname}</h3>
+					</div>
+					<div class="content">
+
+						<div class="i-group">
+							<input type="text" id="username"><span class="bar"></span>
+							<label>Name</label>
+						</div>
+						<br />
+						<div class="center">
+							<canvas id="colorpick" width="250" height="220"></canvas>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 유저리스트 -->
+				<div class="list-account">
+					<div class="meta-bar">
+						<input class="nostyle search-filter" type="text"
+							placeholder="Search" />
+					</div>
+					<ul class="list mat-ripple">
+						<li><img
+							src="https://pp.vk.me/c633629/v633629797/34a48/XqSmmn8PLRU.jpg"><span
+							class="name">Elena</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c307300/v307300537/84c1/-xELFBxvt7Q.jpg"><span
+							class="name">Neil deGrasse Tyson</span><i
+							class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.vk.me/c628727/v628727631/5c79a/yAtBoYXvlUc.jpg"><span
+							class="name">Vetal</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.vk.me/c604319/v604319346/3673/EAGK1PPYTSg.jpg"><span
+							class="name">Dima</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c639620/v639620661/fd56/P6PxyrFvlr0.jpg"><span
+							class="name">Marie Curie</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg"><span
+							class="name">Pavel Durov </span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c622419/v622419432/1b6ab/QuiocdEsyTI.jpg"><span
+							class="name">Stephen Hawking</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c623826/v623826544/1910/Q5QaUBXN5eQ.jpg"><span
+							class="name">Michio Kaku</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c419629/v419629606/1c93/K9Z9BJ9vjWo.jpg"><span
+							class="name">Richard Feynman</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c619731/v619731831/27f8/1jcNxJmUzF0.jpg"><span
+							class="name">Bear Grylls</span><i class="mdi mdi-menu-down"></i></li>
+						<li><img
+							src="https://pp.userapi.com/c407023/g41447720/d_0996245f.jpg"><span
+							class="name">Mark Zuckerberg</span><i class="mdi mdi-menu-down"></i></li>
+					</ul>
+				</div>
+				
+				<!-- 채팅방 리스트 -->
+				<div class="list-text">
+					<ul class="list mat-ripple">
+						<li><img
+							src="https://pp.userapi.com/c626423/v626423797/72515/Q8rsf4m943c.jpg">
+							<div class="content-container">
+								<span class="name">Elena</span> <span class="txt">You
+									complete me. 💋👄</span>
+							</div> <span class="time"> 14:00 </span></li>
+
+						<li><img
+							src="https://pp.userapi.com/c636631/v636631488/36bb3/WeAhU1_YCUI.jpg">
+							<div class="content-container">
+								<span class="name">Stephen Hawking</span> <span class="txt">
+									Nothing cannot exist forever. 🚀🛰</span>
+							</div> <span class="time"> 16:02 </span></li>
+
+						<li><img
+							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg">
+							<div class="content-container">
+								<span class="name">Pavel Durov</span> <span class="txt">
+									nice messenger 👸😱🏈</span>
+							</div> <span class="time"> 16:03 </span></li>
+					</ul>
+				</div>
+				
+				<!-- 채팅창 -->
+				<div class="list-chat">
+					<ul class="chat">
+						<li>
+							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
+          					<div class="message">Hi!</div>
+        				</li>
+						<li>
+							<img src="http://lorempixel.com/100/100/people/1/">
+          					<div class="message"></div>
+        				</li>
+						<li>
+							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
+							<div class="message current"></div>
+						</li>
+					</ul>
+					<div class="meta-bar chat">
+						<input class="nostyle chat-input" type="text"
+							placeholder="Message..." /> <i class="mdi mdi-send"></i>
+					</div>
+				</div>
+				
+				<!-- 하단메뉴 -->
+				<ul class="nav control mat-ripple tiny">
+					<li data-route=".list-account">
+						<i class="mdi mdi-account-multiple"></i>
+					</li>
+					<li data-route=".list-text">
+						<i class="mdi mdi-comment-text"></i>
+					</li>
+				</ul>
+			</div>
+
+			<div id="contact-modal" data-mode="add" class="card dialog">
+				<h3>Add Contact</h3>
+				<div class="i-group">
+					<input type="text" id="new-user"><span class="bar"></span>
+					<label>Name</label>
+				</div>
+
+				<div class="btn-container">
+					<span class="btn cancel">Cancel</span> <span class="btn save">Save</span>
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+		<script>
     	function followList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
     		      var data=$(data)
@@ -824,16 +844,18 @@ Nothing cannot exist forever. 🚀🛰</span>
     		   };
         
         
-        // первый маршрут,для показа
+        // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수
         var GLOBALSTATE = {
             route: '.list-account'
         };
 
-        // Установка первого маршрута
+        // GLOBALSTATE.route값에 따라 show/hide 구별 - 초기값 ".list-account"
         setRoute(GLOBALSTATE.route);
+        
+        
         $('.nav > li[data-route="' + GLOBALSTATE.route + '"]').addClass('active');
 
-        // Волновый эффект
+        // 아이콘(floater)클릭시 효과주기 (0.53초)
         $('.floater').on('click', function(event) {
             var $ripple = $('<div class="ripple tiny bright"></div>');
             var x = event.offsetX;
@@ -852,10 +874,13 @@ Nothing cannot exist forever. 🚀🛰</span>
 
         });
 
-        // должна происходить пульсация , если (добавить)
+        // ul 내부 클릭 효과 주기 (0.53초)
         $('ul.mat-ripple').on('click', 'li', function(event) {
-            if ($(this).parent().hasClass('tiny')) {
+            //하단 메뉴 ul > li
+        	if ($(this).parent().hasClass('tiny')) {
                 var $ripple = $('<div class="ripple tiny"></div>');
+            
+            //기본 리스트 ul > li
             } else {
                 var $ripple = $('<div class="ripple"></div>');
             }
@@ -889,38 +914,48 @@ Nothing cannot exist forever. 🚀🛰</span>
             stylechange(colorarray);
         }
 
-        // Помощики
+        // 메신저 사용자 이름 설정
         function setName(name) {
-            $.trim(name) === '' || $.trim(name) === null ? name = 'Taras Anichin' : name = name;
+        	//이름값 없을경우 본인, 아닐경우 변수 
+            $.trim(name) === '' || $.trim(name) === null ? name = '${login.nickname}' : name = name;
             $('h1').text(name);
             localStorage.setItem('username', name);
+            //사용자 개인 프로필 - input
             $('#username').val(name).addClass('used');
+          	//사용자 개인 프로필 - header
             $('.card.menu > .header > h3').text(name);
         }
 
-        // Стиль смены
+        // dynamic-styles태그에 color값 삽입하여 메뉴 스타일 동적 변경
         function stylechange(arr) {
             var x = 'rgba(' + arr[0] + ',' + arr[1] + ',' + arr[2] + ',1)';
             $('#dynamic-styles').text('.dialog h3 {color: ' + x + '} .i-group input:focus ~ label,.i-group input.used ~ label {color: ' + x + ';} .bar:before,.bar:after {background:' + x + '} .i-group label {color: ' + x + ';} ul.nav > li.active {color:' + x + '} .style-tx {color: ' + x + ';}.style-bg {background:' + x + ';color: white;}@keyframes navgrow {100% {width: 100%;background-color: ' + x + ';}} ul.list li.context {background-color: ' + x + '}');
         }
 
+        //내부 모달끄기
         function closeModal() {
+        	//닉네임 편집 모달 value제거
             $('#new-user').val('');
+            //오버레이(검은배경) 제거
             $('.overlay').removeClass('add');
+            //아이콘 제거
             $('.floater').removeClass('active');
+          	//내부 모달 fadeout
             $('#contact-modal').fadeOut();
-
+          	//save버튼 click 리스너 off
             $('#contact-modal').off('click', '.btn.save');
-
         }
-
+		
+        //내부 모달 활성화
         function setModal(mode, $ctx) {
             var $mod = $('#contact-modal');
             switch (mode) {
+            	//floater클릭시
                 case 'add':
                     $mod.find('h3').text('Add Contact');
                     break;
-
+				
+                //기존 사용자 변경클릭시
                 case 'edit':
                     $mod.find('h3').text('Edit Contact');
                     $mod.find('#new-user').val($ctx.text()).addClass('used');
@@ -931,32 +966,39 @@ Nothing cannot exist forever. 🚀🛰</span>
             $('.overlay').addClass('add');
             $mod.find('#new-user').focus();
         }
-
+		
+        //채팅창 벗어나기
         $('.mdi-arrow-left').on('click', function() {
             $('.shown').removeClass('shown');
             setRoute('.list-text');
         });
 
-        // Установка маршрутов- установка "поплавка"
+        // 특정 메뉴활성화 함수
         function setRoute(route) {
             GLOBALSTATE.route = route;
             $(route).addClass('shown');
-
+			
+            //인물 메뉴 '+'아이콘
             if (route !== '.list-account') {
                 $('#add-contact-floater').addClass('hidden');
             } else {
                 $('#add-contact-floater').removeClass('hidden');
             }
-
+			
+          	//채팅 메뉴 '대화'아이콘
             if (route !== '.list-text') {
                 $('#chat-floater').addClass('hidden');
             } else {
                 $('#chat-floater').removeClass('hidden');
             }
-
+			
+          	//채팅창 보이기
             if (route === '.list-chat') {
+            	//메뉴 버튼 가리기
                 $('.mdi-menu').hide();
+                //채팅 메뉴로 돌아가기 버튼-헤더
                 $('.mdi-arrow-left').show();
+                //채팅창
                 $('#content').addClass('chat');
             } else {
                 $('#content').removeClass('chat');
@@ -965,7 +1007,7 @@ Nothing cannot exist forever. 🚀🛰</span>
             }
         }
 
-        // Выбор цвета , для темы мессенджера
+        // 색상 캔버스 활성화 위해 이미지값 넣기
         var cv = document.getElementById('colorpick');
         var ctx = cv.getContext('2d');
         var img = new Image();
@@ -977,7 +1019,7 @@ Nothing cannot exist forever. 🚀🛰</span>
         };
 
 
-        //todo оптимизация 
+        //유저 프로필 상에서 input태그 포커스 잃었을 때 - 사용자이름 저장 및 프로필 이미지 한바퀴도는 액션
         $('#username').on('blur', function() {
             setName($(this).val());
 
@@ -1068,11 +1110,11 @@ Nothing cannot exist forever. 🚀🛰</span>
             $(route).addClass('shown');
             setRoute(route);
         });
-
+		
         $('#head').on('click', '.mdi-fullscreen', function() {
             $(this).removeClass('mdi-fullscreen').addClass('mdi-fullscreen-exit');
             $('#hangout').css({
-                width: '900px'
+                width: '100%'
             });
         });
 
