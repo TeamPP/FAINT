@@ -1,6 +1,7 @@
 package com.faint.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
@@ -12,7 +13,7 @@ import com.faint.dto.RelationDTO;
 public interface PostService {
 	// ====================post둥록 ===================
 	// POST등록(사진/태그 Transaction)
-	public void regist(PostVO post) throws Exception;
+	public Map<String, Object> regist(PostVO post) throws Exception;
 
 	// regist에서 사용
 	public void registPostAndTag(Integer postid, String tagname) throws Exception;

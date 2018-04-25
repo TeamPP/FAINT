@@ -13,6 +13,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.NoticeDTO;
 import com.faint.dto.RelationDTO;
 
 @Repository
@@ -48,8 +49,15 @@ public class PostDAOImpl implements PostDAO {
 	
 	//==============================게시물 읽기==============================
 	//특정 포스트
+	@Override
 	public PostVO readOne(int postid) throws Exception{
 		return session.selectOne(namespace+".readOne", postid);
+	}
+	
+	//선택 유저의 가장 최근 게시물(db들어갔는지 체크용)
+	@Override
+	public NoticeDTO readRecentOne(PostVO vo) throws Exception{
+		return session.selectOne(namespace+".readRecentOne", vo);
 	}
 	
 	// post전체목록  - 한 유저에 대해

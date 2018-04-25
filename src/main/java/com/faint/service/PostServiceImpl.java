@@ -1,9 +1,14 @@
 package com.faint.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +17,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.NoticeDTO;
 import com.faint.dto.RelationDTO;
 import com.faint.persistence.NoticeDAO;
 import com.faint.persistence.PostDAO;
@@ -20,6 +26,10 @@ import com.faint.util.S3Util;
 
 @Service
 public class PostServiceImpl implements PostService {
+	
+	//로거
+	Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
+	
 	@Inject
 	private PostDAO dao;
 	
@@ -30,7 +40,7 @@ public class PostServiceImpl implements PostService {
 	// post등록 (registPostAndTag method 사용)
 	@Transactional
 	@Override
-	public void regist(PostVO post) throws Exception {
+	public Map<String, Object> regist(PostVO post) throws Exception {
 		dao.create(post);
 		// 첨부파일 목록, filter 불러들임
 		String[] files = post.getFiles();
@@ -40,12 +50,46 @@ public class PostServiceImpl implements PostService {
 		for(int i =0; i< files.length; i++){
 			dao.addAttach(files[i], filters[i]);
 		}
-		List<String> hashTags = HashTagHelper.getAllHashTags(post.getCaption());
-		if (!hashTags.isEmpty()) { // exist hash tag
-			for (String tagname : hashTags) {
+		
+		//post내용 담은 Map(key:hash=hashtag list / key:user=usertag list)
+		Map<String, List<String>> map=HashTagHelper.getAllHashTags(post.getCaption());
+		
+		this.logger.info(map.toString());
+		
+		//해쉬태그 반환 후 DB로 이동(tbl_tag , tbl_posted_tag)
+		List<String> Tags = map.get("hash");
+		if (!Tags.isEmpty()) { // exist hash tag
+			for (String tagname : Tags) {
 				registPostAndTag(post.getId(), tagname);
 			}
 		}
+		
+		//유저태그 반환 후 DB로 이동(tbl_notice)
+		Tags.clear();
+		Tags = map.get("user");
+		
+		
+		Map<String, Object> forwardMap = new HashMap<String, Object>();
+		
+		if (!Tags.isEmpty()) { // exist hash tag
+			//알림창을 위한 반환값을 담을  Map
+			
+			List<String> userTagLists=new ArrayList<String>();
+			
+			NoticeDTO dto=dao.readRecentOne(post); //해당 유저가 쓴 게시물의 userid값과 caption값, 가장 최근 regdate를 통해 postid와 nickname구함
+			
+			for (String tagname : Tags) {
+				dto.setTargetid(tagname);
+				nDao.createTaggingNotice(dto);
+				userTagLists.add(tagname);
+			}
+			
+			forwardMap.put("postid", dto.getPostid());
+			forwardMap.put("targetid", userTagLists);
+		}
+		
+		return forwardMap;
+
 	}
 	
 	//post등록 util 메서드 = insertPostedTag/insertTag메서드 사용
@@ -189,12 +233,31 @@ public class PostServiceImpl implements PostService {
 	public void modify(PostVO post) throws Exception {
 		dao.modify(post);
 		
-		List<String> hashTags = HashTagHelper.getAllHashTags(post.getCaption());
-		if (!hashTags.isEmpty()) { // exist hash tag
-			for (String tagname : hashTags) {
+		//post내용 담은 Map(key:hash=hashtag list / key:user=usertag list)
+		Map<String, List<String>> map=HashTagHelper.getAllHashTags(post.getCaption());
+		
+		//해쉬태그 반환 후 DB로 이동(tbl_tag , tbl_posted_tag)
+		List<String> Tags = map.get("hash");
+		if (!Tags.isEmpty()) { // exist hash tag
+			for (String tagname : Tags) {
 				registPostAndTag(post.getId(), tagname);
 			}
 		}
+		
+		//유저태그 반환 후 DB로 이동(tbl_notice)
+		Tags.clear();
+		Tags = map.get("user");
+		
+		if (!Tags.isEmpty()) { // exist hash tag
+			
+			NoticeDTO dto=dao.readRecentOne(post); //해당 유저가 쓴 게시물의 userid값과 caption값, 가장 최근 regdate를 통해 postid와 nickname구함
+			
+			for (String tagname : Tags) {
+				dto.setTargetid(tagname);
+				nDao.createTaggingNotice(dto);
+			}
+		}
+		
 	}
 	
 	//==============게시글 삭제==============

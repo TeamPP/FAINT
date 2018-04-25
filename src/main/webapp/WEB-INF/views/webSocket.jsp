@@ -185,21 +185,24 @@ display:none;
         
       	//나에대한 follow,reply,like알림 구독
       	stompClient.subscribe('/notify/${login.id}', function(message){
-            console.log("123");
-      		$.getJSON("/getNotice/", function(data){
-      			console.log(data);
-      		});
-            console.log("456");
-            
-        });
-      	//나에대한 tagging알림 구독
-      	stompClient.subscribe('/notify/${login.nickname}', function(message){
-            
-
-        	console.log(message.body);
-            
+            if(message.body=="SUCCESS"){
+          		$.getJSON("/getNotice/", function(data){
+          			console.log(data);
+          		});
+            }
         });
       	
+/*       	//나에대한 tagging알림 구독
+      	stompClient.subscribe('/notify/${login.nickname}', function(message){
+      		
+        }); */
+      	
+      	//게시물 작성시 태깅 알림보내기
+      	if(typeof(tagMessage) != "undefined"){
+      		for(var i in targetId){
+    			stompClient.send("/app/notify/" + targetId[i] + "/tagging/" + targetPost + "/post", {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
+    		}
+      	}
     });
 	
 	
@@ -208,7 +211,7 @@ display:none;
 		stompClient.send("/app/notify/" + userid + "/follow", {}, {});
 	}
 	
-	//2. 태깅 알림 (등록되는 포스트/댓글일때만 (자기소개는 가지않음)) -replyRegist() , post/register.jsp
+	//2. 태깅 알림 (등록되는 - 댓글일때만 (자기소개는 가지않음)) -replyRegist() , post/register.jsp
 	function notifyTagging(text, postid){
 		
       //2-1. split() 함수처리하기 (from common.js)
@@ -224,7 +227,7 @@ display:none;
          //두글자 이상이면서, 첫글자가 @이면서 , 두번째글자가 특수문자가 아니면 링크처리
          if(splitArray[i].length!=1 && (word.indexOf("@")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
             var person=word.substring(word.lastIndexOf("@")+1);
-            stompClient.send("/app/notify/" + person + "/tagging/" + postid, {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
+            stompClient.send("/app/notify/" + person + "/tagging/" + postid + "/reply", {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
          }
       }
       
@@ -286,7 +289,7 @@ display:none;
 		
 	function msgPopup(){
 		$(".followWrp").toggleClass("followHide");
-	} 
+	}
 		
 	</script>
 </sec:authorize>

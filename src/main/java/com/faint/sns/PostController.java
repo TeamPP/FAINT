@@ -2,6 +2,7 @@ package com.faint.sns;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -197,11 +198,14 @@ public class PostController {
 		
 		post.setUserid(user.getId());
 		
-		service.regist(post);
+		Map<String, Object> forwardMap = service.regist(post);
+		
+		if(forwardMap.get("postid")!=null){
+			net.sf.json.JSONObject jsonObj=new net.sf.json.JSONObject();
+			rttr.addFlashAttribute("msg", jsonObj.fromObject(forwardMap).toString());
+		}
 
-		rttr.addFlashAttribute("msg", "SUCCESS");
-
-		return "redirect:/main";
+		return "redirect:/";
 	}
 	
 	
