@@ -12,7 +12,7 @@
 <%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<style>
+<!-- <style>
 
 	td {
 		padding:2px;
@@ -21,7 +21,135 @@
 	input{
 		width:30em;
 	}
+</style> -->
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    /* width: 100%; */
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+        width: 90%;
+    max-width: 450px;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #5a6674;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+
+    padding: 16px;
+
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+       width: 100%;
+    }
+}
+/* 
+#email{
+position: absolute;
+left: 20%;
+}
+
+#nickname{
+position: absolute;
+left: 20%;
+} */
+
 </style>
+
+
 
 <script>
 
@@ -177,57 +305,42 @@
             }); }
     });
 </script>
-<link href="/resources/dist/css/login.css" rel="stylesheet">
+<!-- <link href="/resources/dist/css/login.css" rel="stylesheet"> -->
 
 <div  id="regiser">
-	<div class="wrapper fadeInDown text-center">
-
-		<div class="card border-secondary mb-3" style="max-width: 40rem;" id="formContent">
-
-			<div class="card-header" style="background-color: black">
-
-				<h1 class="text-white hn">회원가입</h1>
-
-			</div>
-			<div class="card-body text-secondary" id="formFooter">
-				<!-- Icon -->
-				<%--<div class="fadeIn first">--%>
-				<%--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />--%>
-				<%--</div>--%>
-
-				<form role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
+				<form class="modal-content" role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<table>
-						<tr>
-							<div class="control-group">
-								<td></td>
-								<td><input type = "text" class="form-control" name="email" id="email" placeholder="Email 주소를 입력해주세요" autofocus></td><td><button type="button" class="btn btn-warning" id="authenticate">중복체크</button></td><br>
-							</div>
-						<tr>
-							<td></td>
-							<td><input type = "text" class="form-control"  name="nickname" id="nickname"  placeholder="사용자이름" ></td><td><button type="button" id="authenticateName" class="btn btn-warning">중복체크</button></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type = "password" class="form-control"  name="password" id="password" onkeyup="checkvalue()" placeholder="패스워드를 입력해주세요" ></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type = "password" class="form-control" name="chkPassword" id="chkPassword" onkeyup="checkvalue()"  placeholder="패스워드를 다시 한 번 입력해주세요" ></td>
-						</tr>
-						<tr>
-							<td width="96" height="36" ></td>
-							<td><p id="pwsame" name="pwsame"  ></p></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type = "submit" value = "회원가입" class="btn btn-primary"></td>
-						</tr>
-					</table>
-
+				
+				  <div class="container">
+							
+				<h1>Sign Up</h1>
+      			<p>Please fill in this form to create an account.</p>
+						<hr>
+					      <label for="email"><b>Email</b></label><br/>
+					      <input type="text"  placeholder="Enter Email" name="email" id="email" required>
+					     <button type="button" class="btn btn-warning" id="authenticate">중복체크</button><br/>
+							
+						 <label for="nickname"><b>Nickname</b></label><br/>
+					      <input type="text"  placeholder="사용자이름"  name="nickname" id="nickname"  required>
+					     <button type="button" id="authenticateName" class="btn btn-warning">중복체크</button><br/>
+							
+					      <label for="psw"><b>Password</b></label><br/>
+					      <input type="password"  placeholder="Enter Password" name="password" id="password"  onkeyup="checkvalue()" required><br/>
+					
+					      <label for="psw-repeat"><b>Repeat Password</b></label><br/>
+					      <input type="password" placeholder="Repeat Password" name="chkPassword" id="chkPassword" onkeyup="checkvalue()"  required>
+					      
+					      <p id="pwsame" name="pwsame"  ></p>
+					     
+				     
+					     <div class="clearfix"> 
+					     <button type="submit" class="signupbtn">Sign Up</button>
+						</div>
+  					  </div>			
+					
 				</form>
-
 			</div>
-		</div>
-	</div>
-</div>
+
+
+
+

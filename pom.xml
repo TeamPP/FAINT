@@ -237,7 +237,8 @@
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-facebook</artifactId>
-			<version>2.0.3.RELEASE</version>
+			<version>1.1.1.RELEASE</version>
+			<!-- <version>2.0.3.RELEASE</version> -->
 		</dependency>
 		<!-- mail 인증을 위한 설정 -->
 		<!-- mail -->
@@ -310,6 +311,16 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		
+		
+		<!-- 구글로그인 선영 -->
+		  <dependency>
+		    <groupId>org.springframework.social</groupId>
+		    <artifactId>spring-social-google</artifactId>
+	            <version>1.0.0.RELEASE</version>
+	    </dependency>
+
+		
 	</dependencies>
 	<build>
 		<plugins>
