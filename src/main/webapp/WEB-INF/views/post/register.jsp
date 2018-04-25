@@ -423,6 +423,8 @@
 			$("#location").val($("#address").text());
 			//캡션 '\n' <br>로 변환
 			$("._bilrf").val($("._bilrf").val().replace(/\n/g, ' <br> '));
+			//태그할 경우 웹소켓 알림
+			notifyTagging($("._bilrf").val());
 			form.attr("action", "/post/register/submit");
 			form.submit(); 
 		});

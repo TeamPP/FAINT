@@ -13,11 +13,6 @@ public class MessageServiceImpl implements MessageService {
 	private MessageDAO dao;
 	
 	
-	
-
-	//=================알림 관련=================
-	
-	
 	//=================메신저 관련=================
 	
 	

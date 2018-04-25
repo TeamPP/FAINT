@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.faint.mapper.noticeMapper">
+
+
+	<!-- 알림 리스트 가져오기 -->
+	<select id="getNoticeList" resultType="com.faint.dto.NoticeDTO">
+        select u.profilePhoto, u.nickname as fromid, n.targetid, n.type, n.postid, n.regdate, a.URL as postPhoto, a.filter, f.isFlw
+		from
+		tbl_notice n
+		left join
+		tbl_user u
+		on n.fromid=u.id
+		left join
+		(select * from tbl_attach group by postid) a
+		on n.postid=a.postid
+		left join
+		(SELECT followedid as isFlw FROM tbl_follow WHERE userid=#{userid}) f
+		on n.fromid=f.isFlw
+		where n.targetid=#{userid}
+	</select>
+	
+	<insert id="createFollowNotice">
+		INSERT INTO faint.tbl_notice
+		(fromid, targetid, type)
+		VALUES
+		(#{loginid},#{userid},#{type})
+	</insert>
+	
+	<insert id="createTaggingNotice">
+		INSERT INTO faint.tbl_notice
+		(fromid, targetid, type, postid)
+		VALUES
+		((select id from tbl_user where nickname=#{fromid}),
+        (select id from tbl_user where nickname=#{targetid}),
+        #{type},
+        #{postid})
+	</insert>
+	
+	<insert id="createLikeNotice">
+		INSERT INTO faint.tbl_notice
+		(fromid, targetid, type, postid)
+		VALUES
+		(#{loginid},#{userid},#{type},#{postid})
+	</insert>
+	
+	<insert id="createReplyNotice">
+		INSERT INTO faint.tbl_notice
+		(fromid, targetid, type, postid)
+		VALUES
+		(#{loginid},#{userid},#{type},#{postid})
+	</insert>
+	
+</mapper>

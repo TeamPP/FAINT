@@ -154,7 +154,7 @@ a{ font-weight: bold; }
  
          <div class="s2_3">
             <div class="s2_3_1">
-               <div class="btnContainer" data-postid="{{postid}}">
+               <div class="btnContainer" data-postid="{{postid}}" data-userid="{{userid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
                <a class="likeContainer" data-postid="{{postid}}">좋아요 <span>0</span>개</a>
@@ -162,7 +162,7 @@ a{ font-weight: bold; }
          </div>
 
          <div class="s2_4">
-            <div class="s2_4_1" data-postid="{{postid}}">
+            <div class="s2_4_1" data-postid="{{postid}}" data-userid="{{userid}}">
                <!-- 댓글달기 -->
                <input class="replyRegist" onkeypress="registReply(this, event);" type="textarea" placeholder="댓글 달기..." name="replyCaption">
             </div>
@@ -539,6 +539,7 @@ function registReply(thisTag, key){
    if(enter==13&&comment.trim().length>0){
       var userid=${login.id};
       var postid=$(thisTag).parent().data("postid");
+      var postWriter=$(thisTag).parent().data("userid");
       $.ajax({
          type:"post",
          url:"/reply",
@@ -554,13 +555,18 @@ function registReply(thisTag, key){
          data:JSON.stringify({
             postid:postid,
             userid:userid,
-            comment:comment.trim()
+            comment:comment.trim(),
+            postwriter:postWriter
          }),
          success:function(result){
             if(result=="SUCCESS"){
                reply();
+               
+ 	           	//웹소켓 댓글달림 알림
+	            notifyReply(postWriter, postid);
+
                //태그할 경우 웹소켓 알림
-               notifyTagging(comment);
+               notifyTagging(comment.trim(), postid);
                
                $(thisTag).val("");
                //댓글 창 스크롤 아래로
@@ -642,12 +648,13 @@ function like(){
 	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").data("postid");
+      var writer=$(this).parents(".btnContainer").data("userid");
       var likeBtn=this;
       if(likeFlg){ return; };
       likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
-         var url ="/post/"+postid+"/like";
+         var url ="/post/"+postid+"/like/"+writer;
          var headers="{'X-HTTP-Method-Override' : 'POST'}";
          var val="0px -349px";
          
@@ -668,12 +675,15 @@ function like(){
          },
          success:function(result){
             if(result=="SUCCESS"){
-            	
-               $(likeBtn).css("background-position", val);
-               likerList();
-               //메인이 아닌경우
-               if(url !="main") getPostList();
-               likeFlg=false;
+	           	//웹소켓 알림
+	           	if($(likeBtn).css("background-position") == "-26px -349px"){
+	               	notifyLike(writer, postid);
+	           	}
+				$(likeBtn).css("background-position", val);
+				likerList();
+				//메인이 아닌경우
+				if(url !="main") getPostList();
+				likeFlg=false;
             }
          }      
       });
@@ -872,11 +882,15 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
-                followFlg=false;
+              
+                //팔로우할경우 소켓 알림
                 if($(isFlw).html()=="팔로잉"){
-                    //팔로우할경우 소켓 알림
                     notifyFollow(userid);
+                    console.log("123");
                 }
+                
+                followFlg=false;
+
             }
          }
       });

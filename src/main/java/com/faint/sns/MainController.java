@@ -111,16 +111,6 @@ public class MainController {
 		}
 	}
 	
-	@RequestMapping(value = "/login-processing", method = RequestMethod.GET)
-	public void loginProcessGET(Model model, HttpServletRequest req, HttpServletResponse res)throws Exception{
-		System.out.println("언제들어오나-get");
-	}
-	
-	@RequestMapping(value = "/login-processing", method = RequestMethod.POST)
-	public void loginProcessing(Model model, HttpServletRequest req, HttpServletResponse res)throws Exception{
-		System.out.println("언제들어오나-post");
-	}
-	
 	@RequestMapping(value = "/empty", method = RequestMethod.GET)
 	public void empty(Model model)throws Exception{
 
@@ -138,7 +128,7 @@ public class MainController {
 	}
 
 	
-	@RequestMapping(value = "/chatTest", method = RequestMethod.GET)
+	@RequestMapping(value = "/webSocket", method = RequestMethod.GET)
 	public void chatTest(Model model)throws Exception{
 		
 		

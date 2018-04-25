@@ -167,7 +167,8 @@ display:none;
 </head>
 
 <body>
-	
+
+<ul class="notice"></ul>
 <div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
 <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
 
@@ -182,21 +183,21 @@ display:none;
 	stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         
-      	//나에대한 follow알림 구독
-      	stompClient.subscribe('/notify/${login.id}/follow', function(message){
-            console.log(message.body);
+      	//나에대한 follow,reply,like알림 구독
+      	stompClient.subscribe('/notify/${login.id}', function(message){
+            console.log("123");
+      		$.getJSON("/getNotice/", function(data){
+      			console.log(data);
+      		});
+            console.log("456");
+            
         });
       	//나에대한 tagging알림 구독
-      	stompClient.subscribe('/notify/${login.nickname}/tagging', function(message){
-            console.log(message.body);
-        });
-      	//내 게시물에 대한 좋아요 알림 구독
-      	stompClient.subscribe('/notify/${login.id}/like', function(message){
-            console.log(message.body);
-        });
-      	//내 게시물에 대한 reply알림 구독
-        stompClient.subscribe('/notify/${login.id}/reply', function(message){
-            console.log(message.body);
+      	stompClient.subscribe('/notify/${login.nickname}', function(message){
+            
+
+        	console.log(message.body);
+            
         });
       	
     });
@@ -204,11 +205,11 @@ display:none;
 	
 	//1. 팔로우 알림
 	function notifyFollow(userid){
-		stompClient.send("/app/notify/" + userid + "/follow", {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+		stompClient.send("/app/notify/" + userid + "/follow", {}, {});
 	}
 	
 	//2. 태깅 알림 (등록되는 포스트/댓글일때만 (자기소개는 가지않음)) -replyRegist() , post/register.jsp
-	function notifyTagging(text){
+	function notifyTagging(text, postid){
 		
       //2-1. split() 함수처리하기 (from common.js)
       text = split(text);
@@ -223,20 +224,20 @@ display:none;
          //두글자 이상이면서, 첫글자가 @이면서 , 두번째글자가 특수문자가 아니면 링크처리
          if(splitArray[i].length!=1 && (word.indexOf("@")==0 && special.indexOf(splitArray[i].charAt(1))==-1)){
             var person=word.substring(word.lastIndexOf("@")+1);
-            stompClient.send("/app/notify/" + person + "/tagging", {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));            
+            stompClient.send("/app/notify/" + person + "/tagging/" + postid, {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
          }
       }
       
 	}
 	
-	//좋아요 알림
-	function notifyLike(userid, postid){
-		stompClient.send("/app/notify/" + userid + "/like/" + postid, {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+	//3. 좋아요 알림
+	function notifyLike(writer, postid){
+		stompClient.send("/app/notify/" + writer + "/like/" + postid, {}, {});
 	}
 	
-	//댓글 알림
-	function notifyReply(userid, postid){
-		stompClient.send("/app/notify/" + userid + "/reply/" + postid, {}, JSON.stringify({ 'id': '${login.id}', 'nickname': '${login.nickname}' }));
+	//4. 댓글 알림
+	function notifyReply(writer, postid){
+		stompClient.send("/app/notify/" + writer + "/reply/" + postid, {}, {});
 	}
 	
 	

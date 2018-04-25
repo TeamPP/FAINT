@@ -9,8 +9,6 @@ import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.faint.domain.Authority;
 import com.faint.domain.AuthorityId;
 import com.faint.domain.UserVO;
-
 import com.faint.domain.UsersException;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
-
 import com.faint.dto.RelationDTO;
 import com.faint.persistence.AuthorityDao;
+import com.faint.persistence.NoticeDAO;
 import com.faint.persistence.UserDAO;
 
 import common.MailHandler;
@@ -40,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
 	@Inject
 	private UserDAO dao;
+	
+	@Inject
+	private NoticeDAO nDao;
 	
 	@Autowired
 	private AuthorityDao authorityDao;
@@ -64,9 +64,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	//============================팔로우============================
+	@Transactional
 	@Override
 	public void flwCreate(RelationDTO dto)throws Exception{
 		dao.flwCreate(dto);
+		nDao.createFollowNotice(dto);
 	}
 	
 	@Override

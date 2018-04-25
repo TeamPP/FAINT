@@ -168,7 +168,6 @@ function getPostList(){
    $(data).each(function(index){
       var url=this.url.split('|'); 
       var filterList = this.filter.split('|');
-      console.log("url[0]:               "+url[0]);
       
       var tagStr = "";
       //이미지일 경우
