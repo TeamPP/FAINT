@@ -322,7 +322,7 @@ canvas {
   padding: 25px 0 0 0;
   width: 100%;
   height: 200px;
-  background: url('https://media.giphy.com/media/3oz8xTfD5SrkAwNNUQ/giphy.gif');
+  background: url(https://thumbs.gfycat.com/FastThreadbareIndigowingedparrot-size_restricted.gif);
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
@@ -659,7 +659,7 @@ body {
 				<i class="mdi mdi-arrow-left"></i>
 				<i class="mdi mdi-fullscreen"></i>
 				<i class="mdi mdi-menu"></i>
-				<h1>${login.nickname}</h1>
+				<h1 id="myName">${login.nickname}</h1>
 				<i class="mdi mdi-chevron-down"></i>
 			</div>
 			<div id="content">
@@ -679,7 +679,7 @@ body {
 				<div class="card menu">
 					<div class="header">
 						<img
-							src="https://pp.userapi.com/c630420/v630420685/458c3/mFPotaYurhc.jpg" />
+							src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
 						<h3>${login.nickname}</h3>
 					</div>
 					<div class="content">
@@ -702,40 +702,6 @@ body {
 							placeholder="Search" />
 					</div>
 					<ul class="list mat-ripple">
-						<li><img
-							src="https://pp.vk.me/c633629/v633629797/34a48/XqSmmn8PLRU.jpg"><span
-							class="name">Elena</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c307300/v307300537/84c1/-xELFBxvt7Q.jpg"><span
-							class="name">Neil deGrasse Tyson</span><i
-							class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.vk.me/c628727/v628727631/5c79a/yAtBoYXvlUc.jpg"><span
-							class="name">Vetal</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.vk.me/c604319/v604319346/3673/EAGK1PPYTSg.jpg"><span
-							class="name">Dima</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c639620/v639620661/fd56/P6PxyrFvlr0.jpg"><span
-							class="name">Marie Curie</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg"><span
-							class="name">Pavel Durov </span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c622419/v622419432/1b6ab/QuiocdEsyTI.jpg"><span
-							class="name">Stephen Hawking</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c623826/v623826544/1910/Q5QaUBXN5eQ.jpg"><span
-							class="name">Michio Kaku</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c419629/v419629606/1c93/K9Z9BJ9vjWo.jpg"><span
-							class="name">Richard Feynman</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c619731/v619731831/27f8/1jcNxJmUzF0.jpg"><span
-							class="name">Bear Grylls</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c407023/g41447720/d_0996245f.jpg"><span
-							class="name">Mark Zuckerberg</span><i class="mdi mdi-menu-down"></i></li>
 					</ul>
 				</div>
 				
@@ -816,7 +782,8 @@ body {
 
 
 		<script>
-    	function followList(){
+		getMessengerUserList();
+    	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
     		      var data=$(data)
     		      if(data.length!=0){
@@ -824,7 +791,7 @@ body {
     		        var followingList="";
     	            data.each(function(){
     	            	
-    	               followingList+="<li><img";
+    	               followingList+="<li><img ";
     	               	// 프로필 사진이 있는경우 | 없는 경우
     	            	if(this.profilephoto != null){
     	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />";
@@ -837,12 +804,46 @@ body {
     	            })
     	            
     	            //모달창 불러오기
-    	            $(".mat-ripple").html(followingList);
+    	            $(".list-account > .mat-ripple.list").html(followingList);
     		            
     		        };
 
     		      });
     		   };
+    		   
+    		   
+    	function getMessengerChatList(){
+/*     		 $.getJSON("/member/following/" + ${login.id}, function(data){
+    		      var data=$(data)
+    		      if(data.length!=0){
+    		         //following onclick 메서드 적용(follow리스트뜨도록)
+    		        var followingList="";
+    	            data.each(function(){
+    	            	
+    	               followingList+="<li><img ";
+    	               	// 프로필 사진이 있는경우 | 없는 경우
+    	            	if(this.profilephoto != null){
+    	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />";
+    	            	}else{
+    	            		followingList+="src='/resources/img/emptyProfile.jpg' />";
+    	            	}
+    	               	
+    	               	followingList+="<span class='name'>" + this.nickname + "</span><i class='mdi mdi-menu-down'></i> </li>";
+
+    	            })
+    	            
+    	            //모달창 불러오기
+    	            $(".list-account > .mat-ripple.list").html(followingList);
+    		            
+    		        };
+
+    		      }); */
+    		   };
+    		   
+		//3. 메세지 보내기
+		function notifyLike(writer, postid){
+			stompClient.send("/app/notify/" + writer + "/like/" + postid, {}, {});
+		}
         
         
         // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수
@@ -902,10 +903,10 @@ body {
             }, 530)
         });
 
-        // Имя набора (пользователя)
-        setName(localStorage.getItem('username'));
+        //현재 로그인 유저정보 설정
+        setName("${login.nickname}");
 
-        // Dyncolor ftw
+        // 로컬저장소에 있는 메신저 색상 가져오기
         if (localStorage.getItem('color') !== null) {
             var colorarray = JSON.parse(localStorage.getItem('color'));
             stylechange(colorarray);
@@ -919,8 +920,7 @@ body {
         function setName(name) {
         	//이름값 없을경우 본인, 아닐경우 변수 
             $.trim(name) === '' || $.trim(name) === null ? name = '${login.nickname}' : name = name;
-            $('h1').text(name);
-            localStorage.setItem('username', name);
+            $('#myName').text(name);
             //사용자 개인 프로필 - input
             $('#username').val(name).addClass('used');
           	//사용자 개인 프로필 - header
@@ -1031,7 +1031,7 @@ body {
 
         });
 
-        // Dirty Colorpicker( обязательно!)
+        // Dirty Colorpicker( 스타일창 클릭시)
         $('#colorpick').on('mousedown', function(eventDown) {
             var x = eventDown.offsetX;
             var y = eventDown.offsetY;
@@ -1047,21 +1047,24 @@ body {
                 stylechange(imgData);
             }
         });
-
+		
+        //채팅 발송 - 클릭
         $('.mdi-send').on('click', function() {
             var $chatmessage = '<p>' + $('.chat-input').val() + '</p>';
             $('ul.chat > li > .current').append($chatmessage);
             $('.chat-input').val('');
         });
-
+      	//채팅 발송 - 엔터
         $('.chat-input').on('keyup', function(event) {
             event.preventDefault();
             if (event.which === 13) {
                 $('.mdi-send').trigger('click');
             }
         });
-
+		
+      	//채팅리스트 클릭이벤트
         $('.list-text > ul > li').on('click', function() {
+        	//채팅리스트에 있는 내용 따서 채팅창으로 이동 - 없애도됨
             $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
 
             // timeout just for eyecandy...
@@ -1074,16 +1077,37 @@ body {
             }, 300);
         });
 
-        // список
-        // Делегирование для манипулирования дом. элементов списка
+        // 친구목록 리스트 클릭이벤트
         $('.list-account > .list').on('click', 'li', function() {
+        	//목록 active활성화 모두제거
             $(this).parent().children().removeClass('active');
+        	//수정 및 삭제버튼 제거
             $(this).parent().find('.context').remove();
+            //클릭한 리스트에만 active활성화
             $(this).addClass('active');
+            //클릭대상
             var $TARGET = $(this);
+            //클릭한 대상이 이미 수정 및 삭제버튼을 가지지 않을 경우
             if (!$(this).next().hasClass('context')) {
-                var $ctx = $('<li class="context"><i class="mdi mdi-pencil"></i><i class="mdi mdi-delete"></i></li>');
+                var $ctx = $('<li class="context"><i class="mdi mdi-comment"></i><i class="mdi mdi-pencil"></i><i class="mdi mdi-delete"></i></li>');
+                
+                //채팅하기 버튼
+                $ctx.on('click', '.mdi-comment', function() {
+                	
+                	//상대의 프로필 이미지 끌어오기
+                	$('ul.chat > li').eq(1).html('<img src="' + $TARGET.find('img').prop('src') + '"><div class="message"><p></p></div>');
+                    // timeout just for eyecandy...
+                    setTimeout(function() {
+                        $('.shown').removeClass('shown');
 
+                        $('.list-chat').addClass('shown');
+                        setRoute('.list-chat');
+                        $('.chat-input').focus();
+                        
+                    }, 300);
+                });
+                
+                //수정버튼
                 $ctx.on('click', '.mdi-pencil', function() {
                     setModal('edit', $TARGET);
 
@@ -1092,17 +1116,18 @@ body {
                         closeModal();
                     });
                 });
-
+				
+              	//삭제버튼
                 $ctx.on('click', '.mdi-delete', function() {
                     $TARGET.remove();
                 });
 
-
+				//수정 및 삭제버튼 삽입
                 $(this).after($ctx);
             }
         });
 
-        // Навигация
+        // 하단메뉴 활성화
         $('.nav li').on('click', function() {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
@@ -1112,13 +1137,15 @@ body {
             setRoute(route);
         });
 		
+        //화면 최대화
         $('#head').on('click', '.mdi-fullscreen', function() {
             $(this).removeClass('mdi-fullscreen').addClass('mdi-fullscreen-exit');
             $('#hangout').css({
                 width: '100%'
             });
         });
-
+		
+      	//화면 일반크기
         $('#head').on('click', '.mdi-fullscreen-exit', function() {
             $(this).removeClass('mdi-fullscreen-exit').addClass('mdi-fullscreen');
             $('#hangout').css({
@@ -1126,13 +1153,13 @@ body {
             });
         });
 
-        // меню-клик!
+        //현재 프로필 메뉴 오픈 및 오버레이 활성화
         $('#head .mdi-menu').on('click', function() {
             $('.menu').toggleClass('open');
             $('.overlay').toggleClass('add');
         });
 
-        // вид переключателя > 1000
+        // 최소화 최대화 버튼
         $('#head .mdi-chevron-down').on('click', function() {
             if ($('#hangout').hasClass('collapsed')) {
                 $(this).removeClass('mdi-chevron-up').addClass('mdi-chevron-down');
@@ -1144,7 +1171,7 @@ body {
 
         });
 
-        // Фильтр
+        // 유저 검색
         $('.search-filter').on('keyup', function() {
             var filter = $(this).val();
             $(GLOBALSTATE.route + ' .list > li').filter(function() {
@@ -1158,11 +1185,12 @@ body {
             });
         });
 
-        // для удаления контакта (ничего не трогать !!)
+        // 모달창 나가기 버튼
         $('#contact-modal').on('click', '.btn.cancel', function() {
             closeModal();
         });
-
+		
+        // 새로운 유저
         $('#new-user').on('keydown', function(event) {
             switch (event.which) {
                 case 13:
@@ -1177,7 +1205,8 @@ body {
             }
 
         });
-
+		
+        // 친구목록 floater
         $('#add-contact-floater').on('click', function() {
             if ($(this).hasClass('active')) {
                 	closeModal();
