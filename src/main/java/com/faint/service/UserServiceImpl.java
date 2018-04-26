@@ -248,6 +248,9 @@ public class UserServiceImpl implements UserService {
   	System.out.println(dto.getEmail());
   	
   	vo =dao.selectByEmail(dto.getEmail());
+  	System.out.println("vo.to"+vo);
+  	
+  	
 //      vo=dao.naverReadUser(dto);
       if(vo==null){
           try{

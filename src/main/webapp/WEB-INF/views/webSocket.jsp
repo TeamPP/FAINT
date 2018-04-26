@@ -72,12 +72,10 @@
 	font-size: 14px;
 	box-sizing: content-box;
 }
-
 .messengerUser:hover{
 	background-color: rgba(255, 255, 255, 0.5);
 	cursor: pointer;
 }
-
 .followPhoto{
 	width: 33px;
 	height: 33px;
@@ -141,21 +139,17 @@ table{
     border-right: 10px solid #9DC8C8;
     border-bottom: 10px solid transparent;
 }
-
 #chat .msg_container_base{
     background:#fff;
 }
 #chat time{ color:#fff; font-style: oblique; }
-
 .chatBlock{
 display:block;
 }
-/* .chatNone{
+.chatNone{
 display:none;
-} */
-
+}
   
-
 #btn-chat{
 	background: #FFE400;
 	border: none;
@@ -170,8 +164,8 @@ display:none;
 
 <ul class="notice"></ul>
 <div class="msgBtn" onclick="msgPopup()"><i class="material-icons">people</i><p>Messenger</p></div>
-<!-- <div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div> -->
-
+<div class="followWrp followHide" sytle="width:200px; display:inline-block;"><div id="scroll"><ul id="followList" onclick="getChat()"></ul></div></div>
+	
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.vo" var="login" />
 
@@ -281,50 +275,6 @@ display:none;
 	            $("#followList").append(followingList);
 		            
 		        };
-		        function getChat(){
-		        	$.ajax({ 
-		        		type:'POST',
-		        		url:'/chatting/chatView22',
-		        			headers : {
-		        			"Content-Type" : "application/json",
-		        			"X-HTTP-Method-Override" : "POST"}, 
-		        		dataType:'json',
-		        		beforeSend : function(xhr)
-		                {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-		                    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-		                },
-		        		data:JSON.stringify({
-		        			
-		        		}),
-		        		success:function(result){ 
-		        			console.log("채팅을 시작하지 ");
-		        			console.log(result+"result 타입은??");
-		        			
-		        			//console.log(result[0].msgRegist);
-		        			
-		        			var message = "";
-		        			
-		        		 	console.log(message+"11message");
-		        			for(var i=0;i<result.length;i++){
-		        				if(result != null){
-		        					console.log("result11"+result)
-		        					message = "<div class='row msg_container base_receive'><div class='col-md-10 col-xs-10' style='padding:0;'>12313<div class='messages msg_receive'>"
-		        						+ result[i].message + "<br><time>"
-		        						+ result[i].msgRegist + "</time>111</div></div></div>";
-		        					$('.msg_container_base').append(message);
-		        				}else{
-		        					message = "<div class='#'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_sent'>"
-		        						+ result[i].message + "<br>11<time>"
-		        						+ result[i].msgRegist + "</time></div></div></div>";
-		        					$('.msg_container_base').append(message);
-		        				}
-		        				
-		        				$('.msg_container_base').scrollTop(9999);
-		        			}
-		        		}
-		                
-		        	}); //$.ajax 끝
-		        }
 		      });
 		   };
 			   
@@ -336,218 +286,5 @@ display:none;
 		
 	</script>
 </sec:authorize>
-<%-- <!--  친구 클릭 시 그 팔로우와 대화 시작  -->
- <!-- =============== 채팅 모달 시작 ====================== -->
- 
- 
-<div id="chatClick" onclick="getChat()" style="cursor:pointer;"></div> 
- 
-<div class="chatNone chatHide" id="chat" >      
-    <div class="#" id="chat_window_1" style="margin-left:;">
-        <div class="TextMessage">
-<div class="chatNone" id="chat">      
-    <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
-        <div class="col-xs-12 col-md-12">
-          	<div class="panel panel-default">
-                 <div class="panel-heading top-bar">
-                 	<div style="display:inline;">
-               		<h4 class="panel-title" style="display:inline;"><span class="glyphicon glyphicon-comment"></span>&nbsp;DIRECT MESSAGE</h4>
-                		<h4 class="panel-title" style="display:inline;"><span class="glyphicon glyphicon-comment"></span>&nbsp;${login.nickname }대화</h4>
-                 	</div>
-                	
-             	</div>
-             	
-             	<!-- 내용이당 -->
-             	<div class="panel-body msg_container_base">
-           <!-- ===========이전 대화창가져 오기인데 아직 안된다 ============ -->  		
-             	
-          <!--========== 다 가져왓땅 =============-->    
-          <!--========== 다 가져왓땅 =============-->  
-                 </div>
-                 <!-- 내용끝났땅 -->
-                 
-                 <!--입력 부분  -->
-                 <div class="panel-footer">
-                     <div class="input-group">
- <!--                         <input id="btn-input" type="text" class="form-control input-sm chat_input" /> -->
-                         <textarea id="btn-input" class="form-control input-sm chat_input"></textarea>
-                         <span class="input-group-btn">
-                         <button class="btn btn-primary btn-sm" id="btn-chat">전송</button>
-                         </span>
-                     </div>
-                 </div>
- 			</div>
- 		</div>
- 	</div>
- </div>
- 
- <!-- ===============1대1채팅 시 ======================  -->
-   <script src="/resources/js/sockjs.js"></script>
- <script src="/resources/js/sockjs.min.js"></script>
- <script>
- 
 
- //Get the modal
- var modal = document.getElementById('id01');
- // When the user clicks anywhere outside of the modal, close it
- window.onclick = function(event) {
-     if (event.target == modal) {
-         modal.style.display = "none";
-     }
- }
- 
-/* $.getJSON("/member/following/" + ${login.id}, function(data){
-    var data=$(data)
-    console.log(data);
-followList(data);
-console.log(followList);
-console.log("das"+this.name);
-console.log("das"+this.name);
-console.log("das"+this.email);
-console.log("das"+this.nickname);
-data.each(function(){
-	console.log("das"+this.name);
-}); */
- function getChat(){
- 	$.ajax({ 
- 		type:'POST',
- 		url:'/chatting/chatView22',
- 			headers : {
- 			"Content-Type" : "application/json",
- 			"X-HTTP-Method-Override" : "POST"}, 
- 		dataType:'json',
- 		beforeSend : function(xhr)
-         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-         },
- 		data:JSON.stringify({
- 			
- 		}),
- 		success:function(result){ 
- 			console.log("채팅을 시작하지 ");
-			console.log(result+"result 타입은??");
-			console.log(result);
- 			
-			//console.log(result[0].msgRegist);
-			console.log(result[0].msgRegist);
- 			
- 			var message = "";
- 			
-		 	console.log(message+"11message");
- 			for(var i=0;i<result.length;i++){
-				if(result != null){
-				if(result[i].email == "admin"){
- 					message = "<div class='row msg_container base_receive'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_receive'>"
- 						+ result[i].message + "<br><time>"
- 						+ result[i].msgRegist + "</time></div></div></div>";
- 					$('.msg_container_base').append(message);
- 				}else{
- 					message = "<div class='row msg_container base_sent'><div class='col-md-10 col-xs-10' style='padding:0;'><div class='messages msg_sent'>"
-						+ result[i].message + "<br>11<time>"
-						+ result[i].message + "<br><time>"
- 						+ result[i].msgRegist + "</time></div></div></div>";
- 					$('.msg_container_base').append(message);
- 				}
- 				
- 				$('.msg_container_base').scrollTop(9999);
- 			}
- 		}
- 	}); //$.ajax 끝
- }
- 
- 
- var sock = null;
- var message = {};
- 
- $(document).ready(function(){
- 	
- 	
- 	//웹 소켓을 지정한 url로 연결
- 	sock = new SockJS("/chat");
- 	
- 	//웹 소켓이 열리면 호출
- 	sock.onopen = function(){
- 		/* message = {};
- 		message.message = "접속하였습니다.";
- 		message.type="all";
- 		message.receiver = "all";
- 		message.email = "${login.email}";
- 		message.email
- 		//메시지 전송
- 		sock.send(JSON.stringify(message)); */
- 	}
- 	
- 	//메시지가 도착하면 호출
- 	sock.onmessage = function(evt){
- 		$('.msg_container_base').append(evt.data + "<br/>");
- 		$('.msg_container_base').scrollTop(9999);
- 	}
- 	
- 	//웹 소켓이 닫히면 호출
- 	sock.onclose = function(){
- 		//메시지 전송
- 		sock.send('채팅을 종료합니다.');
- 	}
- 	
- 	$("#btn-input").keydown(function (key) {
-         if (key.keyCode == 13) {
-            $("#btn-chat").click();
-         }
-     });
- 
- 	$('#btn-chat').click(function(){
- 		
- 		if($('#btn-input').val() != ""){
- 			
- 			message = {};
- 			message.message = $('#btn-input').val();
- 			message.type = "to";
- 			message.receiver = "admin";
- 			message.email = "${login.email}";
- 			
-			console.log(message.email+"이건 뭐지????1asd")
-			console.log(message.email+"이건 뭐지????")
- 			
- 			var time = new Date();
- 			
- 			//메시지 전송
- 			sock.send(JSON.stringify(message));
- 			
- 			$('.msg_container_base').append(
- 					'<div class="row msg_container base_sent"> <div class="col-md-10 col-xs-10" style="padding:0;"><div class="messages msg_sent">'
- 					+  $('#btn-input').val() +'<br><time>' + time.getHours() + ":" + time.getMinutes() +'</time></div></div></div>');
- 			$('#btn-input').val("");
- 			$('.msg_container_base').scrollTop(9999);
- 		}
- 	});
- 	
- 	$('#chatClick').click(function(){
- 		if($('#chat').hasClass('chatNone')){
- 			$('#chat').removeClass('chatNone');
- 			$('#chat').addClass('chatBlock');	
- 			$('.msg_container_base').scrollTop(9999);
- 		}else{
- 			$('#chat').removeClass('chatBlock');
- 			$('#chat').addClass('chatNone');	
- 		}
- 	});
- })
- 
- $(document).on('focus', '.panel-footer input.chat_input', function (e) {
-     var $this = $(this);
-     if ($('#minim_chat_window').hasClass('panel-collapsed')) {
-         $this.parents('.panel').find('.panel-body').slideDown();
-         $('#minim_chat_window').removeClass('panel-collapsed');
-         $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-     }
- });
- $(document).on('click', '#new_chat', function (e) {
-     var size = $( ".chat-window:last-child" ).css("margin-left");
-      size_total = parseInt(size) + 400;
-     alert(size_total);
-     var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
-     clone.css("margin-left", size_total);
- });
- 
-</script>  --%> 
 </html>
