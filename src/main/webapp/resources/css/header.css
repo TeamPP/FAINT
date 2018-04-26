@@ -535,6 +535,8 @@ span {
     float: left;
     top: 20px;
     height: 40px;
+    position: relative;
+    display: inline-block;
 }
 
 .dropbtn {
@@ -549,11 +551,6 @@ span {
 
 .dropbtn:hover {
     color: black;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
 }
 
 .dropdown-content {
@@ -694,6 +691,12 @@ span {
     position: relative;
     top: -186px;
 }
+.hearteffect-svg {
+	fill: white;
+	width: 465%;
+    position: relative;
+    right: 140%;
+}
 
 .heart-svg:hover {
 	fill: #e24040;
@@ -718,5 +721,5 @@ span {
 #followHeader-modal {
     padding: 0px;
     overflow-y: auto;
-    height: 500px;
+    height: 300px;
 }

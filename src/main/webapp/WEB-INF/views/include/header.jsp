@@ -176,157 +176,6 @@ body {
                     	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#heart"></use>
                     </svg>
                  </a>
-                        	             <!--Follow Modal -->
-		<div class="modal fade" id="followModal" role="dialog" aria-hidden="false">
-		        <div class="modal-content" id="followModal-content">
-		            <div class="modal-header" id="followHeader-modal">
-		                <div id="follow-results">
-		                
-		                							<a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/soso">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@soso</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕하세요안녕하세요안녕하세요안녕하세요ㅌㅊㅌㅊㅌㅊㅌㅊㅌ</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/hello">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@hello</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕하다</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/hihi">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@hihi</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/AhnSunYoung">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/displayFile?fileName=/2018/03/28970d287f-ad1c-45d5-83b8-808dee56899c_KakaoTalk.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@AhnSunYoung</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안선영</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-							<a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/soso">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@soso</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕하세요안녕하세요안녕하세요안녕하세요ㅌㅊㅌㅊㅌㅊㅌㅊㅌ</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/hello">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@hello</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕하다</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/hihi">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/resources/img/emptyProfile.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@hihi</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안녕</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a> <a class="_ndl3t _4jr79 user" onclick="unloadCheck()"
-								href="/member/AhnSunYoung">
-								<div class="_o92vn">
-									<span class="_po4xn coreSpriteHashtag"> <img
-										src="/displayFile?fileName=/2018/03/28970d287f-ad1c-45d5-83b8-808dee56899c_KakaoTalk.jpg"
-										;="" style="height: 24px; width: 24px; border-radius: 50%;">
-									</span>
-									<div class="_poxna">
-										<div class="_lv0uf">
-											<span class="_b01op">@AhnSunYoung</span>
-										</div>
-										<div class="_2ph7c">
-											<span class=""> <span class="">안선영</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-										
-		            </div><!-- follow-results 끝 -->
-		        </div>
-		</div>
-		
                  <a class="account" href="/member/${login.nickname}">
                      <c:choose>
                              <c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
@@ -353,6 +202,17 @@ body {
              </div>
          </div>
        </sec:authorize>
+       
+                               	             <!--Follow Modal -->
+		<div class="modal fade" id="followModal" role="dialog" aria-hidden="false">
+		        <div class="modal-content" id="followModal-content">
+		            <div class="modal-header" id="followHeader-modal">
+		                <div id="follow-results">
+		                <a>룰루</a>
+						</div>
+		            </div><!-- follow-results 끝 -->
+		        </div>
+		</div>
          
      </div>
  </div>
@@ -499,11 +359,11 @@ body {
     </symbol>
     <symbol id="heart-effect" viewBox="0 0 219.839 219.839">
 	<g>
-		<path style="fill:#FFC847;" d="M64.92,18.919c-0.663,0-1.2-0.537-1.2-1.2v-5.447c0-0.663,0.537-1.2,1.2-1.2      c0.663,0,1.2,0.537,1.2,1.2v5.447C66.12,18.382,65.583,18.919,64.92,18.919z"/>
-		<path style="fill:#FFC847;" d="M46.858,22.513c-0.471,0-0.917-0.279-1.108-0.741l-2.085-5.033      c-0.254-0.612,0.037-1.314,0.649-1.567c0.608-0.254,1.313,0.038,1.567,0.649l2.085,5.033c0.254,0.612-0.037,1.314-0.65,1.567      C47.167,22.483,47.011,22.513,46.858,22.513z"/>
-		<path style="fill:#FFC847;" d="M31.545,32.744c-0.307,0-0.614-0.117-0.849-0.352l-3.852-3.853c-0.469-0.469-0.469-1.229,0-1.697      c0.469-0.469,1.228-0.469,1.697,0l3.852,3.853c0.469,0.469,0.469,1.229,0,1.697C32.159,32.627,31.852,32.744,31.545,32.744z"/>
-		<path style="fill:#FFC847;" d="M98.295,32.744c-0.307,0-0.614-0.117-0.849-0.352c-0.469-0.469-0.469-1.229,0-1.697l3.853-3.853      c0.469-0.469,1.229-0.469,1.697,0c0.469,0.469,0.469,1.229,0,1.697l-3.853,3.853C98.909,32.627,98.602,32.744,98.295,32.744z"/>
-		<path style="fill:#FFC847;" d="M82.982,22.513c-0.153,0-0.309-0.029-0.459-0.092c-0.612-0.253-0.903-0.955-0.649-1.567      l2.085-5.033c0.254-0.611,0.955-0.903,1.567-0.649c0.612,0.253,0.903,0.955,0.649,1.567l-2.085,5.033      C83.899,22.233,83.453,22.513,82.982,22.513z"/>
+		<path d="M64.92,18.919c-0.663,0-1.2-0.537-1.2-1.2v-5.447c0-0.663,0.537-1.2,1.2-1.2      c0.663,0,1.2,0.537,1.2,1.2v5.447C66.12,18.382,65.583,18.919,64.92,18.919z"/>
+		<path d="M46.858,22.513c-0.471,0-0.917-0.279-1.108-0.741l-2.085-5.033      c-0.254-0.612,0.037-1.314,0.649-1.567c0.608-0.254,1.313,0.038,1.567,0.649l2.085,5.033c0.254,0.612-0.037,1.314-0.65,1.567      C47.167,22.483,47.011,22.513,46.858,22.513z"/>
+		<path d="M31.545,32.744c-0.307,0-0.614-0.117-0.849-0.352l-3.852-3.853c-0.469-0.469-0.469-1.229,0-1.697      c0.469-0.469,1.228-0.469,1.697,0l3.852,3.853c0.469,0.469,0.469,1.229,0,1.697C32.159,32.627,31.852,32.744,31.545,32.744z"/>
+		<path d="M98.295,32.744c-0.307,0-0.614-0.117-0.849-0.352c-0.469-0.469-0.469-1.229,0-1.697l3.853-3.853      c0.469-0.469,1.229-0.469,1.697,0c0.469,0.469,0.469,1.229,0,1.697l-3.853,3.853C98.909,32.627,98.602,32.744,98.295,32.744z"/>
+		<path d="M82.982,22.513c-0.153,0-0.309-0.029-0.459-0.092c-0.612-0.253-0.903-0.955-0.649-1.567      l2.085-5.033c0.254-0.611,0.955-0.903,1.567-0.649c0.612,0.253,0.903,0.955,0.649,1.567l-2.085,5.033      C83.899,22.233,83.453,22.513,82.982,22.513z"/>
 	</g>
     </symbol>
   </svg>
@@ -518,6 +378,15 @@ body {
 	</c:choose>
 
 <script>
+
+/* $(".heart-svg").mouseenter(function() {
+	$(".hearteffect-svg").css("fill", "#e24040");
+})
+
+$(".heart-svg").mouseleave(function() {
+	$(".hearteffect-svg").css("fill", "white");
+}) */
+
 
 // 로그아웃 버튼 클릭 이벤트
 $(".logout").click(function() {
