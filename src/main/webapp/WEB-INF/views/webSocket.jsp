@@ -207,19 +207,19 @@ display:none;
   			console.log(data);
   			var list="";
   			$(data).each(function(){
-  				list += "<li style='height:50px;' class='oneofList'><a href='/member/"+this.fromid+"'><img class='followPhoto'";
+  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
   				
                 // 프로필 사진이 있는경우 | 없는 경우
-   				if(this.profilephoto != null){
-   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
-               	}else if(this.profilephoto == null){
-               		list += "src='/resources/img/emptyProfile.jpg' /></a>";
+   				if(this.profilePhoto != ""){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
+               	}else if(this.profilePhoto == ""){
+               		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
-   				list += "<a href='/member/"+this.fromid+"' style='font-weight:600;'>" + this.fromid + "</a><span>님이";
+   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
                	
                 if(this.type=="F"){
-                	list += "회원님을 팔로우하였습니다</span>";
+                	list += " 회원님을 팔로우하였습니다</div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -233,23 +233,23 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += "회원님을 태그하였습니다</span>";
+                	list += " 회원님을 태그하였습니다</div>";
                 	
                 }else if(this.type=="L"){
-                	list += "회원님의 게시물에 좋아요를 눌렀습니다</span>";
+                	list += " 회원님의 게시물에 좋아요를 눌렀습니다</div>";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</span>";
+                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
                 }
                 
                 if(this.type!="F"){
                 	
                 	if(this.filter==""){
-                		list += "<img style='border-radius:0px' class='followPhoto' "; 
+                		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto' "; 
                 	}else{
-                		list += "<img style='border-radius:0px' class='followPhoto " + this.filter + "' ";
+                		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto " + this.filter + "' ";
                 	}
-                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></li>";
+                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
                 	
                 }
 

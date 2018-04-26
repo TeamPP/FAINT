@@ -189,6 +189,7 @@ canvas {
   bottom: 0;
   right: 0;
   z-index: 30;
+  position: fixed;
 }
 #hangout.collapsed {
   height: 55px;
@@ -309,6 +310,8 @@ canvas {
   color: #3f51b5;
   font-size: 0.85em;
   text-transform: uppercase;
+  position: relative;
+  top: -31px;
 }
 .card.menu {
   padding-top: 50px;
