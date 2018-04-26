@@ -14,7 +14,7 @@
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link href="/resources/bootstrap-social.css" rel="stylesheet">
+
 <!-- 모달 부트스트랩 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -70,14 +70,29 @@ body {
 	content: " ";
 	position: absolute;
 }
+#follow-modal-content::after {
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    height: 0;
+    right: 40.5%;
+    top: -10px;
+    width: 0;
+    z-index: 3;
+	content: " ";
+	position: absolute;
+}
+.modal.fade {
+	top: 8%;
+}
 </style>
 
 </head>
 <body>
-<div class="row" id="header">
-    <div class="col-sm-12" style="height: 100px;">
-        <div class="row" id="col2">
-            
+<div class="row" id="header" style="width:100%;">
+    <div class="col-sm-12" style="height: 100px; background-color: white;">
+        <div class="row" id="col2" style="width:100%;">
+
             <div class="col-sm-4" id="logo" style="height: 100%;">
                 <a href="/main">
                     <img class="faintlogo" src="/resources/image/realogo.png">
@@ -137,20 +152,25 @@ body {
 		
          </div>
 
+<sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal.vo" var="login" />
          <div class="col-sm-4" id="menu" style="height: 100%;">
              <div class="pull-right">
                  <a class="explore" href="/explore/expage">
-                     <img src="/resources/image/header_icon/explore-icon.png">
+					<img src="/resources/image/header_icon/explore-icon.png">
                  </a>
                  <a class="new-post" href="/post/register">
-                     <img src="/resources/image/header_icon/newpost-icon.png">
+					<img src="/resources/image/header_icon/newpost-icon.png">
                  </a>
                  <a class="recommend" href="javascript:;">
-                     <img src="/resources/image/header_icon/recommend-icon.png">
+					<img src="/resources/image/header_icon/recommend-icon.png">
                  </a>
-                 <a class="follow-list" href="javascript:;">
-                     <img src="/resources/image/header_icon/follow-icon.png">
+                 <a class="follow-list" list="results" data-toggle="modal" data-target="#followModal" data-backdrop="true" autocomplete="off">
+                 	<svg class="heart-svg">
+                    	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#heart"></use>
+                    </svg>
                  </a>
+                 
                  <a class="account" href="/member/${login.nickname}">
                      <c:choose>
                              <c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
@@ -176,6 +196,19 @@ body {
                  </div>
              </div>
          </div>
+       </sec:authorize>
+      
+      	                        	             <!--Follow Modal -->
+		<div class="modal fade" id="followModal" role="dialog" aria-hidden="false">
+	        <div class="modal-content" id="follow-modal-content">
+	            <div class="modal-header" id="follow-header-modal">
+	                <ul id="follow-results">
+						
+					</ul>
+	            </div>
+	        </div>
+		</div>
+      
      </div>
  </div>
  
@@ -190,7 +223,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="all" tabindex="-1"  onclick="cateClick(this)" value="type-cateAll" id="type-cateAll">
                             <label for="type-cateAll">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-all-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
                                 </svg>
                                 <span>All</span>
@@ -200,7 +233,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="1" tabindex="-1"  onclick="cateClick(this)" value="type-travel" id="type-travel">
                             <label for="type-travel">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-travel-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
                                 </svg>
                                 <span>Travel</span>
@@ -210,7 +243,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="2" tabindex="-1"  onclick="cateClick(this)" value="type-movie" id="type-movie">
                             <label for="type-movie">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-movie-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
                                 </svg>
                                 <span>Movie</span>
@@ -220,7 +253,7 @@ body {
                         <div>
                             <input name="type" type="radio"  data-filter="3" tabindex="-1"  onclick="cateClick(this)" value="type-music" id="type-music">
                             <label for="type-music">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-music-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
                                 </svg>
                                 <span>Music</span>
@@ -230,7 +263,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="4" tabindex="-1"  onclick="cateClick(this)" value="type-food" id="type-food">
                             <label for="type-food">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-food-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
                                 </svg>
                                 <span>Food</span>
@@ -240,7 +273,7 @@ body {
                         <div>
                             <input name="type" type="radio" data-filter="5" tabindex="-1"  onclick="cateClick(this)" value="type-writing" id="type-writing">
                             <label for="type-writing">
-                                <svg class="edit-pen-title">
+                                <svg class="cate-writing-svg">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
                                 </svg>
                                 <span>Writing</span>
@@ -257,19 +290,17 @@ body {
     </div>
 </div>
 
-<div class="row" style="width:100%;">
+ <div class="row" style="width:100%">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
-	             <!-- Modal -->
+	             <!--Search Modal -->
 		<div class="modal fade" id="searchModal" role="dialog" aria-hidden="false">
-		    <div class="modal-dialog modal-sm">
-		        <div class="modal-content">
-		            <div class="modal-header" id="header-modal">
+		        <div class="modal-content" id="search-modal-content">
+		            <div class="modal-header" id="search-header-modal">
 		                <div id="results"></div>
 		            </div>
 		        </div>
-		    </div>
 		</div>
 		
 	</div>
@@ -304,23 +335,45 @@ body {
         <path d="M0 32h214.6v214.6H0V32zm233.4 0H448v214.6H233.4V32zM0 265.4h214.6V480H0V265.4zm233.4 0H448V480H233.4V265.4z"/>
     </symbol>
     <symbol id="travel" viewBox="0 0 576 512">
-        <path xmlns="http://www.w3.org/2000/svg" d="M472 200H360.211L256.013 5.711A12 12 0 0 0 245.793 0h-57.787c-7.85 0-13.586 7.413-11.616 15.011L209.624 200H99.766l-34.904-58.174A12 12 0 0 0 54.572 136H12.004c-7.572 0-13.252 6.928-11.767 14.353l21.129 105.648L.237 361.646c-1.485 7.426 4.195 14.354 11.768 14.353l42.568-.002c4.215 0 8.121-2.212 10.289-5.826L99.766 312h109.858L176.39 496.989c-1.97 7.599 3.766 15.011 11.616 15.011h57.787a12 12 0 0 0 10.22-5.711L360.212 312H472c57.438 0 104-25.072 104-56s-46.562-56-104-56z"/>
+        <path d="M472 200H360.211L256.013 5.711A12 12 0 0 0 245.793 0h-57.787c-7.85 0-13.586 7.413-11.616 15.011L209.624 200H99.766l-34.904-58.174A12 12 0 0 0 54.572 136H12.004c-7.572 0-13.252 6.928-11.767 14.353l21.129 105.648L.237 361.646c-1.485 7.426 4.195 14.354 11.768 14.353l42.568-.002c4.215 0 8.121-2.212 10.289-5.826L99.766 312h109.858L176.39 496.989c-1.97 7.599 3.766 15.011 11.616 15.011h57.787a12 12 0 0 0 10.22-5.711L360.212 312H472c57.438 0 104-25.072 104-56s-46.562-56-104-56z"/>
     </symbol>
     <symbol id="movie" viewBox="0 0 512 512">
-        <path xmlns="http://www.w3.org/2000/svg" d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z"/>
+        <path d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z"/>
     </symbol>
     <symbol id="music" viewBox="0 0 512 512">
-        <path xmlns="http://www.w3.org/2000/svg" d="M470.4 1.5l-304 96C153.1 101.7 144 114 144 128v264.6c-14.1-5.4-30.5-8.6-48-8.6-53 0-96 28.7-96 64s43 64 96 64 96-28.7 96-64V220.5l272-85.9v194c-14.1-5.4-30.5-8.6-48-8.6-53 0-96 28.7-96 64s43 64 96 64 96-28.7 96-64V32c0-21.7-21.1-37-41.6-30.5z"/>
+        <path d="M470.4 1.5l-304 96C153.1 101.7 144 114 144 128v264.6c-14.1-5.4-30.5-8.6-48-8.6-53 0-96 28.7-96 64s43 64 96 64 96-28.7 96-64V220.5l272-85.9v194c-14.1-5.4-30.5-8.6-48-8.6-53 0-96 28.7-96 64s43 64 96 64 96-28.7 96-64V32c0-21.7-21.1-37-41.6-30.5z"/>
     </symbol>
     <symbol id="food" viewBox="0 0 416 512">
-        <path xmlns="http://www.w3.org/2000/svg" d="M207.9 15.2c.8 4.7 16.1 94.5 16.1 128.8 0 52.3-27.8 89.6-68.9 104.6L168 486.7c.7 13.7-10.2 25.3-24 25.3H80c-13.7 0-24.7-11.5-24-25.3l12.9-238.1C27.7 233.6 0 196.2 0 144 0 109.6 15.3 19.9 16.1 15.2 19.3-5.1 61.4-5.4 64 16.3v141.2c1.3 3.4 15.1 3.2 16 0 1.4-25.3 7.9-139.2 8-141.8 3.3-20.8 44.7-20.8 47.9 0 .2 2.7 6.6 116.5 8 141.8.9 3.2 14.8 3.4 16 0V16.3c2.6-21.6 44.8-21.4 48-1.1zm119.2 285.7l-15 185.1c-1.2 14 9.9 26 23.9 26h56c13.3 0 24-10.7 24-24V24c0-13.2-10.7-24-24-24-82.5 0-221.4 178.5-64.9 300.9z"/>
+        <path d="M207.9 15.2c.8 4.7 16.1 94.5 16.1 128.8 0 52.3-27.8 89.6-68.9 104.6L168 486.7c.7 13.7-10.2 25.3-24 25.3H80c-13.7 0-24.7-11.5-24-25.3l12.9-238.1C27.7 233.6 0 196.2 0 144 0 109.6 15.3 19.9 16.1 15.2 19.3-5.1 61.4-5.4 64 16.3v141.2c1.3 3.4 15.1 3.2 16 0 1.4-25.3 7.9-139.2 8-141.8 3.3-20.8 44.7-20.8 47.9 0 .2 2.7 6.6 116.5 8 141.8.9 3.2 14.8 3.4 16 0V16.3c2.6-21.6 44.8-21.4 48-1.1zm119.2 285.7l-15 185.1c-1.2 14 9.9 26 23.9 26h56c13.3 0 24-10.7 24-24V24c0-13.2-10.7-24-24-24-82.5 0-221.4 178.5-64.9 300.9z"/>
     </symbol>
     <symbol id="writing" viewBox="0 0 512 512">
-        <path xmlns="http://www.w3.org/2000/svg" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/>
+        <path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/>
     </symbol>
-
+    <symbol id="heart" viewBox="0 0 485.3 485.3">
+    	<path d="M349.6,28.95c-36.3,0-70.5,14.2-96.2,39.9l-10.6,10.6L232,68.65c-25.7-25.7-59.9-39.9-96.2-39.9     c-36.2,0-70.3,14.1-96,39.8S0,128.35,0,164.65s14.2,70.4,39.9,96.1l190.5,190.5l0.4,0.4c3.3,3.3,7.7,4.9,12,4.9     c4.4,0,8.8-1.7,12.1-5l190.5-190.5c25.7-25.7,39.9-59.8,39.9-96.1s-14.1-70.5-39.8-96.1C419.9,43.05,385.8,28.95,349.6,28.95z      M421.2,236.75l-178.3,178.4L64.2,236.45c-19.2-19.2-29.8-44.7-29.9-71.9c0-27.1,10.5-52.6,29.7-71.8     c19.2-19.1,44.7-29.7,71.7-29.7c27.2,0,52.7,10.6,72,29.9l22.9,22.9c6.4,6.4,17.8,6.4,24.3,0l22.8-22.8     c19.2-19.2,44.8-29.8,71.9-29.8s52.6,10.6,71.8,29.8c19.2,19.2,29.8,44.7,29.7,71.9C451.1,192.05,440.5,217.55,421.2,236.75z"/>
+    </symbol>
+    <symbol id="heart-effect" viewBox="0 0 219.839 219.839">
+	<g>
+		<path d="M64.92,18.919c-0.663,0-1.2-0.537-1.2-1.2v-5.447c0-0.663,0.537-1.2,1.2-1.2      c0.663,0,1.2,0.537,1.2,1.2v5.447C66.12,18.382,65.583,18.919,64.92,18.919z"/>
+		<path d="M46.858,22.513c-0.471,0-0.917-0.279-1.108-0.741l-2.085-5.033      c-0.254-0.612,0.037-1.314,0.649-1.567c0.608-0.254,1.313,0.038,1.567,0.649l2.085,5.033c0.254,0.612-0.037,1.314-0.65,1.567      C47.167,22.483,47.011,22.513,46.858,22.513z"/>
+		<path d="M31.545,32.744c-0.307,0-0.614-0.117-0.849-0.352l-3.852-3.853c-0.469-0.469-0.469-1.229,0-1.697      c0.469-0.469,1.228-0.469,1.697,0l3.852,3.853c0.469,0.469,0.469,1.229,0,1.697C32.159,32.627,31.852,32.744,31.545,32.744z"/>
+		<path d="M98.295,32.744c-0.307,0-0.614-0.117-0.849-0.352c-0.469-0.469-0.469-1.229,0-1.697l3.853-3.853      c0.469-0.469,1.229-0.469,1.697,0c0.469,0.469,0.469,1.229,0,1.697l-3.853,3.853C98.909,32.627,98.602,32.744,98.295,32.744z"/>
+		<path d="M82.982,22.513c-0.153,0-0.309-0.029-0.459-0.092c-0.612-0.253-0.903-0.955-0.649-1.567      l2.085-5.033c0.254-0.611,0.955-0.903,1.567-0.649c0.612,0.253,0.903,0.955,0.649,1.567l-2.085,5.033      C83.899,22.233,83.453,22.513,82.982,22.513z"/>
+	</g>
+    </symbol>
+    <symbol id="full-heart" viewBox="0 0 492.719 492.719">
+    	<path d="M492.719,166.008c0-73.486-59.573-133.056-133.059-133.056c-47.985,0-89.891,25.484-113.302,63.569    c-23.408-38.085-65.332-63.569-113.316-63.569C59.556,32.952,0,92.522,0,166.008c0,40.009,17.729,75.803,45.671,100.178    l188.545,188.553c3.22,3.22,7.587,5.029,12.142,5.029c4.555,0,8.922-1.809,12.142-5.029l188.545-188.553    C474.988,241.811,492.719,206.017,492.719,166.008z" fill="#D80027"/>
+    </symbol>
   </svg>
-  <div class="empty"></div>
+  
+  <c:choose>
+		<c:when test="${reqURL == '/main'}">
+			<div class="empty" style="height:220px;"></div>
+		</c:when>
+		<c:otherwise>
+			<div class="empty" style="height:150px;"></div>
+		</c:otherwise>
+	</c:choose>
 
 <script>
 $("search-form").click(function() {
@@ -343,11 +396,6 @@ $('.search-input').focus(function () {
 // 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
-    if($("#myDropdown").attr("class")=="dropdown-content show") {
-        $(".dropbtn").css("color", "black");
-    } else {
-        $(".dropbtn").css("color", "lightgray");
-    }
 }
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
@@ -390,7 +438,11 @@ $(".search-form").submit(function(event) {
    
    return true;
    }); 
-   
+// 검색 필터 적용하기 위한 value값
+$('.search-option input').click(function() {
+	$(".search-option input").attr("value", "0");
+	$(this).attr("value", "1");
+});
 </script>
 
 <script>
@@ -399,10 +451,21 @@ function searchAjax(){
    
    if($("#keywordInput").val()=="") {
       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-      $("#header-modal").css("height", "51px");
+      $("#search-header-modal").css("height", "51px");
    }
    
-   $("#keywordInput").keyup(function(){
+   $("#keywordInput").keyup(function(event){
+	 if (event.keyCode == '40' && $(".results").length!=null) {
+		 console.log("아래로눌럿다");
+	 } else if(event.keyCode == '38' && $(".results").length!=null) {
+		 console.log("위로눌럿다");
+	 } else if(event.keyCode == '37' && $(".results").length!=null) {
+		 //왼쪽 방향키 막기
+		 console.log("왼쪽막았다");
+	 } else if(event.keyCode == '39' && $(".results").length!=null) {
+		 //오른쪽 방향키 막기
+		 console.log("오른쪽막았다");
+	 }
       
       var words = $("#keywordInput").val();
        //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
@@ -462,340 +525,12 @@ function searchAjax(){
       }
       console.log("searchwords----------->>>" + searchwords);
       
-      /* 검색 단어가 있으면 일치하는 것 출력 */
-      if(searchwords!=''){
-    	  console.log("찾아지는데이터----------->>>" + searchwords);
-         $.ajax({
-            type:"POST",
-            url: "/explore/searchData/",
-            headers:{
-               "Content-Type" : "application/json",
-               "X-HTTP-Method-Override" : "POST"
-            },
-            async: false,
-            data: searchwords,
-            beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-            //dataType: "text",
-            success: function(result){
-            	
-                for(var i=0; i<result.length; i++) {
-                    if(searchwords.length>0) {
-                        for(var a=0; a<searchwords.length; a++) {
-                            if(result[i].type==0 && result[i].tagname!=null){
-                            	// 특수문자 자르고
-                            	tagname=result[i].tagname.substring(1);
-                            	
-                               for(var b=a; b<tagname.length; b++) {
-                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
-                                     if(a==b && tagname.indexOf(searchwords)==0) {
-                                        result[i].score += 3;
-                                     } else if(a==b) {
-                                    	 result[i].score += 2;
-                                     }
-                                    	 result[i].score += 1;
-                                     }
-                                  }
-                               } /* tagname if문 끝 */
-                            
-                            else if(result[i].nickname!=null) {
-                            	// 특수문자 자르고
-                               nickname = result[i].nickname.substring(1);
-                               
-                               // nickname O name O => 둘 다 있는 경우
-                              if(result[i].name!=null) {
-                            	// 특수문자 자르고
-                            	name = result[i].name.substring(1);
-                               for(var b=a; b<name.length; b++) {
-                                  if(searchwords.charAt(a)==name.charAt(b)) {
-                                      if(a==b && name.indexOf(searchwords)==0) {
-                                    	  result[i].score += 3;
-                                       } else if(a==b) {
-                                    	   result[i].score += 2;
-                                      } 
-                                    	  result[i].score += 1;
-                                     }
-                               } /* name for문 끝 */
-                             }
-                              
-                               // nickname O name X => nickname만 있을 경우
-                               for(var b=a; b<nickname.length; b++) {
-                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
-                                      if(a==b && nickname.indexOf(searchwords)==0) {
-                                    	  result[i].score += 3;
-                                       } else if(a==b) {
-                                    	   result[i].score += 2;
-                                      } else {
-                                    	  result[i].score += 1;
-                                         }
-                                     } 
-                                  } /* nickname for문 끝 */
-                                  
-                            }/* nickname&name elseif끝 */
-                            
-                            else if(result[i].type==2 && result[i].location!=null) {
-                            	
-                               for(var b=a; b<result[i].location.length; b++) {
-                                  if(searchwords.charAt(a)==result[i].location.charAt(b)) {
-										if(a==b) {
-                                        	result[i].score += 2;
-                                       }
-                                    	   result[i].score += 1;
-                                     }
-                                  }
-                            } /* location elseif문 끝 */
-                            
-                            else {
-                               result[i].score=0;
-                            }
-                            
-                        }/* for문 끝 */
-                     }
-                }/* for문 끝 */
-                
-               // score를 비교하여 점수 높은 순으로 출력하기
-                for(var i=0;i<result.length;i++) {
-                  for(var j=i+1; j<result.length; j++) {
-                     if(result[j].score>result[i].score) {
-                        var temp = result[i];
-                        result[i] = result[j];
-                        result[j] = temp;
-                      }
-                    }
-               }
-                
-                console.log("결과값--- "+JSON.stringify(result));
-                 
-                // 검색 첫 글자가 문자일 때
-                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
-                   var count = 0;
-                   var str = ' ';
-                   for(var i=0; i<result.length; i++) {
-                       if(result[i].type==0 && result[i].tagname!=null) {
-                          console.log("태그다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
-                                +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
-                                +"<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].tagname+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>"
-                                +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
-                                +"</div></div></div></a>";
-                       }
-                                         
-                       // 사람 검색
-                       else if(result[i].type==1 && result[i].nickname!=null) {
-                          console.log("이름이다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
-                                +"<div class='_o92vn'>";
-                                
-                                //프로필사진
-                                //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
-                                if(result[i].profilephoto == null){
-                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                }else{
-                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                }
-                                
-                          str+="<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].nickname+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>";
-                                if(result[i].name!=null) {
-                                   str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
-                                } else {
-                                   str+="<span class=''><span class=''></span></span>";
-                                }
-                           str+="</div></div></div></a>";
-                       }
-                                         
-                        // 로케이션 검색
-                       else if(result[i].type==2 && result[i].location!=null) {
-                          console.log("지역이다");
-                          str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
-                                +"<div class='_o92vn'>"
-                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
-                                +"<div class='_poxna'>"
-                                +"<div class='_lv0uf'>"
-                                +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
-                                +"</div>"
-                                +"<div class='_2ph7c'>"
-                                +"</div></div></div></a>";
-                       } 
-                       
-                       else if(result[i].score==0){
-                          count ++;
-                     	  }
-                       
-                       else {
-                          $("#results").html("");
-                      	 }
-                       
-                       if(count>=3) {
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                       } else {
-                          $("#header-modal").css("height", "196px");
-                          $("#results").html(str);
-                      	 }
-                      	
-                   }/* for문 끝 */
-                   
-                } /* 문자 검색 끝 */
-                // 검색 문자 첫 글자가 #인 경우
-               else if(searchwords[0]=="#") {
-                  var count = 0;
-                  var str = '';
-                  for(i=0; i<result.length; i++) {
-                        if(result[i].type==0 && result[i].tagname!=null) {
-                            console.log("태그다");
-                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
-                                  +"<div class='_o92vn'>"
-                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
-                                  +"<div class='_poxna'>"
-                                  +"<div class='_lv0uf'>"
-                                  +"<span class='_b01op'>"+result[i].tagname+"</span>"
-                                  +"</div>"
-                                  +"<div class='_2ph7c'>"
-                                  +"<span class=''>게시물 <span class=''>"+result[i].postedtagCnt+"개</span></span>"
-                                  +"</div></div></div></a>"
-                                  }
-                           else if(result[i].tagname==null){
-                             count ++;
-                             $("#results").html("");
-                          }
-                 	 }
-                 		
-                       if(count>=3) {
-                    	   console.log(">>>"+result.length);
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                     	  } else {
-                     		 $("#header-modal").css("height", "196px");
-                     		 $("#results").html(str);
-                     	  }
-               } /* #검색 끝 */
-               
-                // 검색 첫 글자가 @인 경우
-               else if(searchwords[0]=="@") {
-                 var count = 0;
-                 var str = ' ';
-                 for(var i=0; i<result.length; i++) {
-                    if(result[i].type==1 && result[i].nickname!=null) {
-                          console.log("이름이다");
-                        str+="<a class='_ndl3t _4jr79'  onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
-                                   +"<div class='_o92vn'>";
-                                   
-                             //프로필사진
-                             //result[i].profilephoto.length==0 || result[i].profilephoto == "" 
-                             if(result[i].profilephoto == null){
-                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                } else{
-                               str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
-                                   }
-                             
-                       str+="<div class='_poxna'>"
-                             +"<div class='_lv0uf'>"
-                             +"<span class='_b01op'>"+result[i].nickname+"</span>"
-                             +"</div>"
-                             +"<div class='_2ph7c'>";
-                             if(result[i].name!=null) {
-                                str+="<span class=''><span class=''>"+result[i].name.substring(1)+"</span></span>";
-                             } else {
-                                str+="<span class=''><span class=''></span></span>";
-                             }
-                          str+="</div></div></div></a>";
-                    }
-                        
-                     else if(result[i].nickname==null){
-                         count ++;
-                         $("#results").html("");
-                      }
-                 }
-                    if(count>=3) {
-                 	   console.log(">>>"+result.length);
-                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                       $("#header-modal").css("height", "51px");
-                  	  } else {
-                  		$("#header-modal").css("height", "196px");
-                  		 $("#results").html(str);
-                  	  }
-               } /* @ 검색 끝 */
-               
-               // 검색 문자 첫 글자가 %인 경우
-               else if(searchwords[0]=="%") {
-                  var count = 0;
-                  var str = '';
-                  for(i=0; i<result.length; i++) {
-                        if(result[i].type==2 && result[i].location!=null) {
-                            console.log("지역이다");
-                            str+="<a class='_ndl3t _4jr79' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
-	                            +"<div class='_o92vn'>"
-	                            +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
-	                            +"<div class='_poxna'>"
-	                            +"<div class='_lv0uf'>"
-	                            +"<span class='_b01op'>"+result[i].location.substring(1)+"</span>"
-	                            +"</div>"
-	                            +"<div class='_2ph7c'>"
-	                            +"</div></div></div></a>";
-                                  }
-                           else if(result[i].location==null){
-                             count ++;
-                             $("#results").html("");
-                          }
-                 	 }
-                 		
-                       if(count>=3) {
-                    	   console.log(">>>"+result.length);
-                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                          $("#header-modal").css("height", "51px");
-                     	  } else {
-                     		 $("#header-modal").css("height", "196px");
-                     		 $("#results").html(str);
-                     	  }
-               } /* %검색 끝 */
-                
-               else {
-                  console.log("검색문else로왔다");
-                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                  $("#header-modal").css("height", "51px");
-               }
-               
-            }, /* success  끝 */
-            
-            error: function(e){
-               if(e.status==500) {
-                  console.log("에러로갓니?");
-                  $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-                  $("#header-modal").css("height", "51px");
-               //throw e.responseText;
-               }
-            }/* error 끝 */
-            
-         }); /* ajax 끝 */
-      }      /* if 끝 */
-      
-      // enter 안 먹음
-      else if(searchwords=="") {
-          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
-          $("#header-modal").css("height", "51px");
-       }
-      
-      else{
-         console.log("그럼여기구나");
-      }
-      
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
 </script>
 
-<%-- <jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" /> --%>
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
+<jsp:include page="/WEB-INF/views/messenger.jsp" flush="false" />
 
 </body>
 </html>

@@ -55,6 +55,7 @@ $(document).ready(function() {
 	//console.log("keyword %빼고:      "+keyword);
 	geocoding(keyword);
 });
+
 var map, geocoder, marker;
 function initMap(){
 	var mapObj = document.getElementById('map');

@@ -168,9 +168,9 @@
 		<!-- 인기 post 전체목록 -->
 	<select id="topPost" resultType="com.faint.domain.PostVO">
 	 <![CDATA[
-          	select topT.*, (@rank := @rank +1) as rank
+          	select topT.*, likescore+replyscore as score, (@rank := @rank +1) as rank
         	from
-            ( select pa.* , likeCount, replyCount from
+            ( select pa.* , likeCount, replyCount, ifnull(likeCount*1.5, 0) as likescore, ifnull(replyCount*0.05, 0) as replyscore from
             (select p.id, p.userid,p.cateid, u.nickname, p.caption, p.regdate, a.url, p.location
             from tbl_post as p
             join tbl_attach as a
@@ -196,7 +196,7 @@
             group by p.id) as pr
             on pa.id = pr.id ) as topT, (select @rank := 0) as rankT
             
-            order by likeCount desc, replyCount desc;
+            order by score desc;
 	 ]]>
 	</select>
 	

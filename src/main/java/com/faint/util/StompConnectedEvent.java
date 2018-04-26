@@ -24,8 +24,6 @@ public class StompConnectedEvent implements ApplicationListener<SessionConnected
     	
 
         logger.info("Session Connected "+event.getUser());
-        CustomUserDetails user = (CustomUserDetails)event.getUser();
-        UserVO vo=(UserVO)user.getVo();
         // you can use a controller to send your msg here
         
     }

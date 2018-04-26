@@ -5,6 +5,7 @@ import java.util.Date;
 public class NoticeDTO {
 
 	private String fromid;
+	private int fromUserId;
 	private String targetid;
 	private String type;
 	
@@ -22,6 +23,12 @@ public class NoticeDTO {
 	}
 	public void setFromid(String fromid) {
 		this.fromid = fromid;
+	}
+	public int getFormUserId() {
+		return fromUserId;
+	}
+	public void setFormUserId(int formUserId) {
+		this.fromUserId = formUserId;
 	}
 	public String getTargetid() {
 		return targetid;
@@ -74,9 +81,9 @@ public class NoticeDTO {
 	
 	@Override
 	public String toString() {
-		return "NoticeDTO [fromid=" + fromid + ", targetid=" + targetid + ", type=" + type + ", postid=" + postid
-				+ ", isFlw=" + isFlw + ", regdate=" + regdate + ", profilePhoto=" + profilePhoto + ", postPhoto="
-				+ postPhoto + ", filter=" + filter + "]";
+		return "NoticeDTO [fromid=" + fromid + ", fromUserId=" + fromUserId + ", targetid=" + targetid + ", type="
+				+ type + ", postid=" + postid + ", isFlw=" + isFlw + ", regdate=" + regdate + ", profilePhoto="
+				+ profilePhoto + ", postPhoto=" + postPhoto + ", filter=" + filter + "]";
 	}
-	
+
 }
