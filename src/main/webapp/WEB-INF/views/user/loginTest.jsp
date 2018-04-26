@@ -94,27 +94,27 @@
 
 
                     <input type="text" class="form-control" id="email" name="email" placeholder="가입한 Email을 입력해주세요" autofocus
-                    	<c:if test="${ loginid ne null }">
-							value="${loginid}"
-						</c:if>
+                       <c:if test="${ loginid ne null }">
+                     value="${loginid}"
+                  </c:if>
                     >
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password를 입력해주세요" >
                     <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
                     <input type="submit" class="form-control btn btn-primary" value="로그인"/>
 
                 </form>
-                	<c:if test='${ error eq "login" }'>
-						<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력하셨습니다.</p>
-					</c:if>
-					<c:if test='${ error eq "duplicate" }'>
-						<p style="color:#FF0000">이미 로그인하고 있는 사용자입니다.</p>
-					</c:if>
-					<c:if test='${ error eq "not found" }'>
-						<p style="color:#FF0000">등록되지 않은 유저입니다.</p>
-					</c:if>
-					<c:if test="${ param.logout == 'true' }">
-						<p style="color:#FF0000">로그아웃 되었습니다.</p>
-					</c:if>
+                   <c:if test='${ error eq "login" }'>
+                  <p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력하셨습니다.</p>
+               </c:if>
+               <c:if test='${ error eq "duplicate" }'>
+                  <p style="color:#FF0000">이미 로그인하고 있는 사용자입니다.</p>
+               </c:if>
+               <c:if test='${ error eq "not found" }'>
+                  <p style="color:#FF0000">등록되지 않은 유저입니다.</p>
+               </c:if>
+               <c:if test="${ param.logout == 'true' }">
+                  <p style="color:#FF0000">로그아웃 되었습니다.</p>
+               </c:if>
 
              
                 <div>

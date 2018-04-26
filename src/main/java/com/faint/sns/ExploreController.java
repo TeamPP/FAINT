@@ -34,14 +34,12 @@ import net.sf.json.JSONArray;
 public class ExploreController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ExploreController.class);
+	
 	@Inject
 	private TagService tagservice;
 
 	@Inject
 	private PostService postservice;
-
-	@Inject
-	private UserService userservice;
 
 	@Inject
 	private SearchService searchservice;

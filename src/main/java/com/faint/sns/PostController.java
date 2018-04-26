@@ -2,6 +2,7 @@ package com.faint.sns;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -197,11 +198,14 @@ public class PostController {
 		
 		post.setUserid(user.getId());
 		
-		service.regist(post);
+		Map<String, Object> forwardMap = service.regist(post);
+		
+		if(forwardMap.get("postid")!=null){
+			net.sf.json.JSONObject jsonObj=new net.sf.json.JSONObject();
+			rttr.addFlashAttribute("msg", jsonObj.fromObject(forwardMap).toString());
+		}
 
-		rttr.addFlashAttribute("msg", "SUCCESS");
-
-		return "redirect:/main";
+		return "redirect:/";
 	}
 	
 	
@@ -284,8 +288,8 @@ public class PostController {
 	}
 	
 	//like 등록 - rest방식
-	@RequestMapping(value="/{postid}/like", method=RequestMethod.POST)
-	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
+	@RequestMapping(value="/{postid}/like/{writer}", method=RequestMethod.POST)
+	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, @PathVariable("writer") Integer userid, HttpServletRequest request)throws Exception{
 		ResponseEntity<String> entity=null;
 		
 		HttpSession session=request.getSession();
@@ -293,6 +297,7 @@ public class PostController {
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
 		dto.setLoginid(userVO.getId());
+		dto.setUserid(userid);
 		
 		try{
 			service.postLike(dto);

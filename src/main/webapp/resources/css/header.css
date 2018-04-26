@@ -535,8 +535,11 @@ span {
     float: left;
     top: 20px;
     height: 40px;
+<<<<<<< HEAD
     position: relative;
     display: inline-block;
+=======
+>>>>>>> branch 'jh.yang' of https://github.com/TeamPP/FAINT.git
 }
 
 .dropbtn {
@@ -691,6 +694,7 @@ span {
     position: relative;
     top: -186px;
 }
+<<<<<<< HEAD
 .hearteffect-svg {
 	fill: white;
 	width: 465%;
@@ -722,4 +726,31 @@ span {
     padding: 0px;
     overflow-y: auto;
     height: 300px;
+=======
+
+.heart-svg:hover {
+	fill: #e24040;
+	cursor: pointer;
+}
+
+#followModal {
+	
+}
+
+#followModal-content {
+	width: 15%;
+    right: -70%;
+    position: relative;
+    top: 1%;
+    border: solid 1px #e6e6e6;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px rgba(0,0,0,.0975);
+}
+
+#followHeader-modal {
+    padding: 0px;
+    overflow-y: auto;
+    height: 500px;
+>>>>>>> branch 'jh.yang' of https://github.com/TeamPP/FAINT.git
 }

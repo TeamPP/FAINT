@@ -19,22 +19,27 @@ import org.springframework.transaction.annotation.Transactional;
 import com.faint.domain.Authority;
 import com.faint.domain.AuthorityId;
 import com.faint.domain.UserVO;
-
 import com.faint.domain.UsersException;
 import com.faint.dto.BlockedUserDTO;
 import com.faint.dto.LoginDTO;
 import com.faint.dto.RelationDTO;
 import com.faint.persistence.AuthorityDao;
+import com.faint.persistence.NoticeDAO;
 import com.faint.persistence.UserDAO;
 
 import common.MailHandler;
 import common.TempKey;
+
+
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Inject
 	private UserDAO dao;
+	
+	@Inject
+	private NoticeDAO nDao;
 	
 	@Autowired
 	private AuthorityDao authorityDao;
@@ -59,9 +64,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	//============================팔로우============================
+	@Transactional
 	@Override
 	public void flwCreate(RelationDTO dto)throws Exception{
 		dao.flwCreate(dto);
+		nDao.createFollowNotice(dto);
 	}
 	
 	@Override
@@ -104,7 +111,7 @@ public class UserServiceImpl implements UserService {
 		dao.userBlock(dto);
 	}
 	
-	//차단 해제
+	//차단 해제4
 	@Override
 	public void userUnblock(RelationDTO dto) throws Exception{
 		dao.userUnblock(dto);
@@ -237,7 +244,11 @@ public class UserServiceImpl implements UserService {
   public UserVO googleLogin(LoginDTO dto) throws Exception {
   	System.out.println("구글 로그인을 시작한다. ");
   	UserVO vo =new UserVO();
-      vo=dao.naverReadUser(dto);
+  	System.out.println(vo.toString()+"sd1wd");
+  	System.out.println(dto.getEmail());
+  	
+  	vo =dao.selectByEmail(dto.getEmail());
+//      vo=dao.naverReadUser(dto);
       if(vo==null){
           try{
               dao.naverInsertUser(dto);
@@ -245,7 +256,7 @@ public class UserServiceImpl implements UserService {
               // TODO Auto-generated catch block
               e.printStackTrace();
           }}
-      return dao.naverReadUser(dto);
+      return dao.selectByEmail(dto.getEmail());
   }
 	
 	//이메일 아이디 중복 관련 코드 전송
@@ -289,21 +300,35 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	
+	
+
+	@Override
+	public UserVO find_by_id(UserVO vo) {
+		// TODO Auto-generated method stub
+		return dao.find_by_id(vo);
+	}
 	//비밀번호 찾기
 	@Override
 	public void findPassword(UserVO user) throws Exception {
+		
 		String key = new TempKey().getKey(8,false);
 		System.out.println("key는?"+key);
 		
 		String encPassword = passwordEncoder.encode("qwer1234");
 		//String encPassword = passwordEncoder.encode(key);
 		
+		
+		
 		user.setPassword(encPassword);
 		
 		System.out.println("비밀번호 찾기 서비스 시작 ");
-
+		
+		System.out.println(key+"임시 키 ");
 		dao.createTempPassword(user.getEmail(),encPassword); //인증키 db 저장
-
+		
+		
+		System.out.println(encPassword.toString()+"비번은?? ");
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("[서어비스 센터 비밀번호 찾기 ]");
 		sendMail.setText(new StringBuffer().append("<h1>임시비밀번호</h1>[").append(key)

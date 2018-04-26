@@ -423,6 +423,7 @@
 			$("#location").val($("#address").text());
 			//캡션 '\n' <br>로 변환
 			$("._bilrf").val($("._bilrf").val().replace(/\n/g, ' <br> '));
+			
 			form.attr("action", "/post/register/submit");
 			form.submit(); 
 		});

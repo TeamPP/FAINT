@@ -47,7 +47,7 @@
             </div>
 
             <form name="findPassword" action="/user/findPassword" method="post" onsubmit="return signinchk(this)">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />s
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <input type="text" class="form-control" name="email" id="email" placeholder="가입 시 사용한 이메일을 입력해 주세요"/>
                 <input type="submit" class="form-control btn btn-primary" id="authenticate" value="비밀번호 찾기"/>
 

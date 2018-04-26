@@ -16,7 +16,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  
  <!-- 구글맵 api -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDzpqYW7uB7zVuh5_QgruzBNcsFt71fkI&callback=initMap" async="" defer=""></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDzpqYW7uB7zVuh5_QgruzBNcsFt71fkI&callback=initMap" ></script>
  
  
  
