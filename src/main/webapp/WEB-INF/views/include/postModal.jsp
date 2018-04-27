@@ -207,15 +207,15 @@ a{ font-weight: bold; }
 <script>
 
 var modalFlg = false;
-var url = '';
+var reqUrl = '';
 function postModal(str){
 	var obj;
 	if(typeof str == "undefined" || str == null || str == ""){
 		return;
 	}
 	else{
-		url = str;
-		if(url == "main"){	//main에서 할떄
+		reqUrl = str;
+		if(reqUrl == "main"){	//main에서 할떄
 			obj = $(".selected");
 		} else{	//프로필, 검색 결과에서 할 때
 			obj = $(".imageContainer");
@@ -232,7 +232,7 @@ function postModal(str){
 		var curIndex;
 		var pid;
 		var postLength;
-		if(url == "main"){ //main에서 할떄
+		if(reqUrl == "main"){ //main에서 할떄
 			if(!(e.target.tagName == 'IMG' || e.target.tagName == 'VIDEO')){
 				return;
 			}
@@ -273,7 +273,7 @@ function postModal(str){
 	            var post=Handlebars.compile(source);
 	            var postmodal=post(data);
 	            $("body").append(postmodal);
-	            if(url != "main") $("body").css("overflow-y","hidden");
+	            if(reqUrl != "main") $("body").css("overflow-y","hidden");
 	            $("#carousel").css("-webkit-filter"," blur(6px)");	            
 	            //-----------------------------------여기도 수정
 	            //현재 위치값 저장
@@ -364,7 +364,7 @@ function postModal(str){
 	                  $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	                  $("#myModal[data-postid="+ pid+ "]").remove();
 	                  $("#carousel").css("-webkit-filter","");	        
-	                  if(url != "main") $("body").css("overflow-y","auto");
+	                  if(reqUrl != "main") $("body").css("overflow-y","auto");
 	               }
 	            });
 	            
@@ -373,7 +373,7 @@ function postModal(str){
 	               $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	               $("#myModal[data-postid="+ pid+ "]").remove();
 	               $("#carousel").css("-webkit-filter","");	    
-	               if(url != "main") $("body").css("overflow-y","auto");
+	               if(reqUrl != "main") $("body").css("overflow-y","auto");
 	            });
 	            
 	            //포스트 움직이기 버튼 함수 적용
@@ -450,7 +450,7 @@ function postDelete(thisTag){
 				$("#myModal").remove();
 				//postlist다시부르기
 				
-				if(url == "main"){	//메인인 경우
+				if(reqUrl == "main"){	//메인인 경우
 					//다음 객체 저장
 					var nextObj = $(".post>div[data-postid="+ postid+ "]").parent().next();
 					//카테고리 필터 리스트 다시 읽기 
@@ -564,7 +564,7 @@ function registReply(thisTag, key){
                $(".s2_2_1").scrollTop($(".s2_2_1").height());
                
                //메인이 아닌경우
-               if(url !="main") getPostList();
+               if(reqUrl !="main") getPostList();
             }
          }
       });
@@ -590,7 +590,7 @@ function deleteReply(thisTag){
             //리플리스트 초기화 및 게시물의 댓글 피드 재호출
             reply();
             //메인이 아닌경우
-            if(url !="main") getPostList();
+            if(reqUrl !="main") getPostList();
          }
       }
    });
@@ -669,7 +669,10 @@ function like(){
                $(likeBtn).css("background-position", val);
                likerList();
                //메인이 아닌경우
-               if(url !="main") getPostList();
+               if(reqUrl !="main") {
+            	   console.log(reqUrl);
+            	   getPostList();
+               }
                likeFlg=false;
             }
          }      
