@@ -178,6 +178,7 @@ display:none;
 	stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         
+      	//==========================================알림==========================================
         noticeList();
         
       	//나에대한 follow,reply,like알림 구독
@@ -200,8 +201,24 @@ display:none;
     			stompClient.send("/app/notify/" + targetId[i] + "/tagging/" + targetPost + "/post", {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
     		}
       	}
+      	
+     	//==========================================메신저==========================================
+       	//나에대한 채팅방생성 및 메시지 수신 알림(roomid값 받음)
+      	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
+            if(message.body!="FAIL" && message.body!=null && message.body!=""){
+            	var roomid = message.body;
+            	getChatList();
+            	getChat(roomid);
+            }else{
+            	alert("메세지 전송에 실패하였습니다");
+            }
+        });
+    	  
+    	  
     });
 	
+	
+    //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
   			console.log(data);
@@ -211,7 +228,7 @@ display:none;
   				
                 // 프로필 사진이 있는경우 | 없는 경우
    				if(this.profilephoto != null){
-   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>&nbsp &nbsp";
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>";
                	}else if(this.profilephoto == null){
                		list += "src='/resources/img/emptyProfile.jpg' /></a>";
                	}
@@ -302,6 +319,12 @@ display:none;
             stompClient.disconnect();
         }
     }
+	
+	//4. 댓글 알림
+	function test(writer){
+		var a= stompClient.send("/app/notify/" + writer + "/hi", {}, {});
+		console.log(a);
+	}
 		
 	</script>
 </sec:authorize>

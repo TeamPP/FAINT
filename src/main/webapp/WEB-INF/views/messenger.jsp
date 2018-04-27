@@ -393,6 +393,7 @@ canvas {
 }
 ul.chat {
   width: 100%;
+  overflow-y: auto;
 }
 ul.chat li {
   padding: 15px 25px 15px 25px;
@@ -410,10 +411,10 @@ ul.chat li img {
   border-radius: 100%;
 }
 ul.chat li .message {
-  padding: 10px 10px 10px 20px;
+  padding: 10px 20px 10px 20px;
   font-size: 0.9em;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  min-width: 50%;
+  min-width: 10%;
   position: relative;
   background: white;
   border-radius: 5px;
@@ -430,13 +431,13 @@ ul.chat li .message:after {
   left: -8px;
   top: 3px;
 }
-ul.chat li:nth-child(even) {
+ul.chat li:has(.notMyMsg) {
   flex-direction: row-reverse;
 }
-ul.chat li:nth-child(even) .message {
+ul.chat li:has(.notMyMsg) .message {
   background-color: #f5f5f5;
 }
-ul.chat li:nth-child(even) .message:after {
+ul.chat li:has(.notMyMsg) .message:after {
   right: -8px;
   left: auto;
   border-width: 8px 0 8px 8px;
@@ -734,18 +735,6 @@ body {
 				<!-- 채팅창 -->
 				<div class="list-chat">
 					<ul class="chat">
-						<li>
-							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-          					<div class="message">Hi!</div>
-        				</li>
-						<li>
-							<img src="http://lorempixel.com/100/100/people/1/">
-          					<div class="message"></div>
-        				</li>
-						<li>
-							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-							<div class="message current"></div>
-						</li>
 					</ul>
 					<div class="meta-bar chat">
 						<input class="nostyle chat-input" type="text"
@@ -782,14 +771,87 @@ body {
 
 
 		<script>
+		
+		//채팅창 가져오기
+		function getChat(roomid){
+	    	$.getJSON("/getChat/"+roomid, function(data){
+	    		console.log(data);
+	    		var list="";
+	    		
+	    		$(data).each(function(){
+	    			// 나의 메세지,타인 메세지 구분
+	    			if(this.nickname != "${login.nickname}"){
+	    				list += "<li><img ";
+	    			}else{
+	    				list += "<li class='notMyMsg'><img ";
+	    			}
+
+	    			// 프로필 사진이 있는경우 | 없는 경우
+	   				if(this.profilephoto != null){
+	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
+	               	}else if(this.profilephoto == null){
+	               		list += "src='/resources/img/emptyProfile.jpg' />";
+	               	}
+	    			
+	   				list += "<div class='message'>" + this.comment + "</div></li>";
+	    		})
+	    		
+	    		$(".list-chat > ul").html(list);
+	    		$('.list-chat').data("rid", roomid);
+
+	    	})
+		}
+		
+		//메신저 채팅리스트 불러오기
+		getChatList()
+		function getChatList(){
+			$.getJSON("/getChatList", function(data){
+	    		console.log(data);
+	    		var list="";
+
+	    		if($(data).length!=0){
+	    			$(data).each(function(){
+	    				
+	    				var userPhotoArray = this.usersPhoto.split("|");
+	    				var userNicknameArray = this.usersNickname.split("|");
+	    				
+	    				list += "<li data-rid='"+this.id+"'><img ";
+	    				
+	    				if(userPhotoArray.length==1 || this.usersPhoto==null){
+	    	            	if(this.usersPhoto != "" || this.usersPhoto != null){
+	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.usersPhoto+"' />";
+	    	            	}else{
+	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
+	    	            	}
+	    				}else{
+	    					if(userPhotoArray[0] != "" || userPhotoArray[0] != null){
+	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+userPhotoArray[0]+"' />";
+	    	            	}else{
+	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
+	    	            	}
+	    				}
+
+	    				list += "<div class='content-container'><span class='name'>"+userNicknameArray[0]+"</span>";
+	    				
+	    				list += "<span class='txt'>" + this.lastMessage + "</span></div>";
+	    				
+	    				list += "<span class='time'>" + new Date(this.lastMessageDate) + "</span></li>";
+	    				
+	    			})
+	    		}
+	    		$(".list-text > .mat-ripple.list").html(list);
+	    	})
+		}
+
+		//메신저 유저리스트 불러오기
 		getMessengerUserList();
     	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    		      var data=$(data)
-    		      if(data.length!=0){
+    		      var $data=$(data)
+    		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
     		        var followingList="";
-    	            data.each(function(){
+    	            $data.each(function(){
     	            	
     	               followingList+="<li><img ";
     	               	// 프로필 사진이 있는경우 | 없는 경우
@@ -808,37 +870,8 @@ body {
     		            
     		        };
 
-    		      });
-    		   };
-    		   
-    		   
-    	function getMessengerChatList(){
-/*     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    		      var data=$(data)
-    		      if(data.length!=0){
-    		         //following onclick 메서드 적용(follow리스트뜨도록)
-    		        var followingList="";
-    	            data.each(function(){
-    	            	
-    	               followingList+="<li><img ";
-    	               	// 프로필 사진이 있는경우 | 없는 경우
-    	            	if(this.profilephoto != null){
-    	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />";
-    	            	}else{
-    	            		followingList+="src='/resources/img/emptyProfile.jpg' />";
-    	            	}
-    	               	
-    	               	followingList+="<span class='name'>" + this.nickname + "</span><i class='mdi mdi-menu-down'></i> </li>";
-
-    	            })
-    	            
-    	            //모달창 불러오기
-    	            $(".list-account > .mat-ripple.list").html(followingList);
-    		            
-    		        };
-
-    		      }); */
-    		   };
+   		      });
+   		   };
     		   
 		//3. 메세지 보내기
 		function notifyLike(writer, postid){
@@ -846,9 +879,9 @@ body {
 		}
         
         
-        // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수
+        // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수 // 채팅타겟 저장
         var GLOBALSTATE = {
-            route: '.list-account'
+            route: '.list-account',
         };
 
         // GLOBALSTATE.route값에 따라 show/hide 구별 - 초기값 ".list-account"
@@ -968,10 +1001,15 @@ body {
             $mod.find('#new-user').focus();
         }
 		
-        //채팅창 벗어나기
+        //채팅창 나가기
         $('.mdi-arrow-left').on('click', function() {
             $('.shown').removeClass('shown');
             setRoute('.list-text');
+            //채팅창 데이터 지우기
+            $('.list-chat').removeData("curTarget");
+            $('.list-chat').removeData("rid");
+          	//채팅창 대화기록 삭제
+            $(".chat").html("");
         });
 
         // 특정 메뉴활성화 함수
@@ -1031,7 +1069,7 @@ body {
 
         });
 
-        // Dirty Colorpicker( 스타일창 클릭시)
+        // Dirty Colorpicker(스타일창 클릭시)
         $('#colorpick').on('mousedown', function(eventDown) {
             var x = eventDown.offsetX;
             var y = eventDown.offsetY;
@@ -1050,6 +1088,21 @@ body {
 		
         //채팅 발송 - 클릭
         $('.mdi-send').on('click', function() {
+        	
+        	if( $(".chat").children("li").length == 0){
+        		var targetNickname = $('.list-chat').data("curTarget");
+        		console.log("여긴가1")
+        		stompClient.send("/app/chat/create/" + targetNickname, {},
+        				JSON.stringify({ 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
+        		//채팅창 데이터 값 삭제
+        		$('.list-chat').removeData("curTarget");
+        	}else if( $(".chat").children("li").length >= 1 ){
+        		var roomid = $('.list-chat').data("rid");
+        		console.log(roomid);
+        		stompClient.send("/app/chat/sendMsg", {},
+        				JSON.stringify({ 'roomid': roomid+"", 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
+        	}
+        	
             var $chatmessage = '<p>' + $('.chat-input').val() + '</p>';
             $('ul.chat > li > .current').append($chatmessage);
             $('.chat-input').val('');
@@ -1063,10 +1116,10 @@ body {
         });
 		
       	//채팅리스트 클릭이벤트
-        $('.list-text > ul > li').on('click', function() {
-        	//채팅리스트에 있는 내용 따서 채팅창으로 이동 - 없애도됨
-            $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
-
+        $('.list-text > .list').on('click', 'li', function() {
+        	var roomid=$(this).data("rid");
+        	console.log(roomid);
+			getChat(roomid);
             // timeout just for eyecandy...
             setTimeout(function() {
                 $('.shown').removeClass('shown');
@@ -1094,8 +1147,22 @@ body {
                 //채팅하기 버튼
                 $ctx.on('click', '.mdi-comment', function() {
                 	
-                	//상대의 프로필 이미지 끌어오기
-                	$('ul.chat > li').eq(1).html('<img src="' + $TARGET.find('img').prop('src') + '"><div class="message"><p></p></div>');
+                	
+                	//이미 있는 채팅방인지
+                	var noRoom=true;
+                	$(".content-container > .name").each(function(){
+                		if($(this).html()==$TARGET.find('span').html()){
+                			$(this).trigger("click");
+                			noRoom=false;
+                			break;
+                		}
+                	})
+                	
+                	//채팅방 div에 현재 타겟값 저장
+                	if(noRoom){
+                		$('.list-chat').data("curTarget", $TARGET.find('span').html());
+                	}
+                	
                     // timeout just for eyecandy...
                     setTimeout(function() {
                         $('.shown').removeClass('shown');

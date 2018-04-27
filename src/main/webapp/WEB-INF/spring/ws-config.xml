@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 
-	<bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" />
+	<!-- <bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" /> -->
 	<bean id="customHandshakeHandler" class="com.faint.util.HttpHandshakeInterceptor"/>
 	
 	
