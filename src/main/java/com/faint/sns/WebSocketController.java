@@ -133,23 +133,23 @@ public class WebSocketController {
 	public void reply(@DestinationVariable("targetNickname") String targetNickname, Principal principal, MessageVO vo) throws Exception {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
-			
-			int roomId = 0;
-			
+
 			RelationDTO dto=new RelationDTO();
 			dto.setLoginEmail(principal.getName());
 			dto.setUserNickname(targetNickname);
 			
 			try{
-				roomId = msgService.chatCreate(dto, vo);
+				int roomId = msgService.chatCreate(dto, vo);
+				//나에게 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), roomId+"");
+				//상대에게 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + targetNickname, roomId+"");
+				
+				return;
+				
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			
-			//나에게 알리기
-			messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), roomId+"");
-			//상대에게 알리기
-			messagingTemplate.convertAndSend("/chatWait/" + targetNickname, roomId+"");
 			
 		}
 		
@@ -212,26 +212,27 @@ public class WebSocketController {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
 			
-			String users="";
 			try{
-				users = msgService.registMessage(vo);
+				String users = msgService.registMessage(vo);
+				
+				if(users!=""){
+
+					//나에게 알리기
+					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
+					
+					String[] userArray = users.split("\\|");
+					//상대들에게 알리기
+					for(String user : userArray){
+						this.logger.info(user);
+						messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
+					}
+					
+					return;
+					
+				}
+				
 			}catch(Exception e){
 				e.printStackTrace();
-			}
-			
-			this.logger.info(users);
-			
-			if(users!=""){
-
-				//나에게 알리기
-				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
-				
-				String[] userArray = users.split("\\|");
-				//상대들에게 알리기
-				for(String user : userArray){
-					this.logger.info(user);
-					messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
-				}
 			}
 			
 		}

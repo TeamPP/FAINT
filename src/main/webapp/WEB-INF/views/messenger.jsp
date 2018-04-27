@@ -19,6 +19,7 @@
 
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="../../resources/js/common.js"></script>
 <style>
 
  @keyframes anim-excited {
@@ -119,7 +120,7 @@
     opacity: 0;
   }
 }
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   body {
     background: none;
     background-size: auto;
@@ -134,7 +135,7 @@
   .mdi-fullscreen-exit {
     display: none;
   }
-}
+} */
 canvas {
   cursor: crosshair;
 }
@@ -185,13 +186,14 @@ canvas {
   transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
   overflow: hidden;
   margin: auto;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   z-index: 30;
 }
 #hangout.collapsed {
   height: 55px;
+  width: 195px !important;
   box-shadow: none;
 }
 #hangout.collapsed #content {
@@ -254,6 +256,7 @@ canvas {
 }
 #head .mdi-fullscreen,
 #head .mdi-fullscreen-exit {
+
   font-size: 1.5em;
   color: white;
   margin-right: 5px;
@@ -431,13 +434,13 @@ ul.chat li .message:after {
   left: -8px;
   top: 3px;
 }
-ul.chat li:has(.notMyMsg) {
+ul.chat li[class="notMyMsg"] {
   flex-direction: row-reverse;
 }
-ul.chat li:has(.notMyMsg) .message {
+ul.chat li[class="notMyMsg"] .message {
   background-color: #f5f5f5;
 }
-ul.chat li:has(.notMyMsg) .message:after {
+ul.chat li[class="notMyMsg"] .message:after {
   right: -8px;
   left: auto;
   border-width: 8px 0 8px 8px;
@@ -661,7 +664,7 @@ body {
 				<i class="mdi mdi-fullscreen"></i>
 				<i class="mdi mdi-menu"></i>
 				<h1 id="myName">${login.nickname}</h1>
-				<i class="mdi mdi-chevron-down"></i>
+				<i class="mdi mdi-chevron-up"></i>
 			</div>
 			<div id="content">
 				<div class="overlay"></div>
@@ -687,7 +690,7 @@ body {
 
 						<div class="i-group">
 							<input type="text" id="username"><span class="bar"></span>
-							<label>Name</label>
+							<label>내 소개</label>
 						</div>
 						<br />
 						<div class="center">
@@ -709,26 +712,6 @@ body {
 				<!-- 채팅방 리스트 -->
 				<div class="list-text">
 					<ul class="list mat-ripple">
-						<li><img
-							src="https://pp.userapi.com/c626423/v626423797/72515/Q8rsf4m943c.jpg">
-							<div class="content-container">
-								<span class="name">Elena</span> <span class="txt">You
-									complete me. 💋👄</span>
-							</div> <span class="time"> 14:00 </span></li>
-
-						<li><img
-							src="https://pp.userapi.com/c636631/v636631488/36bb3/WeAhU1_YCUI.jpg">
-							<div class="content-container">
-								<span class="name">Stephen Hawking</span> <span class="txt">
-									Nothing cannot exist forever. 🚀🛰</span>
-							</div> <span class="time"> 16:02 </span></li>
-
-						<li><img
-							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg">
-							<div class="content-container">
-								<span class="name">Pavel Durov</span> <span class="txt">
-									nice messenger 👸😱🏈</span>
-							</div> <span class="time"> 16:03 </span></li>
 					</ul>
 				</div>
 				
@@ -780,7 +763,7 @@ body {
 	    		
 	    		$(data).each(function(){
 	    			// 나의 메세지,타인 메세지 구분
-	    			if(this.nickname != "${login.nickname}"){
+	    			if(this.senderNickname == "${login.nickname}"){
 	    				list += "<li><img ";
 	    			}else{
 	    				list += "<li class='notMyMsg'><img ";
@@ -835,10 +818,11 @@ body {
 	    				
 	    				list += "<span class='txt'>" + this.lastMessage + "</span></div>";
 	    				
-	    				list += "<span class='time'>" + new Date(this.lastMessageDate) + "</span></li>";
+	    				list += "<span class='time'>" + createDateWithCheck(this.lastMessageDate) + "</span></li>";
 	    				
 	    			})
 	    		}
+	    		console.log("!23");
 	    		$(".list-text > .mat-ripple.list").html(list);
 	    	})
 		}
@@ -955,7 +939,7 @@ body {
             $.trim(name) === '' || $.trim(name) === null ? name = '${login.nickname}' : name = name;
             $('#myName').text(name);
             //사용자 개인 프로필 - input
-            $('#username').val(name).addClass('used');
+            $('#username').val('${login.name}').addClass('used');
           	//사용자 개인 프로필 - header
             $('.card.menu > .header > h3').text(name);
         }
@@ -1004,12 +988,18 @@ body {
         //채팅창 나가기
         $('.mdi-arrow-left').on('click', function() {
             $('.shown').removeClass('shown');
-            setRoute('.list-text');
+            //인물리스트로부터 왔지만 메세지 입력하지않고 돌아왔을 때 or 아닐 때
+            if($('.list-chat').data("curTarget")!=undefined){
+            	$('.nav li:eq(0)').trigger("click")
+            }else{
+            	$('.nav li:eq(1)').trigger("click")
+            }
+            
             //채팅창 데이터 지우기
             $('.list-chat').removeData("curTarget");
             $('.list-chat').removeData("rid");
           	//채팅창 대화기록 삭제
-            $(".chat").html("");
+            $(".list-chat > ul").html("");
         });
 
         // 특정 메뉴활성화 함수
@@ -1091,7 +1081,6 @@ body {
         	
         	if( $(".chat").children("li").length == 0){
         		var targetNickname = $('.list-chat').data("curTarget");
-        		console.log("여긴가1")
         		stompClient.send("/app/chat/create/" + targetNickname, {},
         				JSON.stringify({ 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
         		//채팅창 데이터 값 삭제
@@ -1151,10 +1140,13 @@ body {
                 	//이미 있는 채팅방인지
                 	var noRoom=true;
                 	$(".content-container > .name").each(function(){
+                		console.log($(this).html());
+                		console.log($TARGET.find('span').html());
                 		if($(this).html()==$TARGET.find('span').html()){
                 			$(this).trigger("click");
                 			noRoom=false;
-                			break;
+                			return false;
+                			
                 		}
                 	})
                 	
@@ -1199,6 +1191,7 @@ body {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
+            $(".list-chat > ul").html("");
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);
@@ -1227,10 +1220,10 @@ body {
         });
 
         // 최소화 최대화 버튼
-        $('#head .mdi-chevron-down').on('click', function() {
+        $('#head .mdi-chevron-up').on('click', function() {
             if ($('#hangout').hasClass('collapsed')) {
                 $(this).removeClass('mdi-chevron-up').addClass('mdi-chevron-down');
-                $('#hangout').removeClass('collapsed');
+                $('#hangout').removeClass('collapsed');	
             } else {
                 $(this).removeClass('mdi-chevron-down').addClass('mdi-chevron-up');
                 $('#hangout').addClass('collapsed');

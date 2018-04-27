@@ -193,7 +193,7 @@ a{ font-weight: bold; }
 .s2_2_1{ width: 100%; height: 352px; overflow-y: auto; overflow-x: hidden; }
 .replyContainer{ margin-top: 20px; bottom: 0; }
 .reply{ margin-bottom: 4px; }
-.s2_3{ width: 100%; height: 85px; text-align: left; border-bottom: 1.3px solid #efefef; }
+.s2_3{ width: 100%; height: 93px; text-align: left; border-bottom: 1.3px solid #efefef; }
 .s2_3_1{ padding: 10px 0 10px 0; height: 100%;}
 .likeBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); border: none; background-color: #fff; margin: 0 8px 8px 0; font-size: 0;}
 .replyBtn{ height: 24px; width: 24px; background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png"); background-position: -306px -289px; background-color: #fff; margin: 0 8px 8px 0; border: none; font-size: 0;}
@@ -351,6 +351,9 @@ function postModal(str){
 	            }else{
 	               $(".btnContainer[data-postid="+ pid+ "]").append("<span><button class='storeBtn' style='background-position: -182px -349px;'>저장하기 취소</button></span>");
 	            }
+	            
+	            //시간 버튼 삽입
+	            $(".s2_3_1").append("<div><time style='font-size: 12px;'>" + createDateWithCheck(data.regdate) + "</time></div>")
 	            
 	            //게시물 수정버튼 삽입
 	            if(data.userid==${login.id}){

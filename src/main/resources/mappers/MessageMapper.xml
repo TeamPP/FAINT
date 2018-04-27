@@ -21,7 +21,7 @@
 	</insert>
 	
 	<select id="getMessages" resultType="com.faint.domain.MessageVO">
-        select m.id, m.roomid, m.sendtime, m.read_status, m.comment, u.nickname, u.profilephoto
+        select m.id, m.roomid, m.sendtime, m.read_status, m.comment, m.sender, u.nickname as senderNickname, u.profilephoto
 		from tbl_message m
 		join
 		tbl_chatroom_user r
