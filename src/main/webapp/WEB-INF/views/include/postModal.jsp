@@ -353,7 +353,7 @@ function postModal(str){
 	            }
 	            
 	            //시간 버튼 삽입
-	            $(".s2_3_1").append("<div><time style='font-size: 12px;'>" + createDateWithCheck(data.regdate) + "</time></div>")
+	            $(".s2_3_1").append("<div><time style='font-size: 0.8em;'>" + createDateWithCheck(data.regdate) + "</time></div>")
 	            
 	            //게시물 수정버튼 삽입
 	            if(data.userid==${login.id}){

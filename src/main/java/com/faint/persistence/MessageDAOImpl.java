@@ -33,11 +33,13 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 	
 	@Override
-	public String registMessage(MessageVO vo) throws Exception{
-		System.out.println("유저리스트 이건가?1"+ vo.getUsers());
-		session.selectList(namespace+".registMessage", vo);
-		System.out.println("유저리스트 이건가?2"+ vo.getUsers());
-		return vo.getUsers();
+	public void registMessage(MessageVO vo) throws Exception{
+		session.insert(namespace+".registMessage", vo);
+	}
+	
+	@Override
+	public String getUsers(MessageVO vo) throws Exception{
+		return session.selectOne(namespace+".getUsers", vo);
 	}
 	
 }

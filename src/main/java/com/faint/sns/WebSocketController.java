@@ -215,8 +215,8 @@ public class WebSocketController {
 			try{
 				String users = msgService.registMessage(vo);
 				
-				if(users!=""){
-
+				if(users!="" || users!=null){
+					this.logger.info(users);
 					//나에게 알리기
 					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
 					
@@ -227,6 +227,8 @@ public class WebSocketController {
 						messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
 					}
 					
+					this.logger.info("11");
+					
 					return;
 					
 				}
@@ -236,6 +238,8 @@ public class WebSocketController {
 			}
 			
 		}
+		
+		this.logger.info("22");
 		
 		//나에게 실패했음 알리기
 		messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "FAIL");

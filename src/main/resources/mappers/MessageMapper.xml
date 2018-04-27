@@ -37,7 +37,6 @@
 	</select>
 	
 	<insert id="registMessage">
-		<![CDATA[
 		insert into tbl_message(ROOMID, SENDER, SENDTIME, COMMENT, read_status)
 		values (
 		#{roomid}
@@ -46,15 +45,15 @@
 		, #{comment}
 		, (select count(*) from tbl_chatroom_user where roomid=#{roomid} and userid!=#{sender})
 		);
-		]]>
-		<selectKey keyProperty="users" resultType="java.lang.String" order="AFTER">
-        	select group_concat(u.nickname separator '|')as users
-			from
-			tbl_chatroom_user c
-			join
-			tbl_user u
-			on c.userid=u.id where roomid=#{roomid} and userid!=#{sender};
-	    </selectKey>
 	</insert>
+	
+	<select id="getUsers" resultType="java.lang.String">
+        select group_concat(u.nickname separator '|')as users
+		from
+		tbl_chatroom_user c
+		join
+		tbl_user u
+		on c.userid=u.id where roomid=#{roomid} and userid!=#{sender};
+	</select>
 	
 </mapper>

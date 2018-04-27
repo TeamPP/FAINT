@@ -56,9 +56,11 @@ public class MessageServiceImpl implements MessageService {
 		return cDao.getChatList(userid);
 	}
 	
+	@Transactional
 	@Override
 	public String registMessage(MessageVO vo) throws Exception{
-		return mDao.registMessage(vo);
+		mDao.registMessage(vo);
+		return mDao.getUsers(vo);
 	}
 	
 }

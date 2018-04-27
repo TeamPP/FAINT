@@ -35,9 +35,10 @@
         tbl_user p
         on u.userid = p.id
         left join
-        (select * from tbl_message order by sendtime desc limit 1) m
+        (select * from (select * from tbl_message order by sendtime desc) n group by n.roomid) m
         on c.roomid = m.roomid
         group by c.roomid
+        order by m.sendtime desc
 	</select>
 	
 </mapper>

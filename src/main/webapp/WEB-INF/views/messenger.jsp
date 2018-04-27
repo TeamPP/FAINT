@@ -781,6 +781,7 @@ body {
 	    		
 	    		$(".list-chat > ul").html(list);
 	    		$('.list-chat').data("rid", roomid);
+	    		$("div.chat").scrollTop($("div.chat").height());
 
 	    	})
 		}
@@ -1078,7 +1079,7 @@ body {
 		
         //채팅 발송 - 클릭
         $('.mdi-send').on('click', function() {
-        	
+
         	if( $(".chat").children("li").length == 0){
         		var targetNickname = $('.list-chat').data("curTarget");
         		stompClient.send("/app/chat/create/" + targetNickname, {},
@@ -1087,15 +1088,13 @@ body {
         		$('.list-chat').removeData("curTarget");
         	}else if( $(".chat").children("li").length >= 1 ){
         		var roomid = $('.list-chat').data("rid");
-        		console.log(roomid);
         		stompClient.send("/app/chat/sendMsg", {},
         				JSON.stringify({ 'roomid': roomid+"", 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
         	}
-        	
-            var $chatmessage = '<p>' + $('.chat-input').val() + '</p>';
-            $('ul.chat > li > .current').append($chatmessage);
+
             $('.chat-input').val('');
         });
+        
       	//채팅 발송 - 엔터
         $('.chat-input').on('keyup', function(event) {
             event.preventDefault();
@@ -1107,7 +1106,6 @@ body {
       	//채팅리스트 클릭이벤트
         $('.list-text > .list').on('click', 'li', function() {
         	var roomid=$(this).data("rid");
-        	console.log(roomid);
 			getChat(roomid);
             // timeout just for eyecandy...
             setTimeout(function() {
@@ -1140,8 +1138,6 @@ body {
                 	//이미 있는 채팅방인지
                 	var noRoom=true;
                 	$(".content-container > .name").each(function(){
-                		console.log($(this).html());
-                		console.log($TARGET.find('span').html());
                 		if($(this).html()==$TARGET.find('span').html()){
                 			$(this).trigger("click");
                 			noRoom=false;
