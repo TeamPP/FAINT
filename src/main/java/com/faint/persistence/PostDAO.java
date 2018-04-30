@@ -7,6 +7,7 @@ import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
 import com.faint.dto.FollowinPostDTO;
+import com.faint.dto.NoticeDTO;
 import com.faint.dto.RelationDTO;
 
 public interface PostDAO {
@@ -24,6 +25,9 @@ public interface PostDAO {
 	//==================post read관련======================
 	//특정 포스트
 	public PostVO readOne(int postid) throws Exception;
+	
+	//특정유저의 가장최근 포스트의 아이디 값
+	public NoticeDTO readRecentOne(PostVO vo) throws Exception;
 	
 	//특정유저의 전체 포스트
 	public List<PostVO> read(Integer userid) throws Exception;

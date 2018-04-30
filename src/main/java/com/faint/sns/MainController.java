@@ -66,8 +66,10 @@ public class MainController {
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void main(HttpServletRequest request, Model model, Authentication authentication)throws Exception{
+		
 		System.out.println(authentication.getPrincipal());
 		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		
 		//이미지 확장자 리스트
 		List<String> imageType = Arrays.asList("jpg", "bmp", "gif", "png", "jpeg");
 		//비디오 확장자 리스트
@@ -128,7 +130,7 @@ public class MainController {
 	}
 
 	
-	@RequestMapping(value = "/webSocket", method = RequestMethod.GET)
+	@RequestMapping(value = "/messenger", method = RequestMethod.GET)
 	public void chatTest(Model model)throws Exception{
 		
 		

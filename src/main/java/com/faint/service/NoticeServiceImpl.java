@@ -25,8 +25,8 @@ public class NoticeServiceImpl implements NoticeService {
 	public Integer createTaggingNotice(String fromid, String targetid, int postid) throws Exception{
 		
 		NoticeDTO dto=new NoticeDTO();
-		dto.setFromid(fromid);
-		dto.setTargetid(targetid);
+		dto.setFromid(fromid); //String인 nickname값으로 들어감
+		dto.setTargetid(targetid); //String인 nickname값으로 들어감
 		dto.setPostid(postid);
 		
 		System.out.println(dto.toString());

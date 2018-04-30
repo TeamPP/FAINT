@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.faint.mapper.chatMapper">
+
+
+	<insert id="chatCreate">
+		insert into tbl_chatroom
+		values (null);
+	</insert>
+	
+	<insert id="chatCreateAndUserInsert">
+		insert into tbl_chatroom_user(ROOMID, USERID, REGDATE)
+		values
+		(LAST_INSERT_ID(), (select id from tbl_user where email=#{loginEmail}), NOW()),
+		(LAST_INSERT_ID(), (select id from tbl_user where nickname=#{userNickname}), NOW());
+	</insert>
+	
+	<select id="getChatList" resultType="com.faint.domain.ChatroomVO">
+        select c.roomid as id
+        , group_concat(p.nickname separator '|') as usersNickname
+        , group_concat(p.profilephoto separator '|') as usersPhoto
+        , m.comment as lastMessage
+        , m.sendtime as lastMessageDate
+        
+        from
+        (select roomid from tbl_chatroom_user where userid=#{userid} order by regdate) c
+        join
+        (select * from tbl_chatroom_user where userid!=#{userid}) u
+        on c.roomid = u.roomid
+        join
+        tbl_user p
+        on u.userid = p.id
+        left join
+        (select * from (select * from tbl_message order by sendtime desc) n group by n.roomid) m
+        on c.roomid = m.roomid
+        group by c.roomid
+        order by m.sendtime desc
+	</select>
+	
+</mapper>

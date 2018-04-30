@@ -115,7 +115,6 @@ function getPostList(){
              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
          },
          success:function(userdata){
-        	 console.log(userdata);
             data=$(userdata);
          }
       });

@@ -40,6 +40,17 @@
 		from tbl_post p left join tbl_attach a on p.id = a.POSTID where p.id=#{postid}  group by postid order by a.url;
 	</select>
 	
+	<select id="readRecentOne" resultType="com.faint.dto.NoticeDTO">
+		select p.id as postid, u.nickname as fromid
+		from tbl_post p
+        join
+        tbl_user u
+        on u.id=p.userid
+        where p.userid=#{userid}
+        and p.caption=#{caption}
+        order by p.regdate desc limit 1
+	</select>
+	
 	<!-- 유저 게시글 읽기 -->
 	<select id="read" resultType="com.faint.domain.PostVO">
 		select pa.*, likeCount, replyCount from
@@ -112,7 +123,7 @@
 	<!-- 세부 게시글 정보  (모달팝업용) -->
 	<select id="detailRead" resultType="com.faint.dto.FollowinPostDTO">
 		select * from
-        (select pa.postid as postid, pa.userid, pa.caption, pa.cateid, pa.url, pa.filter, pa.location, a_regdate, p_regdate, isLike, isStore  from
+        (select pa.postid as postid, pa.userid, pa.caption, pa.cateid, pa.url, pa.filter, pa.location, a_regdate as regdate, p_regdate, isLike, isStore  from
         
 			(select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.location, a.REGDATE as a_regdate, p.regdate as p_regdate
 			 from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) as pa

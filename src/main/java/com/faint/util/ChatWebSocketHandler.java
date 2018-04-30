@@ -1,4 +1,4 @@
-package com.faint.util;
+/*package com.faint.util;
 
 
 import java.util.ArrayList;
@@ -168,4 +168,4 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
 	}
 
-}
+}*/

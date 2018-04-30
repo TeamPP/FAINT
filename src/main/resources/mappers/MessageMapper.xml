@@ -4,9 +4,56 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.faint.mapper.messageMapper">
   	
-	<!-- =================알림 관련================= -->
+	<insert id="insertFirstMessage">
+		<selectKey keyProperty="roomid" resultType="int" order="BEFORE">
+        	SELECT LAST_INSERT_ID()
+	    </selectKey>
+		<![CDATA[
+		insert into tbl_message(ROOMID, SENDER, SENDTIME, COMMENT, read_status)
+		values (
+		#{roomid}
+		, #{sender}
+		, NOW()
+		, #{comment}
+		, (select count(*) from tbl_chatroom_user where roomid=#{roomid} and userid!=#{sender})
+		)
+		]]>
+	</insert>
 	
+	<select id="getMessages" resultType="com.faint.domain.MessageVO">
+        select m.id, m.roomid, m.sendtime, m.read_status, m.comment, m.sender, u.nickname as senderNickname, u.profilephoto
+		from tbl_message m
+		join
+		tbl_chatroom_user r
+		on 
+		m.roomid=r.roomid
+		left join
+		tbl_user u
+		on m.sender=u.id
+		where m.roomid=#{roomid}
+		and r.userid=#{loginid}
+		and m.sendtime>=r.regdate
+		order by m.sendtime;
+	</select>
 	
-	<!-- =================메신저 관련================= -->
+	<insert id="registMessage">
+		insert into tbl_message(ROOMID, SENDER, SENDTIME, COMMENT, read_status)
+		values (
+		#{roomid}
+		, #{sender}
+		, NOW()
+		, #{comment}
+		, (select count(*) from tbl_chatroom_user where roomid=#{roomid} and userid!=#{sender})
+		);
+	</insert>
+	
+	<select id="getUsers" resultType="java.lang.String">
+        select group_concat(u.nickname separator '|')as users
+		from
+		tbl_chatroom_user c
+		join
+		tbl_user u
+		on c.userid=u.id where roomid=#{roomid} and userid!=#{sender};
+	</select>
 	
 </mapper>
