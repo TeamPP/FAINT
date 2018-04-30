@@ -172,6 +172,7 @@ display:none;
 	stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         
+      	//==========================================알림==========================================
         noticeList();
         
       	//나에대한 follow,reply,like알림 구독
@@ -194,26 +195,43 @@ display:none;
     			stompClient.send("/app/notify/" + targetId[i] + "/tagging/" + targetPost + "/post", {}, JSON.stringify({ 'nickname': '${login.nickname}' }));
     		}
       	}
+      	
+     	//==========================================메신저==========================================
+       	//나에대한 채팅방생성 및 메시지 수신 알림(roomid값 받음)
+      	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
+            if(message.body!="FAIL" && message.body!=null && message.body!=""){
+            	var roomid = message.body;
+            	getChatList();
+            	getChat(roomid);
+            	alert("새로운 메세지 발송 or 수신됨");
+            }else{
+            	alert("메세지 전송에 실패하였습니다");
+            }
+        });
+    	  
+    	  
     });
 	
+	
+    //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
   			console.log(data);
   			var list="";
   			$(data).each(function(){
-  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
+  				list += "<li style='height:50px;' class='oneofList'><a href='/member/"+this.fromid+"'><img class='followPhoto'";
   				
                 // 프로필 사진이 있는경우 | 없는 경우
-   				if(this.profilePhoto != ""){
-   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
-               	}else if(this.profilePhoto == ""){
-               		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
+   				if(this.profilephoto != null){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a>";
+               	}else if(this.profilephoto == null){
+               		list += "src='/resources/img/emptyProfile.jpg' /></a>";
                	}
                 
-   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
+   				list += "<a href='/member/"+this.fromid+"' style='font-weight:600;'>" + this.fromid + "</a><span>님이";
                	
                 if(this.type=="F"){
-                	list += " 회원님을 팔로우하였습니다</div>";
+                	list += "회원님을 팔로우하였습니다</span>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -227,23 +245,23 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += " 회원님을 태그하였습니다</div>";
+                	list += "회원님을 태그하였습니다</span>";
                 	
                 }else if(this.type=="L"){
-                	list += " 회원님의 게시물에 좋아요를 눌렀습니다</div>";
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다</span>";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
+                	list += "회원님의 게시물에 댓글을 남겼습니다</span>";
                 }
                 
                 if(this.type!="F"){
                 	
                 	if(this.filter==""){
-                		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto' "; 
+                		list += "<img style='border-radius:0px' class='followPhoto' "; 
                 	}else{
-                		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto " + this.filter + "' ";
+                		list += "<img style='border-radius:0px' class='followPhoto " + this.filter + "' ";
                 	}
-                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
+                	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></li>";
                 	
                 }
   			})
@@ -295,6 +313,12 @@ display:none;
             stompClient.disconnect();
         }
     }
+	
+	//4. 댓글 알림
+	function test(writer){
+		var a= stompClient.send("/app/notify/" + writer + "/hi", {}, {});
+		console.log(a);
+	}
 		
 	</script>
 </sec:authorize>

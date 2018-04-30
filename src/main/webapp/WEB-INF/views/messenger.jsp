@@ -19,6 +19,7 @@
 
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="../../resources/js/common.js"></script>
 <style>
 
  @keyframes anim-excited {
@@ -119,7 +120,7 @@
     opacity: 0;
   }
 }
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   body {
     background: none;
     background-size: auto;
@@ -134,7 +135,7 @@
   .mdi-fullscreen-exit {
     display: none;
   }
-}
+} */
 canvas {
   cursor: crosshair;
 }
@@ -185,7 +186,7 @@ canvas {
   transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
   overflow: hidden;
   margin: auto;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   z-index: 30;
@@ -193,6 +194,7 @@ canvas {
 }
 #hangout.collapsed {
   height: 55px;
+  width: 195px !important;
   box-shadow: none;
 }
 #hangout.collapsed #content {
@@ -255,6 +257,7 @@ canvas {
 }
 #head .mdi-fullscreen,
 #head .mdi-fullscreen-exit {
+
   font-size: 1.5em;
   color: white;
   margin-right: 5px;
@@ -325,7 +328,7 @@ canvas {
   padding: 25px 0 0 0;
   width: 100%;
   height: 200px;
-  background: url('https://media.giphy.com/media/3oz8xTfD5SrkAwNNUQ/giphy.gif');
+  background: url(https://thumbs.gfycat.com/FastThreadbareIndigowingedparrot-size_restricted.gif);
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
@@ -396,6 +399,7 @@ canvas {
 }
 ul.chat {
   width: 100%;
+  overflow-y: auto;
 }
 ul.chat li {
   padding: 15px 25px 15px 25px;
@@ -413,10 +417,10 @@ ul.chat li img {
   border-radius: 100%;
 }
 ul.chat li .message {
-  padding: 10px 10px 10px 20px;
+  padding: 10px 20px 10px 20px;
   font-size: 0.9em;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  min-width: 50%;
+  min-width: 10%;
   position: relative;
   background: white;
   border-radius: 5px;
@@ -433,13 +437,13 @@ ul.chat li .message:after {
   left: -8px;
   top: 3px;
 }
-ul.chat li:nth-child(even) {
+ul.chat li[class="notMyMsg"] {
   flex-direction: row-reverse;
 }
-ul.chat li:nth-child(even) .message {
+ul.chat li[class="notMyMsg"] .message {
   background-color: #f5f5f5;
 }
-ul.chat li:nth-child(even) .message:after {
+ul.chat li[class="notMyMsg"] .message:after {
   right: -8px;
   left: auto;
   border-width: 8px 0 8px 8px;
@@ -662,8 +666,8 @@ body {
 				<i class="mdi mdi-arrow-left"></i>
 				<i class="mdi mdi-fullscreen"></i>
 				<i class="mdi mdi-menu"></i>
-				<h1>${login.nickname}</h1>
-				<i class="mdi mdi-chevron-down"></i>
+				<h1 id="myName">${login.nickname}</h1>
+				<i class="mdi mdi-chevron-up"></i>
 			</div>
 			<div id="content">
 				<div class="overlay"></div>
@@ -682,14 +686,14 @@ body {
 				<div class="card menu">
 					<div class="header">
 						<img
-							src="https://pp.userapi.com/c630420/v630420685/458c3/mFPotaYurhc.jpg" />
+							src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
 						<h3>${login.nickname}</h3>
 					</div>
 					<div class="content">
 
 						<div class="i-group">
 							<input type="text" id="username"><span class="bar"></span>
-							<label>Name</label>
+							<label>내 소개</label>
 						</div>
 						<br />
 						<div class="center">
@@ -705,84 +709,18 @@ body {
 							placeholder="Search" />
 					</div>
 					<ul class="list mat-ripple">
-						<li><img
-							src="https://pp.vk.me/c633629/v633629797/34a48/XqSmmn8PLRU.jpg"><span
-							class="name">Elena</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c307300/v307300537/84c1/-xELFBxvt7Q.jpg"><span
-							class="name">Neil deGrasse Tyson</span><i
-							class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.vk.me/c628727/v628727631/5c79a/yAtBoYXvlUc.jpg"><span
-							class="name">Vetal</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.vk.me/c604319/v604319346/3673/EAGK1PPYTSg.jpg"><span
-							class="name">Dima</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c639620/v639620661/fd56/P6PxyrFvlr0.jpg"><span
-							class="name">Marie Curie</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg"><span
-							class="name">Pavel Durov </span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c622419/v622419432/1b6ab/QuiocdEsyTI.jpg"><span
-							class="name">Stephen Hawking</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c623826/v623826544/1910/Q5QaUBXN5eQ.jpg"><span
-							class="name">Michio Kaku</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c419629/v419629606/1c93/K9Z9BJ9vjWo.jpg"><span
-							class="name">Richard Feynman</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c619731/v619731831/27f8/1jcNxJmUzF0.jpg"><span
-							class="name">Bear Grylls</span><i class="mdi mdi-menu-down"></i></li>
-						<li><img
-							src="https://pp.userapi.com/c407023/g41447720/d_0996245f.jpg"><span
-							class="name">Mark Zuckerberg</span><i class="mdi mdi-menu-down"></i></li>
 					</ul>
 				</div>
 				
 				<!-- 채팅방 리스트 -->
 				<div class="list-text">
 					<ul class="list mat-ripple">
-						<li><img
-							src="https://pp.userapi.com/c626423/v626423797/72515/Q8rsf4m943c.jpg">
-							<div class="content-container">
-								<span class="name">Elena</span> <span class="txt">You
-									complete me. 💋👄</span>
-							</div> <span class="time"> 14:00 </span></li>
-
-						<li><img
-							src="https://pp.userapi.com/c636631/v636631488/36bb3/WeAhU1_YCUI.jpg">
-							<div class="content-container">
-								<span class="name">Stephen Hawking</span> <span class="txt">
-									Nothing cannot exist forever. 🚀🛰</span>
-							</div> <span class="time"> 16:02 </span></li>
-
-						<li><img
-							src="https://pp.userapi.com/c836333/v836333001/31192/y1Cm4JfplhQ.jpg">
-							<div class="content-container">
-								<span class="name">Pavel Durov</span> <span class="txt">
-									nice messenger 👸😱🏈</span>
-							</div> <span class="time"> 16:03 </span></li>
 					</ul>
 				</div>
 				
 				<!-- 채팅창 -->
 				<div class="list-chat">
 					<ul class="chat">
-						<li>
-							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-          					<div class="message">Hi!</div>
-        				</li>
-						<li>
-							<img src="http://lorempixel.com/100/100/people/1/">
-          					<div class="message"></div>
-        				</li>
-						<li>
-							<img src="https://pp.userapi.com/c837728/v837728653/613fa/kUalq40_cq8.jpg">
-							<div class="message current"></div>
-						</li>
 					</ul>
 					<div class="meta-bar chat">
 						<input class="nostyle chat-input" type="text"
@@ -819,15 +757,91 @@ body {
 
 
 		<script>
-    	function followList(){
+		
+		//채팅창 가져오기
+		function getChat(roomid){
+	    	$.getJSON("/getChat/"+roomid, function(data){
+	    		console.log(data);
+	    		var list="";
+	    		
+	    		$(data).each(function(){
+	    			// 나의 메세지,타인 메세지 구분
+	    			if(this.senderNickname == "${login.nickname}"){
+	    				list += "<li><img ";
+	    			}else{
+	    				list += "<li class='notMyMsg'><img ";
+	    			}
+
+	    			// 프로필 사진이 있는경우 | 없는 경우
+	   				if(this.profilephoto != null){
+	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
+	               	}else if(this.profilephoto == null){
+	               		list += "src='/resources/img/emptyProfile.jpg' />";
+	               	}
+	    			
+	   				list += "<div class='message'>" + this.comment + "</div></li>";
+	    		})
+	    		
+	    		$(".list-chat > ul").html(list);
+	    		$('.list-chat').data("rid", roomid);
+	    		$("div.chat").scrollTop($("div.chat").height());
+
+	    	})
+		}
+		
+		//메신저 채팅리스트 불러오기
+		getChatList()
+		function getChatList(){
+			$.getJSON("/getChatList", function(data){
+	    		console.log(data);
+	    		var list="";
+
+	    		if($(data).length!=0){
+	    			$(data).each(function(){
+	    				
+	    				var userPhotoArray = this.usersPhoto.split("|");
+	    				var userNicknameArray = this.usersNickname.split("|");
+	    				
+	    				list += "<li data-rid='"+this.id+"'><img ";
+	    				
+	    				if(userPhotoArray.length==1 || this.usersPhoto==null){
+	    	            	if(this.usersPhoto != "" || this.usersPhoto != null){
+	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.usersPhoto+"' />";
+	    	            	}else{
+	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
+	    	            	}
+	    				}else{
+	    					if(userPhotoArray[0] != "" || userPhotoArray[0] != null){
+	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+userPhotoArray[0]+"' />";
+	    	            	}else{
+	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
+	    	            	}
+	    				}
+
+	    				list += "<div class='content-container'><span class='name'>"+userNicknameArray[0]+"</span>";
+	    				
+	    				list += "<span class='txt'>" + this.lastMessage + "</span></div>";
+	    				
+	    				list += "<span class='time'>" + createDateWithCheck(this.lastMessageDate) + "</span></li>";
+	    				
+	    			})
+	    		}
+	    		console.log("!23");
+	    		$(".list-text > .mat-ripple.list").html(list);
+	    	})
+		}
+
+		//메신저 유저리스트 불러오기
+		getMessengerUserList();
+    	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    		      var data=$(data)
-    		      if(data.length!=0){
+    		      var $data=$(data)
+    		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
     		        var followingList="";
-    	            data.each(function(){
+    	            $data.each(function(){
     	            	
-    	               followingList+="<li><img";
+    	               followingList+="<li><img ";
     	               	// 프로필 사진이 있는경우 | 없는 경우
     	            	if(this.profilephoto != null){
     	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />";
@@ -840,17 +854,22 @@ body {
     	            })
     	            
     	            //모달창 불러오기
-    	            $(".mat-ripple").html(followingList);
+    	            $(".list-account > .mat-ripple.list").html(followingList);
     		            
     		        };
 
-    		      });
-    		   };
+   		      });
+   		   };
+    		   
+		//3. 메세지 보내기
+		function notifyLike(writer, postid){
+			stompClient.send("/app/notify/" + writer + "/like/" + postid, {}, {});
+		}
         
         
-        // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수
+        // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수 // 채팅타겟 저장
         var GLOBALSTATE = {
-            route: '.list-account'
+            route: '.list-account',
         };
 
         // GLOBALSTATE.route값에 따라 show/hide 구별 - 초기값 ".list-account"
@@ -905,10 +924,10 @@ body {
             }, 530)
         });
 
-        // Имя набора (пользователя)
-        setName(localStorage.getItem('username'));
+        //현재 로그인 유저정보 설정
+        setName("${login.nickname}");
 
-        // Dyncolor ftw
+        // 로컬저장소에 있는 메신저 색상 가져오기
         if (localStorage.getItem('color') !== null) {
             var colorarray = JSON.parse(localStorage.getItem('color'));
             stylechange(colorarray);
@@ -922,10 +941,9 @@ body {
         function setName(name) {
         	//이름값 없을경우 본인, 아닐경우 변수 
             $.trim(name) === '' || $.trim(name) === null ? name = '${login.nickname}' : name = name;
-            $('h1').text(name);
-            localStorage.setItem('username', name);
+            $('#myName').text(name);
             //사용자 개인 프로필 - input
-            $('#username').val(name).addClass('used');
+            $('#username').val('${login.name}').addClass('used');
           	//사용자 개인 프로필 - header
             $('.card.menu > .header > h3').text(name);
         }
@@ -971,10 +989,21 @@ body {
             $mod.find('#new-user').focus();
         }
 		
-        //채팅창 벗어나기
+        //채팅창 나가기
         $('.mdi-arrow-left').on('click', function() {
             $('.shown').removeClass('shown');
-            setRoute('.list-text');
+            //인물리스트로부터 왔지만 메세지 입력하지않고 돌아왔을 때 or 아닐 때
+            if($('.list-chat').data("curTarget")!=undefined){
+            	$('.nav li:eq(0)').trigger("click")
+            }else{
+            	$('.nav li:eq(1)').trigger("click")
+            }
+            
+            //채팅창 데이터 지우기
+            $('.list-chat').removeData("curTarget");
+            $('.list-chat').removeData("rid");
+          	//채팅창 대화기록 삭제
+            $(".list-chat > ul").html("");
         });
 
         // 특정 메뉴활성화 함수
@@ -1034,7 +1063,7 @@ body {
 
         });
 
-        // Dirty Colorpicker( обязательно!)
+        // Dirty Colorpicker(스타일창 클릭시)
         $('#colorpick').on('mousedown', function(eventDown) {
             var x = eventDown.offsetX;
             var y = eventDown.offsetY;
@@ -1050,23 +1079,37 @@ body {
                 stylechange(imgData);
             }
         });
-
+		
+        //채팅 발송 - 클릭
         $('.mdi-send').on('click', function() {
-            var $chatmessage = '<p>' + $('.chat-input').val() + '</p>';
-            $('ul.chat > li > .current').append($chatmessage);
+
+        	if( $(".chat").children("li").length == 0){
+        		var targetNickname = $('.list-chat').data("curTarget");
+        		stompClient.send("/app/chat/create/" + targetNickname, {},
+        				JSON.stringify({ 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
+        		//채팅창 데이터 값 삭제
+        		$('.list-chat').removeData("curTarget");
+        	}else if( $(".chat").children("li").length >= 1 ){
+        		var roomid = $('.list-chat').data("rid");
+        		stompClient.send("/app/chat/sendMsg", {},
+        				JSON.stringify({ 'roomid': roomid+"", 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
+        	}
+
             $('.chat-input').val('');
         });
-
+        
+      	//채팅 발송 - 엔터
         $('.chat-input').on('keyup', function(event) {
             event.preventDefault();
             if (event.which === 13) {
                 $('.mdi-send').trigger('click');
             }
         });
-
-        $('.list-text > ul > li').on('click', function() {
-            $('ul.chat > li').eq(1).html('<img src="' + $(this).find('img').prop('src') + '"><div class="message"><p>' + $(this).find('.txt').text() + '</p></div>');
-
+		
+      	//채팅리스트 클릭이벤트
+        $('.list-text > .list').on('click', 'li', function() {
+        	var roomid=$(this).data("rid");
+			getChat(roomid);
             // timeout just for eyecandy...
             setTimeout(function() {
                 $('.shown').removeClass('shown');
@@ -1077,16 +1120,52 @@ body {
             }, 300);
         });
 
-        // список
-        // Делегирование для манипулирования дом. элементов списка
+        // 친구목록 리스트 클릭이벤트
         $('.list-account > .list').on('click', 'li', function() {
+        	//목록 active활성화 모두제거
             $(this).parent().children().removeClass('active');
+        	//수정 및 삭제버튼 제거
             $(this).parent().find('.context').remove();
+            //클릭한 리스트에만 active활성화
             $(this).addClass('active');
+            //클릭대상
             var $TARGET = $(this);
+            //클릭한 대상이 이미 수정 및 삭제버튼을 가지지 않을 경우
             if (!$(this).next().hasClass('context')) {
-                var $ctx = $('<li class="context"><i class="mdi mdi-pencil"></i><i class="mdi mdi-delete"></i></li>');
+                var $ctx = $('<li class="context"><i class="mdi mdi-comment"></i><i class="mdi mdi-pencil"></i><i class="mdi mdi-delete"></i></li>');
+                
+                //채팅하기 버튼
+                $ctx.on('click', '.mdi-comment', function() {
+                	
+                	
+                	//이미 있는 채팅방인지
+                	var noRoom=true;
+                	$(".content-container > .name").each(function(){
+                		if($(this).html()==$TARGET.find('span').html()){
+                			$(this).trigger("click");
+                			noRoom=false;
+                			return false;
+                			
+                		}
+                	})
+                	
+                	//채팅방 div에 현재 타겟값 저장
+                	if(noRoom){
+                		$('.list-chat').data("curTarget", $TARGET.find('span').html());
+                	}
+                	
+                    // timeout just for eyecandy...
+                    setTimeout(function() {
+                        $('.shown').removeClass('shown');
 
+                        $('.list-chat').addClass('shown');
+                        setRoute('.list-chat');
+                        $('.chat-input').focus();
+                        
+                    }, 300);
+                });
+                
+                //수정버튼
                 $ctx.on('click', '.mdi-pencil', function() {
                     setModal('edit', $TARGET);
 
@@ -1095,33 +1174,37 @@ body {
                         closeModal();
                     });
                 });
-
+				
+              	//삭제버튼
                 $ctx.on('click', '.mdi-delete', function() {
                     $TARGET.remove();
                 });
 
-
+				//수정 및 삭제버튼 삽입
                 $(this).after($ctx);
             }
         });
 
-        // Навигация
+        // 하단메뉴 활성화
         $('.nav li').on('click', function() {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
+            $(".list-chat > ul").html("");
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);
         });
 		
+        //화면 최대화
         $('#head').on('click', '.mdi-fullscreen', function() {
             $(this).removeClass('mdi-fullscreen').addClass('mdi-fullscreen-exit');
             $('#hangout').css({
                 width: '100%'
             });
         });
-
+		
+      	//화면 일반크기
         $('#head').on('click', '.mdi-fullscreen-exit', function() {
             $(this).removeClass('mdi-fullscreen-exit').addClass('mdi-fullscreen');
             $('#hangout').css({
@@ -1129,17 +1212,17 @@ body {
             });
         });
 
-        // меню-клик!
+        //현재 프로필 메뉴 오픈 및 오버레이 활성화
         $('#head .mdi-menu').on('click', function() {
             $('.menu').toggleClass('open');
             $('.overlay').toggleClass('add');
         });
 
-        // вид переключателя > 1000
-        $('#head .mdi-chevron-down').on('click', function() {
+        // 최소화 최대화 버튼
+        $('#head .mdi-chevron-up').on('click', function() {
             if ($('#hangout').hasClass('collapsed')) {
                 $(this).removeClass('mdi-chevron-up').addClass('mdi-chevron-down');
-                $('#hangout').removeClass('collapsed');
+                $('#hangout').removeClass('collapsed');	
             } else {
                 $(this).removeClass('mdi-chevron-down').addClass('mdi-chevron-up');
                 $('#hangout').addClass('collapsed');
@@ -1147,7 +1230,7 @@ body {
 
         });
 
-        // Фильтр
+        // 유저 검색
         $('.search-filter').on('keyup', function() {
             var filter = $(this).val();
             $(GLOBALSTATE.route + ' .list > li').filter(function() {
@@ -1161,11 +1244,12 @@ body {
             });
         });
 
-        // для удаления контакта (ничего не трогать !!)
+        // 모달창 나가기 버튼
         $('#contact-modal').on('click', '.btn.cancel', function() {
             closeModal();
         });
-
+		
+        // 새로운 유저
         $('#new-user').on('keydown', function(event) {
             switch (event.which) {
                 case 13:
@@ -1180,7 +1264,8 @@ body {
             }
 
         });
-
+		
+        // 친구목록 floater
         $('#add-contact-floater').on('click', function() {
             if ($(this).hasClass('active')) {
                 	closeModal();
