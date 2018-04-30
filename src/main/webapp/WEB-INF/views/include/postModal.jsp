@@ -154,7 +154,7 @@ a{ font-weight: bold; }
  
          <div class="s2_3">
             <div class="s2_3_1">
-               <div class="btnContainer" data-postid="{{postid}}" data-userid="{{userid}}">
+               <div class="btnContainer" data-postid="{{postid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
                <a class="likeContainer" data-postid="{{postid}}">좋아요 <span>0</span>개</a>
@@ -162,7 +162,7 @@ a{ font-weight: bold; }
          </div>
 
          <div class="s2_4">
-            <div class="s2_4_1" data-postid="{{postid}}" data-userid="{{userid}}">
+            <div class="s2_4_1" data-postid="{{postid}}">
                <!-- 댓글달기 -->
                <input class="replyRegist" onkeypress="registReply(this, event);" type="textarea" placeholder="댓글 달기..." name="replyCaption">
             </div>
@@ -207,15 +207,15 @@ a{ font-weight: bold; }
 <script>
 
 var modalFlg = false;
-var url = '';
+var reqUrl = '';
 function postModal(str){
 	var obj;
 	if(typeof str == "undefined" || str == null || str == ""){
 		return;
 	}
 	else{
-		url = str;
-		if(url == "main"){	//main에서 할떄
+		reqUrl = str;
+		if(reqUrl == "main"){	//main에서 할떄
 			obj = $(".selected");
 		} else{	//프로필, 검색 결과에서 할 때
 			obj = $(".imageContainer");
@@ -232,7 +232,7 @@ function postModal(str){
 		var curIndex;
 		var pid;
 		var postLength;
-		if(url == "main"){ //main에서 할떄
+		if(reqUrl == "main"){ //main에서 할떄
 			if(!(e.target.tagName == 'IMG' || e.target.tagName == 'VIDEO')){
 				return;
 			}
@@ -273,7 +273,7 @@ function postModal(str){
 	            var post=Handlebars.compile(source);
 	            var postmodal=post(data);
 	            $("body").append(postmodal);
-	            if(url != "main") $("body").css("overflow-y","hidden");
+	            if(reqUrl != "main") $("body").css("overflow-y","hidden");
 	            $("#carousel").css("-webkit-filter"," blur(6px)");	            
 	            //-----------------------------------여기도 수정
 	            //현재 위치값 저장
@@ -364,7 +364,7 @@ function postModal(str){
 	                  $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	                  $("#myModal[data-postid="+ pid+ "]").remove();
 	                  $("#carousel").css("-webkit-filter","");	        
-	                  if(url != "main") $("body").css("overflow-y","auto");
+	                  if(reqUrl != "main") $("body").css("overflow-y","auto");
 	               }
 	            });
 	            
@@ -373,7 +373,7 @@ function postModal(str){
 	               $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	               $("#myModal[data-postid="+ pid+ "]").remove();
 	               $("#carousel").css("-webkit-filter","");	    
-	               if(url != "main") $("body").css("overflow-y","auto");
+	               if(reqUrl != "main") $("body").css("overflow-y","auto");
 	            });
 	            
 	            //포스트 움직이기 버튼 함수 적용
@@ -450,7 +450,7 @@ function postDelete(thisTag){
 				$("#myModal").remove();
 				//postlist다시부르기
 				
-				if(url == "main"){	//메인인 경우
+				if(reqUrl == "main"){	//메인인 경우
 					//다음 객체 저장
 					var nextObj = $(".post>div[data-postid="+ postid+ "]").parent().next();
 					//카테고리 필터 리스트 다시 읽기 
@@ -539,7 +539,6 @@ function registReply(thisTag, key){
    if(enter==13&&comment.trim().length>0){
       var userid=${login.id};
       var postid=$(thisTag).parent().data("postid");
-      var postWriter=$(thisTag).parent().data("userid");
       $.ajax({
          type:"post",
          url:"/reply",
@@ -555,25 +554,17 @@ function registReply(thisTag, key){
          data:JSON.stringify({
             postid:postid,
             userid:userid,
-            comment:comment.trim(),
-            postwriter:postWriter
+            comment:comment.trim()
          }),
          success:function(result){
             if(result=="SUCCESS"){
                reply();
-               
- 	           	//웹소켓 댓글달림 알림
-	            notifyReply(postWriter, postid);
-
-               //태그할 경우 웹소켓 알림
-               notifyTagging(comment.trim(), postid);
-               
                $(thisTag).val("");
                //댓글 창 스크롤 아래로
                $(".s2_2_1").scrollTop($(".s2_2_1").height());
                
                //메인이 아닌경우
-               if(url !="main") getPostList();
+               if(reqUrl !="main") getPostList();
             }
          }
       });
@@ -599,7 +590,7 @@ function deleteReply(thisTag){
             //리플리스트 초기화 및 게시물의 댓글 피드 재호출
             reply();
             //메인이 아닌경우
-            if(url !="main") getPostList();
+            if(reqUrl !="main") getPostList();
          }
       }
    });
@@ -648,13 +639,12 @@ function like(){
 	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").data("postid");
-      var writer=$(this).parents(".btnContainer").data("userid");
       var likeBtn=this;
       if(likeFlg){ return; };
       likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
-         var url ="/post/"+postid+"/like/"+writer;
+         var url ="/post/"+postid+"/like";
          var headers="{'X-HTTP-Method-Override' : 'POST'}";
          var val="0px -349px";
          
@@ -861,7 +851,6 @@ function follow(){
          var url ="/member/follow/"+userid;
          var header="{'X-HTTP-Method-Override' : 'POST'}";
          $(isFlw).html("팔로잉");
-
          
       }else if(($(this).html()=="팔로잉")){
          var type="delete";
@@ -882,15 +871,7 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
-              
-                //팔로우할경우 소켓 알림
-                if($(isFlw).html()=="팔로잉"){
-                    notifyFollow(userid);
-                    console.log("123");
-                }
-                
                 followFlg=false;
-
             }
          }
       });
