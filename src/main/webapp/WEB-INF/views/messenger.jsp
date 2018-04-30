@@ -549,9 +549,9 @@ ul.nav li {
   height: 50px;
   overflow: hidden;
   display: inline-block;
-  width: 49%;
+  width: 49.5%;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.7em;
   color: #676767;
   cursor: pointer;
   padding: 10px 0 10px 0;
@@ -786,8 +786,7 @@ body {
 				
 	    		var cur_Scroll_Location = $(".scroll").scrollTop();
 	    		var list="";
-
-	    		if($(data).length!=0){
+				if($(data).length!=0){
 	    			$(data).each(function(){
 	    				
 	    				var userPhotoArray = this.usersPhoto.split("|");

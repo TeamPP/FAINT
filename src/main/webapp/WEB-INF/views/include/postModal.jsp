@@ -189,7 +189,7 @@ a{ font-weight: bold; }
 .s2_1_1{ height: 100%; display: inline-block; }
 .s2_1_1_1{ width: 45px; height: 45px; display: inline-block; float: left; border-radius: 50%; }
 .s2_1_1_2{ width: 235px; margin-left: 10px; display: inline-block; }
-.nickname{ font-weight: bold; }
+.nickname{ font-weight: bold; margin: 0 0 0px; }
 .s2_2{ width: 100%; height: auto; padding-top: 16px; padding-bottom: 16px; text-align: left; border-bottom: 1.3px solid #efefef; }
 .s2_2_1{ width: 100%; height: 352px; overflow-y: auto; overflow-x: hidden; }
 .replyContainer{ margin-top: 20px; bottom: 0; }
