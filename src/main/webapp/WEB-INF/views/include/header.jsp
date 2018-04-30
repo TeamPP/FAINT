@@ -54,9 +54,13 @@ body {
    border-radius: 150px;  /* 프사 둥글게 */
    vertical-align: baseline !important;
 }
+<<<<<<< HEAD
 .empty {
 	height: 220px; !important
 }
+=======
+
+>>>>>>> branch 'master' of https://github.com/TeamPP/FAINT.git
 .show {display:block;}
 .modal-content::after {
     border-color: transparent transparent #fff;
@@ -257,6 +261,7 @@ body {
     </div>
 </div>
 
+
 <div class="row" style="width:100%;">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
@@ -320,14 +325,20 @@ body {
     </symbol>
 
   </svg>
-  <div class="empty"></div>
+  
+  <c:choose>
+		<c:when test="${reqURL == '/main'}">
+			<div class="empty" style="height:220px;"></div>
+		</c:when>
+		<c:otherwise>
+			<div class="empty" style="height:150px;"></div>
+		</c:otherwise>
+	</c:choose>
+  
+  
 
 <script>
-<<<<<<< HEAD
 
-
-=======
->>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 $("search-form").click(function() {
 	searchAjax();
 })
@@ -340,11 +351,7 @@ $(".search-option input").click(function() {
 $(".logout").click(function() {
 	$(".logoutForm").submit();
 })
-<<<<<<< HEAD
 
-
-=======
->>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 //검색창 그림자
 $('.search-input').focus(function () {
     $(this).parent().addClass('focus');
@@ -362,11 +369,8 @@ function myFunction() {
 
     }
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -655,7 +659,7 @@ function searchAjax(){
                           $("#results").html("");
                       	 }
                        
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
                        } else {
@@ -690,7 +694,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");
@@ -736,7 +740,7 @@ function searchAjax(){
                          $("#results").html("");
                       }
                  }
-                    if(count>=3) {
+                    if(count>=3 && result.length==3) {
                  	   console.log(">>>"+result.length);
                        $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                        $("#header-modal").css("height", "51px");
@@ -769,7 +773,7 @@ function searchAjax(){
                           }
                  	 }
                  		
-                       if(count>=3) {
+                       if(count>=3 && result.length==3) {
                     	   console.log(">>>"+result.length);
                           $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
                           $("#header-modal").css("height", "51px");

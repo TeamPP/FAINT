@@ -205,7 +205,6 @@ public class MemberController {
 			//유저 id로 갱신된 데이터 새로 읽기
 			user = service.read(user.getId());
 			logger.info(user.toString());
-	
 			model.addAttribute("userVO", user);
 			model.addAttribute("reqURL", request.getRequestURI());
 		}

@@ -124,6 +124,30 @@
      ._5zbvx,._jzfl1{border-radius:50%;height:6px;margin-left:2px;margin-right:2px;-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out;width:6px}._5zbvx{background:#dbdbdb}._jzfl1{background:#fff;opacity:.4}._i22oc{opacity:1}._c0g09{background:#3897f0}._4ag49{table-layout:fixed}._4c7y4,._g5463{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}._4c7y4{bottom:15px;left:6px;position:absolute;right:6px}._g5463{margin-bottom:15px;margin-top:15px}._8bjpz,._k7ih4{left:0;position:relative;top:0}._8bjpz,._l5mmu{display:block}._k7ih4 ._l4l38{left:0;position:absolute;right:0;top:0}
      
 	
+._k7ih4, ._ebcx9	{
+	-webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    border: 0 solid #000;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+	}
 </style>
 
 <link href="../../resources/css/style.css" rel="stylesheet" type="text/css">
@@ -527,7 +551,7 @@
 		});
 		
 		//작성중 다른페이지 이동 시 확인처리
-		$(".explore, .new-post, .follow-list, .account, .logo, ._2g7d5, a._pg23k").on("click", function(event){
+		$(".explore, .new-post, .follow-list, .account, #logo, ._2g7d5, a._pg23k").on("click", function(event){
 			unloadCheck();
 		});
 	}); //ready 끝

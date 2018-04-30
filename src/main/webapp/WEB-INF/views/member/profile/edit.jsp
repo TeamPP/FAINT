@@ -142,7 +142,7 @@ h2{
 
 			</div>
 			<!-- 비공개유무 -->
-			<div class="_e1xik">
+			<%-- <div class="_e1xik">
 				<aside class="_kx10g"> <label>비공개</label> </aside>
 				<div class="_cd2n1">
 					<div class="_6dodw">
@@ -161,7 +161,7 @@ h2{
 						</label>
 					</div>
 				</div>
-			</div>
+			</div> --%>
 			<!-- 제출 -->
 			<div class="_e1xik">
 				<aside class="_kx10g _ldhkl">
@@ -198,8 +198,6 @@ h2{
 			//에러난 항목 있으면 다시 체크
 			//에러 표시 항목 클래스드 색깔 빨강이면 에러
 			$(".err").each(function(){
-				console.log(this.id);
-				console.log($(this).css("color"));
 				if($(this).css("color") == "rgb(255, 0, 0)"){
 					alert("올바른 정보를 입력하세요.");
 					errFlg = true;
@@ -208,15 +206,16 @@ h2{
 			});
 			if(errFlg) return;
 			var form = $("#profileForm");
-
 			//비공개 체크 데이터 입력
-			if ($("#chkPri").is(":checked")) {
+		/* 	if ($("#chkPri").is(":checked")) {
 				//비공개 체크 되어있으면 1
 				$("#userlevel").val(1);
 			} else {
 				//안되있으면 0
 				$("#userlevel").val(0);
-			}	
+			}	 */
+			console.log("????왜 안되니");
+			form.attr("action", "/member/profile/edit");
 			form.submit();
 		});
 

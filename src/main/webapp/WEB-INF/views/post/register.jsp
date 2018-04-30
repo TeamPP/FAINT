@@ -557,7 +557,7 @@
 		});
 		
 		//작성중 다른페이지 이동 시 확인처리
-		$(".explore, .new-post, .follow-list, .account, .logo, ._2g7d5, a._pg23k").on("click", function(event){
+		$(".explore, .new-post, .follow-list, .account, #logo, ._2g7d5, a._pg23k").on("click", function(event){
 			unloadCheck();
 		});
 	}); //ready 끝
