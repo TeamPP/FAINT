@@ -133,7 +133,7 @@
         }
     </style>
 </head>
-<body>
+ <body onload="javascript:window_onload()">
 <div id="wrapper">
 
 
@@ -142,5 +142,19 @@
             <span class="info"> <c:out value='${msg}'/></span>
 
 </div>
+
+<script language="javascript">
+
+function window_onload(){
+    setTimeout('go_url()',5000)  // 5초후 go_url() 함수를 호출한다.
+ }
+
+ function go_url(){
+    location.href="/main"  // 페이지 이동
+
+ }
+
+</script>
+
 </body>
 </html>
