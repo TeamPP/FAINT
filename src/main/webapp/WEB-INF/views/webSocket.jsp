@@ -209,7 +209,6 @@ display:none;
             	var roomid = message.body;
             	getChatList();
             	getChat(roomid);
-            	alert("새로운 메세지 발송 or 수신됨");
             }else{
             	alert("메세지 전송에 실패하였습니다");
             }
