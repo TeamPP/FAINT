@@ -24,11 +24,11 @@ public class NoticeDTO {
 	public void setFromid(String fromid) {
 		this.fromid = fromid;
 	}
-	public int getFormUserId() {
+	public int getFromUserId() {
 		return fromUserId;
 	}
-	public void setFormUserId(int formUserId) {
-		this.fromUserId = formUserId;
+	public void setFromUserId(int fromUserId) {
+		this.fromUserId = fromUserId;
 	}
 	public String getTargetid() {
 		return targetid;
@@ -85,5 +85,4 @@ public class NoticeDTO {
 				+ type + ", postid=" + postid + ", isFlw=" + isFlw + ", regdate=" + regdate + ", profilePhoto="
 				+ profilePhoto + ", postPhoto=" + postPhoto + ", filter=" + filter + "]";
 	}
-
 }

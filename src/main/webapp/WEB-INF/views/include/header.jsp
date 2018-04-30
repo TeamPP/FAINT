@@ -849,6 +849,69 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
+
+
+//follow여부확인하여 팔로우/팔로우취소
+function follow(){
+	var followFlg=false;
+	//이벤트 중복 제거를 위해 off먼저 선언
+   $(".isFlw").off("click").on("click", function(event){
+	  event.preventDefault();
+	  var $this=$(this);
+      var userid=$this.data("uid");
+      console.log(userid);
+      console.log(followFlg);
+      if(followFlg){return;}
+      
+      followFlg=true;
+      if( !($this.hasClass("flwActive")) ){
+         var type="post";
+         var url ="/member/follow/"+userid;
+         var header="{'X-HTTP-Method-Override' : 'POST'}";
+         $this.toggleClass("flwActive")
+         $this.html("팔로잉");
+
+      }else if( $this.hasClass("flwActive") ){
+         var type="delete";
+         var url ="/member/unfollow/"+userid;
+         var header="{'X-HTTP-Method-Override' : 'DELETE'}";
+         $this.toggleClass("flwActive");
+         $this.html("팔로우");
+      }
+      
+      $.ajax({
+         type: type,
+         url: url,
+         headers:header,
+         dataType:"text",
+         beforeSend : function(xhr)
+         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
+         success:function(result){
+            if(result=="SUCCESS"){
+            	followed();
+                following();
+              	
+                //팔로우할경우 소켓 알림
+                if($this.hasClass("flwActive")){
+                    notifyFollow(userid);
+                }
+                
+                //메신저 유저목록 갱신
+                getMessengerUserList();
+                
+                //알림창 팔로우 여부 갱신
+                noticeList();
+                
+                followFlg=false;
+
+            }
+         }
+      });
+   });
+}
+
 </script>
 
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />

@@ -82,7 +82,8 @@
 .oneofList{ border-bottom: solid 1px #efefef; width: 100%; height: 53px; padding: 10px 16px; float: left; }
 #likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
 .isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
-	border-width: 1px; line-height: 26px; border-radius: 2px; }
+	border-width: 1px; line-height: 26px; border-radius: 2px; padding: 0 5px 0 5px; }
+.flwActive{ background-color: #53505e !important; color: white !important; }
 .followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
 a{ font-weight: bold; }
 </style>
@@ -739,7 +740,7 @@ function likerList(){
 	                   	
 	                	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	                	if(this.isFollow > 0){
-	                		likers+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+	                		likers+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	                   
 		                }else if(this.isFollow==0 && this.id!=${login.id}){
 		                	likers+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";
@@ -850,56 +851,6 @@ function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
 
-//follow여부확인하여 팔로우/팔로우취소
-function follow(){
-	var followFlg=false;
-   $(".isFlw").on("click", function(){
-	console.log("postModal ");
-      var userid=$(this).data("uid");
-      var isFlw=this;
-      if(followFlg){return;}
-      followFlg=true;
-      if(($(this).html()=="팔로우")){
-         var type="post";
-         var url ="/member/follow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw).html("팔로잉");
-
-         
-      }else if(($(this).html()=="팔로잉")){
-         var type="delete";
-         var url ="/member/unfollow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw).html("팔로우");
-      }
-      $.ajax({
-         type: type,
-         url: url,
-         headers:header,
-         dataType:"text",
-         beforeSend : function(xhr)
-         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-         },
-         success:function(result){
-            if(result=="SUCCESS"){
-            	followed();
-                following();
-              
-                //팔로우할경우 소켓 알림
-                if($(isFlw).html()=="팔로잉"){
-                    notifyFollow(userid);
-                    console.log("123");
-                }
-                
-                followFlg=false;
-
-            }
-         }
-      });
-   });
-}
-
 function followed(){
 	console.log("postModal ");
 	$.getJSON("/member/followed/${userVO.id}", function(data){
@@ -926,7 +877,7 @@ function followed(){
 	               	}
 	            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	            	if(this.isFollow > 0){
-						followedList+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+						followedList+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	               	}else if(this.isFollow==0 && this.id!=${login.id}){
 	               		followedList+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";
              		}else{
@@ -1000,7 +951,7 @@ function following(){
 	               	}
 	            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	            	if(this.isFollow > 0){
-	                  followingList+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+	                  followingList+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	               
 	               }else if(this.isFollow==0 && this.id!=${login.id}){
 	                  followingList+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";

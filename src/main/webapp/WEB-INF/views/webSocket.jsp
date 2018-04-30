@@ -9,11 +9,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>Insert title here</title>
-<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
+.isFlw{
+	float: right;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	background: 0 0;
+	border-color: #dbdbdb;
+	color: #262626;
+	border-style: solid;
+	border-width: 1px;
+	line-height: 26px;
+	border-radius: 2px;
+	padding: 0 5px 0 5px;
+}
+.flwActive{
+	background-color: #53505e !important;
+	color: white !important;
+}
 .msgBtn{
 	float: right;
 	position: fixed;
@@ -217,7 +233,7 @@ display:none;
     	  
     });
 	
-	
+	var date="";
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
@@ -240,7 +256,7 @@ display:none;
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
-                		list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로잉</button></li>";
+                		list += "<button class='isFlw flwActive' data-uid='"+this.fromUserId+"'>팔로잉</button></li>";
                    
                     }else if(this.isFlw==0 && this.fromUserId!=${login.id}){
                     	list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로우</button></li>";
@@ -259,6 +275,8 @@ display:none;
                 	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
                 }
                 
+                list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                
                 if(this.type!="F"){
                 	
                 	if(this.filter==""){
@@ -272,6 +290,8 @@ display:none;
 
   			})
   			$("#follow-results").html(list);
+  			//팔로우 메서드 등록
+  			follow();
   		});
 	}
 	
