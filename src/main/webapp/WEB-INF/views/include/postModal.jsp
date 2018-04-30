@@ -22,8 +22,6 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
-
 	
 </style>
 
@@ -54,7 +52,6 @@
 @media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 ._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
 @media (max-width:480px){._23gmb,._dcj9f{display:none}}
-
 ._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
 ._h74gn:hover{background-color:#efefef}
 ._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
@@ -154,7 +151,7 @@ a{ font-weight: bold; }
  
          <div class="s2_3">
             <div class="s2_3_1">
-               <div class="btnContainer" data-postid="{{postid}}">
+               <div class="btnContainer" data-postid="{{postid}}" data-userid="{{userid}}">
                   <button class="replyBtn" onclick="replyCursor(this)">댓글달기</button>
                </div>
                <a class="likeContainer" data-postid="{{postid}}">좋아요 <span>0</span>개</a>
@@ -162,7 +159,7 @@ a{ font-weight: bold; }
          </div>
 
          <div class="s2_4">
-            <div class="s2_4_1" data-postid="{{postid}}">
+            <div class="s2_4_1" data-postid="{{postid}}" data-userid="{{userid}}">
                <!-- 댓글달기 -->
                <input class="replyRegist" onkeypress="registReply(this, event);" type="textarea" placeholder="댓글 달기..." name="replyCaption">
             </div>
@@ -205,17 +202,16 @@ a{ font-weight: bold; }
 </style>
 </script>
 <script>
-
 var modalFlg = false;
-var reqUrl = '';
+var url = '';
 function postModal(str){
 	var obj;
 	if(typeof str == "undefined" || str == null || str == ""){
 		return;
 	}
 	else{
-		reqUrl = str;
-		if(reqUrl == "main"){	//main에서 할떄
+		url = str;
+		if(url == "main"){	//main에서 할떄
 			obj = $(".selected");
 		} else{	//프로필, 검색 결과에서 할 때
 			obj = $(".imageContainer");
@@ -232,7 +228,7 @@ function postModal(str){
 		var curIndex;
 		var pid;
 		var postLength;
-		if(reqUrl == "main"){ //main에서 할떄
+		if(url == "main"){ //main에서 할떄
 			if(!(e.target.tagName == 'IMG' || e.target.tagName == 'VIDEO')){
 				return;
 			}
@@ -273,7 +269,7 @@ function postModal(str){
 	            var post=Handlebars.compile(source);
 	            var postmodal=post(data);
 	            $("body").append(postmodal);
-	            if(reqUrl != "main") $("body").css("overflow-y","hidden");
+	            if(url != "main") $("body").css("overflow-y","hidden");
 	            $("#carousel").css("-webkit-filter"," blur(6px)");	            
 	            //-----------------------------------여기도 수정
 	            //현재 위치값 저장
@@ -367,7 +363,7 @@ function postModal(str){
 	                  $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	                  $("#myModal[data-postid="+ pid+ "]").remove();
 	                  $("#carousel").css("-webkit-filter","");	        
-	                  if(reqUrl != "main") $("body").css("overflow-y","auto");
+	                  if(url != "main") $("body").css("overflow-y","auto");
 	               }
 	            });
 	            
@@ -376,7 +372,7 @@ function postModal(str){
 	               $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	               $("#myModal[data-postid="+ pid+ "]").remove();
 	               $("#carousel").css("-webkit-filter","");	    
-	               if(reqUrl != "main") $("body").css("overflow-y","auto");
+	               if(url != "main") $("body").css("overflow-y","auto");
 	            });
 	            
 	            //포스트 움직이기 버튼 함수 적용
@@ -405,7 +401,6 @@ function postModal(str){
 	   });
 	});
 }
-
 //게시물 수정
 function postEdit(pid){
 	var postid;	
@@ -427,9 +422,7 @@ function postEdit(pid){
 		     event.stopPropagation();
 		});
 	})
-
 }
-
 //게시물 삭제
 function postDelete(thisTag){
 	var postid=$(thisTag).data("post");
@@ -453,7 +446,7 @@ function postDelete(thisTag){
 				$("#myModal").remove();
 				//postlist다시부르기
 				
-				if(reqUrl == "main"){	//메인인 경우
+				if(url == "main"){	//메인인 경우
 					//다음 객체 저장
 					var nextObj = $(".post>div[data-postid="+ postid+ "]").parent().next();
 					//카테고리 필터 리스트 다시 읽기 
@@ -472,7 +465,6 @@ function postDelete(thisTag){
 		}
 	});
 }
-
 //메뉴 모달 취소버튼 - CSS처리
 function callRemoveDialog(event){
  if(typeof event != "undefined"){
@@ -482,7 +474,6 @@ function callRemoveDialog(event){
  $("body").attr("aria-hidden","false");
  $("div[role='dialog']").remove();
 }
-
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
    $(".replyContainer").each(function(){
@@ -542,6 +533,7 @@ function registReply(thisTag, key){
    if(enter==13&&comment.trim().length>0){
       var userid=${login.id};
       var postid=$(thisTag).parent().data("postid");
+      var postWriter=$(thisTag).parent().data("userid");
       $.ajax({
          type:"post",
          url:"/reply",
@@ -557,17 +549,24 @@ function registReply(thisTag, key){
          data:JSON.stringify({
             postid:postid,
             userid:userid,
-            comment:comment.trim()
+            comment:comment.trim(),
+            postwriter:postWriter
          }),
          success:function(result){
             if(result=="SUCCESS"){
                reply();
+               
+ 	           	//웹소켓 댓글달림 알림
+	            notifyReply(postWriter, postid);
+               //태그할 경우 웹소켓 알림
+               notifyTagging(comment.trim(), postid);
+               
                $(thisTag).val("");
                //댓글 창 스크롤 아래로
                $(".s2_2_1").scrollTop($(".s2_2_1").height());
                
                //메인이 아닌경우
-               if(reqUrl !="main") getPostList();
+               if(url !="main") getPostList();
             }
          }
       });
@@ -593,12 +592,11 @@ function deleteReply(thisTag){
             //리플리스트 초기화 및 게시물의 댓글 피드 재호출
             reply();
             //메인이 아닌경우
-            if(reqUrl !="main") getPostList();
+            if(url !="main") getPostList();
          }
       }
    });
 }
-
 //게시물 저장하기 + 저장하기 취소 
 function store(){
 	var storeFlg=false;
@@ -642,12 +640,13 @@ function like(){
 	var likeFlg=false;
    $(".likeBtn").on("click", function(){
       var postid=$(this).parents(".btnContainer").data("postid");
+      var writer=$(this).parents(".btnContainer").data("userid");
       var likeBtn=this;
       if(likeFlg){ return; };
       likeFlg=true;
       if($(this).css("background-position")=="-26px -349px"){
          var type="post";
-         var url ="/post/"+postid+"/like";
+         var url ="/post/"+postid+"/like/"+writer;
          var headers="{'X-HTTP-Method-Override' : 'POST'}";
          var val="0px -349px";
          
@@ -682,8 +681,6 @@ function like(){
       });
    });
 }
-
-
 //좋아요 count+list
 function likerList(){
 	$(".likeContainer").each(function(){
@@ -755,7 +752,6 @@ function likerList(){
 	      }); 
 	   });
 }
-
 //css - 모달창 사진이동버튼
 		
 //오른쪽으로 넘기기
@@ -764,7 +760,6 @@ function moveRight(){
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var nextObj = curObj.next();
-
 	////다음객체 비율 조정
 	if(nextObj.children().is("video")){
 		//다음 비디오 플레이
@@ -795,14 +790,12 @@ function moveRight(){
 		$("#moveRight").css("display","none");
 	}
 }
-
 //이미지 왼쪽으로 넘기기
 function moveLeft(){
 	var len = $(".popImgDiv").length-1;
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var prevObj = curObj.prev();
-
 	//이전객체 비율 조정
 	if(prevObj.children().is("video")){
 		//다음 비디오 플레이
@@ -834,12 +827,10 @@ function moveLeft(){
 		$("#moveLeft").css("display","none");
 	}
 }
-
 //css - 댓글달기 버튼 클릭시 커서 포커스
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
-
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
@@ -874,13 +865,19 @@ function follow(){
             if(result=="SUCCESS"){
             	followed();
                 following();
+              
+                //팔로우할경우 소켓 알림
+                if($(isFlw).html()=="팔로잉"){
+                    notifyFollow(userid);
+                    console.log("123");
+                }
+                
                 followFlg=false;
             }
          }
       });
    });
 }
-
 function followed(){
 	console.log("postModal ");
 	$.getJSON("/member/followed/${userVO.id}", function(data){
@@ -953,7 +950,6 @@ function followed(){
 }
 	   
 	
-
 //followList 에 followingList부여 및 팔로우 수 갱신
 function following(){
 	console.log("postModal ");
