@@ -16,10 +16,10 @@
       $("body").fadeIn(1000);
      
       setTimeout(function(){$("body").fadeOut(1000);},1000);
-      setTimeout(function(){location.href=history.go(-1)},2000);
+      setTimeout(function(){location.href("/")},2000);
     
     });
     
     </script>
 </body>
-</html>s
+</html>

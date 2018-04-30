@@ -234,13 +234,13 @@ h2{
 		switch (obj.id) {
 		//이름
 		case "name":
-			maxLen = 30;
+			maxLen = 8;
 			//길이체크
 			if (!lengthCheck(obj, maxLen)) return;
 			break;
 		//사용자이름
 		case "nickname":
-			maxLen = 30;
+			maxLen = 8;
 			var orgNick = "${userVO.nickname}";
 			var nick = obj.value;
 			//입력 가능 형식 문자, 숫자, 밑줄, 마침표

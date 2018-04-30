@@ -14,7 +14,7 @@
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+  <link href="/resources/bootstrap-social.css" rel="stylesheet">
 <!-- 모달 부트스트랩 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 <script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 
 <!-- 아이콘 부트스트랩  -->
-<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
 
 <!-- 이미지 필터 -->
@@ -54,11 +54,9 @@ body {
    border-radius: 150px;  /* 프사 둥글게 */
    vertical-align: baseline !important;
 }
-
 .empty {
 	height: 220px; !important
 }
-
 .show {display:block;}
 .modal-content::after {
     border-color: transparent transparent #fff;
@@ -259,7 +257,7 @@ body {
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="width:100%;">
 	<div class="col-sm-4"></div>
 	<div class="col-sm-4">
 	
@@ -325,31 +323,34 @@ body {
   <div class="empty"></div>
 
 <script>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 $("search-form").click(function() {
 	searchAjax();
 })
-
 $(".search-option input").click(function() {
 	$(".search-option input").attr("value", "0");
 	$(this).attr("value", "1");
 })
-
 // 로그아웃 버튼 클릭 이벤트
 
 $(".logout").click(function() {
 	$(".logoutForm").submit();
 })
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 //검색창 그림자
 $('.search-input').focus(function () {
     $(this).parent().addClass('focus');
 }).blur(function () {
     $(this).parent().removeClass('focus');
 })
-
 // 로그아웃 메뉴 펼치기
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -361,11 +362,13 @@ function myFunction() {
 
     }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
-
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
@@ -376,7 +379,6 @@ window.onclick = function (event) {
         }
     }
 }
-
 $(".catefilter").click(function() {
     if($(".catefilter").attr("id")=="1"){
         $(".catefilter").animate({"left": "-=85px"}, "slow");
@@ -477,7 +479,6 @@ function searchAjax(){
     		searchwords += bfsearchwords;
     	  }
       }
-
       console.log("searchwords----------->>>" + searchwords);
       
       /* 검색 단어가 있으면 일치하는 것 출력 */
@@ -812,7 +813,8 @@ function searchAjax(){
 }      /* searchAjax() 끝 */
 </script>
 
-<jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" />
+<%-- <jsp:include page="/WEB-INF/views/chatTest.jsp" flush="false" /> --%>
+<jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
 
 </body>
 </html>

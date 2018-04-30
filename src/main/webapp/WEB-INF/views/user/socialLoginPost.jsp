@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
 
-self.location = '${dest}';
+self.location = '/';
 </script>
   
   </body>

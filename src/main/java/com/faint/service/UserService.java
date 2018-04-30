@@ -87,10 +87,17 @@ public interface UserService {
 	public UserVO detailByEmail(String email) throws UsersException; // 이메일로 사용자의 모든 정보 가져오기
 	
 	public Authority getAuthority(Integer id) throws UsersException; // 사용자 권한 가져오기
-	
+	// 임 시 사용자 비번호 찾기 
+	public UserVO find_by_id(UserVO vo);
+	// 로그아웃
+	/*
+	 *  Principal 객체 가져오기
+	 *  Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자)
+	 */
 	/*public void logout(HttpServletRequest req, HttpServletResponse resp); // 로그아웃*/
 	
 	public UserDetails getPrincipal(); // Principal 객체 가져오기 (*Principal: 시스템을 사용하려고 하는 사용자 (로그인한 사용자))
+
 	
 	public boolean isPasswordMatched(String oldPassword) throws UsersException; // 비밀번호 일치 여부 확인하는 메소드
 	

@@ -1,203 +1,55 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <%--애니메이션 효과--%>
+    <link rel="stylesheet" href="/resources/dist/css/animate.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <%--이모티콘--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="/resources/bootstrap-social.css" rel="stylesheet">
+
+    <!-- jquery load -->
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <%--bootstrap--%>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/sketchy/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="/resources/dist/js/bootstrap.min.js"></script>
 <!--제이쿼리 라이브러리  -->
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- 모달 부트스트랩 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- 업로드 관련 확장자 필터링 스크립트 -->
+<script type="text/javascript" src="../../resources/js/upload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<link rel="stylesheet" href="/resources/css/header.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/animation.css" type="text/css">
+  <link href="/resources/bootstrap-social.css" rel="stylesheet">
+
 
 <%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
 <!--제이쿼리 라이브러리  -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<!-- <style>
-
+<style>
 	td {
 		padding:2px;
-
 	}
 	input{
 		width:30em;
 	}
-</style> -->
-
-<style>
-/* body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box} */
-/* Full-width input fields */
-/* input[type=text], input[type=password] {
-    /* width: 100%; */
-  /*   padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-        width: 90%;
-    max-width: 450px;
-} */
-
-/* Add a background color when the inputs get focus */
-/* input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-} */
-
-/* Set a style for all buttons */
-/*  button {
-    background-color: #5a6674;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    /* width: 100%; */
- /*   opacity: 0.9;
-}  */
-
-button:hover {
-    opacity:1;
-}
-
-
-.submitBtn{
-  background-color: #5a6674;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    /* width: 100%; */
-    opacity: 0.9;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-    padding: 14px 20px;
-    background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 50%;
-}
-
-/* Add padding to container elements */
-.container {
-    padding: 16px;
- 
-    
-}
-
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    /* width: 50%; */ /* Could be more or less, depending on screen size */
-    width: 657px;
-}
-
-/* Style the horizontal ruler */
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 50px;
-}
- 
-.close:hover,
-.close:focus {
-    color: #f44336;
-    cursor: pointer;
-}
-
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .cancelbtn, .signupbtn {
-       width: 100%;
-    }
-}
-
-
-    input{
-      margin:0;
-    }
-    
-    input[type="text"]{
-      
-      width:76%;
-      height:40px;
-      
- background-color: #f1f1f1;
-      border:none;
-      font-size:1.2em;
-      padding-left: 5px;
-      font-style: oblique;
-      display:inline;
-      outline:none;
-      box-sizing: border-box;
-      color:black;
-
-    }
-    
-    
-    input[type="password"]{
-       background-color: #f1f1f1;
-      width:90%;
-      height:40px;
-      border:none;
-      font-size:1.2em;
-      padding-left: 5px;
-      font-style: oblique;
-      display:inline;
-      outline:none;
-      box-sizing: border-box;
-      color:black;
-
-    }
-    input[type=button]{
-     width: 15%;
-      height:40px;
-   /*   background-color: white;   */  
-     background-color: #f1f1f1; 
-      border:none;
-      font-size:1em;
-      color:#5a6674;
-      outline:none;
-      display:inline;
-      margin-left: -10px;
-      box-sizing: border-box;
-    }
-	
-	
-   input[type=button]:hover{
-      background-color: lightgray;
-    } 
-
-.inputContainer{
-margin-left:5%;
-}
-
-
-.clearfix{
-text-align:center;
-}
-
 </style>
 
-
-
 <script>
-
     var chkid=false;
     var chkName=false;
     var chkpass=false;
@@ -229,8 +81,6 @@ text-align:center;
             chkpass=false;
         }
     }
-
-
     function signinchk(obj){
         if(!obj.email.value || obj.email.value.trim().length ==0){
             alert("이메일이 입력되지 않았습니다.");
@@ -267,12 +117,13 @@ text-align:center;
     }
 </script>
 <script>
+
+
+
     $(document).on('click','#authenticate',function(){
     	console.log("asdfasdf");
         var email = $('#email').val();
-
         var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-
         if(!email || email.trim().length ==0){
             alert("이메일이 입력되지 않았습니다.");
             return false;
@@ -285,7 +136,6 @@ text-align:center;
             alert("잘못된 이메일 형식입니다.");
             return false;
         } else {
-
             $.ajax({
                 url:'/user/authenticate',
                 type:'POST',
@@ -305,21 +155,20 @@ text-align:center;
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown){
-
                     alert('서버와의 통신이 원할하지 않습니다.\n다시 시도 해 주십시오.' );
                 }
             }); }
     });
-
     $(document).on('click','#authenticateName',function(){
         var nickname = $('#nickname').val();
         console.log(nickname);
-
-        if(nickname.trim().length >20){
-            alert("이름을 20자 이내로 입력해 주세요.");
+        if(nickname.trim().length >8){
+            alert("이름을 8자 이내로 입력해 주세요.");
+           
+            $('#nickname').val(nickname.substring(0,8));  //value값 8자리 내로
+            console.log("닉네임: "+$('#nickname').val());
             return false;
         }
-
         if(!nickname || nickname.trim().length ==0){
             alert("유저 네임이 입력되지 않았습니다.");
             return false;
@@ -329,7 +178,7 @@ text-align:center;
                 type:'POST',
                 data: {'nickname' : nickname},
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                dataType : "json",
+                dataType : "json", 
 				
             	beforeSend : function(xhr)
   	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
@@ -344,56 +193,158 @@ text-align:center;
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown){
-
                     alert('서버와의 통신이 원할하지 않습니다.\n다시 시도 해 주십시오.' );
                 }
             }); }
     });
 </script>
-<!-- <link href="/resources/dist/css/login.css" rel="stylesheet"> -->
+<link href="/resources/dist/css/login.css" rel="stylesheet">
 
 <div  id="regiser">
-				<form class="modal-content" role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				
-				  <div class="container">
-							
-				<h1 style="text-align:center;">Sign Up</h1>
-      			<p style="text-align:center;">Please fill in this form to create an account.</p>
-						<hr>
-						
-							<div class="inputContainer">
-					      <label for="email"><b style="font-size:1.2em;">Email</b></label><br/>
-					      <input type="text"  placeholder="Enter Email" name="email" id="email" required>
-					      <input type="button"  class="btn btn-warning"  id="authenticate" value="중복체크"><br/><br/><br/>
-				
-							
-						 <label for="nickname"><b  style="font-size:1.2em;">Nickname</b></label><br/>
-					      <input type="text"  placeholder="Nickname"  name="nickname" id="nickname"  required>
-					      <input type="button"  id="authenticateName" class="btn btn-warning" value="중복체크"><br/><br/><br/>
-					 	
-							
-					      <label for="psw"><b  style="font-size:1.2em;">Password</b></label><br/>
-					      <input type="password"  placeholder="Enter Password" name="password" id="password"  onkeyup="checkvalue()" required><br/><br/><br/>
-					
-					      <label for="psw-repeat"><b  style="font-size:1.2em;">Repeat Password</b></label><br/>
-					      <input type="password" placeholder="Repeat Password" name="chkPassword" id="chkPassword" onkeyup="checkvalue()"  required><br/><br/><br/>
-					      
-					      <p id="pwsame" name="pwsame"  ></p>
-					    </div>	 
-				     
-					     <div class="clearfix"> 
-					     <button class="submitBtn" type="submit" class="signupbtn">Sign Up</button>
-						</div>
-						
-						
-						
-						
-  					  </div>			
-					
-				</form>
+	<div class="wrapper fadeInDown text-center">
+
+		<div class="card border-secondary mb-3" style="max-width: 60rem;" id="formContent">
+
+			<div class="card-header" style="background-color: black">
+
+				<h1 class="text-white hn">회원가입</h1>
+
 			</div>
+			<div class="card-body text-secondary" id="formFooter">
+				<!-- Icon -->
+				<%--<div class="fadeIn first">--%>
+				<%--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />--%>
+				<%--</div>--%>
+
+				<form role="form" name="signup"  method="post" onsubmit="return signinchk(this)">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<table>
+						<tr>
+							<div class="control-group">
+								<td></td>
+								<td><input type = "text" class="form-control" name="email" id="email" placeholder="Email 주소를 입력해주세요" autofocus></td><td><button type="button" class="btn btn-warning" id="authenticate">중복체크</button></td><br>
+							</div>
+						<tr>
+							<td></td>
+							<td><input type = "text" class="form-control"  name="nickname" id="nickname"  placeholder="사용자이름"  ></td><td><button type="button" id="authenticateName" class="btn btn-warning">중복체크</button></td>
+						</tr>
+						<tr>
+							<td></td>  
+							<td><input type = "password" class="form-control"  name="password" id="password" onkeyup="checkvalue()" placeholder="패스워드를 입력해주세요" ></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type = "password" class="form-control" name="chkPassword" id="chkPassword"   placeholder="패스워드를 다시 한 번 입력해주세요" ></td>
+						</tr>
+						<tr>
+							<td width="96" height="36" ></td>
+							<td><p id="pwsame" name="pwsame"  ></p></td>
+						</tr>                                
+						<tr>
+							<td></td>
+							<td><input type = "submit" value = "회원가입" class="btn btn-primary"></td>
+						</tr>
+					</table>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+
+
+/* $(documnet).ready(function(){
+	
+
+
+//유효성 검사 에러 체크
+var errFlg = false;
+
+//유효성 검사
+function validCheck(obj) {
+	var chkStr = "";
+	var maxLen = 0;
+
+	switch (obj.id) {
+	//이메일
+	case "email":
+		
+		var email = obj.value;
+		
+		maxLen = 8;
+		//길이체크
+		if (!lengthCheck(obj, maxLen)) return;
+		break;
+	//사용자이름
+	case "nickname":
+		maxLen = 8;
+		var nick = obj.value;
+		//입력 가능 형식 문자, 숫자, 밑줄, 마침표
+		if (nick == null || nick.length == 0) {
+			//길이가 0이면 에러표시 지우고 리턴
+			$("#chkResult").css("color", "red");
+			$("#chkResult").text("사용자 이름을 입력하시오.");
+			return;
+		}
+		//길이체크
+		if (!lengthCheck(obj, maxLen)) return;
+
+		//원래 이름과 같으면
+		if (orgNick == nick) {
+			$("#chkResult").css("color", "#999");
+			$("#chkResult").text("");
+			return;
+		}
+		
+		//체크 정규식 설정
+		if (nick.length <= 2) {
+			//길이가 2보다 작으면
+			chkStr = /^[A-Za-z0-9_]*$/;
+		} else {
+			//길이가 2보다 크면
+			chkStr = /^[A-Za-z0-9_]+[a-zA-Z0-9_\.]+[A-Za-z0-9_]$/;
+		}
+		//입력값 형식에 맞는지 비교
+		if (!chkStr.test(nick)) {
+			$("#chkResult").text("입력형식이 올바르지 않습니다.");
+			$("#chkResult").css("color", "red");
+			return;
+		} else {
+			//중복확인
+			$.getJSON("/member/profile/edit/chkNick", {nick: nick}, function(data) {
+				//data = 0 중복아님, != 0  중복
+				if (data == 0) {
+					//글자색 검정
+					$("#chkResult").css("color", "black");
+					$("#chkResult").text("사용가능한 닉네임입니다.");
+				} else {
+					//글자색 빨강
+					$("#chkResult").css("color", "red");
+					$("#chkResult").text("중복된 닉네임입니다.");
+				}
+			});
+			return;
+		}
+		break;
+	
+		
+		case "password":
+		break;	
+		
+
+
+	default:
+		return;
+	}
+}
+
+
+}); */
 
 
 
-
+</script>

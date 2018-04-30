@@ -71,7 +71,6 @@ body{
    position: absolute;
    z-index: 2;
 }
-
 /*id는 스타일 최우선으로 적용됨 그 다음에 class */
 #carousel {
 	position: relative;
@@ -284,7 +283,6 @@ transition: transform 1s, left 1s, opacity 1s, z-index 0s, width 1s, height 1s;
 a,a:visited{
     text-decoration: none !important;
 }
-
 .multiFile{
 	position: absolute;
 	height: 39px;
@@ -300,7 +298,6 @@ a,a:visited{
 ._82odm{-webkit-align-self:center;-ms-flex-item-align:center;align-self:center;display:block;-webkit-box-flex:0;-webkit-flex:none;-ms-flex:none;flex:none}._qtgjd{cursor:pointer}._15vpm{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
 ._pg23k{background-color:#fafafa;border-radius:50%;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;-webkit-box-flex:0;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;overflow:hidden;position:relative}._pg23k::after{border:1px solid rgba(0,0,0,.0975);border-radius:50%;bottom:0;content:"";left:0;pointer-events:none;position:absolute;right:0;top:0}._jpwof{cursor:pointer}._rewi8{height:100%;width:100%}
 ._2g7d5{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:5px;margin-left:-5px}
-
 header, header>div{-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;border:0 solid #000;-webkit-box-sizing:border-box;box-sizing:border-box;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin:0;padding:0;}
 span{
 	display: inline-block;
@@ -333,7 +330,6 @@ background-color:black;
     left: 0;
     right: 0;
 }
-
 .glyphicon {
 	top: -1px;
 }
@@ -492,7 +488,6 @@ $(document).ready(function(){
 	
 	
 })
-
 //css - 카테고리별 게시물 필터링
 var all=$("#carousel").children(); //초기값
 function cateClick(thisTag){
@@ -540,7 +535,6 @@ function moveToSelected(element) {
 	var prev = $(selected).prev();
 	var prevSecond = $(prev).prev();
 	var nextSecond = $(next).next();
-
 	
 	//기존 클래스 삭제, post클래스와 새로운 클래스 추가(2개 추가 구분은 공백)
 	$(selected).removeClass().addClass("post selected");
@@ -570,7 +564,6 @@ function moveToSelected(element) {
 	moveToSelected('next');
 	});
 }
-
 function prevPost(curObj){
 	curObj.prev().click();
 	$(".selected > div").children().click();

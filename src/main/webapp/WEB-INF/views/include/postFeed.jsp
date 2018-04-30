@@ -7,21 +7,16 @@
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
-
 .empty {
     height: 150px;
 }
-
 span{
 	display: inline-block;
 }
-
 .postContainerWrp{
    text-align : center;
    margin-top: 35px;
 }
-
-
 .postContainer{
    display: inline-block;
    width: 935px;
@@ -73,20 +68,6 @@ span{
 	right: 8px;
 	top: 8px; 
 }
-.likeIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -156px;
-	color: rgba(0,0,0,0);
-}
-.replyIcon{
-	height: 21px;
-	width: 21px;
-	background-image: url("http://hyunjoolee.pythonanywhere.com/static/images/sprites/fef349.png");
-	background-position: -404px -115px;
-	color: rgba(0,0,0,0);
-}
 </style>
 
 <jsp:include page="/WEB-INF/views/include/postModal.jsp" flush="false" />
@@ -94,10 +75,8 @@ span{
 
 <script>
 console.log(jsonList);
-
 //body로딩 후
 $(document).ready(function(){
-
 	//viewport크기 관리
     $(window).resize(function(){
     	if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
@@ -110,9 +89,7 @@ $(document).ready(function(){
     	}
 	});
    getPostList();
-
 });
-
 //포스트 피드 띄우는 함수
 function getPostList(){
    var height=$(window).scrollTop();
@@ -121,7 +98,6 @@ function getPostList(){
    //포스트 피드
    $("body").append("<div class='postContainerWrp' style='width:100%; height:100%;'></div>");
    $(".postContainerWrp").append("<div class='postContainer'></div>");
-
    //데이터 담을 변수
    var data="";
    //태그 or 지역 검색 일때
@@ -192,7 +168,6 @@ function getPostList(){
    $(data).each(function(index){
       var url=this.url.split('|'); 
       var filterList = this.filter.split('|');
-      console.log("url[0]:               "+url[0]);
       
       var tagStr = "";
       //이미지일 경우
@@ -211,7 +186,7 @@ function getPostList(){
       //필터 적용
       $(".imageContainer:eq("+index+")").removeClass().addClass("imageContainer " + filterList[0]);
       
-      var str = "<div style='display:none; user-select:none;'><i class='likeIcon'>aa</i><span>\t"+this.likeCount+"개 </span> \t <i class='replyIcon'>aa</i><span>\t"+this.replyCount+"개</span></div>";
+      var str = "<div style='display:none; user-select:none;'><i class='fas fa-heart'></i><span>&nbsp;"+this.likeCount+"개 </span>&nbsp;\t&nbsp;<i class='fas fa-comment'></i>&nbsp;<span>"+this.replyCount+"개</span></div>";
       
       $(".imageContainer:eq("+index+")").append(str);
       
@@ -223,7 +198,6 @@ function getPostList(){
       
       //이미지에서 벗어날 때
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
-
    });
    
    //포스트 모달
@@ -231,8 +205,6 @@ function getPostList(){
    
    var height=$(window).scrollTop(height);
 };
-
-
 //css - 카테고리별 게시물 필터링
 $(".cate-option input").click(function(){
    var customType=$(this).data("filter");
@@ -244,8 +216,6 @@ $(".cate-option input").click(function(){
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
-
-
 function prevPost(){
 	var curIndex=$(".postModal-content").data("index");
 	$(".imageContainer:eq("+(curIndex-1)+")").click();

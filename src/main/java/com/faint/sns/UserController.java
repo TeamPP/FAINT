@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.impl.GoogleTemplate;
@@ -24,6 +25,7 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +44,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import common.JsonStringParse;
 import common.TempKey;
 import naver.NaverLoginBO;
+import validator.FindPassValidator;
 
 @Controller
 @RequestMapping("/user/*")
@@ -49,6 +52,9 @@ public class UserController {
 
 	@Inject
 	private UserService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	//유저 등록
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -65,6 +71,47 @@ public class UserController {
         rttr.addFlashAttribute("msg" , "가입시 사용한 이메일로 인증해주세요");
 		return "redirect:/";
 	}
+	
+	
+	///////////////////////
+	@RequestMapping(value="/find_passView", method = RequestMethod.GET)
+	public String Find_passView() {
+		return "find_passView";
+	}
+	
+//	@RequestMapping(value="/find_pass", method = RequestMethod.POST)
+//	public String find_pass(UserVO vo,RedirectAttributes redirectattr,Errors errors) {
+//		new FindPassValidator().validate(vo, errors);
+//		
+//		if(errors.hasErrors())
+//			return "find_passView";
+//			
+//		try {
+//			UserVO resultdto = service.find_by_id(vo);
+//			if(resultdto == null)
+//				throw new Exception();
+//			
+//			double randomvalue = Math.random();
+//			int random = (int)(randomvalue * 1000000) +1;
+//			String password = passwordEncoder.encode(String.valueOf(random));
+//			
+//			resultdto.setPassword(password); //��ȣȭ�� ��й�ȣ�� ��� ��������.
+//			service.pass(resultdto); //��ȣȭ�� ��й�ȣ�� ��� ��������.
+//			
+//			resultdto.setbPass(String.valueOf(random));
+//			
+//			redirectattr.addFlashAttribute("resultDto", resultdto); 
+//			return "redirect:sendpass";
+//		}catch(Exception e)
+//		{
+//			errors.reject("IDNotExist");
+//			return "find_passView"; 
+//		}
+//		
+//	}
+//	
+//	
+	/////////////////////
 
     //유저 email 중복 체크
 	@RequestMapping(value = "/authenticate" , method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -470,7 +517,9 @@ public class UserController {
 //		System.out.println("controller dto: "+dto);
 
 		UserVO vo = new UserVO();
-
+		
+	//	vo = service.detailByEmail(dto.getEmail());
+		System.out.println("vo");
 		try {
 			vo = service.googleLogin(dto);
 
@@ -494,6 +543,7 @@ public class UserController {
 			}
 		}else{
 			session.setAttribute("dest","/user/loginTest");
+			System.out.println("11");
 		}
 
 
@@ -688,193 +738,7 @@ public class UserController {
 
 }
 
-    //google 로그인 컨트롤러
 
-	/* GoogleLogin */
-//	@Inject
-//	private GoogleConnectionFactory googleConnectionFactory;
-//	@Inject
-//	private OAuth2Parameters googleOAuth2Parameters;
-//
-//
-//
-//	@RequestMapping(value = "/googleLogin", method = { RequestMethod.GET, RequestMethod.POST })
-//    public String doGoogleSignInActionPage(HttpServletResponse response, Model model) throws Exception{
-//        OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-//
-////		googleOAuth2Parameters.setRedirectUri("http://localhost:8080/user/googleLogincallback");
-//        String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-//       // System.out.println("/user/googleLogincallback, url : " + url);
-//        model.addAttribute("url",url);
-//
-//        return "user/googleLogin";
-//
-//    }
-//
-//
-//    @RequestMapping(value = "/googleLogincallback")
-//    public String doSessionAssignActionPage(HttpServletRequest request, Model model)throws Exception{
-//        //System.out.println("/user/googleLogincallback");
-//        String code = request.getParameter("code");
-//
-//		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-//		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(),
-//				null);
-//
-//		String accessToken = accessGrant.getAccessToken();
-//		Long expireTime = accessGrant.getExpireTime();
-//		if (expireTime != null && expireTime < System.currentTimeMillis()) {
-//			accessToken = accessGrant.getRefreshToken();
-//			//System.out.printf("accessToken is expired. refresh token = {}", accessToken);
-//		}
-//		Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
-//		Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
-//
-//		PlusOperations plusOperations = google.plusOperations();
-//		Person person = plusOperations.getGoogleProfile();
-//
-////		System.out.println("UserVO 전");
-////		System.out.println("person getId: "+person.getId());
-//
-//
-//        LoginDTO dto = new LoginDTO();
-//		TempKey TK = new TempKey();
-//
-//  //      System.out.println(person.getDisplayName());
-//        dto.setUserEmail("google"+"#"+TK.generateNumber(6));
-//        dto.setUserName(person.getDisplayName()+"#"+TK.generateNumber(5));
-//        dto.setUserSocialId("g"+person.getId());
-//        HttpSession session = request.getSession();
-////		System.out.println("controller dto: "+dto);
-//
-//		UserVO vo = new UserVO();
-//
-//		try {
-//			vo = service.googleLogin(dto);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			//username이 겹칠 시 userName 변경 페이지로 이동하는 기능 필요
-//		}
-//
-//
-//		if(vo != null) {
-//			session.setAttribute("login", vo );
-//			//response.sendRedirect("/");
-//			//System.out.println(userVO);
-//			Object dest = session.getAttribute("dest");
-//			if(dest=="user/socialLoginPost"){
-//				session.setAttribute("dest","/");
-//			}
-//			//System.out.println("postHandle dest: "+dest);
-//			if(dest==null){
-//				session.setAttribute("dest","/");
-//			}
-//		}else{
-//			session.setAttribute("dest","/user/login");
-//		}
-//
-//
-//
-////        session.setAttribute("login", vo );
-////		model.addAttribute("userVO",vo);
-//		//System.out.println("getAattributeNames"+session.getAttribute(savedest));
-//        return "redirect:/user/socialLoginPost";
-//    }
-
-//======================================github login ==================================================
-
-//
-//	private GithubLoginBo githubLoginBo;
-//	private String githubapiResult = null;
-//
-//	/* githubLoginBO */
-//
-//	@Inject
-//	private void setGithubLoginBo(GithubLoginBo githubLoginBo) {
-//		this.githubLoginBo = githubLoginBo;
-//	}
-//
-//	@RequestMapping(value="/githubLogin", method = RequestMethod.GET)
-//	public ModelAndView githublogin(HttpSession session) {
-//		/* github 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
-//		String githubAuthUrl = githubLoginBo.getAuthorizationUrl(session);
-//	//	System.out.println("github Login controller 호출");
-//	//	System.out.println(githubAuthUrl);
-//		return new ModelAndView("user/githubLogin", "url", githubAuthUrl);
-//	}
-//
-//	@RequestMapping(value="/githubcallback",method = { RequestMethod.GET, RequestMethod.POST })
-//	public ModelAndView githubcallback(@RequestParam String code, @RequestParam String state, HttpSession session,Model model) throws IOException {
-//		/* 네아로 인증이 성공적으로 완료되면 code 파라미터가 전달되며 이를 통해 access token을 발급 */
-////		System.out.println("/callback 진입 토튼 발급 전 ");
-////		System.out.println("session : "+session);
-////		System.out.println("state : "+state);
-////		System.out.println("code : "+code);
-//
-//		//토큰 생성
-//		OAuth2AccessToken oauthToken = githubLoginBo.getAccessToken(session, code, state);
-//
-//		//System.out.println("github oauthToken 값: "+oauthToken);
-//		githubapiResult = githubLoginBo.getUserProfile(oauthToken);
-//		//System.out.println(githubapiResult);
-//
-//		//JSON 형식을 parsing 하기 위한 준비
-//		Object obj = null;
-//		JSONParser parser = new JSONParser();
-//		try {
-//			obj = parser.parse(githubapiResult);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		//JSON 객체 생성
-//		JSONObject jsonobj = (JSONObject) obj;
-//
-//		System.out.println(jsonobj);
-//		String name = (String) jsonparse.JsonToString(jsonobj, "login");
-//		String userSocialId = (String) (jsonparse.JsonToString(jsonobj, "id")+"");
-//
-//
-//		UserVO vo =new UserVO();
-//		LoginDTO dto = new LoginDTO();
-//		TempKey TK = new TempKey();
-//
-//		dto.setUserEmail("github"+"#"+TK.generateNumber(6));
-//		dto.setUserSocialId("git"+userSocialId);
-//		dto.setUserName(name+"#"+TK.generateNumber(5));
-//
-//		System.out.println("======================JSON 파싱값================");
-//		System.out.println("name: "+name);
-//		System.out.println("id: "+userSocialId );
-//		System.out.println("UserVO "+vo);
-//		System.out.println("UserVO "+dto);
-//		try {
-//			vo = service.naverLogin(dto);
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		//세션 생성
-//		if(vo != null) {
-//			session.setAttribute("login", vo );
-//			Object dest = session.getAttribute("dest");
-//			if(dest=="/user/socialLoginPost"){
-//				session.setAttribute("dest","/");
-//			}
-//			System.out.println("postHandle dest: "+dest);
-//			if(dest==null){
-//				session.setAttribute("dest","/");
-//			}
-//		}else{
-//			session.setAttribute("dest","/user/login");
-//		}
-//		session.setAttribute("login",vo);
-//		model.addAttribute("userVO",vo);
-//		return new ModelAndView("redirect:/user/socialLoginPost", "result", vo);
-//	}
 
 
 }
