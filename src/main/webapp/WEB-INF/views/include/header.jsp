@@ -859,8 +859,6 @@ function follow(){
 	  event.preventDefault();
 	  var $this=$(this);
       var userid=$this.data("uid");
-      console.log(userid);
-      console.log(followFlg);
       if(followFlg){return;}
       
       followFlg=true;
@@ -890,9 +888,12 @@ function follow(){
          },
          success:function(result){
             if(result=="SUCCESS"){
-            	followed();
-                following();
-              	
+            	
+         	   if(window.location.pathname.substr(0,8) == "/member/"){
+          			followed();
+                  	following();
+          		}
+
                 //팔로우할경우 소켓 알림
                 if($this.hasClass("flwActive")){
                     notifyFollow(userid);

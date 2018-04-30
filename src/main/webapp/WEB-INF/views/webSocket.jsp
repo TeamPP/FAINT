@@ -223,8 +223,10 @@ display:none;
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var roomid = message.body;
+            	
             	getChatList();
             	getChat(roomid);
+            	
             }else{
             	alert("메세지 전송에 실패하였습니다");
             }
@@ -252,7 +254,9 @@ display:none;
    				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
                	
                 if(this.type=="F"){
-                	list += "회원님을 팔로우하였습니다</div>";
+                	
+                	//시간
+                	list += "회원님을 팔로우하였습니다</div><div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -275,10 +279,12 @@ display:none;
                 	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
                 }
                 
-                list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
-                
                 if(this.type!="F"){
                 	
+                	//시간
+                	list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	
+                	//이미지 필터
                 	if(this.filter==""){
                 		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto' "; 
                 	}else{
@@ -290,6 +296,13 @@ display:none;
 
   			})
   			$("#follow-results").html(list);
+  			
+  			//알림 리스트가 없을 경우
+  		   	if($("#follow-results").children().length==0) {
+				$("#follow-results").html("<div class='_oznku'><div class='noresult'>새로운 알림이 없습니다.</div></div>");
+				$("#follow-header-modal").css("height", "62px");
+			}
+  			
   			//팔로우 메서드 등록
   			follow();
   		});
