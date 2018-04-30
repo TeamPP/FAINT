@@ -899,9 +899,9 @@ function follow(){
                     notifyFollow(userid);
                 }
                 
-                //메신저 유저목록 갱신
-                getMessengerUserList();
-                
+              	//메신저 유저목록 갱신
+            	getMessengerUserList();
+
                 //알림창 팔로우 여부 갱신
                 noticeList();
                 

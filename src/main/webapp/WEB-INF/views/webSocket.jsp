@@ -223,7 +223,6 @@ display:none;
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var roomid = message.body;
-            	
             	getChatList();
             	getChat(roomid);
             	

@@ -339,11 +339,12 @@ canvas {
   height: 100%;
   overflow-y: hidden;
 }
-#scroll{
+.scroll{
     border-radius: 15px 0px 0px 0px;
-    max-height: 799px;
+    
     overflow-y: scroll;
-   	height: 490px;
+    overflow-x: hidden;
+    height: 490px;
    	width: calc(100% + 17px);
    	width: -moz-calc(100% + 17px);
    	width: -webkit-calc(100% + 17px);
@@ -382,6 +383,9 @@ canvas {
 }
 ul.chat {
   width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 ul.chat li {
   padding: 15px 25px 15px 25px;
@@ -433,7 +437,9 @@ ul.chat li[class="notMyMsg"] .message:after {
 }
 ul.list {
   width: 100%;
-  padding-bottom: 130px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 ul.list li {
   cursor: pointer;
@@ -679,19 +685,23 @@ body {
 						<input class="nostyle search-filter" type="text"
 							placeholder="Search" />
 					</div>
+					<div class="scroll">
 					<ul class="list mat-ripple">
 					</ul>
+					</div>
 				</div>
 				
 				<!-- 채팅방 리스트 -->
 				<div class="list-text">
+					<div class="scroll">
 					<ul class="list mat-ripple">
 					</ul>
+					</div>
 				</div>
 				
 				<!-- 채팅창 -->
 				<div class="list-chat">
-					<div id="scroll">
+					<div class="scroll">
 					<ul class="chat">
 					</ul>
 					</div>
@@ -754,24 +764,27 @@ body {
 	               	}else if(this.profilephoto == null){
 	               		list += "src='/resources/img/emptyProfile.jpg' />";
 	               	}
-	    			
-	   				list += "<div class='message'>" + this.comment + "</div></li>";
+	   				
+	   				list += "<div class='message'>" + this.comment + "</div>";
+	   				
+	   				list += "<div><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
+	   				
+	   				
 	    		})
 	    		
-	    		$(".list-chat > #scroll > ul").html(list);
+	    		$(".list-chat > .scroll > ul").html(list);
 	    		$('.list-chat').data("rid", roomid);
-				
-	    		$("#scroll").scrollTop($(document).height()*2);
 	    		
+	    		$(".scroll").scrollTop($("ul.chat").height()*2);
 	    	})
 		}
-		console.log("123123");
 		
 		//메신저 채팅리스트 불러오기
 		getChatList()
 		function getChatList(){
 			$.getJSON("/getChatList", function(data){
-	    		console.log(data);
+				
+	    		var cur_Scroll_Location = $(".scroll").scrollTop();
 	    		var list="";
 
 	    		if($(data).length!=0){
@@ -804,8 +817,8 @@ body {
 	    				
 	    			})
 	    		}
-	    		console.log("!23");
-	    		$(".list-text > .mat-ripple.list").html(list);
+	    		$(".list-text > .scroll > .mat-ripple.list").html(list);
+	    		$(".scroll").scrollTop(cur_Scroll_Location);
 	    	})
 		}
 
@@ -813,7 +826,7 @@ body {
 		getMessengerUserList();
     	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    			 console.log(data);
+    			  var cur_Scroll_Location = $(".scroll").scrollTop();
     		      var $data=$(data)
     		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
@@ -833,18 +846,19 @@ body {
     	            })
     	            
     	            //모달창 불러오기
-    	            $(".list-account > .mat-ripple.list").html(followingList);
+    	            $(".list-account > .scroll > .mat-ripple.list").html(followingList);
     		            
     		        };
-
+    		        $(".scroll").scrollTop(cur_Scroll_Location);
    		      });
    		   };
-    		   
-		//3. 메세지 보내기
-		function notifyLike(writer, postid){
-			stompClient.send("/app/notify/" + writer + "/like/" + postid, {}, {});
-		}
-        
+    	
+   		// 스크롤 휠클릭 이벤트 막기
+        $(".scroll").mousedown(function(e) {
+        	if(e.which==2){
+        		e.preventDefault();	
+        	}
+        });
         
         // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수 // 채팅타겟 저장
         var GLOBALSTATE = {
@@ -970,7 +984,7 @@ body {
             $('.list-chat').removeData("curTarget");
             $('.list-chat').removeData("rid");
           	//채팅창 대화기록 삭제
-            $(".list-chat > ul").html("");
+            $(".list-chat > .scroll > ul").html("");
         });
 
         // 특정 메뉴활성화 함수
@@ -1062,11 +1076,9 @@ body {
         });
       	
       	//채팅리스트 클릭이벤트
-        $('.list-text > .list').on('click', 'li', function() {
+        $('.list-text > .scroll > .list').on('click', 'li', function() {
         	var roomid=$(this).data("rid");
 			getChat(roomid);
-			
-			
 			
             // timeout just for eyecandy...
             setTimeout(function() {
@@ -1077,13 +1089,11 @@ body {
                 setRoute('.list-chat');
                 $('.chat-input').focus();
                 
-                $("#scroll").scrollTop($(document).height()*2);
-                
             }, 300);
         });
 
         // 친구목록 리스트 클릭이벤트
-        $('.list-account > .list').on('click', 'li', function() {
+        $('.list-account > .scroll > .list').on('click', 'li', function() {
         	//목록 active활성화 모두제거
             $(this).parent().children().removeClass('active');
         	//수정 및 삭제버튼 제거
@@ -1092,6 +1102,7 @@ body {
             $(this).addClass('active');
             //클릭대상
             var $TARGET = $(this);
+            
             //클릭한 대상이 이미 수정 및 삭제버튼을 가지지 않을 경우
             if (!$(this).next().hasClass('context')) {
 
@@ -1122,9 +1133,10 @@ body {
 
                         $('.list-chat').addClass('shown');
                         setRoute('.list-chat');
-                        $('.chat-input').focus();
                         
-                        $("#scroll").scrollTop($(document).height()*2);
+            			$(".scroll").scrollTop($("ul.chat").height()*2);
+            			
+                        $('.chat-input').focus();
                         
                     }, 300);
                     
@@ -1187,7 +1199,7 @@ body {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
-            $(".list-chat > ul").html("");
+            $(".list-chat > .scroll > ul").html("");
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);
