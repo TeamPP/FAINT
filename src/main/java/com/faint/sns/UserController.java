@@ -68,7 +68,7 @@ public class UserController {
 	public String RegisterPost(UserVO user, Model model, RedirectAttributes rttr) throws Exception{
     
 		System.out.println("regesterPost 진입 ");
-    	service.regist(user);
+		service.regist(user);
         rttr.addFlashAttribute("msg" , "가입시 사용한 이메일로 인증해주세요");
 		return "redirect:/";
 	}
