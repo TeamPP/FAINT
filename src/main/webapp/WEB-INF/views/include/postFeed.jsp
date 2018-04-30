@@ -7,16 +7,24 @@
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </header>
 <style>
-.empty {
-    height: 150px;
+
+#emptyCenter {    position:absolute;
+  top:60%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  text-align: center;
 }
+
 span{
 	display: inline-block;
 }
+
 .postContainerWrp{
    text-align : center;
    margin-top: 35px;
 }
+
+
 .postContainer{
    display: inline-block;
    width: 935px;
@@ -75,8 +83,10 @@ span{
 
 <script>
 console.log(jsonList);
+
 //body로딩 후
 $(document).ready(function(){
+
 	//viewport크기 관리
     $(window).resize(function(){
     	if(parseInt($(".postContainer").css("max-width")) <= parseInt($(window).width())){
@@ -89,7 +99,9 @@ $(document).ready(function(){
     	}
 	});
    getPostList();
+
 });
+
 //포스트 피드 띄우는 함수
 function getPostList(){
    var height=$(window).scrollTop();
@@ -98,6 +110,7 @@ function getPostList(){
    //포스트 피드
    $("body").append("<div class='postContainerWrp' style='width:100%; height:100%;'></div>");
    $(".postContainerWrp").append("<div class='postContainer'></div>");
+
    //데이터 담을 변수
    var data="";
    //태그 or 지역 검색 일때
@@ -124,12 +137,12 @@ function getPostList(){
          $(".postContainer").html("<div>아직 등록된 게시글이 없어요 ㅠㅠ</div>");
          return;
       }else if($(data).length==0 && uid==${login.id}){
-         $(".postContainer").html("<div>소중한 순간들을 포착하여 공유해보세요</div>");
+         $(".postContainer").html("<div id='emptyCenter'><h2>소중한 순간들을 포착하여 공유해보세요</h2></div>");
          return;
       }
    //for store.jsp
    }else if(elseList.length==0 && typeof(uid)=="number"){
-      $(".postContainer").html("<div>아직 저장된 게시글이 없어요 ㅠㅠ</div>");
+      $(".postContainer").html("<div id='emptyCenter'><h2>아직 저장된 게시글이 없습니다</h2></div>");
    
    //for search/location.jsp
    }else{
@@ -176,7 +189,6 @@ function getPostList(){
 		}else if(checkVideoType(url[0])){
 			tagStr ="<video class='postImage' data-postid='"+this.id+"' style='height:100%; width:100%; object-fit:fill;' src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+url[0]+"' ></video>";
  		}
-
       //이미지 많을때 아이콘
       if(url.length>1){ tagStr += "<i class='multiFile'></i>"; }
       
@@ -197,6 +209,7 @@ function getPostList(){
       
       //이미지에서 벗어날 때
       $(".postImage").siblings("div").mouseleave(function(event){ $(this).css("display", "none"); });
+
    });
    
    //포스트 모달
@@ -204,6 +217,8 @@ function getPostList(){
    
    var height=$(window).scrollTop(height);
 };
+
+
 //css - 카테고리별 게시물 필터링
 $(".cate-option input").click(function(){
    var customType=$(this).data("filter");
@@ -215,6 +230,8 @@ $(".cate-option input").click(function(){
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
+
+
 function prevPost(){
 	var curIndex=$(".postModal-content").data("index");
 	$(".imageContainer:eq("+(curIndex-1)+")").click();

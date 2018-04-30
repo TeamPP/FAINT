@@ -9,7 +9,7 @@
 <title>FAINT</title>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <style>
-#center {    position:absolute;
+#emptyCenter {    position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%, -50%);
@@ -20,8 +20,6 @@
 </style>
 
 <body>
-	<div id="center">
-		<h2>존재하지 않는 페이지 혹은 잘못된 접근입니다.</h2>
-	</div>
+	<div id="emptyCenter"><h2>존재하지 않는 페이지 혹은 잘못된 접근입니다.</h2></div>
 </body>
 </html>

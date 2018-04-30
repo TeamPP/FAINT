@@ -53,7 +53,7 @@ public class WebSocketController {
 	
 	//알림 리스트 가져오기
 	@ResponseBody
-	@RequestMapping(value="/getNotice", method=RequestMethod.GET)
+	@RequestMapping(value="/getNotice", produces = "application/json; charset=utf8", method=RequestMethod.GET)
 	public ResponseEntity<String> noticeList(Authentication authentication) throws Exception {
 		
 		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();

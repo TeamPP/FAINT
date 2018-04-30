@@ -744,7 +744,7 @@ body {
 				</div>
 
 				<div class="btn-container">
-					<span class="btn cancel">Cancel</span> <span class="btn save">Save</span>
+					<span class="btn save">확인</span> <span class="btn cancel">취소</span>
 				</div>
 
 			</div>
@@ -971,13 +971,21 @@ body {
             switch (mode) {
             	//floater클릭시
                 case 'add':
-                    $mod.find('h3').text('Add Contact');
+                	$mod.find('.i-group').show();
+                    $mod.find('h2').text('Add Contact');
                     break;
 				
                 //기존 사용자 변경클릭시
                 case 'edit':
-                    $mod.find('h3').text('Edit Contact');
+                    $mod.find('h2').text('Edit Contact');
+                    $mod.find('.i-group').show();
                     $mod.find('#new-user').val($ctx.text()).addClass('used');
+                    break;
+                    
+                //유저 삭제 시
+                case 'delete':
+                    $mod.find('h2').text('정말 팔로우를 끊으시겠습니까?');
+                    $mod.find('.i-group').hide();
                     break;
             }
 
@@ -1098,7 +1106,9 @@ body {
       	//채팅 발송 - 엔터
         $('.chat-input').on('keyup', function(event) {
             event.preventDefault();
-            if (event.which === 13) {
+            var enter=event.keyCode||event.which;
+            var comment=$('.chat-input').val().trim();
+            if (enter==13 && comment.trim().length>0) {
                 $('.mdi-send').trigger('click');
             }
         });
@@ -1174,10 +1184,40 @@ body {
 				
               	//삭제버튼
                 $ctx.on('click', '.mdi-delete', function() {
-                    $TARGET.remove();
+                	//팔로우 해제 - 모달
+                	//타겟삭제
+                	//팔로우 해제
+                	setModal('delete', $TARGET);
+                    $('#contact-modal').one('click', '.btn.save', function() {
+                        var username = $TARGET.find('.name').text($('#new-user').val());
+                        followFlg=true;
+                        $.ajax({
+                            type: "delete",
+                            url: "/member/unfollow/"+userid,
+                            headers:"{'X-HTTP-Method-Override' : 'DELETE'}",
+                            dataType:"text",
+                            beforeSend : function(xhr)
+                            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            },
+                            success:function(result){
+                               if(result=="SUCCESS"){
+                               	followed();
+                                following();
+                                
+                                closeModal();
+                                $TARGET.remove(); 
+                                followFlg=false;
+
+                               }
+                            }
+                         });
+                        
+                    });
+                    
                 });
 
-				//수정 및 삭제버튼 삽입
+				//대화 및 삭제버튼 삽입
                 $(this).after($ctx);
             }
         });

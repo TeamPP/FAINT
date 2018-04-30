@@ -678,16 +678,15 @@ function like(){
          },
          success:function(result){
             if(result=="SUCCESS"){
-
-               $(likeBtn).css("background-position", val);
-               likerList();
-               //메인이 아닌경우
-               if(reqUrl !="main") {
-            	   console.log(reqUrl);
-            	   getPostList();
-               }
-               likeFlg=false;
-
+	           	//웹소켓 알림
+	           	if($(likeBtn).css("background-position") == "-26px -349px"){
+	               	notifyLike(writer, postid);
+	           	}
+				$(likeBtn).css("background-position", val);
+				likerList();
+				//메인이 아닌경우
+				if(reqUrl !="main") getPostList();
+				likeFlg=false;
             }
          }      
       });

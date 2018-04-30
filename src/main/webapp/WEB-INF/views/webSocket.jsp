@@ -71,10 +71,12 @@
 	font-size: 14px;
 	box-sizing: content-box;
 }
+
 .messengerUser:hover{
 	background-color: rgba(255, 255, 255, 0.5);
 	cursor: pointer;
 }
+
 .followPhoto{
 	width: 33px;
 	height: 33px;
@@ -138,17 +140,21 @@ table{
     border-right: 10px solid #9DC8C8;
     border-bottom: 10px solid transparent;
 }
+
 #chat .msg_container_base{
     background:#fff;
 }
 #chat time{ color:#fff; font-style: oblique; }
+
 .chatBlock{
 display:block;
 }
 .chatNone{
 display:none;
 }
+
   
+
 #btn-chat{
 	background: #FFE400;
 	border: none;
@@ -203,7 +209,6 @@ display:none;
             	var roomid = message.body;
             	getChatList();
             	getChat(roomid);
-            	alert("새로운 메세지 발송 or 수신됨");
             }else{
             	alert("메세지 전송에 실패하였습니다");
             }
@@ -264,6 +269,7 @@ display:none;
                 	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></li>";
                 	
                 }
+
   			})
   			$("#follow-results").html(list);
   		});
