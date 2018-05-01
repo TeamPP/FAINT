@@ -662,8 +662,14 @@ body {
 
 				<div class="card menu">
 					<div class="header">
-						<img
-							src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
+						<c:choose>
+							<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
+								<img id="btnChangePhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
+							</c:when>
+							<c:otherwise>
+								<img id="btnChangePhoto" src="/resources/img/emptyProfile.jpg" />
+							</c:otherwise>
+						</c:choose>
 						<h4>${login.nickname}</h4>
 					</div>
 					<div class="content">
@@ -761,13 +767,13 @@ body {
 	    			// 프로필 사진이 있는경우 | 없는 경우
 	   				if(this.profilephoto != null){
 	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
-	               	}else if(this.profilephoto == null){
+	               	}else if(this.profilephoto == null && this.profilephoto == ""){
 	               		list += "src='/resources/img/emptyProfile.jpg' />";
 	               	}
 	   				
 	   				list += "<div class='message'>" + this.comment + "</div>";
 	   				
-	   				list += "<div><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
+	   				list += "<div style='padding: 25px 5px 0 0;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
 	   				
 	   				
 	    		})

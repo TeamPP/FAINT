@@ -134,7 +134,7 @@ function getPostList(){
       
       //게시물이 없을 때
       if($(data).length==0 && uid!=${login.id}){
-         $(".postContainer").html("<div>아직 등록된 게시글이 없어요 ㅠㅠ</div>");
+         $(".postContainer").html("<div id='emptyCenter'><h2>아직 등록된 게시글이 없습니다</h2></div>");
          return;
       }else if($(data).length==0 && uid==${login.id}){
          $(".postContainer").html("<div id='emptyCenter'><h2>소중한 순간들을 포착하여 공유해보세요</h2></div>");
