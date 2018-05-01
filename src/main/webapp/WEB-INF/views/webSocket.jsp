@@ -249,7 +249,7 @@ display:none;
                 if(this.type=="F"){
                 	
                 	//시간
-                	list += "회원님을 팔로우하였습니다</div><div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "회원님을 팔로우하였습니다<time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -275,7 +275,7 @@ display:none;
                 if(this.type!="F"){
                 	
                 	//시간
-                	list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "<div><time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	//이미지 필터
                 	if(this.filter==""){

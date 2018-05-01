@@ -41,12 +41,14 @@
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
+
 body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
 					"Segoe UI Symbol" !important;
 	background-color: white;
 }
+
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -221,7 +223,7 @@ body {
 	                        <span class="catefilter" id="1">CATEGORY</span>
 	                        <div class="cate-option">
 	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll">
+	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-cateAll">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
@@ -231,7 +233,7 @@ body {
 	                                </div>
 	    
 	                                <div>
-	                                    <input name="type" type="radio" value="type-travel" id="type-travel">
+	                                    <input name="type" type="radio" value="type-travel" id="type-travel" data-filter="1" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-travel">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
@@ -241,7 +243,7 @@ body {
 	                                </div>
 	    
 	                                <div>
-	                                    <input name="type" type="radio" value="type-movie" id="type-movie">
+	                                    <input name="type" type="radio" value="type-movie" id="type-movie" data-filter="2" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-movie">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
@@ -251,7 +253,7 @@ body {
 	                                </div>
 	    
 	                                <div>
-	                                    <input name="type" type="radio" value="type-music" id="type-music">
+	                                    <input name="type" type="radio" value="type-music" id="type-music" data-filter="3" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-music">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
@@ -261,7 +263,7 @@ body {
 	                                </div>
 	    
 	                                <div>
-	                                    <input name="type" type="radio" value="type-food" id="type-food">
+	                                    <input name="type" type="radio" value="type-food" id="type-food" data-filter="4" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-food">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
@@ -271,7 +273,7 @@ body {
 	                                </div>
 	    
 	                                <div>
-	                                    <input name="type" type="radio" value="type-writing" id="type-writing">
+	                                    <input name="type" type="radio" value="type-writing" id="type-writing" data-filter="5" tabindex="-1"  onclick="cateClick(this)">
 	                                    <label for="type-writing">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
