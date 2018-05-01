@@ -585,8 +585,8 @@ span {
     position: absolute;
     text-align: right;
     top: 24px;
-    right: 27%;
     visibility: hidden;
+    right: 15%;
 }
 
 .cate-option div {
@@ -675,12 +675,11 @@ span {
 .catefilter {
     text-align: center;
     display: inline-block;
-    float: left;
     position: relative;
-    left: 40%;
     height: 50%;
     top: 22px;
     color:#999;
+    left: 43%;
 }
 
 .catefilter:hover {

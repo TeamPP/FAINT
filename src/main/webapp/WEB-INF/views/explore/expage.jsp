@@ -37,7 +37,6 @@ article {
 }
 
 .mid-line {
-    border-top: 1px solid #9d9d9d;
     width: 935px;
     text-align: center;
     display: inline-block;
@@ -210,19 +209,10 @@ $(document).ready(function() {
    
 </script>
 
-
 <!-- 인기 게시글 -->
-
-</br>
-</br>
-</br>
-<!-- 모달 적용한 것 -->
-</br>
 <article>
 <div class="mid-line"></div>
 </article>
-<br/>
-
 
 <script>
 var jsonList=${jsonList};

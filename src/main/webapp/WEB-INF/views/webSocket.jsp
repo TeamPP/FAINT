@@ -239,7 +239,7 @@ display:none;
                 	list += " 회원님의 게시물에 좋아요를 눌렀습니다</div>";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
+                	list += " 회원님의 게시물에 댓글을 남겼습니다</div>";
                 }
                 
                 if(this.type!="F"){
