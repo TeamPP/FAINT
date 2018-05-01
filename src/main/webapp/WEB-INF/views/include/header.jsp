@@ -855,6 +855,10 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'songsi2' of https://github.com/TeamPP/FAINT.git
 
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){

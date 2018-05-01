@@ -1,6 +1,7 @@
 package com.faint.sns;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +62,17 @@ public class MemberController {
 		}
 		
 		
+	}
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model) {
+		logger.debug("member");
+		return "member";
+	}
+	
+	@RequestMapping(value = "exam", method = RequestMethod.GET)
+	public @ResponseBody String exam(Locale locale, Model model) {
+		logger.debug("member/exam");
+		return "member/exam";
 	}
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
@@ -205,7 +217,6 @@ public class MemberController {
 			//유저 id로 갱신된 데이터 새로 읽기
 			user = service.read(user.getId());
 			logger.info(user.toString());
-			user.setIntro(user.getIntro().replaceAll(" <br> ", "\n"));
 			model.addAttribute("userVO", user);
 			model.addAttribute("reqURL", request.getRequestURI());
 		}

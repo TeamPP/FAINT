@@ -2,6 +2,7 @@ package com.faint.sns;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -67,7 +68,7 @@ public class UserController {
 	public String RegisterPost(UserVO user, Model model, RedirectAttributes rttr) throws Exception{
     
 		System.out.println("regesterPost 진입 ");
-    	service.regist(user);
+		service.regist(user);
         rttr.addFlashAttribute("msg" , "가입시 사용한 이메일로 인증해주세요");
 		return "redirect:/";
 	}
@@ -477,7 +478,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/googleSignInCallback")
-    public String doSessionAssignActionPage(HttpServletRequest request, Model model)throws Exception{
+    public String doSessionAssignActionPage(HttpServletRequest request, Model model,Principal principal)throws Exception{
      //System.out.println("/user/googleLogincallback");
     System.out.println("야 왜 안되냐 뒤질래 가자1");
         String code = request.getParameter("code");
@@ -521,14 +522,16 @@ public class UserController {
 	//	vo = service.detailByEmail(dto.getEmail());
 		System.out.println("vo");
 		try {
+			System.out.println(" asdjaslkdjs");
 			vo = service.googleLogin(dto);
+			System.out.println(vo.toString()+"여기는 왜 널이 나오는 걸까 ");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			//username이 겹칠 시 userName 변경 페이지로 이동하는 기능 필요
 		}
 
-
+		System.out.println(vo.toString());
 		if(vo != null) {
 			session.setAttribute("login", vo );
 			//response.sendRedirect("/");
@@ -545,8 +548,12 @@ public class UserController {
 			session.setAttribute("dest","/user/loginTest");
 			System.out.println("11");
 		}
-
-
+		
+		System.out.println(principal.toString());
+		//인가받은 유저가 접속할 경우
+		if(principal!=null){
+			return "forward:/main";
+		}
 
 //        session.setAttribute("login", vo );
 //		model.addAttribute("userVO",vo);
@@ -660,9 +667,10 @@ public class UserController {
 	@RequestMapping(value="/naverLogin", method = RequestMethod.GET)
 	public ModelAndView login(HttpSession session) {
 		/* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
+		System.out.println("네이버 로그인 ");
 		String naverAuthUrl = naverLoginBo.getAuthorizationUrl(session);
-		//System.out.println("naverLogin controller 호출");
-		//System.out.println(naverAuthUrl);
+		System.out.println("naverLogin controller 호출");
+		System.out.println(naverAuthUrl);
 		return new ModelAndView("user/naverLogin", "url", naverAuthUrl);
 	}
 	//API 에서 토큰을 받을 콜백 주소
