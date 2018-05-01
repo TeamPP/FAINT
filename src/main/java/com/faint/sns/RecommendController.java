@@ -41,6 +41,7 @@ public class RecommendController {
 	private ActivityService activityservice;
 	
 	// 인기검색어, 인기게시글 출력
+	//친구추천 및 추천친구들의 게시글
 	@RequestMapping(value = "/recompage", method = RequestMethod.GET)
 	public String getPost(Model model , HttpServletRequest request) throws Exception {		
 		
