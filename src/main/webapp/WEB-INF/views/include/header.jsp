@@ -37,6 +37,7 @@
 <!-- 아이콘 부트스트랩  -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
@@ -46,7 +47,7 @@ body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
 					"Segoe UI Symbol" !important;
-	background-color: white;
+	background-color: white !important;
 }
 
 .headerPhoto{
@@ -88,7 +89,7 @@ body {
 
 </head>
 <body>
-<div class="row" id="header" style="width:100%;">
+<div class="row" id="header" style="width:102%;">
     <div class="col-sm-12" style="height: 100px; background-color: white;">
         <div class="row" id="col2" style="width:100%;">
 

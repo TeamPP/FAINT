@@ -9,7 +9,7 @@
 <select id="listKeyword" resultType="com.faint.dto.SearchDTO">
 <![CDATA[
 
-	select * from tbl_search
+select * from tbl_search
     
     left outer join
     
@@ -20,9 +20,9 @@
     join (select * from tbl_post as p
    
     left outer join
-	
+   
     (SELECT b.userid as b_userid, b.blockedid as blockedid, u.nickname as nickname, u.name as name
-	 from tbl_block b 
+    from tbl_block b 
      join tbl_user u
      on b.blockedid = u.id
      where b.userid = #{loginid}) as bu
@@ -41,17 +41,15 @@
     left outer join
     
     ( select concat('@', u.nickname) as nickname, concat('$', u.name) as name, u.profilephoto
-		from tbl_user u
-        
-	left join (SELECT b.userid as userid, b.blockedid as blockedid, u.nickname as nickname, u.name as name
-	from tbl_block b 
-	join tbl_user u
-	on b.blockedid = u.id
-	where b.userid = #{loginid} ) as bl
-    
-	on u.id = bl.blockedid
-	where bl.blockedid is null
-	and (u.nickname like CONCAT('%', #{keyword} , '%') or  u.name like concat('%', #{keyword} , '%'))) as userT
+      from tbl_user u
+      left join
+        (select userid from tbl_block where blockedid=#{loginid}) bu
+      on u.id = bu.userid
+        left join
+        (select blockedid from tbl_block where userid=#{loginid}) ub
+        on u.id = ub.blockedid
+      where bu.userid is null and ub.blockedid is null
+   and (u.nickname like CONCAT('%', #{keyword} , '%') or  u.name like concat('%', #{keyword} , '%'))) as userT
     
     on type=1
     
@@ -63,8 +61,7 @@
    
     on type=2
     
-    order by rand()
-  
+    order by rand();
 ]]>
 </select>
 
