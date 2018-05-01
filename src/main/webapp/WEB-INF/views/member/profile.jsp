@@ -325,7 +325,7 @@ border-radius: 150px;  /* 프사 둥글게 */
    <div class="_23gmb"></div>
    <div class="_o0j5z" onclick="callRemoveDialog(event)">
    <div class="_784q7" id="modalChangeProfilePhoto" onclick="callRemoveDialog(event)">
-   <ul class="_cepxb">
+   <ul class="_cepxb" style="list-style: none;">
    </ul>
    </div>
    </div>
