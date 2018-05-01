@@ -142,7 +142,7 @@ h2{
 
 			</div>
 			<!-- 비공개유무 -->
-			<%-- <div class="_e1xik">
+			<div class="_e1xik">
 				<aside class="_kx10g"> <label>비공개</label> </aside>
 				<div class="_cd2n1">
 					<div class="_6dodw">
@@ -161,7 +161,7 @@ h2{
 						</label>
 					</div>
 				</div>
-			</div> --%>
+			</div>
 			<!-- 제출 -->
 			<div class="_e1xik">
 				<aside class="_kx10g _ldhkl">
@@ -198,6 +198,8 @@ h2{
 			//에러난 항목 있으면 다시 체크
 			//에러 표시 항목 클래스드 색깔 빨강이면 에러
 			$(".err").each(function(){
+				console.log(this.id);
+				console.log($(this).css("color"));
 				if($(this).css("color") == "rgb(255, 0, 0)"){
 					alert("올바른 정보를 입력하세요.");
 					errFlg = true;
@@ -207,18 +209,15 @@ h2{
 			if(errFlg) return;
 			var form = $("#profileForm");
 			//비공개 체크 데이터 입력
-		/* 	if ($("#chkPri").is(":checked")) {
+			if ($("#chkPri").is(":checked")) {
 				//비공개 체크 되어있으면 1
 				$("#userlevel").val(1);
 			} else {
 				//안되있으면 0
 				$("#userlevel").val(0);
-			}	 */
-			console.log("????왜 안되니");
-			form.attr("action", "/member/profile/edit");
+			}	
 			form.submit();
 		});
-
 	}); //end ready
 	
 	
@@ -229,7 +228,6 @@ h2{
 	function validCheck(obj) {
 		var chkStr = "";
 		var maxLen = 0;
-
 		switch (obj.id) {
 		//이름
 		case "name":
@@ -239,7 +237,7 @@ h2{
 			break;
 		//사용자이름
 		case "nickname":
- 			maxLen = 10;
+			maxLen = 30;
 			var orgNick = "${userVO.nickname}";
 			var nick = obj.value;
 			//입력 가능 형식 문자, 숫자, 밑줄, 마침표
@@ -251,7 +249,6 @@ h2{
 			}
 			//길이체크
 			if (!lengthCheck(obj, maxLen)) return;
-
 			//원래 이름과 같으면
 			if (orgNick == nick) {
 				$("#chkResult").css("color", "#999");
@@ -298,11 +295,9 @@ h2{
 				$("#" + obj.id).siblings("label").css("color", "black");
 				return;
 			}
-
 			chkStr = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/
 			//입렵값 체크
 			strCheck(obj, chkStr);
-
 			break;
 		//소개
 		case "intro":
@@ -326,7 +321,6 @@ h2{
 			chkStr = /[01](0|1|6|7|8|9)[-](\d{4}|\d{3})[-]\d{4}$/g;
 			//입력값 형식에 맞는지 비교
 			strCheck(obj, chkStr);
-
 			break;
 		default:
 			return;
