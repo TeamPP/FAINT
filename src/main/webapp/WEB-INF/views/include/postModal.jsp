@@ -851,53 +851,6 @@ function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
 
-//follow여부확인하여 팔로우/팔로우취소
-function follow(){
-	var followFlg=false;
-   $(".isFlw").on("click", function(){
-	console.log("postModal ");
-      var userid=$(this).data("uid");
-      var isFlw=this;
-      if(followFlg){return;}
-      followFlg=true;
-      if(($(this).html()=="팔로우")){
-         var type="post";
-         var url ="/member/follow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw).html("팔로잉");
-         
-      }else if(($(this).html()=="팔로잉")){
-         var type="delete";
-         var url ="/member/unfollow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw).html("팔로우");
-      }
-      $.ajax({
-         type: type,
-         url: url,
-         headers:header,
-         dataType:"text",
-         beforeSend : function(xhr)
-         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-         },
-         success:function(result){
-            if(result=="SUCCESS"){
-            	followed();
-                following();
-              
-                //팔로우할경우 소켓 알림
-                if($(isFlw).html()=="팔로잉"){
-                    notifyFollow(userid);
-                    console.log("123");
-                }
-                
-                followFlg=false;
-            }
-         }
-      });
-   });
-}
 function followed(){
 	console.log("postModal ");
 	$.getJSON("/member/followed/${userVO.id}", function(data){

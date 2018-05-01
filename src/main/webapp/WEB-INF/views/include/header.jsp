@@ -215,7 +215,7 @@ body {
              <div class="col-sm-4">
              <c:choose>
 				<c:when test="${reqURL == '/main'}">
-                    <span class="catefilter" id="1">CATEGORY FILTER</span>
+                    <span class="catefilter" id="1">CATEGORY</span>
                     <div class="cate-option">
                         <div>
                             <input name="type" type="radio" data-filter="all" tabindex="-1"  onclick="cateClick(this)" value="type-cateAll" id="type-cateAll">
@@ -849,8 +849,6 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
-
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
@@ -868,7 +866,6 @@ function follow(){
          var header="{'X-HTTP-Method-Override' : 'POST'}";
          $this.toggleClass("flwActive")
          $this.html("팔로잉");
-
       }else if( $this.hasClass("flwActive") ){
          var type="delete";
          var url ="/member/unfollow/"+userid;
@@ -893,7 +890,6 @@ function follow(){
           			followed();
                   	following();
           		}
-
                 //팔로우할경우 소켓 알림
                 if($this.hasClass("flwActive")){
                     notifyFollow(userid);
@@ -901,18 +897,15 @@ function follow(){
                 
               	//메신저 유저목록 갱신
             	getMessengerUserList();
-
                 //알림창 팔로우 여부 갱신
                 noticeList();
                 
                 followFlg=false;
-
             }
          }
       });
    });
 }
-
 </script>
 
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
