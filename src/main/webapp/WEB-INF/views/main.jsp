@@ -524,7 +524,7 @@ function cateClick(thisTag){
 	$("#carousel").children().removeClass(); //기존 클래스명 삭제
 	
 	if($("#carousel").children().length == 0){
-		$("#carousel").html("<div id='emptyCenter'><img src='http://i.imgur.com/a7XlBaz.gif' /><h2>해당 카테고리에 아직 등록된 게시글이 없습니다</h2></div>");
+		$("#carousel").html("<div id='emptyCenter'><img src='https://media.giphy.com/media/P7eCVhhWey6Yg/source.gif' /><h2>해당 카테고리에 아직 등록된 게시글이 없습니다</h2></div>");
 	}else if($("#carousel").children().length == 1){
 		moveToSelected($("#carousel").children().eq(0));	
 	}else{

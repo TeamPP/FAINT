@@ -244,7 +244,7 @@ display:none;
                		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
-   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
+   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이 ";
                	
                 if(this.type=="F"){
                 	
