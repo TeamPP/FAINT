@@ -773,7 +773,7 @@ body {
 	   				
 	   				list += "<div class='message'>" + this.comment + "</div>";
 	   				
-	   				list += "<div style='padding: 25px 5px 0 0;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
+	   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
 	   				
 	   				
 	    		})
