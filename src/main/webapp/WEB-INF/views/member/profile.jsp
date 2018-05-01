@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!--헤더-->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -166,6 +168,8 @@ div.secondLine span {
 </style>
 </head>
 <body>
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
 
 <article>
 	<div class="photo-profile">
@@ -237,6 +241,7 @@ div.secondLine span {
 </article>
 </c:if>
 
+</sec:authorize>
 
 
 <!-- 프로필 이미지 input -->
@@ -349,10 +354,13 @@ border-radius: 150px;  /* 프사 둥글게 */
 </style>
 </script>
 
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
+
 <script>
 // ======================프로필 사진 버튼 클릭(자기페이지일 경우에만)==========================
 // 모달팝업
-if(${userVO.id}==${login.id}){
+if(${userVO.id} == ${login.id}){
 	$("#btnChangePhoto").css("cursor", "pointer");
 	$("#btnChangePhoto").on("click",function(){	   
 		   if($("#btnChangePhoto").children("img").attr("src") != "../../resources/img/emptyProfile.jpg"){
@@ -402,7 +410,7 @@ function uploadFiles(files) {
       var file = this;
       var formData = new FormData();
       console.log("method");
-      if(this.type.indexOf('image') ==-1 ) {
+      if(this.type.indexOf('image') == -1 ) {
     		console.log("이상한 파일");
     		alert("이미지 파일을 다시 선택하세요.");
     		return false;
@@ -595,6 +603,8 @@ $(document).ready(function(){
 })
 
 </script>
+
+</sec:authorize>
 
 </body>
 

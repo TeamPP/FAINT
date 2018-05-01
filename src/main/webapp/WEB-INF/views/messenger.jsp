@@ -664,11 +664,11 @@ body {
 				<div class="card menu">
 					<div class="header">
 						<c:choose>
-							<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-								<img id="btnChangePhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
+							<c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+								<img src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
 							</c:when>
 							<c:otherwise>
-								<img id="btnChangePhoto" src="/resources/img/emptyProfile.jpg" />
+								<img src="/resources/img/emptyProfile.jpg" />
 							</c:otherwise>
 						</c:choose>
 						<h4>${login.nickname}</h4>

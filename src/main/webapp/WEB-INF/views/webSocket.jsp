@@ -87,12 +87,10 @@
 	font-size: 14px;
 	box-sizing: content-box;
 }
-
 .messengerUser:hover{
 	background-color: rgba(255, 255, 255, 0.5);
 	cursor: pointer;
 }
-
 .followPhoto{
 	width: 33px;
 	height: 33px;
@@ -156,21 +154,17 @@ table{
     border-right: 10px solid #9DC8C8;
     border-bottom: 10px solid transparent;
 }
-
 #chat .msg_container_base{
     background:#fff;
 }
 #chat time{ color:#fff; font-style: oblique; }
-
 .chatBlock{
 display:block;
 }
 .chatNone{
 display:none;
 }
-
   
-
 #btn-chat{
 	background: #FFE400;
 	border: none;
@@ -255,7 +249,7 @@ display:none;
                 if(this.type=="F"){
                 	
                 	//시간
-                	list += "회원님을 팔로우하였습니다</div><div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "회원님을 팔로우하였습니다. <time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -269,19 +263,19 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += "회원님을 태그하였습니다</div>";
+                	list += "회원님을 태그하였습니다. ";
                 	
                 }else if(this.type=="L"){
-                	list += "회원님의 게시물에 좋아요를 눌렀습니다</div>";
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다. ";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
+                	list += "회원님의 게시물에 댓글을 남겼습니다. ";
                 }
                 
                 if(this.type!="F"){
                 	
                 	//시간
-                	list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "<time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	//이미지 필터
                 	if(this.filter==""){
@@ -292,7 +286,6 @@ display:none;
                 	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
                 	
                 }
-
   			})
   			$("#follow-results").html(list);
   			
