@@ -67,3 +67,50 @@ function split(text){
     var splitMerge = splitArray.join(" ");
     return splitMerge;
 }
+
+//날짜 변환기
+function createDateWithCheck(data){
+
+	 var sec = 60;
+	 var mins = 60;
+	 var hours = 24;
+	 var days = 7;
+	 var month =12;
+	 
+	 //시간차 비교
+	 //현재시간 - 등록된시간
+	 
+	 //현재시간
+	 var tday = new Date();
+	 var cday = new Date(data);
+	 var difftime = Math.floor((tday - cday)/1000);
+	 var msg="";
+	 if(data == "0000-00-00 00:00:00"){
+	  
+	  msg = 0;
+	  
+	  }else
+	 
+	 if(difftime < sec){
+	  msg="방금";
+	 }else if((difftime /=sec) < mins){
+	  
+	  msg=Math.floor(difftime) + "분 전";
+	 }else if((difftime /=mins) < hours){
+	  
+	  msg=Math.floor(difftime) + "시간 전";
+	 }else if((difftime /=hours) < days){
+	  
+	  msg=Math.floor(difftime) + "일 전";
+	 }else if((difftime /=days) < month){
+	  
+	  msg=Math.floor(difftime) + "달 전";
+	 }else {
+	  
+	  msg=Math.floor(difftime) + "년 전";
+	 }
+
+	return msg;
+}
+
+//팔로우/언팔로우의 경우 jsp파일로 (ajax사용하기 때문)

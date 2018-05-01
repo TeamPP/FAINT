@@ -2,14 +2,17 @@ package com.faint.service;
 
 import java.util.List;
 
+import com.faint.domain.ChatroomVO;
 import com.faint.domain.MessageVO;
+import com.faint.dto.RelationDTO;
 
 public interface MessageService {
 	
-	//=================알림 관련=================
+	public int chatCreate(RelationDTO dto, MessageVO vo) throws Exception;
 	
+	public List<MessageVO> getMessages(int roomid, int loginid) throws Exception;
 	
-	//=================메신저 관련=================
-//	public List<MessageVO> Message(String email) throws Exception;
-//	public List<MessageVO> MessageView() throws Exception;
+	public List<ChatroomVO> getChatList(int userid) throws Exception;
+	
+	public String registMessage(MessageVO vo) throws Exception;
 }

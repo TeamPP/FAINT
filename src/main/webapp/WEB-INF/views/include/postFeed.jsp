@@ -8,8 +8,11 @@
 </header>
 <style>
 
-.empty {
-    height: 150px;
+#emptyCenter {    position:absolute;
+  top:60%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  text-align: center;
 }
 
 span{
@@ -134,12 +137,12 @@ function getPostList(){
          $(".postContainer").html("<div>아직 등록된 게시글이 없어요 ㅠㅠ</div>");
          return;
       }else if($(data).length==0 && uid==${login.id}){
-         $(".postContainer").html("<div>소중한 순간들을 포착하여 공유해보세요</div>");
+         $(".postContainer").html("<div id='emptyCenter'><h2>소중한 순간들을 포착하여 공유해보세요</h2></div>");
          return;
       }
    //for store.jsp
    }else if(elseList.length==0 && typeof(uid)=="number"){
-      $(".postContainer").html("<div>아직 저장된 게시글이 없어요 ㅠㅠ</div>");
+      $(".postContainer").html("<div id='emptyCenter'><h2>아직 저장된 게시글이 없습니다</h2></div>");
    
    //for search/location.jsp
    }else{

@@ -1,85 +1,106 @@
 package com.faint.domain;
 
-import com.google.gson.Gson;
+import java.util.Date;
 
 public class MessageVO {
-	private int id;			//메시지 번호
-	private String message;		//메시지 내용
-	private String type;		//all, to 전체, 귓속말
-	private String receiver;	//귓속말 대상 
-	private String email;		//메시지 보낸 이메일
-	private String msgRegist;	//메시지 전송일
-	private int readCheck;		//읽음 여부 
+	private int id; //메시지 번호
+	private int roomid;	//채팅방  번호
+	private int readStatus; //읽음 여부
+	private String comment; //메시지 내용
+	private Date sendtime; //보낸시간
+	private int sender; //보낸사람 아이디
 	
+	private String profilephoto; //보낸사람 프로필사진
+	private String senderNickname; //보낸사람 닉네임
+	private String senderEmail; //보낸사람 이메일(소켓은 principal로 email값만 가져오기때문에 검증용으로)
 	
-	public static MessageVO converMessage(String source){
-		MessageVO message = new MessageVO();
-		Gson gson = new Gson();
-		message = gson.fromJson(source, MessageVO.class);
-		
-		return message;
-	}
-	
-	public int getReadCheck() {
-		return readCheck;
-	}
-
-	public void setReadCheck(int readCheck) {
-		this.readCheck = readCheck;
-	}
+	private String users; //메시지 저장시 반환될 유저리스트(group_concat("|"))
 
 	public int getId() {
 		return id;
 	}
 
-	public void setBno(int bno) {
-		this.id = bno;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getMsgRegist() {
-		return msgRegist;
+	public int getRoomid() {
+		return roomid;
 	}
 
-	public void setMsgRegist(String msgRegist) {
-		this.msgRegist = msgRegist;
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
 
-	public String getEmail() {
-		return email;
+	public int getReadStatus() {
+		return readStatus;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setReadStatus(int readStatus) {
+		this.readStatus = readStatus;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
-	public String getType() {
-		return type;
+	public Date getSendtime() {
+		return sendtime;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setSendtime(Date sendtime) {
+		this.sendtime = sendtime;
 	}
 
-	public String getReceiver() {
-		return receiver;
+	public int getSender() {
+		return sender;
 	}
 
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
+	public void setSender(int sender) {
+		this.sender = sender;
+	}
+
+	public String getProfilephoto() {
+		return profilephoto;
+	}
+
+	public void setProfilephoto(String profilephoto) {
+		this.profilephoto = profilephoto;
+	}
+
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
+
+	public String getSenderEmail() {
+		return senderEmail;
+	}
+
+	public void setSenderEmail(String senderEmail) {
+		this.senderEmail = senderEmail;
+	}
+
+	public String getUsers() {
+		return users;
+	}
+
+	public void setUsers(String users) {
+		this.users = users;
 	}
 
 	@Override
 	public String toString() {
-		return "MessageVO [bno=" + id + ", message=" + message + ", type=" + type + ", receiver=" + receiver
-				+ ", email=" + email + ", msgRegist=" + msgRegist + ", readCheck=" + readCheck + "]";
+		return "MessageVO [id=" + id + ", roomid=" + roomid + ", readStatus=" + readStatus + ", comment=" + comment
+				+ ", sendtime=" + sendtime + ", sender=" + sender + ", profilephoto=" + profilephoto
+				+ ", senderNickname=" + senderNickname + ", senderEmail=" + senderEmail + ", users=" + users + "]";
 	}
 
 }
