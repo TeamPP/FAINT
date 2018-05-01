@@ -763,7 +763,7 @@ body {
 	    			}else{
 	    				list += "<li class='notMyMsg'><img ";
 	    			}
-					console.log(this.profilephoto=="");
+
 	    			// 프로필 사진이 있는경우 | 없는 경우
 	   				if(this.profilephoto != null && this.profilephoto != ""){
 	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
