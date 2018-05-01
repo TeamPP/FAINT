@@ -111,4 +111,6 @@ function createDateWithCheck(data){
 	 }
 
 	return msg;
-	 } 
+}
+
+//팔로우/언팔로우의 경우 jsp파일로 (ajax사용하기 때문)

@@ -63,6 +63,8 @@ public class WebSocketController {
 		//JSONobject로 만들기 위한 인스턴스값 생성
     	String notice=JSONArray.fromObject(noticeList).toString();
     	
+    	this.logger.info(notice);
+    	
 		ResponseEntity<String> entity=null;
 		try{
 			entity=new ResponseEntity<String>(notice, HttpStatus.OK);

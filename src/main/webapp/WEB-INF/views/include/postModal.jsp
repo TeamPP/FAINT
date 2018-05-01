@@ -22,6 +22,8 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
+
 	
 </style>
 
@@ -52,6 +54,7 @@
 @media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 ._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
 @media (max-width:480px){._23gmb,._dcj9f{display:none}}
+
 ._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
 ._h74gn:hover{background-color:#efefef}
 ._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
@@ -79,7 +82,8 @@
 .oneofList{ border-bottom: solid 1px #efefef; width: 100%; height: 53px; padding: 10px 16px; float: left; }
 #likersContainer{ height: 93%; overflow-y: auto; width: 100%; list-style:none; padding:0; margin:0;}
 .isFlw{ float: right; font-size: 12px; font-weight: 400; cursor: pointer; background: 0 0; border-color: #dbdbdb; color: #262626; border-style: solid;
-	border-width: 1px; line-height: 26px; border-radius: 2px; }
+	border-width: 1px; line-height: 26px; border-radius: 2px; padding: 0 5px 0 5px; }
+.flwActive{ background-color: #53505e !important; color: white !important; }
 .followPhoto{ width: 33px; height: 33px; display: inline-block; float: left; border-radius: 150px;  /* 프사 둥글게 */ }
 a{ font-weight: bold; }
 </style>
@@ -185,7 +189,7 @@ a{ font-weight: bold; }
 .s2_1_1{ height: 100%; display: inline-block; }
 .s2_1_1_1{ width: 45px; height: 45px; display: inline-block; float: left; border-radius: 50%; }
 .s2_1_1_2{ width: 235px; margin-left: 10px; display: inline-block; }
-.nickname{ font-weight: bold; }
+.nickname{ font-weight: bold; margin: 0 0 0px; }
 .s2_2{ width: 100%; height: auto; padding-top: 16px; padding-bottom: 16px; text-align: left; border-bottom: 1.3px solid #efefef; }
 .s2_2_1{ width: 100%; height: 352px; overflow-y: auto; overflow-x: hidden; }
 .replyContainer{ margin-top: 20px; bottom: 0; }
@@ -202,16 +206,17 @@ a{ font-weight: bold; }
 </style>
 </script>
 <script>
+
 var modalFlg = false;
-var url = '';
+var reqUrl = '';
 function postModal(str){
 	var obj;
 	if(typeof str == "undefined" || str == null || str == ""){
 		return;
 	}
 	else{
-		url = str;
-		if(url == "main"){	//main에서 할떄
+		reqUrl = str;
+		if(reqUrl == "main"){	//main에서 할떄
 			obj = $(".selected");
 		} else{	//프로필, 검색 결과에서 할 때
 			obj = $(".imageContainer");
@@ -228,7 +233,7 @@ function postModal(str){
 		var curIndex;
 		var pid;
 		var postLength;
-		if(url == "main"){ //main에서 할떄
+		if(reqUrl == "main"){ //main에서 할떄
 			if(!(e.target.tagName == 'IMG' || e.target.tagName == 'VIDEO')){
 				return;
 			}
@@ -269,7 +274,7 @@ function postModal(str){
 	            var post=Handlebars.compile(source);
 	            var postmodal=post(data);
 	            $("body").append(postmodal);
-	            if(url != "main") $("body").css("overflow-y","hidden");
+	            if(reqUrl != "main") $("body").css("overflow-y","hidden");
 	            $("#carousel").css("-webkit-filter"," blur(6px)");	            
 	            //-----------------------------------여기도 수정
 	            //현재 위치값 저장
@@ -363,7 +368,7 @@ function postModal(str){
 	                  $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	                  $("#myModal[data-postid="+ pid+ "]").remove();
 	                  $("#carousel").css("-webkit-filter","");	        
-	                  if(url != "main") $("body").css("overflow-y","auto");
+	                  if(reqUrl != "main") $("body").css("overflow-y","auto");
 	               }
 	            });
 	            
@@ -372,7 +377,7 @@ function postModal(str){
 	               $("#myModal[data-postid="+ pid+ "]").css("display","none");
 	               $("#myModal[data-postid="+ pid+ "]").remove();
 	               $("#carousel").css("-webkit-filter","");	    
-	               if(url != "main") $("body").css("overflow-y","auto");
+	               if(reqUrl != "main") $("body").css("overflow-y","auto");
 	            });
 	            
 	            //포스트 움직이기 버튼 함수 적용
@@ -401,6 +406,7 @@ function postModal(str){
 	   });
 	});
 }
+
 //게시물 수정
 function postEdit(pid){
 	var postid;	
@@ -422,7 +428,9 @@ function postEdit(pid){
 		     event.stopPropagation();
 		});
 	})
+
 }
+
 //게시물 삭제
 function postDelete(thisTag){
 	var postid=$(thisTag).data("post");
@@ -446,7 +454,7 @@ function postDelete(thisTag){
 				$("#myModal").remove();
 				//postlist다시부르기
 				
-				if(url == "main"){	//메인인 경우
+				if(reqUrl == "main"){	//메인인 경우
 					//다음 객체 저장
 					var nextObj = $(".post>div[data-postid="+ postid+ "]").parent().next();
 					//카테고리 필터 리스트 다시 읽기 
@@ -465,6 +473,7 @@ function postDelete(thisTag){
 		}
 	});
 }
+
 //메뉴 모달 취소버튼 - CSS처리
 function callRemoveDialog(event){
  if(typeof event != "undefined"){
@@ -474,6 +483,7 @@ function callRemoveDialog(event){
  $("body").attr("aria-hidden","false");
  $("div[role='dialog']").remove();
 }
+
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
    $(".replyContainer").each(function(){
@@ -558,6 +568,7 @@ function registReply(thisTag, key){
                
  	           	//웹소켓 댓글달림 알림
 	            notifyReply(postWriter, postid);
+
                //태그할 경우 웹소켓 알림
                notifyTagging(comment.trim(), postid);
                
@@ -566,7 +577,7 @@ function registReply(thisTag, key){
                $(".s2_2_1").scrollTop($(".s2_2_1").height());
                
                //메인이 아닌경우
-               if(url !="main") getPostList();
+               if(reqUrl !="main") getPostList();
             }
          }
       });
@@ -592,11 +603,12 @@ function deleteReply(thisTag){
             //리플리스트 초기화 및 게시물의 댓글 피드 재호출
             reply();
             //메인이 아닌경우
-            if(url !="main") getPostList();
+            if(reqUrl !="main") getPostList();
          }
       }
    });
 }
+
 //게시물 저장하기 + 저장하기 취소 
 function store(){
 	var storeFlg=false;
@@ -674,13 +686,15 @@ function like(){
 				$(likeBtn).css("background-position", val);
 				likerList();
 				//메인이 아닌경우
-				if(url !="main") getPostList();
+				if(reqUrl !="main") getPostList();
 				likeFlg=false;
             }
          }      
       });
    });
 }
+
+
 //좋아요 count+list
 function likerList(){
 	$(".likeContainer").each(function(){
@@ -726,7 +740,7 @@ function likerList(){
 	                   	
 	                	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	                	if(this.isFollow > 0){
-	                		likers+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+	                		likers+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	                   
 		                }else if(this.isFollow==0 && this.id!=${login.id}){
 		                	likers+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";
@@ -752,6 +766,7 @@ function likerList(){
 	      }); 
 	   });
 }
+
 //css - 모달창 사진이동버튼
 		
 //오른쪽으로 넘기기
@@ -760,6 +775,7 @@ function moveRight(){
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var nextObj = curObj.next();
+
 	////다음객체 비율 조정
 	if(nextObj.children().is("video")){
 		//다음 비디오 플레이
@@ -790,12 +806,14 @@ function moveRight(){
 		$("#moveRight").css("display","none");
 	}
 }
+
 //이미지 왼쪽으로 넘기기
 function moveLeft(){
 	var len = $(".popImgDiv").length-1;
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var prevObj = curObj.prev();
+
 	//이전객체 비율 조정
 	if(prevObj.children().is("video")){
 		//다음 비디오 플레이
@@ -827,10 +845,12 @@ function moveLeft(){
 		$("#moveLeft").css("display","none");
 	}
 }
+
 //css - 댓글달기 버튼 클릭시 커서 포커스
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
 }
+
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
@@ -904,7 +924,7 @@ function followed(){
 	               	}
 	            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	            	if(this.isFollow > 0){
-						followedList+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+						followedList+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	               	}else if(this.isFollow==0 && this.id!=${login.id}){
 	               		followedList+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";
              		}else{
@@ -950,6 +970,7 @@ function followed(){
 }
 	   
 	
+
 //followList 에 followingList부여 및 팔로우 수 갱신
 function following(){
 	console.log("postModal ");
@@ -977,7 +998,7 @@ function following(){
 	               	}
 	            	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
 	            	if(this.isFollow > 0){
-	                  followingList+="<button class='isFlw' data-uid='"+this.id+"'>팔로잉</button></li>";
+	                  followingList+="<button class='isFlw flwActive' data-uid='"+this.id+"'>팔로잉</button></li>";
 	               
 	               }else if(this.isFollow==0 && this.id!=${login.id}){
 	                  followingList+="<button class='isFlw' data-uid='"+this.id+"'>팔로우</button></li>";

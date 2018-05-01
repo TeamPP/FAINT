@@ -201,35 +201,9 @@ canvas {
   opacity: 0;
   height: 0;
 }
-#hangout.collapsed .control.floater {
-  transform: scale(0) rotate(90deg);
-  opacity: 0;
-}
 #hangout.collapsed .control.nav {
   height: 0;
   opacity: 0;
-}
-#floater-position {
-  position: absolute;
-  right: 50px;
-  bottom: 90px;
-  z-index: 70;
-}
-#chat-floater {
-  margin-top: -64px;
-}
-.floater {
-  cursor: pointer;
-  padding: 17px 20px 17px 20px;
-  border-radius: 100%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  transition: all 0.333s ease-in-out;
-  font-size: 1.5em;
-  position: relative;
-  overflow: hidden;
-}
-.floater.hidden {
-  transform: scale(0);
 }
 #head {
   position: absolute;
@@ -270,7 +244,9 @@ canvas {
   font-weight: normal;
 }
 #content {
-  height: 100%;
+  height: calc(100% - 55px);
+  height: -moz-calc(100% - 55px);
+  height: -webkit-calc(100% - 55px);
   overflow-y: auto;
   background-color: white;
   transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
@@ -287,7 +263,7 @@ canvas {
 }
 .card.dialog {
   width: 350px;
-  height: 200px;
+  height: 130px;
   padding: 20px;
   margin: auto;
   position: absolute;
@@ -300,7 +276,7 @@ canvas {
   display: none;
   z-index: 80;
 }
-.card.dialog h3 {
+.card.dialog h4 {
   margin-bottom: 30px;
 }
 .card.dialog .btn-container {
@@ -346,7 +322,7 @@ canvas {
   animation: anim-excited 0.777s 1 ease-out;
   animation-fill-mode: forwards;
 }
-.card.menu .header h3 {
+.card.menu .header h4 {
   color: white;
   font-size: 2em;
   font-weight: bold;
@@ -364,6 +340,17 @@ canvas {
 .list-chat {
   display: none;
   height: 100%;
+  overflow-y: hidden;
+}
+.scroll{
+    border-radius: 15px 0px 0px 0px;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 490px;
+   	width: calc(100% + 17px);
+   	width: -moz-calc(100% + 17px);
+   	width: -webkit-calc(100% + 17px);
 }
 .list-phone.shown,
 .list-text.shown,
@@ -399,7 +386,9 @@ canvas {
 }
 ul.chat {
   width: 100%;
-  overflow-y: auto;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 ul.chat li {
   padding: 15px 25px 15px 25px;
@@ -451,7 +440,9 @@ ul.chat li[class="notMyMsg"] .message:after {
 }
 ul.list {
   width: 100%;
-  padding-bottom: 130px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 ul.list li {
   cursor: pointer;
@@ -561,9 +552,9 @@ ul.nav li {
   height: 50px;
   overflow: hidden;
   display: inline-block;
-  width: 49%;
+  width: 49.5%;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.7em;
   color: #676767;
   cursor: pointer;
   padding: 10px 0 10px 0;
@@ -672,22 +663,11 @@ body {
 			<div id="content">
 				<div class="overlay"></div>
 
-				<div id="floater-position">
-					<div id="add-contact-floater"
-						class="floater control style-bg hidden">
-						<i class="mdi mdi-plus"></i>
-					</div>
-					<div id="chat-floater" class="floater control style-bg hidden">
-						<i class="mdi mdi-comment-text-outline"></i>
-					</div>
-				</div>
-
-
 				<div class="card menu">
 					<div class="header">
 						<img
 							src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
-						<h3>${login.nickname}</h3>
+						<h4>${login.nickname}</h4>
 					</div>
 					<div class="content">
 
@@ -708,24 +688,32 @@ body {
 						<input class="nostyle search-filter" type="text"
 							placeholder="Search" />
 					</div>
+					<div class="scroll">
 					<ul class="list mat-ripple">
 					</ul>
+					</div>
 				</div>
 				
 				<!-- 채팅방 리스트 -->
 				<div class="list-text">
+					<div class="scroll">
 					<ul class="list mat-ripple">
 					</ul>
+					</div>
 				</div>
 				
 				<!-- 채팅창 -->
 				<div class="list-chat">
+					<div class="scroll">
 					<ul class="chat">
 					</ul>
+					</div>
 					<div class="meta-bar chat">
 						<input class="nostyle chat-input" type="text"
 							placeholder="Message..." /> <i class="mdi mdi-send"></i>
 					</div>
+					
+					
 				</div>
 				
 				<!-- 하단메뉴 -->
@@ -740,7 +728,7 @@ body {
 			</div>
 
 			<div id="contact-modal" data-mode="add" class="card dialog">
-				<h3>Add Contact</h3>
+				<h4>Add Contact</h4>
 				<div class="i-group">
 					<input type="text" id="new-user"><span class="bar"></span>
 					<label>Name</label>
@@ -760,6 +748,7 @@ body {
 		
 		//채팅창 가져오기
 		function getChat(roomid){
+			
 	    	$.getJSON("/getChat/"+roomid, function(data){
 	    		console.log(data);
 	    		var list="";
@@ -778,14 +767,18 @@ body {
 	               	}else if(this.profilephoto == null){
 	               		list += "src='/resources/img/emptyProfile.jpg' />";
 	               	}
-	    			
-	   				list += "<div class='message'>" + this.comment + "</div></li>";
+	   				
+	   				list += "<div class='message'>" + this.comment + "</div>";
+	   				
+	   				list += "<div><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
+	   				
+	   				
 	    		})
 	    		
-	    		$(".list-chat > ul").html(list);
+	    		$(".list-chat > .scroll > ul").html(list);
 	    		$('.list-chat').data("rid", roomid);
-	    		$("div.chat").scrollTop($("div.chat").height());
-
+	    		
+	    		$(".scroll").scrollTop($("ul.chat").height()*2);
 	    	})
 		}
 		
@@ -793,10 +786,10 @@ body {
 		getChatList()
 		function getChatList(){
 			$.getJSON("/getChatList", function(data){
-	    		console.log(data);
+				
+	    		var cur_Scroll_Location = $(".scroll").scrollTop();
 	    		var list="";
-
-	    		if($(data).length!=0){
+				if($(data).length!=0){
 	    			$(data).each(function(){
 	    				
 	    				var userPhotoArray = this.usersPhoto.split("|");
@@ -826,8 +819,8 @@ body {
 	    				
 	    			})
 	    		}
-	    		console.log("!23");
-	    		$(".list-text > .mat-ripple.list").html(list);
+	    		$(".list-text > .scroll > .mat-ripple.list").html(list);
+	    		$(".scroll").scrollTop(cur_Scroll_Location);
 	    	})
 		}
 
@@ -835,13 +828,14 @@ body {
 		getMessengerUserList();
     	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
+    			  var cur_Scroll_Location = $(".scroll").scrollTop();
     		      var $data=$(data)
     		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
     		        var followingList="";
     	            $data.each(function(){
     	            	
-    	               followingList+="<li><img ";
+    	               followingList+="<li data-uid='" + this.id + "'><img ";
     	               	// 프로필 사진이 있는경우 | 없는 경우
     	            	if(this.profilephoto != null){
     	            		followingList+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' />";
@@ -854,18 +848,19 @@ body {
     	            })
     	            
     	            //모달창 불러오기
-    	            $(".list-account > .mat-ripple.list").html(followingList);
+    	            $(".list-account > .scroll > .mat-ripple.list").html(followingList);
     		            
     		        };
-
+    		        $(".scroll").scrollTop(cur_Scroll_Location);
    		      });
    		   };
-    		   
-		//3. 메세지 보내기
-		function notifyLike(writer, postid){
-			stompClient.send("/app/notify/" + writer + "/like/" + postid, {}, {});
-		}
-        
+    	
+   		// 스크롤 휠클릭 이벤트 막기
+        $(".scroll").mousedown(function(e) {
+        	if(e.which==2){
+        		e.preventDefault();	
+        	}
+        });
         
         // 하단메뉴 data-route 태그중 list-account태그일경우를 찾기위한 변수 // 채팅타겟 저장
         var GLOBALSTATE = {
@@ -877,25 +872,6 @@ body {
         
         
         $('.nav > li[data-route="' + GLOBALSTATE.route + '"]').addClass('active');
-
-        // 아이콘(floater)클릭시 효과주기 (0.53초)
-        $('.floater').on('click', function(event) {
-            var $ripple = $('<div class="ripple tiny bright"></div>');
-            var x = event.offsetX;
-            var y = event.offsetY;
-            var $me = $(this);
-
-            $ripple.css({
-                top: y,
-                left: x
-            });
-            $(this).append($ripple);
-
-            setTimeout(function() {
-                $me.find('.ripple').remove();
-            }, 530)
-
-        });
 
         // ul 내부 클릭 효과 주기 (0.53초)
         $('ul.mat-ripple').on('click', 'li', function(event) {
@@ -945,13 +921,13 @@ body {
             //사용자 개인 프로필 - input
             $('#username').val('${login.name}').addClass('used');
           	//사용자 개인 프로필 - header
-            $('.card.menu > .header > h3').text(name);
+            $('.card.menu > .header > h4').text(name);
         }
 
         // dynamic-styles태그에 color값 삽입하여 메뉴 스타일 동적 변경
         function stylechange(arr) {
             var x = 'rgba(' + arr[0] + ',' + arr[1] + ',' + arr[2] + ',1)';
-            $('#dynamic-styles').text('.dialog h3 {color: ' + x + '} .i-group input:focus ~ label,.i-group input.used ~ label {color: ' + x + ';} .bar:before,.bar:after {background:' + x + '} .i-group label {color: ' + x + ';} ul.nav > li.active {color:' + x + '} .style-tx {color: ' + x + ';}.style-bg {background:' + x + ';color: white;}@keyframes navgrow {100% {width: 100%;background-color: ' + x + ';}} ul.list li.context {background-color: ' + x + '}');
+            $('#dynamic-styles').text('.dialog h4 {color: ' + x + '} .i-group input:focus ~ label,.i-group input.used ~ label {color: ' + x + ';} .bar:before,.bar:after {background:' + x + '} .i-group label {color: ' + x + ';} ul.nav > li.active {color:' + x + '} .style-tx {color: ' + x + ';}.style-bg {background:' + x + ';color: white;}@keyframes navgrow {100% {width: 100%;background-color: ' + x + ';}} ul.list li.context {background-color: ' + x + '}');
         }
 
         //내부 모달끄기
@@ -960,8 +936,6 @@ body {
             $('#new-user').val('');
             //오버레이(검은배경) 제거
             $('.overlay').removeClass('add');
-            //아이콘 제거
-            $('.floater').removeClass('active');
           	//내부 모달 fadeout
             $('#contact-modal').fadeOut();
           	//save버튼 click 리스너 off
@@ -972,23 +946,24 @@ body {
         function setModal(mode, $ctx) {
             var $mod = $('#contact-modal');
             switch (mode) {
-            	//floater클릭시
+            	//인물 메뉴클릭시
                 case 'add':
                 	$mod.find('.i-group').show();
-                    $mod.find('h2').text('Add Contact');
+                    $mod.find('h4').text('Add Contact');
                     break;
 				
                 //기존 사용자 변경클릭시
                 case 'edit':
-                    $mod.find('h2').text('Edit Contact');
+                    $mod.find('h4').text('Edit Contact');
                     $mod.find('.i-group').show();
                     $mod.find('#new-user').val($ctx.text()).addClass('used');
                     break;
                     
                 //유저 삭제 시
                 case 'delete':
-                    $mod.find('h2').text('정말 팔로우를 끊으시겠습니까?');
+                    $mod.find('h4').text('정말 팔로우를 끊으시겠습니까?');
                     $mod.find('.i-group').hide();
+                    $(".card .dialog").css("height", "130px");
                     break;
             }
 
@@ -1011,28 +986,14 @@ body {
             $('.list-chat').removeData("curTarget");
             $('.list-chat').removeData("rid");
           	//채팅창 대화기록 삭제
-            $(".list-chat > ul").html("");
+            $(".list-chat > .scroll > ul").html("");
         });
 
         // 특정 메뉴활성화 함수
         function setRoute(route) {
             GLOBALSTATE.route = route;
             $(route).addClass('shown');
-			
-            //인물 메뉴 '+'아이콘
-            if (route !== '.list-account') {
-                $('#add-contact-floater').addClass('hidden');
-            } else {
-                $('#add-contact-floater').removeClass('hidden');
-            }
-			
-          	//채팅 메뉴 '대화'아이콘
-            if (route !== '.list-text') {
-                $('#chat-floater').addClass('hidden');
-            } else {
-                $('#chat-floater').removeClass('hidden');
-            }
-			
+
           	//채팅창 보이기
             if (route === '.list-chat') {
             	//메뉴 버튼 가리기
@@ -1115,23 +1076,26 @@ body {
                 $('.mdi-send').trigger('click');
             }
         });
-		
+      	
       	//채팅리스트 클릭이벤트
-        $('.list-text > .list').on('click', 'li', function() {
+        $('.list-text > .scroll > .list').on('click', 'li', function() {
         	var roomid=$(this).data("rid");
 			getChat(roomid);
+			
             // timeout just for eyecandy...
             setTimeout(function() {
+            	
                 $('.shown').removeClass('shown');
 
                 $('.list-chat').addClass('shown');
                 setRoute('.list-chat');
                 $('.chat-input').focus();
+                
             }, 300);
         });
 
         // 친구목록 리스트 클릭이벤트
-        $('.list-account > .list').on('click', 'li', function() {
+        $('.list-account > .scroll > .list').on('click', 'li', function() {
         	//목록 active활성화 모두제거
             $(this).parent().children().removeClass('active');
         	//수정 및 삭제버튼 제거
@@ -1140,14 +1104,15 @@ body {
             $(this).addClass('active');
             //클릭대상
             var $TARGET = $(this);
+            
             //클릭한 대상이 이미 수정 및 삭제버튼을 가지지 않을 경우
             if (!$(this).next().hasClass('context')) {
-                var $ctx = $('<li class="context"><i class="mdi mdi-comment"></i><i class="mdi mdi-pencil"></i><i class="mdi mdi-delete"></i></li>');
+
+                var $ctx = $('<li class="context"><i class="mdi mdi-comment"></i><i class="mdi mdi-home"></i><i class="mdi mdi-delete"></i></li>');
                 
                 //채팅하기 버튼
                 $ctx.on('click', '.mdi-comment', function() {
-                	
-                	
+
                 	//이미 있는 채팅방인지
                 	var noRoom=true;
                 	$(".content-container > .name").each(function(){
@@ -1170,19 +1135,18 @@ body {
 
                         $('.list-chat').addClass('shown');
                         setRoute('.list-chat');
+                        
+            			$(".scroll").scrollTop($("ul.chat").height()*2);
+            			
                         $('.chat-input').focus();
                         
                     }, 300);
+                    
                 });
                 
-                //수정버튼
-                $ctx.on('click', '.mdi-pencil', function() {
-                    setModal('edit', $TARGET);
-
-                    $('#contact-modal').one('click', '.btn.save', function() {
-                        $TARGET.find('.name').text($('#new-user').val());
-                        closeModal();
-                    });
+              	//방문하기 버튼
+                $ctx.on('click', '.mdi-home', function() {
+                	window.location = "/member/" + $TARGET.find(".name").html();
                 });
 				
               	//삭제버튼
@@ -1191,8 +1155,11 @@ body {
                 	//타겟삭제
                 	//팔로우 해제
                 	setModal('delete', $TARGET);
+                	var followFlg=false;
                     $('#contact-modal').one('click', '.btn.save', function() {
-                        var username = $TARGET.find('.name').text($('#new-user').val());
+                        var userid = $TARGET.data("uid");
+                        console.log(userid);
+                        if(followFlg){return;}
                         followFlg=true;
                         $.ajax({
                             type: "delete",
@@ -1205,12 +1172,16 @@ body {
                             },
                             success:function(result){
                                if(result=="SUCCESS"){
-                               	followed();
-                                following();
-                                
-                                closeModal();
-                                $TARGET.remove(); 
-                                followFlg=false;
+                            	   
+                            	   if(window.location.pathname.substr(0,8) == "/member/"){
+                               			followed();
+                                       	following();
+                               		}
+	                                
+	                                closeModal();
+	                                
+	                                $TARGET.remove();
+	                                followFlg=false;
 
                                }
                             }
@@ -1230,7 +1201,7 @@ body {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
-            $(".list-chat > ul").html("");
+            $(".list-chat > .scroll > ul").html("");
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);
@@ -1303,23 +1274,6 @@ body {
                     break;
             }
 
-        });
-		
-        // 친구목록 floater
-        $('#add-contact-floater').on('click', function() {
-            if ($(this).hasClass('active')) {
-                	closeModal();
-                $(this).removeClass('active');
-
-            } else {
-
-                $(this).addClass('active');
-                setModal('add');
-                $('#contact-modal').one('click', '.btn.save', function() {
-                    $('.list-account > .list').prepend('<li><img src="https://autoban-service.com/themes/autoban/images/no-image-user.png"><span class="name">' + $('#new-user').val() + '</span><i class="mdi mdi-menu-down"></i></li>');
-                    closeModal();
-                });
-            }
         });
         
         </script>

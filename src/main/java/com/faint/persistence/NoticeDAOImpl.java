@@ -23,6 +23,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public List<NoticeDTO> getNoticeList(int userid) throws Exception {
 		return session.selectList(namespace+".getNoticeList", userid);
+		
 	}
 	
 	@Override

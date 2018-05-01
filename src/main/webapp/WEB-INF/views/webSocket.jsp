@@ -9,11 +9,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>Insert title here</title>
-<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
+.isFlw{
+	float: right;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	background: 0 0;
+	border-color: #dbdbdb;
+	color: #262626;
+	border-style: solid;
+	border-width: 1px;
+	line-height: 26px;
+	border-radius: 2px;
+	padding: 0 5px 0 5px;
+}
+.flwActive{
+	background-color: #53505e !important;
+	color: white !important;
+}
 .msgBtn{
 	float: right;
 	position: fixed;
@@ -203,6 +219,7 @@ display:none;
             	var roomid = message.body;
             	getChatList();
             	getChat(roomid);
+            	
             }else{
             	alert("메세지 전송에 실패하였습니다");
             }
@@ -211,7 +228,7 @@ display:none;
     	  
     });
 	
-	
+	var date="";
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
@@ -230,11 +247,13 @@ display:none;
    				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
                	
                 if(this.type=="F"){
-                	list += "회원님을 팔로우하였습니다</div>";
+                	
+                	//시간
+                	list += "회원님을 팔로우하였습니다</div><div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
-                		list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로잉</button></li>";
+                		list += "<button class='isFlw flwActive' data-uid='"+this.fromUserId+"'>팔로잉</button></li>";
                    
                     }else if(this.isFlw==0 && this.fromUserId!=${login.id}){
                     	list += "<button class='isFlw' data-uid='"+this.fromUserId+"'>팔로우</button></li>";
@@ -255,6 +274,10 @@ display:none;
                 
                 if(this.type!="F"){
                 	
+                	//시간
+                	list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	
+                	//이미지 필터
                 	if(this.filter==""){
                 		list += "<div class='_g0ya9'><a class='_gvoze _3q5ui' href=''><img style='border-radius:0px' class='followPhoto' "; 
                 	}else{
@@ -265,6 +288,15 @@ display:none;
                 }
   			})
   			$("#follow-results").html(list);
+  			
+  			//알림 리스트가 없을 경우
+  		   	if($("#follow-results").children().length==0) {
+				$("#follow-results").html("<div class='_oznku'><div class='noresult'>새로운 알림이 없습니다.</div></div>");
+				$("#follow-header-modal").css("height", "62px");
+			}
+  			
+  			//팔로우 메서드 등록
+  			follow();
   		});
 	}
 	

@@ -31,6 +31,11 @@ a:hover {
 	border-width: 1px;
 	line-height: 26px;
 	border-radius: 2px;
+	padding: 0 5px 0 5px;
+}
+.flwActive{
+	background-color: #53505e !important;
+	color: white !important;
 }
 .followModal {
     display: none; /* Hidden by default */
@@ -194,7 +199,7 @@ div.secondLine span {
 								<span><button class='btnUserUnblock' onclick="userUnblock()">차단 해제</button></span>
 							</c:when>
 							<c:when test="${userVO.isFollow > 0}">
-								<span><button class='isFlw' data-uid="${userVO.id}">팔로잉</button></span>
+								<span><button class='isFlw flwActive' data-uid="${userVO.id}">팔로잉</button></span>
 							</c:when>
 							<c:otherwise>
 								<span><button class='isFlw' data-uid="${userVO.id}">팔로우</button></span>
