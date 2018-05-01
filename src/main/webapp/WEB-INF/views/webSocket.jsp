@@ -249,7 +249,7 @@ display:none;
                 if(this.type=="F"){
                 	
                 	//시간
-                	list += "회원님을 팔로우하였습니다<time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "회원님을 팔로우하였습니다. <time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -263,19 +263,19 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += "회원님을 태그하였습니다</div>";
+                	list += "회원님을 태그하였습니다. ";
                 	
                 }else if(this.type=="L"){
-                	list += "회원님의 게시물에 좋아요를 눌렀습니다</div>";
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다. ";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
+                	list += "회원님의 게시물에 댓글을 남겼습니다. ";
                 }
                 
                 if(this.type!="F"){
                 	
                 	//시간
-                	list += "<div><time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "<time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	//이미지 필터
                 	if(this.filter==""){
