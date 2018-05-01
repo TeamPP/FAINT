@@ -492,20 +492,21 @@ ul.list li .name {
   display: flex;
   justify-content: space-between;
 }
+ul.list li .content-container{
+	word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 75%;
+}
 ul.list li .content-container .name {
   font-weight: bold;
   padding: 0 0 0 20px;
   font-size: 1em;
 }
-ul.list li .content-container .phone {
-  padding: 0 0 0 20px;
-  font-size: 0.8em;
-  display: block;
-  margin-bottom: -4px;
-}
 ul.list li .content-container .txt {
   padding: 0 0 0 20px;
   font-size: 0.9em;
+  white-space: nowrap;
 }
 ul.list li .content-container .meta {
   font-size: 0.7em;
@@ -771,7 +772,7 @@ body {
 	               		list += "src='/resources/img/emptyProfile.jpg' />";
 	               	}
 	   				
-	   				list += "<div class='message'>" + this.comment + "</div>";
+	   				list += "<div class='message' style='word-break: break-word; max-width: 245px;'>" + this.comment + "</div>";
 	   				
 	   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
 	   				
@@ -816,7 +817,7 @@ body {
 
 	    				list += "<div class='content-container'><span class='name'>"+userNicknameArray[0]+"</span>";
 	    				
-	    				list += "<span class='txt'>" + this.lastMessage + "</span></div>";
+	    				list += "<span class='txt' style='word-break:break-all;'>" + this.lastMessage + "</span></div>";
 	    				
 	    				list += "<span class='time'>" + createDateWithCheck(this.lastMessageDate) + "</span></li>";
 	    				
