@@ -22,8 +22,6 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
-
 	
 </style>
 
@@ -54,7 +52,6 @@
 @media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 ._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
 @media (max-width:480px){._23gmb,._dcj9f{display:none}}
-
 ._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
 ._h74gn:hover{background-color:#efefef}
 ._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
@@ -206,7 +203,6 @@ a{ font-weight: bold; }
 </style>
 </script>
 <script>
-
 var modalFlg = false;
 var reqUrl = '';
 function postModal(str){
@@ -406,7 +402,6 @@ function postModal(str){
 	   });
 	});
 }
-
 //게시물 수정
 function postEdit(pid){
 	var postid;	
@@ -428,9 +423,7 @@ function postEdit(pid){
 		     event.stopPropagation();
 		});
 	})
-
 }
-
 //게시물 삭제
 function postDelete(thisTag){
 	var postid=$(thisTag).data("post");
@@ -473,7 +466,6 @@ function postDelete(thisTag){
 		}
 	});
 }
-
 //메뉴 모달 취소버튼 - CSS처리
 function callRemoveDialog(event){
  if(typeof event != "undefined"){
@@ -483,7 +475,6 @@ function callRemoveDialog(event){
  $("body").attr("aria-hidden","false");
  $("div[role='dialog']").remove();
 }
-
 //각 게시물에 댓글리스트 등록 처음 4개 이후 +20개씩('댓글 더보기' 기능이 수행)
 function reply(){
    $(".replyContainer").each(function(){
@@ -568,7 +559,6 @@ function registReply(thisTag, key){
                
  	           	//웹소켓 댓글달림 알림
 	            notifyReply(postWriter, postid);
-
                //태그할 경우 웹소켓 알림
                notifyTagging(comment.trim(), postid);
                
@@ -608,7 +598,6 @@ function deleteReply(thisTag){
       }
    });
 }
-
 //게시물 저장하기 + 저장하기 취소 
 function store(){
 	var storeFlg=false;
@@ -693,8 +682,6 @@ function like(){
       });
    });
 }
-
-
 //좋아요 count+list
 function likerList(){
 	$(".likeContainer").each(function(){
@@ -766,7 +753,6 @@ function likerList(){
 	      }); 
 	   });
 }
-
 //css - 모달창 사진이동버튼
 		
 //오른쪽으로 넘기기
@@ -775,7 +761,6 @@ function moveRight(){
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var nextObj = curObj.next();
-
 	////다음객체 비율 조정
 	if(nextObj.children().is("video")){
 		//다음 비디오 플레이
@@ -806,14 +791,12 @@ function moveRight(){
 		$("#moveRight").css("display","none");
 	}
 }
-
 //이미지 왼쪽으로 넘기기
 function moveLeft(){
 	var len = $(".popImgDiv").length-1;
 	var curIdx = parseInt($(".popImgDiv:visible").index());
 	var curObj = $(".popImgDiv:visible");
 	var prevObj = curObj.prev();
-
 	//이전객체 비율 조정
 	if(prevObj.children().is("video")){
 		//다음 비디오 플레이
@@ -845,58 +828,9 @@ function moveLeft(){
 		$("#moveLeft").css("display","none");
 	}
 }
-
 //css - 댓글달기 버튼 클릭시 커서 포커스
 function replyCursor(thisBtn){
    $(".replyRegist").focus();
-}
-
-//follow여부확인하여 팔로우/팔로우취소
-function follow(){
-	var followFlg=false;
-   $(".isFlw").on("click", function(){
-	console.log("postModal ");
-      var userid=$(this).data("uid");
-      var isFlw=this;
-      if(followFlg){return;}
-      followFlg=true;
-      if(($(this).html()=="팔로우")){
-         var type="post";
-         var url ="/member/follow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'POST'}";
-         $(isFlw).html("팔로잉");
-         
-      }else if(($(this).html()=="팔로잉")){
-         var type="delete";
-         var url ="/member/unfollow/"+userid;
-         var header="{'X-HTTP-Method-Override' : 'DELETE'}";
-         $(isFlw).html("팔로우");
-      }
-      $.ajax({
-         type: type,
-         url: url,
-         headers:header,
-         dataType:"text",
-         beforeSend : function(xhr)
-         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-         },
-         success:function(result){
-            if(result=="SUCCESS"){
-            	followed();
-                following();
-              
-                //팔로우할경우 소켓 알림
-                if($(isFlw).html()=="팔로잉"){
-                    notifyFollow(userid);
-                    console.log("123");
-                }
-                
-                followFlg=false;
-            }
-         }
-      });
-   });
 }
 function followed(){
 	console.log("postModal ");
@@ -970,7 +904,6 @@ function followed(){
 }
 	   
 	
-
 //followList 에 followingList부여 및 팔로우 수 갱신
 function following(){
 	console.log("postModal ");
