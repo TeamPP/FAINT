@@ -12,7 +12,7 @@
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
-.isFlw{
+._75ljm > .isFlw{
 	float: right;
 	font-size: 12px;
 	font-weight: 400;

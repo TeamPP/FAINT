@@ -9,7 +9,7 @@
 <select id="listKeyword" resultType="com.faint.dto.SearchDTO">
 <![CDATA[
 
-	select * from tbl_search
+	select distinct * from tbl_search
     
     left outer join
     
