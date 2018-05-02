@@ -229,7 +229,7 @@ function moveToSelected(element) {
 	if (element == "next") {
 		console.log("->화살표누름!!!!")
 		//->화살표누름
-		if(startInd>=totalChild-5){ //5개만 보여주기
+		if(startInd>=totalChild-4){ //4개만 보여주기
 			 console.log("멈췄다 기능 멈췄다");
 			//비었다
 		} else {
