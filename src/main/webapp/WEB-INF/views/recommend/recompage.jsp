@@ -26,31 +26,12 @@
 
 <style>
 
-article {
-   text-align: center;
-   display: block;
-}
-
-.mid-line {
-    border-top: 1px solid #9d9d9d;
-    width: 935px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: 200;
-    height: 35px;
-}
-
-
-
 /* 추천계정 스타일 */
 .recommContainerWrp{
  width: 100%;
  height: 100%;
  text-align:center;
 }
-
-
  .recommContainer{
  width: 935px;
  max-width: 935px;
@@ -59,94 +40,108 @@ display: inline-block;
  /* height: 250px; */
  /*  text-align:center; */
 }
-
 .recommendList{
 padding-left:0;
 overflow: hidden;
 }
-
 .recommendList li{
 /*    display: inline-block;
    display: block; */
 /*  transition: transform 1s, left 1s ; */
-
  }
-
 #chip {
- width: 23%;
- border: solid 1px #efefef;
- margin-left: 1%;
+	width: 23%;
+	border: solid 1px #efefef;
+	margin-left: 1%;
 } 
-
-
-
 #chip img {
-border-radius: 50%;
+	border-radius: 50%;
 }
-
-.nickname {
-   line-height: 28px;
-    font-weight: 600;
+.recom_nickname {
+	line-height: 28px;	
+	font-weight: 600;
 } 
-
-.name {
-   line-height: 28px;
-    font-weight: 600;
+.recom_name {
+	line-height: 28px;
+	font-weight: 500;
+	font-size: 12px;
 } 
-
-
 /* 팔로우버튼 */
 .isFlw{
-font-size: 12px;
-font-weight: 400;
-cursor: pointer;
-background: 0 0;
-border-color: #dbdbdb;
-color: #262626;
-border-style: solid;
-border-width: 1px;
-line-height: 26px;
-border-radius: 2px;
-margin-bottom: 10%;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	background: 0 0;
+	border-color: #dbdbdb;
+	color: #262626;
+	border-style: solid;
+	border-width: 1px;
+	line-height: 26px;
+	border-radius: 2px;
+	margin-bottom: 10%;
+	padding: 0px 5px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 } 
-
-
 /*추천리스트 프사 */
  .recommPhoto{
-width:80px;
-height:80px;
-margin: 5% auto;
+	width:80px;
+	height:80px;
+	margin: 5% auto;
 } 
-
 
 /*왼쪽 오른쪽 버튼  */
 .prev{
-margin-left:1%;
-color: #999;
-border: 0;
-background-color: white;
+	margin-left:1%;
+	text-align: center;
+	width: 3%;
+	font-size: 18px;
+	background-color: #f1f1f1;
+	color: black;
+	border: 0;
 }
-
 .next{
-color: #999;
-border: 0;
-background-color: white;
+	text-align: center;
+	width: 3%;
+	font-size: 18px;
+	background-color: #f1f1f1;
+	color: black;
+	border: 0;
 }
-
 .slideBtnContainer > button{
-float: inherit !important;
-
+	float: inherit !important;
 }
-
+.prev:hover {
+	background-color: #ddd;
+}
+.next:hover {
+	background-color: #ddd;
+}
+.round {
+    border-radius: 50%;
+}
+.recom_nickname {
+	color: black;
+}
+.recom_name {
+	color: #999;
+}
+.intro {
+    position: relative;
+    left: 25.5%;
+    color: #999;
+    font-size: 12px;
+}
 </style>
 </head>
 
 <body>
 
+<span class="intro">추천 계정 및 게시글</span>
+<div style="height:10px;"></div>
+
 <input type="hidden"
    name="${_csrf.parameterName}"
    value="${_csrf.token}"/>
-
 
 <!--친구추천  -->
 <div class="recommContainerWrp">
@@ -168,13 +163,13 @@ float: inherit !important;
    <div>
   
   <c:choose>
-  <c:when test="${userVO.name eq null}">
-  <a  class="nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-  <p class="name">${userVO.name}</p>
+ 	<c:when test="${userVO.name eq null || userVO.name==''}">
+  <a  class="recom_nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
+  <p class="recom_name">${userVO.name}</p>
   </c:when>
   <c:otherwise>
-    <a  class="nickname" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-    <p class="name">${userVO.name}</p>
+    <a  class="recom_nickname" href="/member/${userVO.nickname}">${userVO.nickname}</a>
+    <p class="recom_name">${userVO.name}</p>
   </c:otherwise>
   </c:choose>
   <button class="isFlw" data-uid='${userVO.id}'>팔로우</button>
@@ -184,9 +179,10 @@ float: inherit !important;
 
 </ul>
 <div class="slideBtnContainer" style="display: block;">
-  <button class="prev">prev</button>
-  <button class="next" >next</button>
-   </div>
+	<button class="prev round">&#8249;</button>
+	<div style="display:inline-block; width:10px;"></div>
+  	<button class="next round" >&#8250;</button>
+</div>
    
 </div>
 </div>
@@ -295,30 +291,9 @@ function hideBtn(){
    
 }
 
-
-
 </script> 
-
-
-
-
-<!-- 인기 게시글 -->
-
 </br>
 </br>
-</br>
-</br>
-</br>
-</br>
-<!-- 모달 적용한 것 -->
-</br>
-
-
-<article>
-<div class="mid-line"></div>
-</article>
-<br/>
-
 
 <script>
  var jsonList=${jsonList}; 

@@ -48,7 +48,13 @@ article {
 .pull-right {
 	float: left !important;
 }
-
+.intro {
+	position: relative;
+    left: 11%;
+    top: 68px;
+    color: #555;
+    font-size: 13px;
+}
 </style>
 </head>
 
@@ -60,6 +66,7 @@ article {
 <!-- 실시간 -->
 
 <div class="realtime_keywd">
+	<span class="intro">실시간 인기 검색어</span>
     <div class="wrap_last_date">
         <span class="none">실시간 급상승 키워드 최종 업데이트 시간</span>
         <span class="last_date"></span><span class="last_time"></span>

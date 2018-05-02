@@ -12,7 +12,7 @@
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
-._751jm > .isFlw{
+._75ljm > .isFlw{
 	float: right;
 	font-size: 12px;
 	font-weight: 400;
@@ -218,7 +218,10 @@ display:none;
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var roomid = message.body;
             	getChatList();
-            	getChat(roomid);
+            	
+            	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+            		getChat(roomid);
+            	}
             	
             }else{
             	alert("메세지 전송에 실패하였습니다");
@@ -244,12 +247,12 @@ display:none;
                		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
-   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이";
+   				list += "<div class='_b96u5'><a class='_2g7d5 notranslate _nodr2' href='/member/"+this.fromid+"'>" + this.fromid + "</a>님이 ";
                	
                 if(this.type=="F"){
                 	
                 	//시간
-                	list += "회원님을 팔로우하였습니다</div><div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "회원님을 팔로우하였습니다. <time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	// 팔로우하고있는 경우 | 팔로우하지 않는 경우 | 본인인 경우
                 	if(this.isFlw > 0){
@@ -263,19 +266,19 @@ display:none;
                     }
                 	
                 }else if(this.type=="T"){
-                	list += "회원님을 태그하였습니다</div>";
+                	list += "회원님을 태그하였습니다. ";
                 	
                 }else if(this.type=="L"){
-                	list += "회원님의 게시물에 좋아요를 눌렀습니다</div>";
+                	list += "회원님의 게시물에 좋아요를 눌렀습니다. ";
                 	
                 }else if(this.type=="R"){
-                	list += "회원님의 게시물에 댓글을 남겼습니다</div>";
+                	list += "회원님의 게시물에 댓글을 남겼습니다. ";
                 }
                 
                 if(this.type!="F"){
                 	
                 	//시간
-                	list += "<div><time style='font-size: 0.8em;'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
+                	list += "<time class='_3lema _6g6t5'>" + createDateWithCheck(this.regdate.time) + "</time></div>";
                 	
                 	//이미지 필터
                 	if(this.filter==""){
