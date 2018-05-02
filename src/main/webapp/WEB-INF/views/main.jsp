@@ -494,7 +494,7 @@ $(document).ready(function(){
 	      default: return;
 	  	}
 	  e.preventDefault();
-	}); 
+	});
 	
  	$('#carousel article').not(".selected").click(function(e) {
 		if($(this).hasClass("hideLeft")){

@@ -10,7 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <!-- 메신저 아이콘 & 폰트 -->
 <link rel='stylesheet prefetch' href='https://cdn.materialdesignicons.com/1.1.70/css/materialdesignicons.min.css'>
@@ -795,7 +794,7 @@ body {
 		getChatList()
 		function getChatList(){
 			$.getJSON("/getChatList", function(data){
-	    		var cur_Scroll_Location = $(".scroll").scrollTop();
+	    		var cur_Scroll_Location = $(".scroll:eq(1)").scrollTop();
 	    		var list="";
 				if($(data).length!=0){
 	    			$(data).each(function(){
@@ -852,7 +851,7 @@ body {
 		getMessengerUserList();
     	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    			  var cur_Scroll_Location = $(".scroll").scrollTop();
+    			  var cur_Scroll_Location = $(".scroll:eq(0)").scrollTop();
     		      var $data=$(data)
     		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
@@ -1110,9 +1109,9 @@ body {
             setTimeout(function() {
             	
                 $('.shown').removeClass('shown');
-
                 $('.list-chat').addClass('shown');
                 setRoute('.list-chat');
+                $(".scroll").scrollTop($(".scroll")[2].scrollHeight);
                 $('.chat-input').focus();
                 
             }, 300);
@@ -1159,11 +1158,8 @@ body {
 
                         $('.list-chat').addClass('shown');
                         setRoute('.list-chat');
-                        
             			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
-            			
                         $('.chat-input').focus();
-                        
                     }, 300);
                     
                 });
