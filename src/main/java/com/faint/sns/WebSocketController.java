@@ -168,7 +168,6 @@ public class WebSocketController {
 		ResponseEntity<List<ChatroomVO>> entity=null;
 		try{
 			List<ChatroomVO> chatList=msgService.getChatList(vo.getId());
-			this.logger.info(chatList.toString());
 			entity=new ResponseEntity<List<ChatroomVO>>(chatList, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -191,6 +190,9 @@ public class WebSocketController {
 			
 			Map<String, Object> map=msgService.getMessages(roomid, vo.getId());
 			
+			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
+			String chatRoom=JSONArray.fromObject(messageList).toString();
+			
 			if(map.get("users")!=null){
 				String users=map.get("users").toString();
 				String[] userArray = users.split("\\|");
@@ -201,11 +203,8 @@ public class WebSocketController {
 				}
 			}
 			
-			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
-			
 			//JSONArray로 만들기 위한 인스턴스값 생성
-	    	String chatRoom=JSONArray.fromObject(messageList).toString();
-	    	
+
 			entity=new ResponseEntity<String>(chatRoom, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -220,26 +219,24 @@ public class WebSocketController {
 	public void registMessage(Principal principal, MessageVO vo) throws Exception {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
-			
+			String users="";
+					
 			try{
-				String users = msgService.registMessage(vo);
-				
-				if(users!="" || users!=null){
-					//나에게 알리기
-					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
-					
-					String[] userArray = users.split("\\|");
-					//상대들에게 알리기
-					for(String user : userArray){
-						messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
-					}
-					
-					return;
-					
-				}
-				
+				users = msgService.registMessage(vo);
 			}catch(Exception e){
 				e.printStackTrace();
+			}
+			
+			if(users!="" || users!=null){
+				//나에게 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
+				
+				String[] userArray = users.split("\\|");
+				//상대들에게 알리기
+				for(String user : userArray){
+					messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
+				}
+				return;
 			}
 			
 		}

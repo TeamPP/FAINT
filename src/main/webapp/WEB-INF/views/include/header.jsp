@@ -38,17 +38,17 @@
 <!-- 아이콘 부트스트랩  -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
-
 body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
-					"Segoe UI Symbol";
+					"Segoe UI Symbol" !important;
+	background-color: white !important;
 }
-
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -222,144 +222,8 @@ body {
 	                    <div class="col-sm-8">
 	                        <span class="catefilter" id="1">CATEGORY</span>
 	                        <div class="cate-option">
-	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-cateAll">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
-	                                        </svg>
-	                                        <span>All</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-travel" id="type-travel" data-filter="1" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-travel">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
-	                                        </svg>
-	                                        <span>Travel</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-movie" id="type-movie" data-filter="2" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-movie">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
-	                                        </svg>
-	                                        <span>Movie</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-music" id="type-music" data-filter="3" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-music">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
-	                                        </svg>
-	                                        <span>Music</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-food" id="type-food" data-filter="4" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-food">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
-	                                        </svg>
-	                                        <span>Food</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-writing" id="type-writing" data-filter="5" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-writing">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
-	                                        </svg>
-	                                        <span>Writing</span>
-	                                    </label>
-	                                </div>
-	                            </div>
-	                    </div>
-	                    <div class="col-sm-2"></div>
-	                </div>
-	                <div class="row" style="width:100%; height:100%;">
-	                    <div class="col-sm-2"></div>
-	                    <div class="col-sm-8">
-	                        <span class="catefilter" id="1">CATEGORY</span>
-	                        <div class="cate-option">
-	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-cateAll">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
-	                                        </svg>
-	                                        <span>All</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-travel" id="type-travel" data-filter="1" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-travel">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
-	                                        </svg>
-	                                        <span>Travel</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-movie" id="type-movie" data-filter="2" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-movie">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
-	                                        </svg>
-	                                        <span>Movie</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-music" id="type-music" data-filter="3" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-music">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
-	                                        </svg>
-	                                        <span>Music</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-food" id="type-food" data-filter="4" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-food">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
-	                                        </svg>
-	                                        <span>Food</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-writing" id="type-writing" data-filter="5" tabindex="-1"  onclick="cateClick(this)">
-	                                    <label for="type-writing">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
-	                                        </svg>
-	                                        <span>Writing</span>
-	                                    </label>
-	                                </div>
-	                            </div>
-	                    </div>
-	                    <div class="col-sm-2"></div>
-	                </div>
-	                <div class="row" style="width:100%; height:100%;">
-	                    <div class="col-sm-2"></div>
-	                    <div class="col-sm-8">
-	                        <span class="catefilter" id="1">CATEGORY</span>
-	                        <div class="cate-option">
-	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+	                                <div><input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+
 	                                    <label for="type-cateAll">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
@@ -993,7 +857,6 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
@@ -1011,7 +874,6 @@ function follow(){
          var header="{'X-HTTP-Method-Override' : 'POST'}";
          $this.toggleClass("flwActive")
          $this.html("팔로잉");
-
       }else if( $this.hasClass("flwActive") ){
          var type="delete";
          var url ="/member/unfollow/"+userid;
@@ -1036,7 +898,6 @@ function follow(){
           			followed();
                   	following();
           		}
-
                 //팔로우할경우 소켓 알림
                 if($this.hasClass("flwActive")){
                     notifyFollow(userid);
@@ -1044,18 +905,15 @@ function follow(){
                 
               	//메신저 유저목록 갱신
             	getMessengerUserList();
-
                 //알림창 팔로우 여부 갱신
                 noticeList();
                 
                 followFlg=false;
-
             }
          }
       });
    });
 }
-
 </script>
 
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
