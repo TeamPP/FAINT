@@ -216,18 +216,50 @@ display:none;
        	//나에대한 채팅방생성 및 메시지 수신 알림(roomid값 받음)
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
-            	var roomid = message.body;
-            	getChatList();
+            	var msg = message.body;
+            	console.log(msg);
             	
-            	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
-            		getChat(roomid);
+            	//누군가 새로 채팅창을 만들었을 때
+            	if(msg[0]=="c"){
+            		
+            		var roomid = msg.substr(1,msg.length-1);
+                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                		getChat(roomid);
+                	}
+                	getChatList();
+                	
+                //누군가 새로 읽었을 때
+            	}else if(msg[0]=="r"){
+            		
+            		var roomid = msg.substr(1,msg.indexOf("[")-1);
+                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                		var data = JSON.parse(msg.substr(msg.indexOf("["),msg.length-1));
+                		$(".list-chat > .scroll > ul").children("li").each(function(){
+                			var newValue=data[$(this).index()].readstatus;
+                			if($(this).children(".readStatus").html() != newValue){
+                				$(this).children(".readStatus").html(newValue);
+                				if(newValue==0){
+                					$(this).children(".readStatus").css("display", "none");
+                				}
+                			}
+                		})
+                	}
+                	
+               	//누군가 새로 메세지를 전송했을 때
+            	}else if(msg[0]=="n"){
+            		
+            		var roomid = msg.substr(1,msg.length-1);
+                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                		getChat(roomid);
+                	}
+                	getChatList();
+                	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
             	}
             	
             }else{
             	alert("메세지 전송에 실패하였습니다");
             }
         });
-    	  
     	  
     });
 	

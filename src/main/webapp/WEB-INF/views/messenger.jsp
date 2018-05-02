@@ -750,47 +750,56 @@ body {
 
 
 		<script>
-		
+		var uu;
 		//채팅창 가져오기
 		function getChat(roomid){
 			
 	    	$.getJSON("/getChat/"+roomid, function(data){
-	    		console.log(data);
-	    		var list="";
-	    		
-	    		$(data).each(function(){
-	    			// 나의 메세지,타인 메세지 구분
-	    			if(this.senderNickname == "${login.nickname}"){
-	    				list += "<li><img ";
-	    			}else{
-	    				list += "<li class='notMyMsg'><img ";
-	    			}
-
-	    			// 프로필 사진이 있는경우 | 없는 경우
-	   				if(this.profilephoto != null && this.profilephoto != ""){
-	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
-	               	}else if(this.profilephoto == null || this.profilephoto == ""){
-	               		list += "src='/resources/img/emptyProfile.jpg' />";
-	               	}
-	   				
-	   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
-	   				
-	   				//읽음 상태표시
-	   				if(this.readstatus!=0){
-	   					list += "<div style='color: #ffa845; padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + this.readstatus + "</time></div>";	
-	   				}
-	   				
-	   				//시간
-	   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
-	   				
-	   				
-	    		})
-	    		
-	    		$(".list-chat > .scroll > ul").html(list);
-	    		$('.list-chat').data("rid", roomid);
+	    		if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+	    			var list = getNewChat($(data).eq(-1));
+	    			$(".list-chat > .scroll > ul").append(list);
+	    		}else{
+	    			var list = getNewChat(data);
+	    			$(".list-chat > .scroll > ul").html(list);
+	    			$('.list-chat').data("rid", roomid);
+	    		}
 	    		
 	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
+		}
+		
+		//새로운 메세지 혹은 채팅창 리스트 전체
+		function getNewChat(data){
+			var list="";
+			$(data).each(function(){
+    			// 나의 메세지,타인 메세지 구분
+    			if(this.senderNickname == "${login.nickname}"){
+    				list += "<li><img ";
+    			}else{
+    				list += "<li class='notMyMsg'><img ";
+    			}
+
+    			// 프로필 사진이 있는경우 | 없는 경우
+   				if(this.profilephoto != null && this.profilephoto != ""){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
+               	}else if(this.profilephoto == null || this.profilephoto == ""){
+               		list += "src='/resources/img/emptyProfile.jpg' />";
+               	}
+   				
+   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
+   				
+   				//읽음 상태표시
+   				if(this.readstatus!=0){
+   					list += "<div class='readStatus' style='color: #ffa845; padding: 25px 5px 0 5px; font-size: 0.8em;'>" + this.readstatus + "</div>";	
+   				}else if(this.readstatus==0){
+   					list += "<div class='readStatus' style='color: #ffa845; padding: 25px 5px 0 5px; font-size: 0.8em; display:none;'>" + this.readstatus + "</div>";
+   				}
+   				
+   				//시간
+   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";
+   				
+    		})
+    		return list;
 		}
 		
 		//메신저 채팅리스트 불러오기

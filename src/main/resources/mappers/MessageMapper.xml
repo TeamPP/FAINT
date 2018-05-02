@@ -62,7 +62,7 @@
         order by m.sendtime;
 	</select>
 	
-	<insert id="registMessage">
+	<insert id="registMessage" useGeneratedKeys="true" keyProperty="id"	>
 		insert into tbl_message(ROOMID, SENDER, SENDTIME, COMMENT, read_status)
 		values (
 		#{roomid}
@@ -72,6 +72,33 @@
 		, (select count(*) from tbl_chatroom_user where roomid=#{roomid} and userid!=#{sender})
 		);
 	</insert>
+	
+	<select id="getOneMessage" resultType="com.faint.domain.MessageVO">
+        select m.id, m.roomid, m.sendtime, m.read_status, m.comment, m.sender, u.nickname as senderNickname, u.profilephoto, count(cu.userid)-count(mr.userid) as readstatus
+		from
+        
+        tbl_message m
+		
+        join
+		tbl_chatroom_user r
+		on m.roomid=r.roomid
+		
+        left join
+		tbl_user u
+		on m.sender=u.id
+        
+        left join
+        tbl_message_read mr
+        on m.id=mr.messageid
+        
+        left join
+        tbl_chatroom_user cu
+        on cu.roomid=m.roomid and cu.userid!=#{sender}
+        
+		where m.roomid=#{roomid}
+		and r.userid=#{sender}
+		and m.id=#{id}
+	</select>
 	
 	<select id="getUsers" resultType="java.lang.String">
         select group_concat(u.nickname separator '|')as users

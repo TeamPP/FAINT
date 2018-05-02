@@ -15,5 +15,5 @@ public interface MessageService {
 	
 	public List<ChatroomVO> getChatList(int userid) throws Exception;
 	
-	public String registMessage(MessageVO vo) throws Exception;
+	public Map<String, Object> registMessage(MessageVO vo) throws Exception;
 }
