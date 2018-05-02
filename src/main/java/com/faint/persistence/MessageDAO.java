@@ -9,6 +9,8 @@ public interface MessageDAO {
 
 	public int insertFirstMessage(MessageVO vo) throws Exception;
 	
+	public int readMessages(RelationDTO dto) throws Exception;
+	
 	public List<MessageVO> getMessages(RelationDTO dto) throws Exception;
 	
 	public void registMessage(MessageVO vo) throws Exception;

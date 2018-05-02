@@ -14,12 +14,15 @@
   left:50%;
   transform:translate(-50%, -50%);
   text-align: center;}
+body{
+  background-color: #f2d7c8 !important;
+}
 </style>
 </head>
 <style>
 </style>
 
 <body>
-	<div id="emptyCenter"><h2>존재하지 않는 페이지 혹은 잘못된 접근입니다.</h2></div>
+	<div id="emptyCenter"><img src="https://i.pinimg.com/originals/34/6c/b2/346cb214f8f79202e0482da5f9dbb7d4.gif" /><h2>존재하지 않는 페이지 혹은 잘못된 접근입니다.</h2></div>
 </body>
 </html>

@@ -20,6 +20,13 @@
 
 </head>
 <style>
+#emptyCenter {
+  	top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    position: absolute;
+}
 a {
 	color: black;
 }
@@ -347,28 +354,29 @@ background-color:black;
 		var targetId=tagMessage.targetid;
 		</script>
 	</c:if>
-	
 	<div class="row" id="carousel">
 		<c:forEach items="${list}" var="postDTO"  varStatus='status'>
 		<article  data-filter="${postDTO.cateid}"
-		<c:choose>
-		<c:when test="${status.index == 0}">
-			class="post prev"
-		</c:when>
-		<c:when test="${status.index ==	1}">
-			class="post selected"
-		</c:when>
-		<c:when test="${status.index ==	2}">
-			class="post next"
-		</c:when>
-		<c:when test="${status.index ==	3}">
-			class="post nextRightSecond"
-		</c:when>
-		<c:otherwise>
-		class="post hideRight"
-		</c:otherwise>
-		</c:choose>
-		
+			<c:choose>
+				<c:when test="${status.index == 0 && fn:length(list) == 1}">
+					class="post selected"
+				</c:when>
+				<c:when test="${status.index == 0 && fn:length(list) ne 1}">
+					class="post prev"
+				</c:when>
+				<c:when test="${status.index ==	1}">
+					class="post selected"
+				</c:when>
+				<c:when test="${status.index ==	2}">
+					class="post next"
+				</c:when>
+				<c:when test="${status.index ==	3}">
+					class="post nextRightSecond"
+				</c:when>
+				<c:otherwise>
+					class="post hideRight"
+				</c:otherwise>
+			</c:choose>
 		>
 <!-- 프사, 닉네임 -->
 		<header class="_7b8eu _9dpug">
@@ -514,7 +522,15 @@ function cateClick(thisTag){
 		  $(".post").not("article[data-filter='" + customType +"']").remove(); //customType 일치하지않는 요소 삭제
 	  }
 	$("#carousel").children().removeClass(); //기존 클래스명 삭제
-	moveToSelected($("#carousel").children().eq(1));
+	
+	if($("#carousel").children().length == 0){
+		$("#carousel").html("<div id='emptyCenter'><img src='https://media.giphy.com/media/P7eCVhhWey6Yg/source.gif' /><h2>해당 카테고리에 아직 등록된 게시글이 없습니다</h2></div>");
+	}else if($("#carousel").children().length == 1){
+		moveToSelected($("#carousel").children().eq(0));	
+	}else{
+		moveToSelected($("#carousel").children().eq(1));
+	}
+	
 	//삭제한 다음에 들어가는거라서 다시 클릭함수를 선언함
 	$('#carousel article').not(".selected").click(function() {
 		if($(this).hasClass("hideLeft")){
@@ -531,7 +547,6 @@ function cateClick(thisTag){
 }
 	
 function moveToSelected(element) {
-	console.log("moveToSelected");
 	if (element == "next") {
 		var selected = $(".selected").next();
 	} else if (element == "prev") {

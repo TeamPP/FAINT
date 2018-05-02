@@ -28,6 +28,11 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 	
 	@Override
+	public int readMessages(RelationDTO dto) throws Exception{
+		return session.update(namespace+".readMessages", dto);
+	}
+	
+	@Override
 	public List<MessageVO> getMessages(RelationDTO dto) throws Exception{
 		return session.selectList(namespace+".getMessages", dto);
 	}

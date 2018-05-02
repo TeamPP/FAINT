@@ -1,6 +1,8 @@
 package com.faint.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -41,14 +43,29 @@ public class MessageServiceImpl implements MessageService {
 		
 	}
 	
+	//채팅방 매세지 불러오기
+	@Transactional
 	@Override
-	public List<MessageVO> getMessages(int roomid, int loginid) throws Exception{
+	public Map<String, Object> getMessages(int roomid, int loginid) throws Exception{
 		
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(loginid);
 		dto.setRoomid(roomid);
+		int readStatusChange = (int)mDao.readMessages(dto);
 		
-		return mDao.getMessages(dto);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("users", null);
+		
+		if(readStatusChange > 0){
+			MessageVO msg=new MessageVO();
+			msg.setRoomid(roomid);
+			msg.setSender(loginid);
+			map.put("users", mDao.getUsers(msg));
+		}
+
+		map.put("messages", mDao.getMessages(dto));
+		return map;
+		
 	}
 	
 	@Override

@@ -223,8 +223,8 @@ body {
 	                    <div class="col-sm-8">
 	                        <span class="catefilter" id="1">CATEGORY</span>
 	                        <div class="cate-option">
-	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+	                                <div><input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+
 	                                    <label for="type-cateAll">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
