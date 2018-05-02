@@ -24,6 +24,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta content="" name="description" />
 <meta content="themes-lab" name="author" />
+ <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/pixit/admin/assets/img/favicon.png">
 <!-- END META SECTION -->
 <!-- BEGIN MANDATORY STYLE -->
@@ -151,6 +153,11 @@
 			url : url,
 			dataType : 'json', //dataType에 데이터 타입 넣기
 			data : params,
+			dataType : "text",
+			beforeSend : function(xhr)
+	          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	          },
 			success : function(data) { //success에 성공했을 때 동작 넣기.
 				//중복되지 않은 경우
 				if (data.result == "success") {
@@ -221,6 +228,7 @@
 										<div class="clearfix m-b-20"></div>
 									</div>
 									<form class="form-horizontal p-t-20" role="form">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										<div class="form-group">
 											<label for="to" class="col-sm-2 control-label">받는사람:</label>
 											<div class="col-sm-10">

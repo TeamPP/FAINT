@@ -46,15 +46,10 @@ article {
     height: 35px;
 }
 
-<<<<<<< HEAD
 .pull-right {
 	float: left !important;
 }
-=======
 
-
-
->>>>>>> branch 'oolong' of https://github.com/TeamPP/FAINT.git
 </style>
 </head>
 
@@ -64,10 +59,6 @@ article {
 	name="${_csrf.parameterName}"
 	value="${_csrf.token}"/>
 <!-- 실시간 -->
-<br/>
-<br/>
-
-
 
 <div class="realtime_keywd">
     <div class="wrap_last_date">
@@ -222,9 +213,6 @@ $(document).ready(function() {
 
 <!-- 인기 게시글 -->
 
-</br>
-</br>
-</br>
 </br>
 </br>
 </br>

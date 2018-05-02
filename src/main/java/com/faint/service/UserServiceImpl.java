@@ -248,6 +248,9 @@ public class UserServiceImpl implements UserService {
   	System.out.println(dto.getEmail());
   	
   	vo =dao.selectByEmail(dto.getEmail());
+  	System.out.println("vo.to"+vo);
+  	
+  	
 //      vo=dao.naverReadUser(dto);
       if(vo==null){
           try{
@@ -315,8 +318,8 @@ public class UserServiceImpl implements UserService {
 		String key = new TempKey().getKey(8,false);
 		System.out.println("key는?"+key);
 		
-		String encPassword = passwordEncoder.encode("qwer1234");
-		//String encPassword = passwordEncoder.encode(key);
+		//String encPassword = passwordEncoder.encode("qwer1234");
+		String encPassword = passwordEncoder.encode(key);
 		
 		
 		

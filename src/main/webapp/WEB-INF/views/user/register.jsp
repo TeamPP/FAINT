@@ -5,9 +5,38 @@
 
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <%--애니메이션 효과--%>
+    <link rel="stylesheet" href="/resources/dist/css/animate.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <%--이모티콘--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="/resources/bootstrap-social.css" rel="stylesheet">
+
+    <!-- jquery load -->
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <%--bootstrap--%>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/sketchy/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="/resources/dist/js/bootstrap.min.js"></script>
 <!--제이쿼리 라이브러리  -->
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- 모달 부트스트랩 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- 업로드 관련 확장자 필터링 스크립트 -->
+<script type="text/javascript" src="../../resources/js/upload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<link rel="stylesheet" href="/resources/css/header.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/animation.css" type="text/css">
+  <link href="/resources/bootstrap-social.css" rel="stylesheet">
+
 
 <%-- <jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/> --%>
 <!--제이쿼리 라이브러리  -->
@@ -142,7 +171,7 @@
         var nickname = $('#nickname').val();
         console.log(nickname);
 
-        if(nickname.trim().length >20){
+        if(nickname.trim().length >15){
             alert("이름을 20자 이내로 입력해 주세요.");
             return false;
         }
@@ -182,7 +211,7 @@
 <div  id="regiser">
 	<div class="wrapper fadeInDown text-center">
 
-		<div class="card border-secondary mb-3" style="max-width: 40rem;" id="formContent">
+		<div class="card border-secondary mb-3" style="max-width: 60rem;" id="formContent">
 
 			<div class="card-header" style="background-color: black">
 

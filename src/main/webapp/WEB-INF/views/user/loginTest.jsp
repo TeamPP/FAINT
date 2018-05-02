@@ -42,7 +42,13 @@
     <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
     <%--첨부파일--%>
     <script src="/resources/dist/js/upload.js"></script>
-
+	<script>      
+	
+	var msg=Boolean("${msg}");
+    if(msg){
+        alert("${msg}");
+    }
+    </script>
     
     <style>
         .naver{
@@ -76,6 +82,8 @@
     </style>
     
 <link href="/resources/dist/css/login.css" rel="stylesheet">
+
+
 <div  id="login">
     <div class="wrapper fadeInDown text-center">
 

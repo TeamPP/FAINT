@@ -465,7 +465,6 @@ background-color:black;
 <jsp:include page="/WEB-INF/views/include/postModal.jsp" flush="false" />
 <!-- 길이제한 함수, 해쉬태그 필터링 -->
 <script>
-
 //postid 가져와서 댓글달기
 $(document).ready(function(){
 	

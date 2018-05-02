@@ -208,7 +208,6 @@ h2{
 			});
 			if(errFlg) return;
 			var form = $("#profileForm");
-
 			//비공개 체크 데이터 입력
 			if ($("#chkPri").is(":checked")) {
 				//비공개 체크 되어있으면 1
@@ -219,7 +218,6 @@ h2{
 			}	
 			form.submit();
 		});
-
 	}); //end ready
 	
 	
@@ -230,7 +228,6 @@ h2{
 	function validCheck(obj) {
 		var chkStr = "";
 		var maxLen = 0;
-
 		switch (obj.id) {
 		//이름
 		case "name":
@@ -252,7 +249,6 @@ h2{
 			}
 			//길이체크
 			if (!lengthCheck(obj, maxLen)) return;
-
 			//원래 이름과 같으면
 			if (orgNick == nick) {
 				$("#chkResult").css("color", "#999");
@@ -299,11 +295,9 @@ h2{
 				$("#" + obj.id).siblings("label").css("color", "black");
 				return;
 			}
-
 			chkStr = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/
 			//입렵값 체크
 			strCheck(obj, chkStr);
-
 			break;
 		//소개
 		case "intro":
@@ -327,7 +321,6 @@ h2{
 			chkStr = /[01](0|1|6|7|8|9)[-](\d{4}|\d{3})[-]\d{4}$/g;
 			//입력값 형식에 맞는지 비교
 			strCheck(obj, chkStr);
-
 			break;
 		default:
 			return;

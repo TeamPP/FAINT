@@ -118,7 +118,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	    
 		logger.info("2");
 		
-	    //연결된 모든 클라이언트에게 메시지 전송
+	    //연결된 모든 클라이언트에게 메시지 전송 
 	     for (WebSocketSession webSocketSession : connectedUsers) {
 	    	 
 	 		//logger.info("로그인 한 아이디 : "+ login.getEmail());

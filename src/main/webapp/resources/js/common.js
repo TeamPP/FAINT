@@ -13,6 +13,8 @@ function lengthCheck(obj, limit) {
 }
 //searchFilter - 포스트 내용, 프로필 intro, 댓글 해쉬태그 및 인물태그 링크처리
 function searchFilter(obj){
+	console.log("searchFilter");
+	console.log(obj);
 	obj.find("span").each(function(){
       //1. 텍스트 가져오기 & 처리한 새로운 문자
       var text = $(this).text();
@@ -46,7 +48,7 @@ function searchFilter(obj){
 }
 //searchFilter메서드의 보조 사용 함수
 function split(text){
-    
+	console.log("split");
     //1. 공백기준으로 나누기
     var splitArray = text.split(" ");
     //2. 처리될 특수문자 

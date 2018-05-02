@@ -188,6 +188,7 @@ canvas {
   bottom: 0;
   right: 0;
   z-index: 30;
+  position: fixed;
 }
 #hangout.collapsed {
   height: 55px;
@@ -286,6 +287,8 @@ canvas {
   color: #3f51b5;
   font-size: 0.85em;
   text-transform: uppercase;
+  position: relative;
+  top: -31px;
 }
 .card.menu {
   padding-top: 50px;
@@ -1279,7 +1282,7 @@ body {
         $('#contact-modal').on('click', '.btn.cancel', function() {
             closeModal();
         });
-		
+
         // 새로운 유저
         $('#new-user').on('keydown', function(event) {
             switch (event.which) {
