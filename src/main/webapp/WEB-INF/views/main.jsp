@@ -354,28 +354,29 @@ background-color:black;
 		var targetId=tagMessage.targetid;
 		</script>
 	</c:if>
-	
 	<div class="row" id="carousel">
 		<c:forEach items="${list}" var="postDTO"  varStatus='status'>
 		<article  data-filter="${postDTO.cateid}"
-		<c:choose>
-		<c:when test="${status.index == 0}">
-			class="post prev"
-		</c:when>
-		<c:when test="${status.index ==	1}">
-			class="post selected"
-		</c:when>
-		<c:when test="${status.index ==	2}">
-			class="post next"
-		</c:when>
-		<c:when test="${status.index ==	3}">
-			class="post nextRightSecond"
-		</c:when>
-		<c:otherwise>
-		class="post hideRight"
-		</c:otherwise>
-		</c:choose>
-		
+			<c:choose>
+				<c:when test="${status.index == 0 && fn:length(list) == 1}">
+					class="post selected"
+				</c:when>
+				<c:when test="${status.index == 0 && fn:length(list) ne 1}">
+					class="post prev"
+				</c:when>
+				<c:when test="${status.index ==	1}">
+					class="post selected"
+				</c:when>
+				<c:when test="${status.index ==	2}">
+					class="post next"
+				</c:when>
+				<c:when test="${status.index ==	3}">
+					class="post nextRightSecond"
+				</c:when>
+				<c:otherwise>
+					class="post hideRight"
+				</c:otherwise>
+			</c:choose>
 		>
 <!-- 프사, 닉네임 -->
 		<header class="_7b8eu _9dpug">
@@ -547,7 +548,6 @@ function cateClick(thisTag){
 }
 	
 function moveToSelected(element) {
-	console.log("moveToSelected");
 	if (element == "next") {
 		var selected = $(".selected").next();
 	} else if (element == "prev") {
