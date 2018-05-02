@@ -133,7 +133,7 @@ border: 0;
 background-color: white;
 }
 
-.slideBtnContainer button{
+.slideBtnContainer > button{
 float: inherit !important;
 
 }

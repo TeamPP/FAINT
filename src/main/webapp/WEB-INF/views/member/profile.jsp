@@ -88,7 +88,6 @@ article {
 	margin-bottom: 70px;
 	height: 170px;
 }
-
 #proPhoto {
 	display: inline-block;
 	text-align: center;
@@ -110,44 +109,36 @@ article {
 	height: 170px;
 	margin-left: 3%;
 }
-
 /* 첫번째줄 */
 .firstLine {
 	width: 613px;
 	height: 40px;
 	margin-bottom: 20px;
 }
-
 div.firstLine span {
 	margin-right: 10px;
 }
-
 .fL-1 {
 	font-size: 32px;
 	font-weight: 200;
 }
-
 /* 두번째줄 */
 .secondLine {
 	margin-bottom: 20px;
 	font-size:16px;
 }
-
 div.secondLine span {
 	margin-right: 20px;
 }
-
 /* 세번째 줄 */
 .thirdLine {
 	margin-bottom: 20px;
 }
-
 .intro-name {
 	margin-right: 5px;
 	font-weight: bold;
 	float: left;
 }
-
 .mid-line{
 	border-top: 1px solid #efefef;
 	width:935px;
@@ -263,26 +254,22 @@ div.secondLine span {
 width: 602px;
 height: 600px;
 }
-
 .followTitle{
 width:600px; 
 height:51px;
 padding: 16px;
 }
-
 .followLine{
 width:600px;
 margin-top: 0;
 margin-bottom: 0;
 }
-
 .oneofList{
 border-bottom: solid 1px #efefef;
 width: 581px;
 height: 53px;
 padding: 8px 16px;
 }
-
 #followsContainer{
 height: 536px;
 overflow-y: scroll;
@@ -290,7 +277,6 @@ width: 600px;
 list-style:none;   
 padding:0;
 }
-
 .isFlw{
 float: right;
 font-size: 12px;
@@ -304,7 +290,6 @@ border-width: 1px;
 line-height: 26px;
 border-radius: 2px;
 }
-
 .followPhoto{
 width: 33px;
 height: 33px;
@@ -312,8 +297,6 @@ display: inline-block;
 float: left;
 border-radius: 150px;  /* 프사 둥글게 */
 }
-
-
 </style>
 
 
@@ -342,7 +325,6 @@ border-radius: 150px;  /* 프사 둥글게 */
 @media (min-width:481px){._o0j5z{padding:0 40px;pointer-events:none;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 ._o0j5z::after,._o0j5z::before{content:'';display:block;-webkit-flex-basis:40px;-ms-flex-preferred-size:40px;flex-basis:40px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}}
 @media (max-width:480px){._23gmb,._dcj9f{display:none}}
-
 ._h74gn{background:#fff;border:0;color:#262626;cursor:pointer;font-size:16px;font-weight:400;line-height:50px;margin:0;overflow:hidden;padding:0 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;width:100%}
 ._h74gn:hover{background-color:#efefef}
 ._hql7s,._o2wxh{background-color:#fff;border-bottom:1px solid #dbdbdb}
@@ -384,7 +366,6 @@ if(${userVO.id} == ${login.id}){
 	      }
 	})
 }
-
 // 취소버튼 - CSS처리 (유저 더보기 액션에서도 동일 처리)
 function callRemoveDialog(event){
    if(typeof event != "undefined"){
@@ -394,15 +375,12 @@ function callRemoveDialog(event){
    $("body").attr("aria-hidden","false");
    $("div[role='dialog']").remove();
 }
-
 // 파일 업로드 - 파일탐색기에서 OK누른 후 처리
 $("#inputfile").on("change", function(event) {
    console.log("change");
    event.preventDefault();
    uploadFiles(this.files);
 });
-
-
 // ======================프로필 사진 CRUD======================
 //프로필 사진 바꾸기
 function uploadFiles(files) {
@@ -438,7 +416,6 @@ function uploadFiles(files) {
       }); //ajax end
    });
 }
-
 //프사지우기
 function removePhoto(){
    var data_src = $("#btnChangePhoto").children("img").attr("src").substr(22);
@@ -464,12 +441,10 @@ function removePhoto(){
       }
    });
 }
-
 //파일탐색기호출
 function callFileUploader(){
    $("#inputfile").click();
 }
-
 //프로필 사진 DB업데이트
 function updatePhoto(fullName){
    $.ajax({
@@ -495,7 +470,6 @@ function updatePhoto(fullName){
       }
    }); //ajax end
 }
-
 //======================유저 더보기 버튼 액션==========================
 //모달팝업
 $("#moreAction").on("click",function(){	   
@@ -514,7 +488,6 @@ $("#moreAction").on("click",function(){
 	     event.stopPropagation();
 	});
 })
-
 //사용자 신고
 function userReport(){
 	//임시 함수
@@ -522,7 +495,6 @@ function userReport(){
 	$("body").attr("aria-hidden","false");
 	$("div[role='dialog']").remove();
 }
-
 //사용자 차단
 function userBlock(){
 	$.ajax({
@@ -546,7 +518,6 @@ function userBlock(){
 		}
 	})
 }
-
 //사용자 차단해제
 function userUnblock(){
 	$.ajax({
@@ -567,7 +538,6 @@ function userUnblock(){
 		}
 	})
 }
-
 //======================postFeed.jsp관련======================
 var jsonList="profile";
 var uid=${userVO.id};
@@ -583,10 +553,8 @@ $(document).ready(function(){
    follow();
    searchFilter($(".intro"));
 })
-
 //body로딩 후
 $(document).ready(function(){
-
 	//viewport크기 관리
     $(window).resize(function(){
     	if(parseInt($(".photo-profile").css("max-width")) <= parseInt($(window).width())){
@@ -599,9 +567,7 @@ $(document).ready(function(){
     		$(".mid-line").css("width", $(window).width());
     	}
 	})
-
 })
-
 </script>
 
 </sec:authorize>

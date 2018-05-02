@@ -42,14 +42,12 @@
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
-
 body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
 					"Segoe UI Symbol" !important;
 	background-color: white !important;
 }
-
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -858,7 +856,6 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;
@@ -876,7 +873,6 @@ function follow(){
          var header="{'X-HTTP-Method-Override' : 'POST'}";
          $this.toggleClass("flwActive")
          $this.html("팔로잉");
-
       }else if( $this.hasClass("flwActive") ){
          var type="delete";
          var url ="/member/unfollow/"+userid;
@@ -901,7 +897,6 @@ function follow(){
           			followed();
                   	following();
           		}
-
                 //팔로우할경우 소켓 알림
                 if($this.hasClass("flwActive")){
                     notifyFollow(userid);
@@ -909,18 +904,15 @@ function follow(){
                 
               	//메신저 유저목록 갱신
             	getMessengerUserList();
-
                 //알림창 팔로우 여부 갱신
                 noticeList();
                 
                 followFlg=false;
-
             }
          }
       });
    });
 }
-
 </script>
 
 <jsp:include page="/WEB-INF/views/webSocket.jsp" flush="false" />
