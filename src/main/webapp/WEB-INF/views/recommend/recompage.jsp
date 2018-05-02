@@ -132,6 +132,12 @@ color: #999;
 border: 0;
 background-color: white;
 }
+
+.slideBtnContainer button{
+float: inherit !important;
+
+}
+
 </style>
 </head>
 
@@ -162,7 +168,7 @@ background-color: white;
 	<div>
   
   <c:choose>
-  <c:when test="${userVO.name eq null}">
+  <c:when test="${userVO.name eq null || userVO.name==''}">
   <a  class="nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
   <p class="name">${userVO.name}</p>
   </c:when>
