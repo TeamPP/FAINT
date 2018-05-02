@@ -218,7 +218,10 @@ display:none;
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var roomid = message.body;
             	getChatList();
-            	getChat(roomid);
+            	
+            	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+            		getChat(roomid);
+            	}
             	
             }else{
             	alert("메세지 전송에 실패하였습니다");
