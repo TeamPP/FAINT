@@ -57,12 +57,13 @@ public class RecommendController {
 		List<PostVO> recomPostList=activityservice.RecommPost(loginid);
 		
 		if(recomPostList.size()>0){
+			System.out.println("recomPostList.size()"+recomPostList.size());
 			model.addAttribute("recomPostList", recomPostList);
 			model.addAttribute("jsonList", jsonArray.fromObject(recomPostList));
 		
 			return "/recommend/recompage";
 		}else{
-			return "forward:/empty";
+			return "forward:/emptyRecomm";  //추천할 계정이 현재 없음
 		}
 		
 		

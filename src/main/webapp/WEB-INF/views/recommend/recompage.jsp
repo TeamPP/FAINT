@@ -176,41 +176,12 @@ background-color: white;
 </li>
 </c:forEach>
 
-
-<%-- <c:forEach items="${recommList}" var="userVO">   
-<li id="chip"  style="display:none;" >
-<a href="/member/${userVO.nickname}">
-			<c:choose>
-				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-					<img class="recommPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
-				</c:when>
-				<c:otherwise>
-					<img class="recommPhoto" src="/resources/img/emptyProfile.jpg" />
-				</c:otherwise>
-			</c:choose>
-</a>
-	<div>
-  
-  <c:choose>
-  <c:when test="${userVO.name eq null}"> 
-  <a  class="nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-  <p class="name">${userVO.name}</p>
-  </c:when>
-  <c:otherwise>
-    <a  class="nickname" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-    <p class="name">${userVO.name}</p>
-  </c:otherwise>
-  </c:choose>
-  <button class="isFlw" data-uid='${userVO.id}'>팔로우</button>
-	</div>
-</li>
-</c:forEach>
-</ul> --%>
-
-	<div class="slideBtnContainer">
+</ul>
+<div class="slideBtnContainer" style="display: block;">
   <button class="prev">prev</button>
   <button class="next" >next</button>
 	</div>
+	
 </div>
 </div>
 
@@ -229,6 +200,12 @@ var totalChild=$(".recommendList").children().length;  //총 추천계정의 수
 var viewCnt=4; //보여주고 싶은 계정 수 
 
  function changeClass(){
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
+	 console.log("totalChild:   "+totalChild);
 	 console.log("totalChild:   "+totalChild);
 	 console.log("totalChild:   "+totalChild);
 	 console.log("totalChild:   "+totalChild);
@@ -300,7 +277,11 @@ moveToSelected('next');
 
 //totalChild가 viewCnt보다 작거나 같으면 prev, next 버튼 숨김
 function hideBtn(){
-
+ console.log("totalChild"+totalChild);
+ console.log("viewCnt"+viewCnt);
+ 
+ 
+ 
 	if(totalChild<=viewCnt){
 		$(".prev").css("display","none");
 		$(".next").css("display","none");

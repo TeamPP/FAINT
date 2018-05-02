@@ -118,6 +118,14 @@ public class MainController {
 
 	}
 	
+	
+	//추천계정 없을때
+	@RequestMapping(value = "/emptyRecomm", method = RequestMethod.GET)
+	public void emptyRecomm(Model model)throws Exception{
+
+	}
+	
+	
 	// 접근 제한 페이지
 	@RequestMapping(value="/access-denied", method=RequestMethod.GET)
 	public String accessDenied(Model model) {
