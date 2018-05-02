@@ -787,7 +787,7 @@ body {
 	    		$(".list-chat > .scroll > ul").html(list);
 	    		$('.list-chat').data("rid", roomid);
 	    		
-	    		$(".scroll").scrollTop($("ul.chat").height()*2);
+	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
 		}
 		
@@ -1160,7 +1160,7 @@ body {
                         $('.list-chat').addClass('shown');
                         setRoute('.list-chat');
                         
-            			$(".scroll").scrollTop($("ul.chat").height()*2);
+            			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
             			
                         $('.chat-input').focus();
                         
