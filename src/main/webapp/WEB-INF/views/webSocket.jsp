@@ -216,9 +216,7 @@ display:none;
        	//나에대한 채팅방생성 및 메시지 수신 알림(roomid값 받음)
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
-            	var messageArray = message.body.split("|");
-            	if(messageArray)
-            	
+            	var roomid = message.body;
             	getChatList();
             	
             	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
