@@ -34,40 +34,42 @@ import net.sf.json.JSONArray;
 @RequestMapping("/recommend/*")
 public class RecommendController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RecommendController.class);
+   private static final Logger logger = LoggerFactory.getLogger(RecommendController.class);
 
 
-	@Inject
-	private ActivityService activityservice;
-	
-	// 인기검색어, 인기게시글 출력
-	@RequestMapping(value = "/recompage", method = RequestMethod.GET)
-	public String getPost(Model model , HttpServletRequest request) throws Exception {		
-		
-		//친구추천 계정
-		UserVO vo = (UserVO) request.getSession().getAttribute("login");
-		int loginid = vo.getId();
-		List<UserVO> recommList=activityservice.recomm(loginid);  
-		model.addAttribute("recommList",recommList);
-		
-		
-		//친구추천 계정들의 post
-		JSONArray jsonArray=new JSONArray();
-		List<PostVO> recomPostList=activityservice.RecommPost(loginid);
-		
-		if(recomPostList.size()>0){
-			model.addAttribute("recomPostList", recomPostList);
-			model.addAttribute("jsonList", jsonArray.fromObject(recomPostList));
-		
-			return "/recommend/recompage";
-		}else{
-			return "forward:/empty";
-		}
-		
-		
+   @Inject
+   private ActivityService activityservice;
+   
+   // 인기검색어, 인기게시글 출력
+   //친구추천 및 추천친구들의 게시글
+   @RequestMapping(value = "/recompage", method = RequestMethod.GET)
+   public String getPost(Model model , HttpServletRequest request) throws Exception {      
+      
+      //친구추천 계정
+      UserVO vo = (UserVO) request.getSession().getAttribute("login");
+      int loginid = vo.getId();
+      List<UserVO> recommList=activityservice.recomm(loginid);  
+      model.addAttribute("recommList",recommList);
+      
+      
+      //친구추천 계정들의 post
+      JSONArray jsonArray=new JSONArray();
+      List<PostVO> recomPostList=activityservice.RecommPost(loginid);
+      
+      if(recomPostList.size()>0){
+         System.out.println("recomPostList.size()"+recomPostList.size());
+         model.addAttribute("recomPostList", recomPostList);
+         model.addAttribute("jsonList", jsonArray.fromObject(recomPostList));
+      
+         return "/recommend/recompage";
+      }else{
+         return "forward:/emptyRecomm";  //추천할 계정이 현재 없음
+      }
+      
+      
 
-		
-	}
+      
+   }
 
-	
+   
 }

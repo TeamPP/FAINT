@@ -162,7 +162,7 @@ body {
                  <a class="new-post" href="/post/register">
 					<img src="/resources/image/header_icon/newpost-icon.png">
                  </a>
-                 <a class="recommend" href="javascript:;">
+                 <a class="recommend" href="/recommend/recompage">
 					<img src="/resources/image/header_icon/recommend-icon.png">
                  </a>
                  <a class="follow-list" list="results" data-toggle="modal" data-target="#followModal" data-backdrop="true" autocomplete="off">

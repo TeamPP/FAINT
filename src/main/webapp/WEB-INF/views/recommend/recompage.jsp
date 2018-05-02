@@ -18,11 +18,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    
-<!--검색창 부트스트랩  -->  
-<link rel="stylesheet" href="/resources/bootstrap/css/nav-style.css"> 
 
-<!-- expage.css -->
-<link rel="stylesheet" href="/resources//css/expage.css"> 
   
 <title>Insert title here</title>
 <!-- jquery 2.1.4. -->
@@ -31,8 +27,8 @@
 <style>
 
 article {
-	text-align: center;
-	display: block;
+   text-align: center;
+   display: block;
 }
 
 .mid-line {
@@ -48,66 +44,48 @@ article {
 
 
 /* 추천계정 스타일 */
- .recommContainer{
+.recommContainerWrp{
  width: 100%;
- height: 250px;
-  text-align:center;
+ height: 100%;
+ text-align:center;
+}
+
+
+ .recommContainer{
+ width: 935px;
+ max-width: 935px;
+display: inline-block;
+ /* height: 100%; */
+ /* height: 250px; */
+ /*  text-align:center; */
 }
 
 .recommendList{
+padding-left:0;
 overflow: hidden;
 }
 
 .recommendList li{
-/* transition: transform 1s, left 1s ;
- */
+/*    display: inline-block;
+   display: block; */
+/*  transition: transform 1s, left 1s ; */
+
  }
 
 #chip {
- width: 13%;
+ width: 23%;
  border: solid 1px #efefef;
  margin-left: 1%;
 } 
 
-.hideLeft{
-display: none;
-}
 
- .prev{
-	display: block;
-	display: inline-block;
-}
-
-.prevLeftSecond{
-display: block;
-display: inline-block;
-}
-
-.selected{
-	display: block;
-	display: inline-block;
-}
-
-.next{
-display: block;
-display: inline-block;
-}
-
-.nextRightSecond{
-display: block;
-display: inline-block;
-}
-
-.hideRight{
-display: none;
-}
 
 #chip img {
 border-radius: 50%;
 }
 
 .nickname {
-	line-height: 28px;
+   line-height: 28px;
     font-weight: 600;
 } 
 
@@ -140,37 +118,54 @@ height:80px;
 margin: 5% auto;
 } 
 
-/*모두보기 버튼 */
-.allRecomm{
+
+/*왼쪽 오른쪽 버튼  */
+.prev{
+margin-left:1%;
+color: #999;
+border: 0;
+background-color: white;
+}
+
+.next{
+color: #999;
+border: 0;
+background-color: white;
+}
+
+.slideBtnContainer button{
+float: inherit !important;
 
 }
+
 </style>
 </head>
 
 <body>
 
 <input type="hidden"
-	name="${_csrf.parameterName}"
-	value="${_csrf.token}"/>
+   name="${_csrf.parameterName}"
+   value="${_csrf.token}"/>
 
 
 <!--친구추천  -->
+<div class="recommContainerWrp">
 <div class="recommContainer">
 <ul class="recommendList">
 
 <c:forEach items="${recommList}" var="userVO">   
-<li id="chip">
+<li id="chip" style="display:none;" >
 <a href="/member/${userVO.nickname}">
-			<c:choose>
-				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-					<img class="recommPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
-				</c:when>
-				<c:otherwise>
-					<img class="recommPhoto" src="/resources/img/emptyProfile.jpg" />
-				</c:otherwise>
-			</c:choose>
+         <c:choose>
+            <c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
+               <img class="recommPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
+            </c:when>
+            <c:otherwise>
+               <img class="recommPhoto" src="/resources/img/emptyProfile.jpg" />
+            </c:otherwise>
+         </c:choose>
 </a>
-	<div>
+   <div>
   
   <c:choose>
   <c:when test="${userVO.name eq null}">
@@ -182,175 +177,123 @@ margin: 5% auto;
     <p class="name">${userVO.name}</p>
   </c:otherwise>
   </c:choose>
-  <button class="isFlw" title='${userVO.id}'>팔로우</button>
-	</div>
+  <button class="isFlw" data-uid='${userVO.id}'>팔로우</button>
+   </div>
 </li>
 </c:forEach>
-
-
-<c:forEach items="${recommList}" var="userVO">   
-<li id="chip">
-<a href="/member/${userVO.nickname}">
-			<c:choose>
-				<c:when test="${userVO.profilephoto ne null && userVO.profilephoto != ''}">
-					<img class="recommPhoto" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${userVO.profilephoto}" />
-				</c:when>
-				<c:otherwise>
-					<img class="recommPhoto" src="/resources/img/emptyProfile.jpg" />
-				</c:otherwise>
-			</c:choose>
-</a>
-	<div>
-  
-  <c:choose>
-  <c:when test="${userVO.name eq null}">
-  <a  class="nickname" style="line-height: 55px;" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-  <p class="name">${userVO.name}</p>
-  </c:when>
-  <c:otherwise>
-    <a  class="nickname" href="/member/${userVO.nickname}">${userVO.nickname}</a>
-    <p class="name">${userVO.name}</p>
-  </c:otherwise>
-  </c:choose>
-  <button class="isFlw" title='${userVO.id}'>팔로우</button>
-	</div>
-</li>
-</c:forEach>
-
 
 </ul>
+<div class="slideBtnContainer" style="display: block;">
+  <button class="prev">prev</button>
+  <button class="next" >next</button>
+   </div>
+   
+</div>
 </div>
 
 <script>
+$(document).ready(function(){
+   follow();
+   changeClass();
+    hideBtn();
+})
 
-/* 추천계정 */
+
+/* =============================== */
+/* 추천계정 슬라이드 처리 */
+var startInd=$(".recommendList").children().eq(0).index(); // start부분의 인덱스 처음엔 0
+var totalChild=$(".recommendList").children().length;  //총 추천계정의 수
+var viewCnt=4; //보여주고 싶은 계정 수 
+
  function changeClass(){
-	$(".recommendList").children().css("background-color","gray");
-	
-	var startInd=$(".start").index();
-	$(".recommendList").children().eq(0).addClass("start"); //클래스추가
-	var startInd=$(".start").index();  // start부분의 인덱스
-	$(".recommendList").children().eq($(".start").index()+0).css("background-color", "yellow");
-	$(".recommendList").children().eq($(".start").index()+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-	$(".recommendList").children().eq($(".start").index()+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-	$(".recommendList").children().eq($(".start").index()+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-	$(".recommendList").children().eq($(".start").index()+4).css("background-color", "yellow");  //첫번째요소+인덱스4
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+    console.log("totalChild:   "+totalChild);
+   //클래스명 추가하기
+   for(var i=0; i<viewCnt; i++){
+      console.log("함수가 돌아가요 돌아돌아");
+      $(".recommendList").children().eq(startInd+i).css("display","inline-block");
+   }
+   $(".recommendList").children().eq(startInd+viewCnt-1).nextAll().css("display","none");
+   
+   
 } 
-
-
-//   <- , -> 키보드 화살표로 이동
-	$(document).keydown(function(e) {
-  switch(e.which) {
-      case 37: // left
-      moveToSelected('prev');
-      break;
-      case 39: // right
-      moveToSelected('next');
-      break;
-      default: return;
-  }
-  e.preventDefault();
-}); 
-
 
 
 //추천계정 넘기기
 function moveToSelected(element) {
-	console.log("moveToStart");
-	if (element == "next") { 
-		$(".recommendList").children().eq(startInd).removeClass(); //start클래스 제거
-		
-		startInd+=1; //스타트 인덱스 1추가
-		$(".recommendList").children().eq(startInd).addClass("start"); //idx+1에 클래스 추가
-		
-		
-		$(".recommendList").children().eq(startInd+0).css("background-color", "yellow");
-		$(".recommendList").children().eq(startInd+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-		$(".recommendList").children().eq(startInd+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-		$(".recommendList").children().eq(startInd+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-		$(".recommendList").children().eq(startInd+4).css("background-color", "yellow");  //첫번째요소+인덱스4
-		
-		
-	} else if (element == "prev") {
-		$(".recommendList").children().eq(startInd).removeClass(); //start클래스 제거
-		
-		startInd-=1; //스타트 인덱스 1추가
-		$(".recommendList").children().eq(startInd).addClass("start"); //idx+1에 클래스 추가
-		
-		
-		$(".recommendList").children().eq(startInd+0).css("background-color", "yellow");
-		$(".recommendList").children().eq(startInd+1).css("background-color", "yellow");  //첫번째요소+인덱스1
-		$(".recommendList").children().eq(startInd+2).css("background-color", "yellow");  //첫번째요소+인덱스2
-		$(".recommendList").children().eq(startInd+3).css("background-color", "yellow");  //첫번째요소+인덱스3
-		$(".recommendList").children().eq(startInd+4).css("background-color", "yellow");  //첫번째요소+인덱스4
-		
-	} else {
-		var start = element;
-	}	
-	
-	/* prev, next 아이콘 클릭 사진이동  */
-	$('#prev').click(function() {
-	moveToSelected('prev');
-	});
-	$('#next').click(function() {
-	moveToSelected('next');
-	});
+   console.log("moveToSelected");
+   if (element == "next") {
+      console.log("->화살표누름!!!!")
+      //->화살표누름
+      if(startInd>=totalChild-4){ //4개만 보여주기
+          console.log("멈췄다 기능 멈췄다");
+         //비었다
+      } else {
+      console.log("처음 startInd"+startInd);
+      
+      $(".recommendList").children().eq(startInd).css("display","none");
+      
+      startInd= startInd+1;
+      console.log("변경된 스타트 인덱스:    "+startInd);
+      $(".recommendList").children().eq(startInd+viewCnt-1).css("display","inline-block");
+      
+      }
+      
+      
+   } else if (element == "prev") {
+      console.log("<-화살표누름!!!!")
+      console.log("totalChild-viewCnt:      "+totalChild-viewCnt);
+      
+        if(startInd==0){  
+           console.log("멈췄다 기능 멈췄다");
+           //비었다
+        } else {
+         console.log("처음 startInd:    " +startInd);
+         $(".recommendList").children().eq(startInd+viewCnt-1).css("display","none");
+         
+      // <-- 화살표누름
+      startInd= startInd-1;
+      console.log("변경된 startInd" +startInd);      
+      $(".recommendList").children().eq(startInd).css("display","inline-block");
+        }
+      
+   } 
 } 
 
+/* prev, next 버튼 클릭 사진이동  */
+$('.prev').click(function() {
+   console.log("왼쪽왼쪽왼쪽")
+moveToSelected('prev');
+});
+$('.next').click(function() {
+   console.log("왼쪽왼쪽왼쪽")
+moveToSelected('next');
+});
 
 
-
-
-
-
- $(document).ready(function(){
-	follow();
-	changeClass();
-})
-
-//follow여부확인하여 팔로우/팔로우취소
-
-function follow(){
-	 var followFlg=false;
-	 
-	 $(".isFlw").on("click", function(){
-		
-		 var userid=$(this).attr("title");
-		 var isFlw=this;
-		 
-		 if(followFlg){return;};
-		 
-		 followFlg=true;
-		 if($(this).html()=="팔로우"){
-			 var type="post";
-			 var url="/member/follow/"+userid;
-			 var header="{'X-HTTP-Method-Overrid' : 'POST'}";
-			 $(isFlw).html("팔로잉"); 
-		 } else if($(this).html()=="팔로잉"){
-			 var type="delete";
-			 var url="/member/unfollow/"+userid;
-			 var header="{'X-HTTP-Method-Overrid' : 'DELETE'}";
-			 $(isFlw).html("팔로우");
-		 }
-		 
-		 $.ajax({
-			type:type,
-			url:url,
-			headers:header,
-			dataType:"text",
-			beforeSend: function(xhr){
-				xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
-			},
-			
-			success:function(result){
-				if(result=="SUCCESS"){
-					followFlg=false;
-				};
-			}
-		 });
-	 });
- };
-
+//totalChild가 viewCnt보다 작거나 같으면 prev, next 버튼 숨김
+function hideBtn(){
+ console.log("totalChild"+totalChild);
+ console.log("viewCnt"+viewCnt);
+ 
+ 
+ 
+   if(totalChild<=viewCnt){
+      $(".prev").css("display","none");
+      $(".next").css("display","none");
+   }
+   
+}
 
 
 
