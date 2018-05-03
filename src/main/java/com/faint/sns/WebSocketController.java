@@ -157,7 +157,7 @@ public class WebSocketController {
 		messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "FAIL");
 	}
 	
-	//채팅방 메세지 리스트 가져오기
+	//채팅방 리스트 가져오기
 	@ResponseBody
 	@RequestMapping(value="/getChatList", method=RequestMethod.GET)
 	public ResponseEntity<List<ChatroomVO>> getChatList(Authentication authentication) throws Exception {
@@ -192,7 +192,6 @@ public class WebSocketController {
 			
 			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
 			String chatRoom=JSONArray.fromObject(messageList).toString();
-			
 			//읽은 사람이 없을경우 실행 X
 			if(map.get("users")!=null){
 				
@@ -225,7 +224,6 @@ public class WebSocketController {
 	public void registMessage(Principal principal, MessageVO vo) throws Exception {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
-			
 			try{
 				String users = msgService.registMessage(vo);
 				

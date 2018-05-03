@@ -223,8 +223,12 @@ display:none;
             	if(msg[0]=="c"){
             		
             		var roomid = msg.substr(1,msg.length-1);
-                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+            		console.log("들어오남ㅁㅁ뮤ㅠㅠㅠ");
+                	if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==undefined){
+                		console.log("들어오남ㅁㅁㅁ");
+                		$('.list-chat').data("rid", roomid);
                 		getChat(roomid);
+                		
                 	}
                 	getChatList();
                 	

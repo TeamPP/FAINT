@@ -750,29 +750,34 @@ body {
 
 
 		<script>
-		var uu;
+
 		//채팅창 가져오기
 		function getChat(roomid){
 			
 	    	$.getJSON("/getChat/"+roomid, function(data){
-	    		if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+	    		//서로 채팅하는 중일 때 + 처음 메세지 입력할 때
+	    		if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==roomid){
 	    			var currentLength = $(".list-chat > .scroll > ul").children().length;
 	    			var list="";
+	    			console.log("서로 채팅하는 중일 때 + 처음 메세지 입력할 때");
 	    			if($(data).length > currentLength){
-	    				for (var i = $(data).length - $(".list-chat > .scroll > ul").children().length; int > 0; int--) {
+	    				for (var i = $(data).length - $(".list-chat > .scroll > ul").children().length; i > 0; i--) {
+	    					console.log($(data).eq(-1*i).comment);
 	    					list = getNewChat($(data).eq(-1*i));
 	    				}
+	    			}
 	    			$(".list-chat > .scroll > ul").append(list);
 	    			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
+	    		
+	    		//채팅방 접속 시
+	    		}else if( !($(".list-chat").hasClass("shown")) && $(".list-chat").data("rid")==roomid ){
 	    			
-	    		}else{
-	    			
+	    			console.log("채팅방 접속시");
 	    			var list = getNewChat(data);
 	    			$(".list-chat > .scroll > ul").html(list);
-	    			$('.list-chat').data("rid", roomid);
-	    			
 	    		}
 	    		
+	    		console.log("이프문 안들어갈때");
 	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
 		}
@@ -1130,18 +1135,21 @@ body {
       	//채팅리스트 클릭이벤트
         $('.list-text > .scroll > .list').on('click', 'li', function() {
         	var roomid=$(this).data("rid");
-			getChat(roomid);
-			
+        	$('.list-chat').data("rid", roomid);
+        	getChat(roomid);
+        	
             // timeout just for eyecandy...
             setTimeout(function() {
             	
                 $('.shown').removeClass('shown');
                 $('.list-chat').addClass('shown');
+                
                 setRoute('.list-chat');
                 $(".scroll").scrollTop($(".scroll")[2].scrollHeight);
                 $('.chat-input').focus();
                 
             }, 300);
+           
         });
 
         // 친구목록 리스트 클릭이벤트
@@ -1170,13 +1178,12 @@ body {
                 			$(this).trigger("click");
                 			noRoom=false;
                 			return false;
-                			
                 		}
                 	})
                 	
                 	//채팅방 div에 현재 타겟값 저장
                 	if(noRoom){
-                		$('.list-chat').data("curTarget", $TARGET.find('span').html());
+                		$('.list-chat').data("curTarget", $TARGET.find('span').html().trim());
                 	}
                 	
                     // timeout just for eyecandy...
@@ -1248,7 +1255,10 @@ body {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
+            
             $(".list-chat > .scroll > ul").html("");
+            $('.list-chat').removeData("rid");
+            
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);
