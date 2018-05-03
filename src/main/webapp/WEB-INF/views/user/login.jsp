@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%-- <!DOCTYPE html>
 <html>
 <head><title>로그인 페이지</title></head>
@@ -99,14 +100,16 @@
         }
 
     </style>
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
 <script>
     var memberID=Boolean(${login.id});
     if(memberID){
         alert("이미 로그인 되어있습니다. 로그아웃 해주세요");
         self.location = "/";
     }
-
 </script>
+</sec:authorize>
 <link href="/resources/dist/css/login.css" rel="stylesheet">
 <div  id="login">
     <div class="wrapper fadeInDown text-center">
