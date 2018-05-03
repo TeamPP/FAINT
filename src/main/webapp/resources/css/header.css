@@ -533,6 +533,7 @@ span {
 .dropdown {
     text-align: center;
     float: left;
+    left: 2%;
     top: 20px;
     height: 40px;
 }
@@ -566,6 +567,7 @@ span {
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    right: -39.5%;
 }
 
 .dropdown-content a {
@@ -707,7 +709,7 @@ span {
 
 #follow-modal-content {
 	width: 18%;
-    right: -69.3%;
+	right: -70.9%;
     position: relative;
     top: 1%;
     border: solid 1px #e6e6e6;
@@ -807,7 +809,7 @@ span {
 }
 
 ._nodr2, ._nodr2:visited {
-    color: #262626;
+    color: #262626 !important;
     font-weight: 600;
 }
 
