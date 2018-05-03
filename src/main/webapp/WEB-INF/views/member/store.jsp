@@ -172,6 +172,9 @@ div.secondLine span {
 </head>
 <body>
 
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
+
 <article>
 	<div class="photo-profile">
 		<section id="proPhoto">
@@ -240,6 +243,8 @@ div.secondLine span {
 	</div>
 </article>
 </c:if>
+
+</sec:authorize>
 
 <!-- 프로필 이미지 input -->
 <input type="file" name="file" id="inputfile" accept="image/*" style="display:none;">
@@ -355,6 +360,9 @@ border-radius: 150px;  /* 프사 둥글게 */
 @media (min-width:414px){._cepxb{margin:0 auto}}
 </style>
 </script>
+
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
 
 <script>
 
@@ -692,6 +700,8 @@ $(document).ready(function(){
 
 })
 </script>
+
+</sec:authorize>
 
 </body>
 </html>

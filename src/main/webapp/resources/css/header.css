@@ -585,8 +585,8 @@ span {
     position: absolute;
     text-align: right;
     top: 24px;
-    right: 27%;
     visibility: hidden;
+    right: 15%;
 }
 
 .cate-option div {
@@ -675,12 +675,11 @@ span {
 .catefilter {
     text-align: center;
     display: inline-block;
-    float: left;
     position: relative;
-    left: 40%;
     height: 50%;
     top: 22px;
     color:#999;
+    left: 43%;
 }
 
 .catefilter:hover {
@@ -741,10 +740,6 @@ span {
     width: 500px;
     z-index: 11;
 } */
-
-._3qhgf {
-    cursor: pointer;
-}
 
 ._75ljm {
     -webkit-box-align: center;
@@ -837,4 +832,14 @@ span {
     height: 40px;
     min-width: 40px;
     vertical-align: middle;
+}
+
+._3lema {
+    color: #999;
+    margin-left: 5px;
+}
+
+._6g6t5 {
+    font-size: 13px;
+    line-height: 18px;
 }

@@ -71,7 +71,7 @@ public class CommonErrorController {
         logger.info("page error code 500");
         pageErrorLog(request);
         model.addAttribute("title","500");
-        model.addAttribute("msg","서버에 오류가 발생하였습니다.");
+        model.addAttribute("msg","페이지가 만료가 되었습니다..");
         return "common/error";
     }
 

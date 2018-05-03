@@ -10,8 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
-<script type="text/javascript" src="../../resources/js/stomp.js"></script>
+
 
 <!-- 메신저 아이콘 & 폰트 -->
 <link rel='stylesheet prefetch' href='https://cdn.materialdesignicons.com/1.1.70/css/materialdesignicons.min.css'>
@@ -495,20 +494,21 @@ ul.list li .name {
   display: flex;
   justify-content: space-between;
 }
+ul.list li .content-container{
+	word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 75%;
+}
 ul.list li .content-container .name {
   font-weight: bold;
   padding: 0 0 0 20px;
   font-size: 1em;
 }
-ul.list li .content-container .phone {
-  padding: 0 0 0 20px;
-  font-size: 0.8em;
-  display: block;
-  margin-bottom: -4px;
-}
 ul.list li .content-container .txt {
   padding: 0 0 0 20px;
   font-size: 0.9em;
+  white-space: nowrap;
 }
 ul.list li .content-container .meta {
   font-size: 0.7em;
@@ -665,8 +665,14 @@ body {
 
 				<div class="card menu">
 					<div class="header">
-						<img
-							src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
+						<c:choose>
+							<c:when test="${login.profilephoto ne null && login.profilephoto != ''}">
+								<img src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${login.profilephoto}" />
+							</c:when>
+							<c:otherwise>
+								<img src="/resources/img/emptyProfile.jpg" />
+							</c:otherwise>
+						</c:choose>
 						<h4>${login.nickname}</h4>
 					</div>
 					<div class="content">
@@ -762,15 +768,21 @@ body {
 	    			}
 
 	    			// 프로필 사진이 있는경우 | 없는 경우
-	   				if(this.profilephoto != null){
+	   				if(this.profilephoto != null && this.profilephoto != ""){
 	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
-	               	}else if(this.profilephoto == null){
+	               	}else if(this.profilephoto == null || this.profilephoto == ""){
 	               		list += "src='/resources/img/emptyProfile.jpg' />";
 	               	}
 	   				
-	   				list += "<div class='message'>" + this.comment + "</div>";
+	   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
 	   				
-	   				list += "<div><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
+	   				//읽음 상태표시
+	   				if(this.readstatus!=0){
+	   					list += "<div style='color: #ffa845; padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + this.readstatus + "</time></div>";	
+	   				}
+	   				
+	   				//시간
+	   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
 	   				
 	   				
 	    		})
@@ -786,34 +798,49 @@ body {
 		getChatList()
 		function getChatList(){
 			$.getJSON("/getChatList", function(data){
-				
 	    		var cur_Scroll_Location = $(".scroll").scrollTop();
 	    		var list="";
 				if($(data).length!=0){
 	    			$(data).each(function(){
-	    				
-	    				var userPhotoArray = this.usersPhoto.split("|");
-	    				var userNicknameArray = this.usersNickname.split("|");
-	    				
+	    				console.log(this.usersPhoto);
+
 	    				list += "<li data-rid='"+this.id+"'><img ";
 	    				
-	    				if(userPhotoArray.length==1 || this.usersPhoto==null){
-	    	            	if(this.usersPhoto != "" || this.usersPhoto != null){
-	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.usersPhoto+"' />";
-	    	            	}else{
-	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
-	    	            	}
-	    				}else{
+	    				if(this.usersPhoto!=null){
+	    					var userPhotoArray = this.usersPhoto.split("|");
+	    				}else if(this.usersPhoto==null){
+	    					list+="src='/resources/img/emptyProfile.jpg' />";
+	    				}
+	    				
+	    				if(userPhotoArray!=undefined && userPhotoArray.length==1){
+	    	            	list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.usersPhoto+"' />";
+	    	            	
+	    				}else if(userPhotoArray!=undefined && userPhotoArray.length>1){
+	    					
 	    					if(userPhotoArray[0] != "" || userPhotoArray[0] != null){
 	    	            		list+="src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+userPhotoArray[0]+"' />";
 	    	            	}else{
 	    	            		list+="src='/resources/img/emptyProfile.jpg' />";
 	    	            	}
+	    					
 	    				}
-
-	    				list += "<div class='content-container'><span class='name'>"+userNicknameArray[0]+"</span>";
 	    				
-	    				list += "<span class='txt'>" + this.lastMessage + "</span></div>";
+	    				var userNicknameArray = this.usersNickname.split("|");
+	    				
+						if(userNicknameArray.length == 1){
+							list += "<div class='content-container'><span class='name'>"+userNicknameArray[0]+"</span>";	
+						}else{
+							list += "<div class='content-container'><span class='name'>"
+							for(var i in userNicknameArray){
+								list += userNicknameArray[i]+", ";
+								if( i == userNicknameArray.length-1){
+									list += userNicknameArray[i]+"</span>";
+								}
+							}
+						}
+	    				
+	    				
+	    				list += "<span class='txt' style='word-break:break-all;'>" + this.lastMessage + "</span></div>";
 	    				
 	    				list += "<span class='time'>" + createDateWithCheck(this.lastMessageDate) + "</span></li>";
 	    				
