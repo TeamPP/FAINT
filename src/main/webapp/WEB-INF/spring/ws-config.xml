@@ -10,7 +10,6 @@
 
 
 	<!-- <bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" /> -->
-	<bean id="customHandshakeHandler" class="com.faint.util.HttpHandshakeInterceptor"/>
 	
 	
 <!-- 	<websocket:handlers>
@@ -27,9 +26,6 @@
 		application-destination-prefix="/app"
 		user-destination-prefix="/user">
        	<websocket:stomp-endpoint path="/hello">
-       		<websocket:handshake-interceptors>
-       			<bean class="com.faint.util.HttpHandshakeInterceptor"/>
-       		</websocket:handshake-interceptors>
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/chat, /notify, /access"/>

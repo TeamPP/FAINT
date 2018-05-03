@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.google.api.Google;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.LoginDTO;
 import com.faint.service.UserService;
 import com.faint.util.UploadFileUtils;
@@ -157,7 +159,7 @@ public class UserController {
     }
 	//이메일 인증 코드 검증
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
-	public String emailConfirm(UserVO user,Model model,RedirectAttributes rttr) throws Exception { // 이메일인증
+	public String emailConfirm(UserVO user, Model model, RedirectAttributes rttr) throws Exception { // 이메일인증
 		
 		System.out.println("cont get user"+user);
 		UserVO vo = new UserVO();
@@ -179,7 +181,7 @@ public class UserController {
     }
 	//이메일 확인 후
     @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
-    public String findPasswordPost(UserVO user, Model model,RedirectAttributes rttr) throws Exception{
+    public String findPasswordPost(UserVO user, Model model, RedirectAttributes rttr) throws Exception{
         System.out.println("find passwordPost 진입 ");
 		//userEmail 값으로 회원 여부 확인 requestparam 으로 변경??
         String str= user.getEmail();
@@ -280,10 +282,7 @@ public class UserController {
 	
 	@RequestMapping(value="/loginTest", method = {RequestMethod.GET, RequestMethod.POST} )
 	public void login_view(Model model) {
-/*		model.addAttribute("principal", principal);
-		System.out.println("여기는 UC loginTest1: "+principal);
-		System.out.println("여기는 UC loginTest2: ");
-		return "user/loginTest";*/
+		
 	}
 	
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
@@ -391,7 +390,7 @@ public class UserController {
 	private String uploadPath;
 
 	@RequestMapping(value = "/modifyUser", method = RequestMethod.POST, produces = "text/plane;charset=UTF-8")
-	public String ModifyUserPost(UserVO user,Model model,RedirectAttributes rttr,HttpSession session, MultipartFile file) throws Exception{
+	public String ModifyUserPost(UserVO user, Model model, RedirectAttributes rttr, Authentication authentication, MultipartFile file) throws Exception{
 		
 		
 		System.out.println("바꾸러 왔다 ");
@@ -399,7 +398,8 @@ public class UserController {
         String test=user.getProfilephoto();
         //user 정보 저장
 		String userId= user.getId()+"";
-		UserVO ssvo = (UserVO)session.getAttribute("login");
+		CustomUserDetails customUser = (CustomUserDetails)authentication.getPrincipal();
+		UserVO ssvo=(UserVO)customUser.getVo();
 
 		String ssuserId =ssvo.getId()+"";
 
@@ -456,12 +456,12 @@ public class UserController {
 		return "redirect:/user/myinfo";
 	}
 	/* GoogleLogin */
+	
 	@Inject
 	private GoogleConnectionFactory googleConnectionFactory;
+	
 	@Inject
 	private OAuth2Parameters googleOAuth2Parameters;
-
-
 
 	@RequestMapping(value = "/googleLogin", method = { RequestMethod.GET, RequestMethod.POST })
     public String doGoogleSignInActionPage(HttpServletResponse response, Model model) throws Exception{

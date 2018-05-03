@@ -191,8 +191,6 @@ public class PostDAOImpl implements PostDAO {
 	public void postTakeaway(RelationDTO dto) throws Exception{
 		session.delete(namespace + ".postTakeaway", dto);
 	}
-
-	
 	
 	//==============================category filtering==============================
 		//카테고리로 필터링

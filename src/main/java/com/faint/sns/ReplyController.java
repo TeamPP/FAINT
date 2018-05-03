@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.ReplyVO;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.RelationDTO;
 import com.faint.persistence.UserDAO;
 import com.faint.service.ReplyService;
@@ -36,6 +38,7 @@ public class ReplyController {
 	
 	@Inject
 	private UserDAO userDao;
+	
 	/*댓글 등록 - rest방식*/
 	@ResponseBody
 	@RequestMapping(value="", method=RequestMethod.POST)
@@ -79,12 +82,13 @@ public class ReplyController {
 	
 	/*댓글 삭제 - rest방식*/
 	@ResponseBody
-	@RequestMapping(value="/{replyid}", method=RequestMethod.DELETE)
-	public ResponseEntity<String> rplRegister(@PathVariable("replyid") Integer id){
+	@RequestMapping(value="/{replyid}/removeby/{userid}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> rplRegister(@PathVariable("replyid") Integer id, @PathVariable("userid") Integer userid){
+		
 		ResponseEntity<String> entity=null;
-		System.out.println(id);
+
 		try{
-			service.remove(id);
+			service.remove(id, userid);
 			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -96,15 +100,18 @@ public class ReplyController {
 	/*게시물에 대한 댓글 조회 - JSON객체(LIST배열에 담아서 던져줌)*/
 	@ResponseBody
 	@RequestMapping(value="/post/{postid}", method=RequestMethod.GET)
-	public ResponseEntity<List<ReplyVO>> rplList(@PathVariable("postid") Integer postid, HttpServletRequest request){
+	public ResponseEntity<List<ReplyVO>> rplList(@PathVariable("postid") Integer postid, Authentication authentication){
 		
 		//차단or차단당한 유저일경우 빼기위해 로그인값 확인
-		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setPostid(postid);
 	
 		ResponseEntity<List<ReplyVO>> entity=null;
+		
 		try{
 			entity=new ResponseEntity<>(service.read(dto), HttpStatus.OK);
 		}catch(Exception e){

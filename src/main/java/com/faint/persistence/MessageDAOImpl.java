@@ -21,9 +21,7 @@ public class MessageDAOImpl implements MessageDAO {
 
 	@Override
 	public int insertFirstMessage(MessageVO vo) throws Exception{
-		System.out.println(vo.toString());
 		session.insert(namespace+".insertFirstMessage", vo);
-		System.out.println(vo.toString());
 		return vo.getRoomid();
 	}
 	

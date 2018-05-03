@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.faint.domain.PostVO;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.FollowinPostDTO;
 import com.faint.dto.RelationDTO;
 import com.faint.service.PostService;
@@ -40,30 +42,26 @@ public class PostController {
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 	/*게시물 등록창 읽기*/
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String registerGET(Model model, HttpServletRequest request) throws Exception {
+	public String registerGET(Model model, Authentication authentication) throws Exception {
 		logger.info("register get..............");
 		
-		HttpSession session = request.getSession();
-		if(session !=null){
-			UserVO user = (UserVO)session.getAttribute("login");
-			logger.info(user.toString());
-			model.addAttribute("userVO", user);
-		}
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO user=(UserVO)customUser.getVo();
+		
+		model.addAttribute("userVO", user);
 		
 		return "forward:/post/uploader";
 	}
 
 	/*게시물 등록 - model방식*/
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public void registerPOST(Model model, HttpServletRequest request) throws Exception {
+	public void registerPOST(Model model, HttpServletRequest request, Authentication authentication) throws Exception {
 		logger.info("register post..............");
 		
-		HttpSession session = request.getSession();
-		if(session !=null){
-			UserVO user = (UserVO)session.getAttribute("login");
-			logger.info(user.toString());
-			model.addAttribute("userVO", user);
-		}
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO user=(UserVO)customUser.getVo();
+		
+		model.addAttribute("userVO", user);
 		
 		String[] files = request.getParameterValues("files");
 
@@ -83,9 +81,11 @@ public class PostController {
 	
 	// 게시물 수정 get-1
 	@RequestMapping(value = "/{postid}/postEditor", method = RequestMethod.GET)
-	public String modifyGET(@PathVariable("postid") int postid, Model model, HttpServletRequest request) throws Exception {
+	public String modifyGET(@PathVariable("postid") int postid, Model model, Authentication authentication) throws Exception {
 		
-		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
+		
 		RelationDTO dto=new RelationDTO();
 		dto.setLoginid(vo.getId());
 		dto.setPostid(postid);
@@ -138,10 +138,11 @@ public class PostController {
 	
 	// 게시물 수정 post
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(PostVO post, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+	public String modifyPOST(PostVO post, RedirectAttributes rttr, Authentication authentication) throws Exception {
 		System.out.println("===================modify post.........=========");
-		HttpSession session = request.getSession();
-		UserVO user = (UserVO)session.getAttribute("login");
+		
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO user=(UserVO)customUser.getVo();
 		//게시글 유저정보랑 로그인 유저랑 다를경우 리턴
 		//같을떄만 수정 가능
 		if(post.getUserid() != user.getId() ){
@@ -159,10 +160,11 @@ public class PostController {
 	
 	//게시물 삭제
 	@RequestMapping(value="/{postid}/delete", method=RequestMethod.DELETE)
-	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> deletePost(@PathVariable("postid") int postid, Authentication authentication) throws Exception {
 		ResponseEntity<String> entity=null;
 		
-		UserVO vo=(UserVO)request.getSession().getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
 		
 		try{
 			String delete=service.deleteOne(postid, vo.getId());
@@ -188,13 +190,13 @@ public class PostController {
 	
 	/*게시물 등록 - model방식*/
 	@RequestMapping(value = "/register/submit", method = RequestMethod.POST)
-	public String registerSubmit(PostVO post, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+	public String registerSubmit(PostVO post, RedirectAttributes rttr, Authentication authentication) throws Exception {
 		logger.info("regist submit POST..............");
-		logger.info(post.toString());
 		
-		HttpSession session = request.getSession();
-		System.out.println(Arrays.toString(post.getFilters()));
-		UserVO user = (UserVO)session.getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO user=(UserVO)customUser.getVo();
+		
+		logger.info(Arrays.toString(post.getFilters()));
 		
 		post.setUserid(user.getId());
 		
@@ -225,14 +227,14 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping(value="/detail", method=RequestMethod.POST)
-	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, HttpServletRequest request)throws Exception{
+	public ResponseEntity<FollowinPostDTO> detailRead(@RequestParam("postid") Integer postid, Authentication authentication)throws Exception{
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
 		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
 		
 		ResponseEntity<FollowinPostDTO> entity=null;
 		try{
@@ -247,14 +249,15 @@ public class PostController {
 	
 	//게시물 저장 - rest방식
 	@RequestMapping(value="/{postid}/store", method=RequestMethod.POST)
-	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
+	public ResponseEntity<String> postStore(@PathVariable("postid") Integer postid, Authentication authentication)throws Exception{
 		ResponseEntity<String> entity=null;
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
 				
 		try{
 			service.postStore(dto);
@@ -268,14 +271,15 @@ public class PostController {
 
 	//게시물 저장 취소 - rest방식
 	@RequestMapping(value="/{postid}/takeaway", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
+	public ResponseEntity<String> postTakeaway(@PathVariable("postid") Integer postid, Authentication authentication)throws Exception{
 		ResponseEntity<String> entity=null;
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
 		
 		try{
 			service.postTakeaway(dto);
@@ -289,15 +293,17 @@ public class PostController {
 	
 	//like 등록 - rest방식
 	@RequestMapping(value="/{postid}/like/{writer}", method=RequestMethod.POST)
-	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, @PathVariable("writer") Integer userid, HttpServletRequest request)throws Exception{
-		ResponseEntity<String> entity=null;
+	public ResponseEntity<String> postLike(@PathVariable("postid") Integer postid, @PathVariable("writer") Integer userid, Authentication authentication)throws Exception{
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
 		dto.setUserid(userid);
+		
+		ResponseEntity<String> entity=null;
 		
 		try{
 			service.postLike(dto);
@@ -311,14 +317,16 @@ public class PostController {
 
 	//like 삭제 - rest방식
 	@RequestMapping(value="/{postid}/unlike", method=RequestMethod.DELETE)
-	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
-		ResponseEntity<String> entity=null;
+	public ResponseEntity<String> postUnlike(@PathVariable("postid") Integer postid, Authentication authentication)throws Exception{
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
+		
+		ResponseEntity<String> entity=null;
 		
 		try{
 			service.postUnlike(dto);
@@ -333,14 +341,17 @@ public class PostController {
 	//게시물에 대한 좋아요 유저반환(PK,nickname만) - JSON객체(LIST배열에 담아서 던져줌)
 	@ResponseBody
 	@RequestMapping(value="/{postid}/likerlist", method=RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, HttpServletRequest request)throws Exception{
-		ResponseEntity<List<UserVO>> entity=null;
+	public ResponseEntity<List<UserVO>> likerList(@PathVariable("postid") Integer postid, Authentication authentication)throws Exception{
 		
-		HttpSession session=request.getSession();
-		UserVO userVO=(UserVO)session.getAttribute("login");
+		
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+		
 		RelationDTO dto = new RelationDTO();
 		dto.setPostid(postid);
-		dto.setLoginid(userVO.getId());
+		dto.setLoginid(vo.getId());
+		
+		ResponseEntity<List<UserVO>> entity=null;
 		
 		try{
 			entity=new ResponseEntity<List<UserVO>>(service.postLiker(dto), HttpStatus.OK);

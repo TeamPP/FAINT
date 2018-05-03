@@ -18,7 +18,6 @@ import com.faint.service.MailService;
 @Controller
 public class MailController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Inject
 	private MailService service;
 	
