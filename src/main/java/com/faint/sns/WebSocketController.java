@@ -227,13 +227,10 @@ public class WebSocketController {
 		if(principal.getName().equals(vo.getSenderEmail())){
 			
 			try{
-				Map<String, Object> map = msgService.registMessage(vo);
-				MessageVO sendMessage = (MessageVO)map.get("message");
-				String users = map.get("users").toString();
+				String users = msgService.registMessage(vo);
 				
 				if(users!="" || users!=null){
 					
-					String newMessage = JSONArray.fromObject(sendMessage).toString();
 					//나에게 알리기
 					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "n"+vo.getRoomid());
 					

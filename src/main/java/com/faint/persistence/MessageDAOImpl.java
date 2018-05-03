@@ -42,12 +42,6 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 	
 	@Override
-	public MessageVO getOneMessage(MessageVO vo) throws Exception{
-		return session.selectOne(namespace+".getOneMessage", vo);
-		
-	}
-	
-	@Override
 	public String getUsers(MessageVO vo) throws Exception{
 		return session.selectOne(namespace+".getUsers", vo);
 	}

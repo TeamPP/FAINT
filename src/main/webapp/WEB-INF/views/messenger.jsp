@@ -756,14 +756,21 @@ body {
 			
 	    	$.getJSON("/getChat/"+roomid, function(data){
 	    		if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
-	    			
-	    			var list = getNewChat($(data).eq(-1));
+	    			var currentLength = $(".list-chat > .scroll > ul").children().length;
+	    			var list="";
+	    			if($(data).length > currentLength){
+	    				for (var i = $(data).length - $(".list-chat > .scroll > ul").children().length; int > 0; int--) {
+	    					list = getNewChat($(data).eq(-1*i));
+	    				}
 	    			$(".list-chat > .scroll > ul").append(list);
 	    			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
+	    			
 	    		}else{
+	    			
 	    			var list = getNewChat(data);
 	    			$(".list-chat > .scroll > ul").html(list);
 	    			$('.list-chat').data("rid", roomid);
+	    			
 	    		}
 	    		
 	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
@@ -801,6 +808,7 @@ body {
    				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";
    				
     		})
+			
     		return list;
 		}
 		
