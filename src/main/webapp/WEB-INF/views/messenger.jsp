@@ -756,8 +756,10 @@ body {
 			
 	    	$.getJSON("/getChat/"+roomid, function(data){
 	    		if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+	    			
 	    			var list = getNewChat($(data).eq(-1));
 	    			$(".list-chat > .scroll > ul").append(list);
+	    			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    		}else{
 	    			var list = getNewChat(data);
 	    			$(".list-chat > .scroll > ul").html(list);
@@ -1042,6 +1044,10 @@ body {
                 $('.mdi-menu').show();
                 $('.mdi-arrow-left').hide();
             }
+          	
+          	if(route === '.list-text') {
+          		getChatList();
+          	}
         }
 
         // 색상 캔버스 활성화 위해 이미지값 넣기
@@ -1093,6 +1099,7 @@ body {
         				JSON.stringify({ 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
         		//채팅창 데이터 값 삭제
         		$('.list-chat').removeData("curTarget");
+        		
         	}else if( $(".chat").children("li").length >= 1 ){
         		var roomid = $('.list-chat').data("rid");
         		stompClient.send("/app/chat/sendMsg", {},

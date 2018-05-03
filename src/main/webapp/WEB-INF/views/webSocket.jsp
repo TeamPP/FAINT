@@ -252,7 +252,6 @@ display:none;
                 	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
                 		getChat(roomid);
                 	}
-                	getChatList();
                 	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
             	}
             	

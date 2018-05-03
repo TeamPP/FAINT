@@ -193,7 +193,9 @@ public class WebSocketController {
 			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
 			String chatRoom=JSONArray.fromObject(messageList).toString();
 			
+			//읽은 사람이 없을경우 실행 X
 			if(map.get("users")!=null){
+				
 				String users=map.get("users").toString();
 				String[] userArray = users.split("\\|");
 				
@@ -201,6 +203,10 @@ public class WebSocketController {
 				for(String nickname : userArray){
 					messagingTemplate.convertAndSend("/chatWait/" + nickname, "r"+roomid+chatRoom);
 				}
+				
+				//나에게 다시 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getNickname(), "r"+roomid+chatRoom);
+				
 			}
 			
 			//JSONArray로 만들기 위한 인스턴스값 생성
