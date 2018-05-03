@@ -9,20 +9,21 @@
 
 	<!-- 알림 리스트 가져오기 -->
 	<select id="getNoticeList" resultType="com.faint.dto.NoticeDTO">
-        select u.profilePhoto, u.nickname as fromid, u.id as fromUserId, n.targetid, n.type, n.postid, n.regdate, a.URL as postPhoto, a.filter, f.isFlw
-		from
-		tbl_notice n
-		left join
-		tbl_user u
-		on n.fromid=u.id
-		left join
-		(select * from tbl_attach group by postid) a
-		on n.postid=a.postid
-		left join
-		(SELECT followedid as isFlw FROM tbl_follow WHERE userid=#{userid}) f
-		on n.fromid=f.isFlw
-		where n.targetid=#{userid}
-		order by n.regdate desc
+        select u.profilePhoto, u.nickname as fromid, u.id as fromUserId, n.targetid, n.type, n.postid, max(n.regdate) as regdate, a.URL as postPhoto, a.filter, f.isFlw
+	      from
+	      tbl_notice n
+	      left join
+	      tbl_user u
+	      on n.fromid=u.id
+	      left join
+	      (select * from tbl_attach group by postid) a
+	      on n.postid=a.postid
+	      left join
+	      (SELECT followedid as isFlw FROM tbl_follow WHERE userid=172) f
+	      on n.fromid=f.isFlw
+	      where n.targetid=172
+	      group by fromUserId, targetid, type, postid
+	      order by regdate desc
 	</select>
 	
 	<insert id="createFollowNotice">

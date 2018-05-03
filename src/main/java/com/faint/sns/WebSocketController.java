@@ -141,9 +141,9 @@ public class WebSocketController {
 			try{
 				int roomId = msgService.chatCreate(dto, vo);
 				//나에게 알리기
-				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), roomId+"");
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "c"+roomId);
 				//상대에게 알리기
-				messagingTemplate.convertAndSend("/chatWait/" + targetNickname, roomId+"");
+				messagingTemplate.convertAndSend("/chatWait/" + targetNickname, "c"+roomId);
 				
 				return;
 				
@@ -168,7 +168,6 @@ public class WebSocketController {
 		ResponseEntity<List<ChatroomVO>> entity=null;
 		try{
 			List<ChatroomVO> chatList=msgService.getChatList(vo.getId());
-			this.logger.info(chatList.toString());
 			entity=new ResponseEntity<List<ChatroomVO>>(chatList, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -189,7 +188,10 @@ public class WebSocketController {
 		
 		try{
 			
-			Map<String, Object> map=msgService.getMessages(roomid, vo.getId());
+			Map<String, Object> map = msgService.getMessages(roomid, vo.getId());
+			
+			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
+			String chatRoom=JSONArray.fromObject(messageList).toString();
 			
 			if(map.get("users")!=null){
 				String users=map.get("users").toString();
@@ -197,15 +199,12 @@ public class WebSocketController {
 				
 				//상대들에게 누군가 읽었음을 알리기
 				for(String nickname : userArray){
-					messagingTemplate.convertAndSend("/chatWait/" + nickname, roomid+"");
+					messagingTemplate.convertAndSend("/chatWait/" + nickname, "r"+roomid+chatRoom);
 				}
 			}
 			
-			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
-			
 			//JSONArray로 만들기 위한 인스턴스값 생성
-	    	String chatRoom=JSONArray.fromObject(messageList).toString();
-	    	
+
 			entity=new ResponseEntity<String>(chatRoom, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -222,20 +221,22 @@ public class WebSocketController {
 		if(principal.getName().equals(vo.getSenderEmail())){
 			
 			try{
-				String users = msgService.registMessage(vo);
+				Map<String, Object> map = msgService.registMessage(vo);
+				MessageVO sendMessage = (MessageVO)map.get("message");
+				String users = map.get("users").toString();
 				
 				if(users!="" || users!=null){
+					
+					String newMessage = JSONArray.fromObject(sendMessage).toString();
 					//나에게 알리기
-					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
+					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "n"+vo.getRoomid());
 					
 					String[] userArray = users.split("\\|");
 					//상대들에게 알리기
 					for(String user : userArray){
-						messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
+						messagingTemplate.convertAndSend("/chatWait/" + user, "n"+vo.getRoomid());
 					}
-					
 					return;
-					
 				}
 				
 			}catch(Exception e){

@@ -483,7 +483,7 @@ $(document).ready(function(){
 	});
 	//   <- , -> 키보드 화살표로 이동
  	$(document).keydown(function(e) {
-	  switch(e.which) {
+ 		switch(e.which) {
 	      case 37: // left
 	      moveToSelected('prev');
 	      break;
@@ -491,9 +491,9 @@ $(document).ready(function(){
 	      moveToSelected('next');
 	      break;
 	      default: return;
-	  }
+	  	}
 	  e.preventDefault();
-	}); 
+	});
 	
  	$('#carousel article').not(".selected").click(function(e) {
 		if($(this).hasClass("hideLeft")){

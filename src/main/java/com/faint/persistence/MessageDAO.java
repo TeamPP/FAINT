@@ -13,7 +13,9 @@ public interface MessageDAO {
 	
 	public List<MessageVO> getMessages(RelationDTO dto) throws Exception;
 	
-	public void registMessage(MessageVO vo) throws Exception;
+	public int registMessage(MessageVO vo) throws Exception;
+	
+	public MessageVO getOneMessage(MessageVO vo) throws Exception;
 	
 	public String getUsers(MessageVO vo) throws Exception;
 }

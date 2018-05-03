@@ -62,6 +62,7 @@ select  distinct * from tbl_search
     on type=2
     
     order by rand();
+    
 ]]>
 </select>
 

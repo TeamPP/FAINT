@@ -38,8 +38,15 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 	
 	@Override
-	public void registMessage(MessageVO vo) throws Exception{
+	public int registMessage(MessageVO vo) throws Exception{
 		session.insert(namespace+".registMessage", vo);
+		return vo.getId();
+	}
+	
+	@Override
+	public MessageVO getOneMessage(MessageVO vo) throws Exception{
+		return session.selectOne(namespace+".getOneMessage", vo);
+		
 	}
 	
 	@Override

@@ -75,9 +75,15 @@ public class MessageServiceImpl implements MessageService {
 	
 	@Transactional
 	@Override
-	public String registMessage(MessageVO vo) throws Exception{
-		mDao.registMessage(vo);
-		return mDao.getUsers(vo);
+	public Map<String, Object> registMessage(MessageVO vo) throws Exception{
+		int messageid = mDao.registMessage(vo);
+		vo.setId(messageid);
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("users", mDao.getUsers(vo));
+		map.put("message", mDao.getOneMessage(vo));
+
+		return map;
 	}
 	
 }

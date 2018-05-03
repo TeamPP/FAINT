@@ -32,7 +32,8 @@
 <script type="text/javascript" src="../../resources/js/common.js"></script>
 
 <!-- 웹소켓 -->
-<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
+<script type="text/javascript" src="../../resources/js/sockjs-1.0.0.min.js"></script>
+<script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <!-- 아이콘 부트스트랩  -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
