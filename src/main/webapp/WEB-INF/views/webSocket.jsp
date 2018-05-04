@@ -326,7 +326,7 @@ display:none;
                 //안 읽은 숫자 카운트
                 unreadCount+=this.unread;
   			})
-			console.log(unreadCount);
+
   			//안 읽은 알람 있을 경우
   			if(unreadCount>0){
   				$(".heart-svg").data("unread", unreadCount);
