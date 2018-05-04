@@ -426,7 +426,7 @@ $(".catefilter").click(function() {
 })
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
-   if($("._oznku").text()=="검색 결과가 없습니다.") {
+   if($("._oznku > .noresult").html()=="검색 결과가 없습니다.") {
       return false;
       }
    
