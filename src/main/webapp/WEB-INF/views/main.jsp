@@ -78,6 +78,32 @@ body{
    position: absolute;
    z-index: 2;
 }
+
+@media screen and (max-width: 400px) {
+	#carousel .selected header {
+	    width: 70% !important;
+	}
+	
+	#carousel .selected .imgDiv {
+    height: 70% !important;
+    width: 70% !important;
+	}
+	
+	#carousel .selected {
+    width: 120% !important;
+    left: 70% !important;
+	}
+	
+	#carousel .prevLeftSecond, #carousel .prev, #carousel .hideLeft, #carousel .next, #carousel .nextRightSecond, #carousel .hideRight {
+    visibility: hidden !important;
+	}
+	
+	#carousel {
+    height: 460px !important;
+	}
+}
+
+
 /*id는 스타일 최우선으로 적용됨 그 다음에 class */
 #carousel {
 	position: relative;
@@ -275,8 +301,9 @@ height: 560px;
 /* 사진 넘기기 버튼 */
 .buttons {
    position: absolute;
-   left: 47%;
-   bottom: 30%;
+	left: 10%;
+   bottom: -3%;
+   z-index: 10;
 }
 .fa{
    font-size: 19px;
@@ -459,6 +486,14 @@ background-color:black;
 		</c:forEach>
 	</div>
 	
+		<!--버튼  -->
+	    <div class="buttons">
+	    <i  id="prev" class="fa fa-arrow-left"></i>
+	    <span> </span>
+	    <i  id="next" class="fa fa-arrow-right"></i>
+    	</div>
+	</main> 
+	
 
 </body>
 
@@ -580,13 +615,6 @@ function moveToSelected(element) {
 		}
 	});
 	
-	/* prev, next 아이콘 클릭 사진이동  */
-	$('#prev').click(function() {
-	moveToSelected('prev');
-	});
-	$('#next').click(function() {
-	moveToSelected('next');
-	});
 }
 function prevPost(curObj){
 	curObj.prev().click();
@@ -596,6 +624,15 @@ function nextPost(curObj){
 	curObj.next().click();
 	$(".selected > div").children().click();
 }
+
+/* prev, next 아이콘 클릭 사진이동  */
+$('#prev').click(function() {
+moveToSelected('prev');
+});
+$('#next').click(function() {
+moveToSelected('next');
+});
+
 </script>
 
 </html>

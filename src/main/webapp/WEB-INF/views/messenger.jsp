@@ -118,7 +118,7 @@
     opacity: 0;
   }
 }
-/* @media (max-width: 1000px) {
+/* @media (max-width: 0px) {
   body {
     background: none;
     background-size: auto;
