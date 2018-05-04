@@ -57,9 +57,6 @@ public interface UserDAO {
 	// 최근 등록한 사용자의 번호를 가져오기
 	public Integer selectLastInsertId() throws UsersException;
 	///////////////////////////////////
-	
-	// sessionKey & sessionLimit 업데이트
-	public void keepLogin(String email, String sessionId, Date next) throws Exception; // sessinId = DB의 sessionKey
 
 	public UserVO checkSessionKey(String value);   // 세션 확인 
 	
