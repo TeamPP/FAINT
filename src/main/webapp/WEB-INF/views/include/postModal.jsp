@@ -256,8 +256,6 @@ function postModal(str){
 		//새로운 모달 띄우기 전에 다시 띄우려하면 리턴
 		//이미 모달 띄워져있음 리턴
        	 if($(".postModal[data-postid="+pid+"]").length >0 ) return;
-		console.log("curIndex : " + curIndex);
-		console.log("여기는 모달 띄우는 중에 또 실행됨 : " + pid);
 	   $.ajax({
 	      type:"post",
 	      url:"/post/detail",
