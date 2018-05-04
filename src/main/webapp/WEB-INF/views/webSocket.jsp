@@ -349,7 +349,7 @@ display:none;
   			follow();
   		});
 	}
-	
+	 
 	
 	//1. 팔로우 알림
 	function notifyFollow(userid){
