@@ -332,7 +332,7 @@ display:none;
   				$(".heart-svg").data("unread", unreadCount);
   				$(".heart-svg").css("fill", "#e24040");
   			}else{
-  				$(".heart-svg").css("fill", "black");
+  				$(".heart-svg").css("fill", "#555");
   			}
   			
   			$("#follow-results").html(list);
