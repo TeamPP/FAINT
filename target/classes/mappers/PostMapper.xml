@@ -5,8 +5,8 @@
 <mapper namespace="com.faint.mapper.postMapper">
 	<!-- 게시글 작성 -->
 	<insert id="create">
-		insert into tbl_post (userid, cateid, caption, location)
-		values(#{userid}, #{cateid}, #{caption}, #{location})
+		insert into tbl_post (userid, cateid, caption, location, regdate)
+		values(#{userid}, #{cateid}, #{caption}, #{location}, now())
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
 			<!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
 			select last_insert_id() as id
@@ -98,7 +98,7 @@
 	
 	<!-- 메인 피드용 게시글 읽기 (팔로우하는 사람의 게시글 정보 / 최신 등록 순)-->
 	<select id="mainRead" resultType="com.faint.dto.FollowinPostDTO">
-		select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.location, a.REGDATE as a_regdate, p.regdate as p_regdate
+		select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.location, a.REGDATE as a_regdate, p.regdate as regdate
         , l.userid as isLike
         , s.userid as isStore
         , u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
@@ -127,42 +127,47 @@
         or p.userid = #{userid}
         
         group by p.id
-        order by p_regdate DESC, a_regdate DESC;
+        order by regdate DESC, a_regdate DESC
 	</select>
 	
 	<!-- 세부 게시글 정보  (모달팝업용) -->
 	<select id="detailRead" resultType="com.faint.dto.FollowinPostDTO">
-		select * from
-        (select pa.postid as postid, pa.userid, pa.caption, pa.cateid, pa.url, pa.filter, pa.location, a_regdate as regdate, p_regdate, isLike, isStore  from
+		select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.location, a.REGDATE as a_regdate, p.regdate as regdate
+        , l.userid as isLike
+        , s.userid as isStore
+        , u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
         
-			(select p.id as POSTID, p.USERID, p.CAPTION, p.CATEID, group_concat(a.url separator '|') as url, group_concat(a.filter separator '|') as filter, p.location, a.REGDATE as a_regdate, p.regdate as p_regdate
-			 from tbl_post p left join tbl_attach a on p.id = a.POSTID group by p.id) as pa
-			join
-			(select pl.postid, isLike, isStore from
-				(select distinct(p.id) as postid, l.userid as isLike from tbl_post p left join tbl_post_like l on p.id = l.POSTID and l.userid = #{loginid}) pl
-				join
-				(select distinct(p.id) as postid, s.userid as isStore from tbl_post p left join tbl_store s on p.id = s.POSTID and s.userid = #{loginid}) ps
-				on pl.postid=ps.postid) as pls
-			on
-			pa.postid = pls.postid) plsa
-			
-        join
-			(select p.id as pid, u.id, u.NICKNAME as USERNICKNAME, u.PROFILEPHOTO
-			from tbl_post p join tbl_user u on p.userid = u.ID and p.id=#{postid}) as pu
-		on
-		plsa.USERID = pu.id
-        and plsa.postid = pu.pid
+		from
+        tbl_post p
+        
+        left join
+        tbl_attach a
+        on p.id = a.POSTID
+        
+        left join
+        tbl_post_like l
+        on p.id = l.POSTID and l.userid = #{loginid}
+        
+        left join
+        tbl_store s
+        on p.id = s.POSTID and s.userid = #{loginid}
+        
+        left join
+        tbl_user u
+        on p.userid = u.id
+        
+        where p.id = #{postid}
+
+        order by regdate DESC, a_regdate DESC
 	</select>
 	
 	<!-- 게시글 수정 -->
 	<update id="update">
 		UPDATE faint.tbl_post
-		SET caption=#{caption},
+		SET caption=#{caption}, moddate=now()
 		<!-- regdate=now() 넣을 경우 프로필 피드에서 위치변경됨-->
 		WHERE id=#{id}
 	</update>
-	
-
 	
 	<!--post 전체목록 -->
 	<select id="listAllPost" resultType="com.faint.domain.PostVO">
