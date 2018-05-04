@@ -331,7 +331,9 @@ display:none;
   			if(unreadCount>0){
   				$(".heart-svg").data("unread", unreadCount);
   				$(".heart-svg").css("fill", "#e24040");
+  				$(".heart-svg").children("use").attr("xlink:href", "#full-heart");
   			}else{
+  				$(".heart-svg").children("use").attr("xlink:href", "#heart");
   				$(".heart-svg").css("fill", "#555");
   			}
   			
