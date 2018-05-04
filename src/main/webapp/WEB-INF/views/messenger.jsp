@@ -127,8 +127,7 @@
     width: 100% !important;
     height: 100% !important;
   }
-  #head .mdi-chevron-down,
-  .mdi-chevron-up,
+  #head
   .mdi-fullscreen,
   .mdi-fullscreen-exit {
     display: none;
