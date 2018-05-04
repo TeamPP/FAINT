@@ -759,10 +759,9 @@ body {
 	    		if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==roomid){
 	    			var currentLength = $(".list-chat > .scroll > ul").children().length;
 	    			var list="";
-	    			console.log("서로 채팅하는 중일 때 + 처음 메세지 입력할 때");
+
 	    			if($(data).length > currentLength){
 	    				for (var i = $(data).length - $(".list-chat > .scroll > ul").children().length; i > 0; i--) {
-	    					console.log($(data).eq(-1*i).comment);
 	    					list = getNewChat($(data).eq(-1*i));
 	    				}
 	    			}
@@ -772,12 +771,10 @@ body {
 	    		//채팅방 접속 시
 	    		}else if( !($(".list-chat").hasClass("shown")) && $(".list-chat").data("rid")==roomid ){
 	    			
-	    			console.log("채팅방 접속시");
 	    			var list = getNewChat(data);
 	    			$(".list-chat > .scroll > ul").html(list);
 	    		}
 	    		
-	    		console.log("이프문 안들어갈때");
 	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
 		}
@@ -825,7 +822,6 @@ body {
 	    		var list="";
 				if($(data).length!=0){
 	    			$(data).each(function(){
-	    				console.log(this.usersPhoto);
 
 	    				list += "<li data-rid='"+this.id+"'><img ";
 	    				

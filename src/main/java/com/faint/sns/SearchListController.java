@@ -80,7 +80,7 @@ public class SearchListController {
 
 		} else {
 			System.out.println("통합검색..");
-			return "";
+			return "forward:/empty";
 		}
 
 	}
@@ -103,7 +103,7 @@ public class SearchListController {
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
 
-		
+		System.out.println("길이"+taglist.size());
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);
 			model.addAttribute("jsonList", jsonArray.fromObject(taglist));

@@ -217,18 +217,14 @@ display:none;
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var msg = message.body;
-            	console.log(msg);
             	
             	//누군가 새로 채팅창을 만들었을 때
             	if(msg[0]=="c"){
             		
             		var roomid = msg.substr(1,msg.length-1);
-            		console.log("들어오남ㅁㅁ뮤ㅠㅠㅠ");
                 	if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==undefined){
-                		console.log("들어오남ㅁㅁㅁ");
                 		$('.list-chat').data("rid", roomid);
                 		getChat(roomid);
-                		
                 	}
                 	getChatList();
                 	
@@ -270,7 +266,7 @@ display:none;
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
-  			console.log(data);
+
   			var list="";
   			$(data).each(function(){
   				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
@@ -329,7 +325,7 @@ display:none;
   			
   			//알림 리스트가 없을 경우
   		   	if($("#follow-results").children().length==0) {
-				$("#follow-results").html("<div class='_oznku'><div class='noresult'>새로운 알림이 없습니다.</div></div>");
+				$("#follow-results").html("<div class='_oznku'><div class='noalarm'>새로운 알림이 없습니다.</div></div>");
 				$("#follow-header-modal").css("height", "62px");
 			}
   			
