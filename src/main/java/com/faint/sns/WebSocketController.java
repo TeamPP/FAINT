@@ -73,6 +73,24 @@ public class WebSocketController {
 		return entity;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/notice/read", produces = "application/json; charset=utf8", method=RequestMethod.POST)
+	public ResponseEntity<String> noticeRead(Authentication authentication) throws Exception {
+		
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+
+		ResponseEntity<String> entity=null;
+		try{
+			ntcService.noticeRead(vo.getId());
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	//알림구독시 메세지 보내기
 	@SubscribeMapping("/notify/{loginid}")
 	public String noticeSubscribe(@DestinationVariable("loginid") int loginid) throws Exception {

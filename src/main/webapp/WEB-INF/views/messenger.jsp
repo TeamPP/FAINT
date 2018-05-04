@@ -657,6 +657,7 @@ body {
 				<i class="mdi mdi-fullscreen"></i>
 				<i class="mdi mdi-menu"></i>
 				<h1 id="myName">${login.nickname}</h1>
+				<div sytle="border-radius:50%; color:white;">N</div>
 				<i class="mdi mdi-chevron-up"></i>
 			</div>
 			<div id="content">

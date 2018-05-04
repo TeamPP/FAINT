@@ -27,6 +27,11 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 	
 	@Override
+	public void noticeRead(int userid) throws Exception {
+		session.update(namespace+".noticeRead", userid);
+	}
+	
+	@Override
 	public void createFollowNotice(RelationDTO dto) throws Exception{
 		if(dto.getLoginid()!=dto.getUserid()){
 			dto.setType("F");

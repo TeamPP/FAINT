@@ -385,6 +385,27 @@ body {
 $(".logout").click(function() {
 	$(".logoutForm").submit();
 })
+// 알림창 클릭 이벤트
+$(".heart-svg").on("click", function(){
+	if($(this).data("unread")>0){
+		$.ajax({
+	        type: "post",
+	        url: "/notice/read",
+	        headers:"{'X-HTTP-Method-Override' : 'POST'}",
+	        dataType:"text",
+	        beforeSend : function(xhr)
+	        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+	        success:function(result){
+	           if(result=="SUCCESS"){
+	        	   console.log(result)
+	        	   noticeList();
+	           }
+	        }
+	     });
+	}
+})
 //검색창 그림자
 $('.search-input').focus(function () {
     $(this).parent().addClass('focus');

@@ -268,6 +268,7 @@ display:none;
   		$.getJSON("/getNotice/", function(data){
 			console.log(data);
   			var list="";
+  			var unreadCount=0;
   			$(data).each(function(){
   				
   				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
@@ -321,7 +322,19 @@ display:none;
                 	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
                 	
                 }
+                
+                //안 읽은 숫자 카운트
+                unreadCount+=this.unread;
   			})
+			console.log(unreadCount);
+  			//안 읽은 알람 있을 경우
+  			if(unreadCount>0){
+  				$(".heart-svg").data("unread", unreadCount);
+  				$(".heart-svg").css("fill", "#e24040");
+  			}else{
+  				$(".heart-svg").css("fill", "black");
+  			}
+  			
   			$("#follow-results").html(list);
   			
   			//알림 리스트가 없을 경우
