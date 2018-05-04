@@ -326,7 +326,7 @@ display:none;
   			
   			//알림 리스트가 없을 경우
   		   	if($("#follow-results").children().length==0) {
-				$("#follow-results").html("<div class='_oznku'><div class='noresult'>새로운 알림이 없습니다.</div></div>");
+				$("#follow-results").html("<div class='_oznku'><div class='noalarm'>새로운 알림이 없습니다.</div></div>");
 				$("#follow-header-modal").css("height", "62px");
 			}
   			
