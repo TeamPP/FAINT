@@ -1,4 +1,4 @@
-/*package com.faint.sns;
+package com.faint.sns;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,4 +96,4 @@ public class CommonErrorController {
     }
 
 
-}*/
+}
