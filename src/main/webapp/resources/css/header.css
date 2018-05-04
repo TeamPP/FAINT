@@ -205,7 +205,6 @@
      flex-shrink: 0;
     margin: 0;
     position: relative;
-   
 }
 
 ._oznku{
@@ -709,7 +708,7 @@ span {
 
 #follow-modal-content {
 	width: 18%;
-	right: -70.9%;
+    right: -71%;
     position: relative;
     top: 1%;
     border: solid 1px #e6e6e6;
@@ -845,4 +844,23 @@ span {
 ._6g6t5 {
     font-size: 13px;
     line-height: 18px;
+}
+
+.noalarm {
+    color: #999;
+    font-size: 14px;
+    padding: 15px;
+    text-align: center;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    border: 0 solid #000;
+    box-sizing: border-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+     flex-direction: column;
+     flex-shrink: 0;
+    margin: 0;
+    position: relative;
+    top: 6px;
 }
