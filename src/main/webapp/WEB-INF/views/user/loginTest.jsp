@@ -83,7 +83,6 @@
     
 <link href="/resources/dist/css/login.css" rel="stylesheet">
 
-
 <div  id="login">
     <div class="wrapper fadeInDown text-center">
 

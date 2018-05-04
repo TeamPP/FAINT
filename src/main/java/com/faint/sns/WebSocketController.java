@@ -157,7 +157,7 @@ public class WebSocketController {
 		messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "FAIL");
 	}
 	
-	//채팅방 메세지 리스트 가져오기
+	//채팅방 리스트 가져오기
 	@ResponseBody
 	@RequestMapping(value="/getChatList", method=RequestMethod.GET)
 	public ResponseEntity<List<ChatroomVO>> getChatList(Authentication authentication) throws Exception {
@@ -192,8 +192,9 @@ public class WebSocketController {
 			
 			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
 			String chatRoom=JSONArray.fromObject(messageList).toString();
-			
+			//읽은 사람이 없을경우 실행 X
 			if(map.get("users")!=null){
+				
 				String users=map.get("users").toString();
 				String[] userArray = users.split("\\|");
 				
@@ -201,6 +202,10 @@ public class WebSocketController {
 				for(String nickname : userArray){
 					messagingTemplate.convertAndSend("/chatWait/" + nickname, "r"+roomid+chatRoom);
 				}
+				
+				//나에게 다시 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getNickname(), "r"+roomid+chatRoom);
+				
 			}
 			
 			//JSONArray로 만들기 위한 인스턴스값 생성
@@ -219,15 +224,11 @@ public class WebSocketController {
 	public void registMessage(Principal principal, MessageVO vo) throws Exception {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
-			
 			try{
-				Map<String, Object> map = msgService.registMessage(vo);
-				MessageVO sendMessage = (MessageVO)map.get("message");
-				String users = map.get("users").toString();
+				String users = msgService.registMessage(vo);
 				
 				if(users!="" || users!=null){
 					
-					String newMessage = JSONArray.fromObject(sendMessage).toString();
 					//나에게 알리기
 					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "n"+vo.getRoomid());
 					

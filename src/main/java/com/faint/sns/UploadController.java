@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.util.MediaUtils;
 import com.faint.util.S3Util;
 import com.faint.util.UploadFileUtils;
@@ -45,11 +47,12 @@ public class UploadController {
 	//서버에 파일 업로드
 	@ResponseBody
 	@RequestMapping(value ="/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public ResponseEntity<String> uploadAjax(MultipartFile file, HttpSession session) throws Exception{
+	public ResponseEntity<String> uploadAjax(MultipartFile file, Authentication authentication) throws Exception{
 		logger.info("originalName: " + file.getOriginalFilename());
 		logger.info("size : " +  file.getSize());
 		logger.info("contentType : " + file.getContentType());
-		UserVO vo = (UserVO)session.getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
 		String userid = vo.getNickname();
 		return new ResponseEntity<>(
 				UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes(), userid),
@@ -123,45 +126,6 @@ public class UploadController {
         }
         return entity;
     }
-//	@ResponseBody
-//	@RequestMapping("/displayFile")
-//	public ResponseEntity<byte[]> displayFile(String fileName)throws Exception{
-//		
-//		InputStream in =null;
-//		ResponseEntity<byte[]> entity = null;
-//		
-//		logger.info("FILE NAME : " + fileName);
-//		
-//		try {
-//			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
-//			//확장자 이름 추출
-//			MediaType mType = MediaUtils.getMediaType(formatName);
-//			HttpHeaders headers = new HttpHeaders();
-//			in = new FileInputStream(uploadPath+fileName);
-//			
-//			
-//			//이미지파일인경우
-//			if(mType != null) {
-//				headers.setContentType(mType);
-//			}else{
-//				//이미지파일아닌경우
-//				fileName = fileName.substring(fileName.indexOf("_")+1);
-//				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-//				//headers.setContentLength(IOUtils.toByteArray(in).length);
-//				headers.add("Content-Disposition", "attachment; filename=\""+
-//				new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");
-//			}
-//			
-//			logger.info("headers : " + headers);
-//			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-//		}finally{
-//			in.close();
-//		}
-//		return entity;
-//	}
 	
 	//파일 삭제
 	@ResponseBody

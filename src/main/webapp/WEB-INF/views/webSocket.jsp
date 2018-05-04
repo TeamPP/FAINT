@@ -217,13 +217,13 @@ display:none;
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
             	var msg = message.body;
-            	console.log(msg);
             	
             	//누군가 새로 채팅창을 만들었을 때
             	if(msg[0]=="c"){
             		
             		var roomid = msg.substr(1,msg.length-1);
-                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                	if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==undefined){
+                		$('.list-chat').data("rid", roomid);
                 		getChat(roomid);
                 	}
                 	getChatList();
@@ -252,7 +252,6 @@ display:none;
                 	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
                 		getChat(roomid);
                 	}
-                	getChatList();
                 	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
             	}
             	
@@ -267,7 +266,7 @@ display:none;
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
-  			console.log(data);
+
   			var list="";
   			$(data).each(function(){
   				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";

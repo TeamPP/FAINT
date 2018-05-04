@@ -10,8 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<script type="text/javascript" src="../../resources/js/sockjs.js"></script>
-<script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <!-- 메신저 아이콘 & 폰트 -->
 <link rel='stylesheet prefetch' href='https://cdn.materialdesignicons.com/1.1.70/css/materialdesignicons.min.css'>
@@ -752,58 +750,78 @@ body {
 
 
 		<script>
-		
+
 		//채팅창 가져오기
 		function getChat(roomid){
 			
 	    	$.getJSON("/getChat/"+roomid, function(data){
-	    		console.log(data);
-	    		var list="";
-	    		
-	    		$(data).each(function(){
-	    			// 나의 메세지,타인 메세지 구분
-	    			if(this.senderNickname == "${login.nickname}"){
-	    				list += "<li><img ";
-	    			}else{
-	    				list += "<li class='notMyMsg'><img ";
-	    			}
+	    		//서로 채팅하는 중일 때 + 처음 메세지 입력할 때
+	    		if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==roomid){
+	    			var currentLength = $(".list-chat > .scroll > ul").children().length;
+	    			var list="";
 
-	    			// 프로필 사진이 있는경우 | 없는 경우
-	   				if(this.profilephoto != null && this.profilephoto != ""){
-	   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
-	               	}else if(this.profilephoto == null || this.profilephoto == ""){
-	               		list += "src='/resources/img/emptyProfile.jpg' />";
-	               	}
-	   				
-	   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
-	   				
-	   				//읽음 상태표시
-	   				if(this.readstatus!=0){
-	   					list += "<div style='color: #ffa845; padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + this.readstatus + "</time></div>";	
-	   				}
-	   				
-	   				//시간
-	   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";	
-	   				
-	   				
-	    		})
+	    			if($(data).length > currentLength){
+	    				for (var i = $(data).length - $(".list-chat > .scroll > ul").children().length; i > 0; i--) {
+	    					list = getNewChat($(data).eq(-1*i));
+	    				}
+	    			}
+	    			$(".list-chat > .scroll > ul").append(list);
+	    			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    		
-	    		$(".list-chat > .scroll > ul").html(list);
-	    		$('.list-chat').data("rid", roomid);
+	    		//채팅방 접속 시
+	    		}else if( !($(".list-chat").hasClass("shown")) && $(".list-chat").data("rid")==roomid ){
+	    			
+	    			var list = getNewChat(data);
+	    			$(".list-chat > .scroll > ul").html(list);
+	    		}
 	    		
-	    		$(".scroll").scrollTop($("ul.chat").height()*2);
+	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
+		}
+		
+		//새로운 메세지 혹은 채팅창 리스트 전체
+		function getNewChat(data){
+			var list="";
+			$(data).each(function(){
+    			// 나의 메세지,타인 메세지 구분
+    			if(this.senderNickname == "${login.nickname}"){
+    				list += "<li><img ";
+    			}else{
+    				list += "<li class='notMyMsg'><img ";
+    			}
+
+    			// 프로필 사진이 있는경우 | 없는 경우
+   				if(this.profilephoto != null && this.profilephoto != ""){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122" + this.profilephoto + "' />";
+               	}else if(this.profilephoto == null || this.profilephoto == ""){
+               		list += "src='/resources/img/emptyProfile.jpg' />";
+               	}
+   				
+   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
+   				
+   				//읽음 상태표시
+   				if(this.readstatus!=0){
+   					list += "<div class='readStatus' style='color: #ffa845; padding: 25px 5px 0 5px; font-size: 0.8em;'>" + this.readstatus + "</div>";	
+   				}else if(this.readstatus==0){
+   					list += "<div class='readStatus' style='color: #ffa845; padding: 25px 5px 0 5px; font-size: 0.8em; display:none;'>" + this.readstatus + "</div>";
+   				}
+   				
+   				//시간
+   				list += "<div style='padding: 25px 5px 0 5px;'><time style='font-size: 0.8em;'>" + new Date(this.sendtime.time).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + "</time></div></li>";
+   				
+    		})
+			
+    		return list;
 		}
 		
 		//메신저 채팅리스트 불러오기
 		getChatList()
 		function getChatList(){
 			$.getJSON("/getChatList", function(data){
-	    		var cur_Scroll_Location = $(".scroll").scrollTop();
+	    		var cur_Scroll_Location = $(".scroll:eq(1)").scrollTop();
 	    		var list="";
 				if($(data).length!=0){
 	    			$(data).each(function(){
-	    				console.log(this.usersPhoto);
 
 	    				list += "<li data-rid='"+this.id+"'><img ";
 	    				
@@ -856,7 +874,7 @@ body {
 		getMessengerUserList();
     	function getMessengerUserList(){
     		 $.getJSON("/member/following/" + ${login.id}, function(data){
-    			  var cur_Scroll_Location = $(".scroll").scrollTop();
+    			  var cur_Scroll_Location = $(".scroll:eq(0)").scrollTop();
     		      var $data=$(data)
     		      if($data.length!=0){
     		         //following onclick 메서드 적용(follow리스트뜨도록)
@@ -1035,6 +1053,10 @@ body {
                 $('.mdi-menu').show();
                 $('.mdi-arrow-left').hide();
             }
+          	
+          	if(route === '.list-text') {
+          		getChatList();
+          	}
         }
 
         // 색상 캔버스 활성화 위해 이미지값 넣기
@@ -1086,6 +1108,7 @@ body {
         				JSON.stringify({ 'sender': '${login.id}', 'senderNickname': '${login.nickname}', 'senderEmail': '${login.email}', 'comment': $('.chat-input').val() }));
         		//채팅창 데이터 값 삭제
         		$('.list-chat').removeData("curTarget");
+        		
         	}else if( $(".chat").children("li").length >= 1 ){
         		var roomid = $('.list-chat').data("rid");
         		stompClient.send("/app/chat/sendMsg", {},
@@ -1108,18 +1131,21 @@ body {
       	//채팅리스트 클릭이벤트
         $('.list-text > .scroll > .list').on('click', 'li', function() {
         	var roomid=$(this).data("rid");
-			getChat(roomid);
-			
+        	$('.list-chat').data("rid", roomid);
+        	getChat(roomid);
+        	
             // timeout just for eyecandy...
             setTimeout(function() {
             	
                 $('.shown').removeClass('shown');
-
                 $('.list-chat').addClass('shown');
+                
                 setRoute('.list-chat');
+                $(".scroll").scrollTop($(".scroll")[2].scrollHeight);
                 $('.chat-input').focus();
                 
             }, 300);
+           
         });
 
         // 친구목록 리스트 클릭이벤트
@@ -1148,13 +1174,12 @@ body {
                 			$(this).trigger("click");
                 			noRoom=false;
                 			return false;
-                			
                 		}
                 	})
                 	
                 	//채팅방 div에 현재 타겟값 저장
                 	if(noRoom){
-                		$('.list-chat').data("curTarget", $TARGET.find('span').html());
+                		$('.list-chat').data("curTarget", $TARGET.find('span').html().trim());
                 	}
                 	
                     // timeout just for eyecandy...
@@ -1163,11 +1188,8 @@ body {
 
                         $('.list-chat').addClass('shown');
                         setRoute('.list-chat');
-                        
-            			$(".scroll").scrollTop($("ul.chat").height()*2);
-            			
+            			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
                         $('.chat-input').focus();
-                        
                     }, 300);
                     
                 });
@@ -1229,7 +1251,10 @@ body {
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
             $('.shown').removeClass('shown');
+            
             $(".list-chat > .scroll > ul").html("");
+            $('.list-chat').removeData("rid");
+            
             var route = $(this).data('route');
             $(route).addClass('shown');
             setRoute(route);

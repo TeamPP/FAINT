@@ -21,9 +21,7 @@ public class MessageDAOImpl implements MessageDAO {
 
 	@Override
 	public int insertFirstMessage(MessageVO vo) throws Exception{
-		System.out.println(vo.toString());
 		session.insert(namespace+".insertFirstMessage", vo);
-		System.out.println(vo.toString());
 		return vo.getRoomid();
 	}
 	
@@ -41,12 +39,6 @@ public class MessageDAOImpl implements MessageDAO {
 	public int registMessage(MessageVO vo) throws Exception{
 		session.insert(namespace+".registMessage", vo);
 		return vo.getId();
-	}
-	
-	@Override
-	public MessageVO getOneMessage(MessageVO vo) throws Exception{
-		return session.selectOne(namespace+".getOneMessage", vo);
-		
 	}
 	
 	@Override

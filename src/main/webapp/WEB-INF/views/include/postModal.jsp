@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -205,8 +206,11 @@ a{ font-weight: bold; }
 .likeContainer{ font-weight: bold; cursor: default; }
 </style>
 </script>
-<script>
 
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.vo" var="login" />
+
+<script>
 var modalFlg = false;
 var reqUrl = '';
 function postModal(str){
@@ -252,8 +256,6 @@ function postModal(str){
 		//새로운 모달 띄우기 전에 다시 띄우려하면 리턴
 		//이미 모달 띄워져있음 리턴
        	 if($(".postModal[data-postid="+pid+"]").length >0 ) return;
-		console.log("curIndex : " + curIndex);
-		console.log("여기는 모달 띄우는 중에 또 실행됨 : " + pid);
 	   $.ajax({
 	      type:"post",
 	      url:"/post/detail",
@@ -588,7 +590,7 @@ function deleteReply(thisTag){
    var rid=$(thisTag).parent().parent().data("replyid");
    $.ajax({
       type:"delete",
-      url:"/reply/"+rid,
+      url:"/reply/"+rid+"/removeby/${login.id}",
       headers:{
          "Content-Type" : "application/json",
          "X-HTTP-Method-Override" : "DELETE"
@@ -996,4 +998,8 @@ function following(){
 	   });
 	}
 </script>
+
+</sec:authorize>
+
+
 </html>

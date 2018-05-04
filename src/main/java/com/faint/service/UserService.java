@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.faint.domain.Authority;
@@ -46,7 +47,6 @@ public interface UserService {
 	public void regist(UserVO user) throws Exception;
 	
 	//=================로그인=================
-	public UserVO login(LoginDTO dto) throws Exception;
 	
 	public UserVO userAuth(UserVO vo) throws Exception; //이메일 인증 키 검증
 
@@ -59,14 +59,14 @@ public interface UserService {
 	public String authenticateName(String nickname) throws Exception; //이름 중복관련 코드 전송
 	
 	public void findPassword(UserVO vo) throws Exception; //비번찾기
-	
-	public void keepLogin(String email, String sessionId, Date next) throws Exception;
 
 	public UserVO checkLoginBefore(String value); //세션키 확인
 	
 	public UserVO naverLogin(LoginDTO dto) throws Exception;  // 네이버 로그인
 	
 	//=================회원정보변경=================
+	
+	@PreAuthorize("isAuthenticated() and #id == principal.vo.id")
 	public int checkPassWord(int id, String pw) throws Exception; //비밀번호 체크
 	
 	public void modifypassUser(UserVO vo) throws Exception; //비밀번호 수정

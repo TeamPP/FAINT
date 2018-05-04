@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.service.PostService;
 
 import net.sf.json.JSONArray;
@@ -78,7 +80,7 @@ public class SearchListController {
 
 		} else {
 			System.out.println("통합검색..");
-			return "";
+			return "forward:/empty";
 		}
 
 	}
@@ -87,12 +89,13 @@ public class SearchListController {
 
 	// 키워드받는 태그 게시물목록 무한스크롤 (처음 10개 목록)
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
-	public String tagsSearch(@RequestParam("name") String name, Model model, HttpServletRequest request) throws Exception {
+	public String tagsSearch(@RequestParam("name") String name, Model model, Authentication authentication) throws Exception {
 		
 
 		SearchCriteria cri = new SearchCriteria();
 		
-		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
 		int loginid = vo.getId();
 		cri.setLoginid(loginid);
 		
@@ -100,7 +103,7 @@ public class SearchListController {
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
 
-		
+		System.out.println("길이"+taglist.size());
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);
 			model.addAttribute("jsonList", jsonArray.fromObject(taglist));

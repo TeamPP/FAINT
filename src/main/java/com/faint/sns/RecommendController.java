@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
 import com.faint.service.ActivityService;
@@ -43,13 +45,15 @@ public class RecommendController {
    // 인기검색어, 인기게시글 출력
    //친구추천 및 추천친구들의 게시글
    @RequestMapping(value = "/recompage", method = RequestMethod.GET)
-   public String getPost(Model model , HttpServletRequest request) throws Exception {      
+   public String getPost(Model model , Authentication authentication) throws Exception {      
       
-      //친구추천 계정
-      UserVO vo = (UserVO) request.getSession().getAttribute("login");
-      int loginid = vo.getId();
-      List<UserVO> recommList=activityservice.recomm(loginid);  
-      model.addAttribute("recommList",recommList);
+	   	//친구추천 계정
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
+		
+		int loginid = vo.getId();
+		List<UserVO> recommList=activityservice.recomm(loginid);  
+		model.addAttribute("recommList",recommList);
       
       
       //친구추천 계정들의 post

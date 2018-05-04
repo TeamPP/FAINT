@@ -40,7 +40,7 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 	
 	@Override
-	public void remove(Integer id) throws Exception{
+	public void remove(int id, int userid) throws Exception{
 		dao.delete(id);
 	}
 	
