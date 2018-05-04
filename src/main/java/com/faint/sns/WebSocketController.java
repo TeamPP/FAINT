@@ -62,7 +62,7 @@ public class WebSocketController {
     	
 		//JSONobject로 만들기 위한 인스턴스값 생성
     	String notice=JSONArray.fromObject(noticeList).toString();
-    	
+
 		ResponseEntity<String> entity=null;
 		try{
 			entity=new ResponseEntity<String>(notice, HttpStatus.OK);
@@ -96,15 +96,16 @@ public class WebSocketController {
 	public String tagging(@DestinationVariable("nickname") String usernickname, @DestinationVariable("postid") int postid, @DestinationVariable("type") String type, UserVO vo) throws Exception {
 		
 		String Message="FAIL";
-		
-		if (type=="reply"){
+
+		if (type.equals("reply")){
 			int count = ntcService.createTaggingNotice(vo.getNickname(), usernickname, postid);
+			this.logger.info("이게 태그 카운터"+count);
 			
-			if(count==1){
+			if(count == 1){
 				Message="SUCCESS";
 			}
 			
-		}else if (type=="post"){
+		}else if (type.equals("post")){
 			Message="SUCCESS";
 		}
 		

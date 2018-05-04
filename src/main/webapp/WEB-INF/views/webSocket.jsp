@@ -186,7 +186,6 @@ display:none;
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
         
       	//==========================================알림==========================================
         
@@ -270,12 +269,13 @@ display:none;
 			console.log(data);
   			var list="";
   			$(data).each(function(){
-  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
   				
+  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
+
                 // 프로필 사진이 있는경우 | 없는 경우
-   				if(this.profilePhoto != null){
+   				if(this.profilePhoto != ""){
    					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
-               	}else if(this.profilephoto == null || this.profilephoto == ""){
+               	}else if(this.profilePhoto == ""){
                		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
