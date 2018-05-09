@@ -100,8 +100,16 @@ body {
 
             <div class="col-sm-4" id="search" style="height: 100%;">
                 <form class="search-form" action="/search/search" method="get">
-                    <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
-                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                  <c:choose>
+					<c:when test="${reqURL == '/search/category'}">
+	                    <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value=""
+	                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                     </c:when>
+                     <c:otherwise>
+		                 <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
+	                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                     </c:otherwise>
+                  </c:choose>
                  <button type="submit" class="search-button">
                      <img class="searchbtn" src="/resources/image/search_icon/search.png">
                  </button>

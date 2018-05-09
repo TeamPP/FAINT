@@ -13,7 +13,29 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  
-<title>${keyword}</title>
+<c:choose>
+        <c:when test="${catename=='category.1'}">
+           <title>여행 카테고리</title>
+        </c:when>
+        
+        <c:when test="${catename=='category.2'}">
+           <title>영화 카테고리</title>
+        </c:when>
+        
+        <c:when test="${catename=='category.3'}">
+           <title>음악 카테고리</title>
+        </c:when>
+        
+        <c:when test="${catename=='category.4'}">
+           <title>음식 카테고리</title>
+        </c:when>
+        
+        <c:when test="${catename=='category.5'}">
+           <title>글귀 카테고리</title>
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+</c:choose>
 
 <style>
 h1, h5 {
@@ -23,8 +45,29 @@ h1, h5 {
 
 </head>
 <body>
-
-<h1 id="keywordTitle">${keyword}</h1>
+<c:choose>
+        <c:when test="${catename=='category.1'}">
+           <h1 id="keywordTitle">여행 카테고리</h1>
+        </c:when>
+        
+        <c:when test="${catename=='category.2'}">
+           <h1 id="keywordTitle">영화 카테고리</h1>
+        </c:when>
+        
+        <c:when test="${catename=='category.3'}">
+           <h1 id="keywordTitle">음악 카테고리</h1>
+        </c:when>
+        
+        <c:when test="${catename=='category.4'}">
+           <h1 id="keywordTitle">음식 카테고리</h1>
+        </c:when>
+        
+        <c:when test="${catename=='category.5'}">
+           <h1 id="keywordTitle">글귀 카테고리</h1>
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+</c:choose>
 
 <script type="text/javascript">
 	//postFeed로 전달될 데이터
