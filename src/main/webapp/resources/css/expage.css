@@ -13,7 +13,7 @@ body {
 	height: 292px;
 	margin-top: 24px;
 	/* background: url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_keywd.png) no-repeat 0 0; */
-	background: url(/resources/image/rtbg1.png) no-repeat 0 0;
+	background: url(/resources/image/rtbg2.gif) no-repeat 0 0;
 	background-size: 1008px 292px;
 	border-radius: 20px;
 	margin: auto;
@@ -23,6 +23,16 @@ body {
 	font: inherit;
 	vertical-align: baseline;
 	display: block;
+}
+
+.aaa {
+    background: url(/resources/image/11111.png) no-repeat 0 0;
+    background-size: 550px;
+    width: 55%;
+    height: 33%;
+    left: 5%;
+    top: 30%;
+    position: absolute;
 }
 
 .realtime_keywd .wrap_last_date {
@@ -43,19 +53,17 @@ body {
 }
 
 .realtime_keywd .wrap_last_date .last_date {
-	/* color: #bbc8cd; */
-	color: #676767;
+	color: #f5f5f5;
 	font-size : 14px;
 	line-height: 16px;
 	font-family: Arial, "Apple Gothic", sans-serif;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .realtime_keywd .wrap_last_date .last_time {
 	margin-left: 7px;
-	/* color: #bbc8cd; */
-	color: #676767;
-	font-size: 14px;
+	color: #f5f5f5;
+	font-size: 15px;
 	line-height: 16px;
 	font-family: Arial, "Apple Gothic", sans-serif;
 }
@@ -209,7 +217,8 @@ li {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	/* color: #bbc8cd; */
-	color: black; font-size : 12px;
+	color: #f5f5f5;
+	font-size : 12px;
 	line-height: 18px;
 	/* font-family: Dotum, "Apple Gothic", sans-serif; */
 	font-family: HelveticRounded, "Apple Gothic", sans-serif;
