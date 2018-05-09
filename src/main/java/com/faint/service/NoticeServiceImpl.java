@@ -22,6 +22,11 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
+	public void noticeRead(int userid) throws Exception{
+		noticeDao.noticeRead(userid);
+	}
+	
+	@Override
 	public Integer createTaggingNotice(String fromid, String targetid, int postid) throws Exception{
 		
 		NoticeDTO dto=new NoticeDTO();

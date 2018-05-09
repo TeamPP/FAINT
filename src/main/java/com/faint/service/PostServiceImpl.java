@@ -79,9 +79,11 @@ public class PostServiceImpl implements PostService {
 			NoticeDTO dto=dao.readRecentOne(post); //해당 유저가 쓴 게시물의 userid값과 caption값, 가장 최근 regdate를 통해 postid와 nickname구함
 			
 			for (String tagname : Tags) {
-				dto.setTargetid(tagname);
-				nDao.createTaggingNotice(dto);
-				userTagLists.add(tagname);
+				if(dto.getFromid()!=tagname){
+					dto.setTargetid(tagname);
+					nDao.createTaggingNotice(dto);
+					userTagLists.add(tagname);
+				}
 			}
 			
 			forwardMap.put("postid", dto.getPostid());

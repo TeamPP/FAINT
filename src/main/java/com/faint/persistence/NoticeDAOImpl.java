@@ -27,27 +27,41 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 	
 	@Override
+	public void noticeRead(int userid) throws Exception {
+		session.update(namespace+".noticeRead", userid);
+	}
+	
+	@Override
 	public void createFollowNotice(RelationDTO dto) throws Exception{
-		dto.setType("F");
-		session.insert(namespace+".createFollowNotice", dto);
+		if(dto.getLoginid()!=dto.getUserid()){
+			dto.setType("F");
+			session.insert(namespace+".createFollowNotice", dto);
+		}
 	}
 	
 	@Override
 	public Integer createTaggingNotice(NoticeDTO dto) throws Exception{
-		dto.setType("T");
-		return session.insert(namespace+".createTaggingNotice", dto);
+		if(dto.getFromid()!=dto.getTargetid()){
+			dto.setType("T");
+			return session.insert(namespace+".createTaggingNotice", dto);
+		}
+		return 0;
 	}
 	
 	@Override
 	public void createLikeNotice(RelationDTO dto) throws Exception{
-		dto.setType("L");
-		session.insert(namespace+".createLikeNotice", dto);
+		if(dto.getLoginid()!=dto.getUserid()){
+			dto.setType("L");
+			session.insert(namespace+".createLikeNotice", dto);
+		}
 	}
 	
 	@Override
 	public void createReplyNotice(RelationDTO dto) throws Exception{
-		dto.setType("R");
-		session.insert(namespace+".createReplyNotice", dto);
+		if(dto.getLoginid()!=dto.getUserid()){
+			dto.setType("R");
+			session.insert(namespace+".createReplyNotice", dto);
+		}
 	}
 	
 	

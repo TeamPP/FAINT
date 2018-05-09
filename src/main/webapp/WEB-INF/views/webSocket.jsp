@@ -186,10 +186,10 @@ display:none;
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
         
       	//==========================================알림==========================================
-        noticeList();
+        
+      	noticeList();
         
       	//나에대한 follow,reply,like알림 구독
       	stompClient.subscribe('/notify/${login.id}', function(message){
@@ -266,15 +266,17 @@ display:none;
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
-
+			console.log(data);
   			var list="";
+  			var unreadCount=0;
   			$(data).each(function(){
-  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
   				
+  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
+
                 // 프로필 사진이 있는경우 | 없는 경우
-   				if(this.profilephoto != null){
-   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a></div></div>";
-               	}else if(this.profilephoto == null || this.profilephoto == ""){
+   				if(this.profilePhoto != ""){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
+               	}else if(this.profilePhoto == ""){
                		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
@@ -320,7 +322,21 @@ display:none;
                 	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
                 	
                 }
+                
+                //안 읽은 숫자 카운트
+                unreadCount+=this.unread;
   			})
+
+  			//안 읽은 알람 있을 경우
+  			if(unreadCount>0){
+  				$(".heart-svg").data("unread", unreadCount);
+  				$(".heart-svg").css("fill", "#e24040");
+  				$(".heart-svg").children("use").attr("xlink:href", "#full-heart");
+  			}else{
+  				$(".heart-svg").children("use").attr("xlink:href", "#heart");
+  				$(".heart-svg").css("fill", "#555");
+  			}
+  			
   			$("#follow-results").html(list);
   			
   			//알림 리스트가 없을 경우
@@ -333,7 +349,7 @@ display:none;
   			follow();
   		});
 	}
-	
+	 
 	
 	//1. 팔로우 알림
 	function notifyFollow(userid){

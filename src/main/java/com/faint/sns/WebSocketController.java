@@ -62,10 +62,28 @@ public class WebSocketController {
     	
 		//JSONobject로 만들기 위한 인스턴스값 생성
     	String notice=JSONArray.fromObject(noticeList).toString();
-    	
+
 		ResponseEntity<String> entity=null;
 		try{
 			entity=new ResponseEntity<String>(notice, HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/notice/read", produces = "application/json; charset=utf8", method=RequestMethod.POST)
+	public ResponseEntity<String> noticeRead(Authentication authentication) throws Exception {
+		
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+
+		ResponseEntity<String> entity=null;
+		try{
+			ntcService.noticeRead(vo.getId());
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -96,15 +114,16 @@ public class WebSocketController {
 	public String tagging(@DestinationVariable("nickname") String usernickname, @DestinationVariable("postid") int postid, @DestinationVariable("type") String type, UserVO vo) throws Exception {
 		
 		String Message="FAIL";
-		
-		if (type=="reply"){
+
+		if (type.equals("reply")){
 			int count = ntcService.createTaggingNotice(vo.getNickname(), usernickname, postid);
+			this.logger.info("이게 태그 카운터"+count);
 			
-			if(count==1){
+			if(count == 1){
 				Message="SUCCESS";
 			}
 			
-		}else if (type=="post"){
+		}else if (type.equals("post")){
 			Message="SUCCESS";
 		}
 		
