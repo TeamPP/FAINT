@@ -181,10 +181,9 @@ display:none;
 	<sec:authentication property="principal.vo" var="login" />
 
 	<script type="text/javascript">
-	//sockjs의  POST XHR request를 막음(aws사용 위해서)
-	var allowedProtocols = ['xdr-streaming', 'xhr-streaming', 'iframe-eventsource', 'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling'];
+	
 	//웸소켓을 '/hello' end point로 연결한다.
-	var socket = new SockJS('/hello', {}, {protocols_whitelist : allowedProtocols});
+	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
         
