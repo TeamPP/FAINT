@@ -7,8 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <meta name="_csrf" content="${_csrf.token}"/>
-   <meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
@@ -181,11 +181,15 @@ display:none;
 	<sec:authentication property="principal.vo" var="login" />
 
 	<script type="text/javascript">
-		
+	var headerName = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	var headers = {};
+	headers[headerName] = token;
+	
 	//웸소켓을 '/hello' end point로 연결한다.
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
+	stompClient.connect(headers, function(frame) {
         
       	//==========================================알림==========================================
         
