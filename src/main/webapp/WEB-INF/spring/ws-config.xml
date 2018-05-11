@@ -18,7 +18,7 @@
 	    <security:intercept-message type="UNSUBSCRIBE" access="hasAnyRole('ROLE_ADMIN')" />
 	    <security:intercept-message type="DISCONNECT" access="hasAnyRole('ROLE_ADMIN')" />
 	
-	    <security:intercept-message pattern="/app/**" access="hasRole('ROLE_USER', 'ROLE_ADMIN')" />
+	    <security:intercept-message pattern="/app/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
     </security:websocket-message-broker>
 	
 	<websocket:message-broker
