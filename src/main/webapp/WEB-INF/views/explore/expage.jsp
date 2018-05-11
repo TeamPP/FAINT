@@ -26,18 +26,14 @@
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
 <style>
-
 .empty {
 	height: 150px;
 }
-
 article {
 	text-align: center;
 	display: block;
 }
-
 .mid-line {
-    border-top: 1px solid #9d9d9d;
     width: 935px;
     text-align: center;
     display: inline-block;
@@ -45,11 +41,16 @@ article {
     font-weight: 200;
     height: 35px;
 }
-
 .pull-right {
 	float: left !important;
 }
-
+.intro {
+	position: absolute;
+    left: 11%;
+    top: 22%;
+    color: #f5f5f5;
+    font-size: 15px;
+}
 </style>
 </head>
 
@@ -61,6 +62,8 @@ article {
 <!-- 실시간 -->
 
 <div class="realtime_keywd">
+	<span class="intro">실시간 인기 검색어</span>
+    <span class="aaa"></span>
     <div class="wrap_last_date">
         <span class="none">실시간 급상승 키워드 최종 업데이트 시간</span>
         <span class="last_date"></span><span class="last_time"></span>
@@ -77,7 +80,6 @@ article {
 </div>
 
 <script type="text/javascript">
-
   	RTtag();
    function RTtag () {  
 	   flag = false;
@@ -135,7 +137,6 @@ article {
        flag = true;
        console.log(">>>"+flag);
    } /* RTtag끝  */
-
    
 $(document).ready(function() {
 	
@@ -159,7 +160,6 @@ $(document).ready(function() {
 	
 	// 인기 검색어 1위~10위 className
 	var chgname = document.getElementsByClassName("cntt_realtime"); 
-
 	if(flag) {
 		setInterval(function(){
 		    
@@ -196,7 +196,6 @@ $(document).ready(function() {
 			               $(".rank"+x+"").toggleClass("on");
 		            },2100);
 		        })(ii);
-
 		        ii++;
 		        jj++;
 	        
@@ -210,23 +209,13 @@ $(document).ready(function() {
    
 </script>
 
-
 <!-- 인기 게시글 -->
-
-</br>
-</br>
-</br>
-<!-- 모달 적용한 것 -->
-</br>
 <article>
 <div class="mid-line"></div>
 </article>
-<br/>
-
 
 <script>
 var jsonList=${jsonList};
-
 </script>
 
 <!-- 메인피드 -->

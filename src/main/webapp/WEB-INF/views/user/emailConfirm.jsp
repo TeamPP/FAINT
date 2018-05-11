@@ -1,6 +1,6 @@
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,8 @@
     <title>회원가입 완료</title>
 </head>
 <body>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.vo" var="login" />
 <script type="text/javascript">
     var userEmail = '${login.email}';
 
@@ -17,5 +19,6 @@
     /* window.close(); // 브라우저 창 닫기 */
     self.location = '/';
 </script>
+</sec:authorize>
 </body>
 </html>

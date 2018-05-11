@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.RelationDTO;
 import com.faint.dto.SearchDTO;
 import com.faint.service.ActivityService;
@@ -34,40 +36,44 @@ import net.sf.json.JSONArray;
 @RequestMapping("/recommend/*")
 public class RecommendController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RecommendController.class);
+   private static final Logger logger = LoggerFactory.getLogger(RecommendController.class);
 
 
-	@Inject
-	private ActivityService activityservice;
-	
-	// 인기검색어, 인기게시글 출력
-	@RequestMapping(value = "/recompage", method = RequestMethod.GET)
-	public String getPost(Model model , HttpServletRequest request) throws Exception {		
+   @Inject
+   private ActivityService activityservice;
+   
+   // 인기검색어, 인기게시글 출력
+   //친구추천 및 추천친구들의 게시글
+   @RequestMapping(value = "/recompage", method = RequestMethod.GET)
+   public String getPost(Model model , Authentication authentication) throws Exception {      
+      
+	   	//친구추천 계정
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
 		
-		//친구추천 계정
-		UserVO vo = (UserVO) request.getSession().getAttribute("login");
 		int loginid = vo.getId();
 		List<UserVO> recommList=activityservice.recomm(loginid);  
 		model.addAttribute("recommList",recommList);
-		
-		
-		//친구추천 계정들의 post
-		JSONArray jsonArray=new JSONArray();
-		List<PostVO> recomPostList=activityservice.RecommPost(loginid);
-		
-		if(recomPostList.size()>0){
-			model.addAttribute("recomPostList", recomPostList);
-			model.addAttribute("jsonList", jsonArray.fromObject(recomPostList));
-		
-			return "/recommend/recompage";
-		}else{
-			return "forward:/empty";
-		}
-		
-		
+      
+      
+      //친구추천 계정들의 post
+      JSONArray jsonArray=new JSONArray();
+      List<PostVO> recomPostList=activityservice.RecommPost(loginid);
+      
+      if(recomPostList.size()>0){
+         System.out.println("recomPostList.size()"+recomPostList.size());
+         model.addAttribute("recomPostList", recomPostList);
+         model.addAttribute("jsonList", jsonArray.fromObject(recomPostList));
+      
+         return "/recommend/recompage";
+      }else{
+         return "forward:/emptyRecomm";  //추천할 계정이 현재 없음
+      }
+      
+      
 
-		
-	}
+      
+   }
 
-	
+   
 }

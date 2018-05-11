@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.faint.domain.Authority;
@@ -67,6 +68,8 @@ public interface UserService {
 	public UserVO naverLogin(LoginDTO dto) throws Exception;  // 네이버 로그인
 	
 	//=================회원정보변경=================
+	
+	@PreAuthorize("isAuthenticated() and #id == principal.vo.id")
 	public int checkPassWord(int id, String pw) throws Exception; //비밀번호 체크
 	
 	public void modifypassUser(UserVO vo) throws Exception; //비밀번호 수정

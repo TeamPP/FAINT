@@ -43,15 +43,12 @@
 <!-- 이미지 필터 -->
 <!-- <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css"> -->
 <style>
-
 body {
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 					"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",
 					"Segoe UI Symbol" !important;
 	background-color: white !important;
-					"Segoe UI Symbol";
 }
-
 .headerPhoto{
    width: 38px;
    height: 38px;
@@ -87,7 +84,6 @@ body {
 .modal.fade {
 	top: 8%;
 }
-
 </style>
 
 </head>
@@ -226,8 +222,8 @@ body {
 	                    <div class="col-sm-8">
 	                        <span class="catefilter" id="1">CATEGORY</span>
 	                        <div class="cate-option">
-	                                <div>
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+	                                <div><input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)">
+
 	                                    <label for="type-cateAll">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
@@ -278,57 +274,6 @@ body {
 	    
 	                                <div>
 	                                    <input name="type" type="radio" value="type-writing" id="type-writing" data-filter="5" tabindex="-1"  onclick="cateClick(this)">
-	                                    <input name="type" type="radio" value="type-cateAll" id="type-cateAll" data-filter="all" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-cateAll">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cateAll"></use>
-	                                        </svg>
-	                                        <span>All</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-travel" id="type-travel" data-filter="1" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-travel">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#travel"></use>
-	                                        </svg>
-	                                        <span>Travel</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-movie" id="type-movie" data-filter="2" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-movie">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#movie"></use>
-	                                        </svg>
-	                                        <span>Movie</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-music" id="type-music" data-filter="3" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-music">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#music"></use>
-	                                        </svg>
-	                                        <span>Music</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-food" id="type-food" data-filter="4" tabindex="-1"  onclick="cateClick(this)" />
-	                                    <label for="type-food">
-	                                        <svg class="edit-pen-title">
-	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#food"></use>
-	                                        </svg>
-	                                        <span>Food</span>
-	                                    </label>
-	                                </div>
-	    
-	                                <div>
-	                                    <input name="type" type="radio" value="type-writing" id="type-writing" data-filter="5" tabindex="-1"  onclick="cateClick(this)" />
 	                                    <label for="type-writing">
 	                                        <svg class="edit-pen-title">
 	                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#writing"></use>
@@ -412,15 +357,6 @@ body {
     <symbol id="heart" viewBox="0 0 485.3 485.3">
     	<path d="M349.6,28.95c-36.3,0-70.5,14.2-96.2,39.9l-10.6,10.6L232,68.65c-25.7-25.7-59.9-39.9-96.2-39.9     c-36.2,0-70.3,14.1-96,39.8S0,128.35,0,164.65s14.2,70.4,39.9,96.1l190.5,190.5l0.4,0.4c3.3,3.3,7.7,4.9,12,4.9     c4.4,0,8.8-1.7,12.1-5l190.5-190.5c25.7-25.7,39.9-59.8,39.9-96.1s-14.1-70.5-39.8-96.1C419.9,43.05,385.8,28.95,349.6,28.95z      M421.2,236.75l-178.3,178.4L64.2,236.45c-19.2-19.2-29.8-44.7-29.9-71.9c0-27.1,10.5-52.6,29.7-71.8     c19.2-19.1,44.7-29.7,71.7-29.7c27.2,0,52.7,10.6,72,29.9l22.9,22.9c6.4,6.4,17.8,6.4,24.3,0l22.8-22.8     c19.2-19.2,44.8-29.8,71.9-29.8s52.6,10.6,71.8,29.8c19.2,19.2,29.8,44.7,29.7,71.9C451.1,192.05,440.5,217.55,421.2,236.75z"/>
     </symbol>
-    <symbol id="heart-effect" viewBox="0 0 219.839 219.839">
-	<g>
-		<path d="M64.92,18.919c-0.663,0-1.2-0.537-1.2-1.2v-5.447c0-0.663,0.537-1.2,1.2-1.2      c0.663,0,1.2,0.537,1.2,1.2v5.447C66.12,18.382,65.583,18.919,64.92,18.919z"/>
-		<path d="M46.858,22.513c-0.471,0-0.917-0.279-1.108-0.741l-2.085-5.033      c-0.254-0.612,0.037-1.314,0.649-1.567c0.608-0.254,1.313,0.038,1.567,0.649l2.085,5.033c0.254,0.612-0.037,1.314-0.65,1.567      C47.167,22.483,47.011,22.513,46.858,22.513z"/>
-		<path d="M31.545,32.744c-0.307,0-0.614-0.117-0.849-0.352l-3.852-3.853c-0.469-0.469-0.469-1.229,0-1.697      c0.469-0.469,1.228-0.469,1.697,0l3.852,3.853c0.469,0.469,0.469,1.229,0,1.697C32.159,32.627,31.852,32.744,31.545,32.744z"/>
-		<path d="M98.295,32.744c-0.307,0-0.614-0.117-0.849-0.352c-0.469-0.469-0.469-1.229,0-1.697l3.853-3.853      c0.469-0.469,1.229-0.469,1.697,0c0.469,0.469,0.469,1.229,0,1.697l-3.853,3.853C98.909,32.627,98.602,32.744,98.295,32.744z"/>
-		<path d="M82.982,22.513c-0.153,0-0.309-0.029-0.459-0.092c-0.612-0.253-0.903-0.955-0.649-1.567      l2.085-5.033c0.254-0.611,0.955-0.903,1.567-0.649c0.612,0.253,0.903,0.955,0.649,1.567l-2.085,5.033      C83.899,22.233,83.453,22.513,82.982,22.513z"/>
-	</g>
-    </symbol>
     <symbol id="full-heart" viewBox="0 0 492.719 492.719">
     	<path d="M492.719,166.008c0-73.486-59.573-133.056-133.059-133.056c-47.985,0-89.891,25.484-113.302,63.569    c-23.408-38.085-65.332-63.569-113.316-63.569C59.556,32.952,0,92.522,0,166.008c0,40.009,17.729,75.803,45.671,100.178    l188.545,188.553c3.22,3.22,7.587,5.029,12.142,5.029c4.555,0,8.922-1.809,12.142-5.029l188.545-188.553    C474.988,241.811,492.719,206.017,492.719,166.008z" fill="#D80027"/>
     </symbol>
@@ -439,6 +375,27 @@ body {
 // 로그아웃 버튼 클릭 이벤트
 $(".logout").click(function() {
 	$(".logoutForm").submit();
+})
+// 알림창 클릭 이벤트
+$(".heart-svg").on("click", function(){
+	if($(this).data("unread")>0){
+		$.ajax({
+	        type: "post",
+	        url: "/notice/read",
+	        headers:"{'X-HTTP-Method-Override' : 'POST'}",
+	        dataType:"text",
+	        beforeSend : function(xhr)
+	        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+	        success:function(result){
+	           if(result=="SUCCESS"){
+	        	   console.log(result)
+	        	   noticeList();
+	           }
+	        }
+	     });
+	}
 })
 //검색창 그림자
 $('.search-input').focus(function () {
@@ -481,7 +438,7 @@ $(".catefilter").click(function() {
 })
 // 검색 결과 없을 때 enter키 막기
 $(".search-form").submit(function(event) { 
-   if($("._oznku").text()=="검색 결과가 없습니다.") {
+   if($("._oznku > .noresult").html()=="검색 결과가 없습니다.") {
       return false;
       }
    
@@ -912,7 +869,6 @@ function searchAjax(){
       
    }) /* keyup() 끝 */
 }      /* searchAjax() 끝 */
-
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
 	var followFlg=false;

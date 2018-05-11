@@ -62,10 +62,28 @@ public class WebSocketController {
     	
 		//JSONobject로 만들기 위한 인스턴스값 생성
     	String notice=JSONArray.fromObject(noticeList).toString();
-    	
+
 		ResponseEntity<String> entity=null;
 		try{
 			entity=new ResponseEntity<String>(notice, HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/notice/read", produces = "application/json; charset=utf8", method=RequestMethod.POST)
+	public ResponseEntity<String> noticeRead(Authentication authentication) throws Exception {
+		
+		CustomUserDetails user=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)user.getVo();
+
+		ResponseEntity<String> entity=null;
+		try{
+			ntcService.noticeRead(vo.getId());
+			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			entity=new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -96,15 +114,16 @@ public class WebSocketController {
 	public String tagging(@DestinationVariable("nickname") String usernickname, @DestinationVariable("postid") int postid, @DestinationVariable("type") String type, UserVO vo) throws Exception {
 		
 		String Message="FAIL";
-		
-		if (type=="reply"){
+
+		if (type.equals("reply")){
 			int count = ntcService.createTaggingNotice(vo.getNickname(), usernickname, postid);
+			this.logger.info("이게 태그 카운터"+count);
 			
-			if(count==1){
+			if(count == 1){
 				Message="SUCCESS";
 			}
 			
-		}else if (type=="post"){
+		}else if (type.equals("post")){
 			Message="SUCCESS";
 		}
 		
@@ -141,9 +160,9 @@ public class WebSocketController {
 			try{
 				int roomId = msgService.chatCreate(dto, vo);
 				//나에게 알리기
-				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), roomId+"");
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "c"+roomId);
 				//상대에게 알리기
-				messagingTemplate.convertAndSend("/chatWait/" + targetNickname, roomId+"");
+				messagingTemplate.convertAndSend("/chatWait/" + targetNickname, "c"+roomId);
 				
 				return;
 				
@@ -157,7 +176,7 @@ public class WebSocketController {
 		messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "FAIL");
 	}
 	
-	//채팅방 메세지 리스트 가져오기
+	//채팅방 리스트 가져오기
 	@ResponseBody
 	@RequestMapping(value="/getChatList", method=RequestMethod.GET)
 	public ResponseEntity<List<ChatroomVO>> getChatList(Authentication authentication) throws Exception {
@@ -168,7 +187,6 @@ public class WebSocketController {
 		ResponseEntity<List<ChatroomVO>> entity=null;
 		try{
 			List<ChatroomVO> chatList=msgService.getChatList(vo.getId());
-			this.logger.info(chatList.toString());
 			entity=new ResponseEntity<List<ChatroomVO>>(chatList, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -189,23 +207,28 @@ public class WebSocketController {
 		
 		try{
 			
-			Map<String, Object> map=msgService.getMessages(roomid, vo.getId());
+			Map<String, Object> map = msgService.getMessages(roomid, vo.getId());
 			
+			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
+			String chatRoom=JSONArray.fromObject(messageList).toString();
+			//읽은 사람이 없을경우 실행 X
 			if(map.get("users")!=null){
+				
 				String users=map.get("users").toString();
 				String[] userArray = users.split("\\|");
 				
 				//상대들에게 누군가 읽었음을 알리기
 				for(String nickname : userArray){
-					messagingTemplate.convertAndSend("/chatWait/" + nickname, roomid+"");
+					messagingTemplate.convertAndSend("/chatWait/" + nickname, "r"+roomid+chatRoom);
 				}
+				
+				//나에게 다시 알리기
+				messagingTemplate.convertAndSend("/chatWait/" + vo.getNickname(), "r"+roomid+chatRoom);
+				
 			}
 			
-			List<MessageVO> messageList = (List<MessageVO>)map.get("messages");
-			
 			//JSONArray로 만들기 위한 인스턴스값 생성
-	    	String chatRoom=JSONArray.fromObject(messageList).toString();
-	    	
+
 			entity=new ResponseEntity<String>(chatRoom, HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -220,22 +243,20 @@ public class WebSocketController {
 	public void registMessage(Principal principal, MessageVO vo) throws Exception {
 
 		if(principal.getName().equals(vo.getSenderEmail())){
-			
 			try{
 				String users = msgService.registMessage(vo);
 				
 				if(users!="" || users!=null){
+					
 					//나에게 알리기
-					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), vo.getRoomid()+"");
+					messagingTemplate.convertAndSend("/chatWait/" + vo.getSenderNickname(), "n"+vo.getRoomid());
 					
 					String[] userArray = users.split("\\|");
 					//상대들에게 알리기
 					for(String user : userArray){
-						messagingTemplate.convertAndSend("/chatWait/" + user, vo.getRoomid()+"");
+						messagingTemplate.convertAndSend("/chatWait/" + user, "n"+vo.getRoomid());
 					}
-					
 					return;
-					
 				}
 				
 			}catch(Exception e){
@@ -249,4 +270,3 @@ public class WebSocketController {
 	}
 	
 }
-

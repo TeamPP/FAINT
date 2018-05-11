@@ -15,6 +15,7 @@
   			<id property="id" column="id" />
   			<result property="name" column="aname"/>
   		</collection>
+  		
   	</resultMap>
   	
   	<select id="select-users" parameterType="int" resultMap="UsersResultMap">

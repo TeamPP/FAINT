@@ -19,7 +19,7 @@
 		<property name="url"
 			value="jdbc:mysql://faint.c6kv0m0reijx.ap-northeast-2.rds.amazonaws.com/faint?useSSL=false"></property>
 		<property name="username" value="faint"></property>
-		<property name="password" value="faint1122"></property>
+		<property name="password" value="faint1234"></property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

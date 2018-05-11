@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.faint.domain.PostVO;
 import com.faint.domain.SearchCriteria;
 import com.faint.domain.TagVO;
 import com.faint.domain.UserVO;
+import com.faint.dto.CustomUserDetails;
 import com.faint.dto.SearchDTO;
 import com.faint.service.ActivityService;
 import com.faint.service.PostService;
@@ -49,7 +51,7 @@ public class ExploreController {
 	
 	// 인기검색어, 인기게시글 출력
 	@RequestMapping(value = "/expage", method = RequestMethod.GET)
-	public void getPost(Model model , HttpServletRequest request) throws Exception {
+	public void getPost(Model model, Authentication authentication) throws Exception {
 
 		// model.addAttribute("topTag", tagservice.topTag()); // 상위10개 태그목록 출력
 		List<PostVO> topPostList = postservice.topPost();
@@ -61,7 +63,9 @@ public class ExploreController {
 		
 		
 		//친구추천 계정
-		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
+		
 		int loginid = vo.getId();
 		List<UserVO> recommList=activityservice.recomm(loginid);  
 		model.addAttribute("recommList",recommList);
@@ -89,13 +93,14 @@ public class ExploreController {
 	// 실시간으로 keyword값 받아서 띄우기 => 이름, 닉네임, 태그 모두 다
 	@ResponseBody
 	@RequestMapping(value = "/searchData", method = RequestMethod.POST)
-	public ResponseEntity<List<SearchDTO>> searchList(@RequestBody String words, HttpServletRequest request)
+	public ResponseEntity<List<SearchDTO>> searchList(@RequestBody String words, Authentication authentication)
 			throws Exception {
 
 		SearchCriteria cri = new SearchCriteria();
 		ResponseEntity<List<SearchDTO>> entity = null;
 
-		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		CustomUserDetails customUser=(CustomUserDetails)authentication.getPrincipal();
+		UserVO vo=(UserVO)customUser.getVo();
 		int loginid = vo.getId();
 		cri.setLoginid(loginid);
 

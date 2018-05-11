@@ -62,7 +62,7 @@
         order by m.sendtime;
 	</select>
 	
-	<insert id="registMessage">
+	<insert id="registMessage" useGeneratedKeys="true" keyProperty="id"	>
 		insert into tbl_message(ROOMID, SENDER, SENDTIME, COMMENT, read_status)
 		values (
 		#{roomid}

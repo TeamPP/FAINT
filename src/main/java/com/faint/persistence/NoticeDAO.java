@@ -9,6 +9,8 @@ public interface NoticeDAO {
 	
 	public List<NoticeDTO> getNoticeList(int userid) throws Exception;
 	
+	public void noticeRead(int userid) throws Exception;
+	
 	public void createFollowNotice(RelationDTO dto) throws Exception;
 	
 	public Integer createTaggingNotice(NoticeDTO dto) throws Exception;

@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="_csrf" content="${_csrf.token}"/>
    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+<script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
 ._75ljm > .isFlw{
@@ -185,10 +186,10 @@ display:none;
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
         
       	//==========================================알림==========================================
-        noticeList();
+        
+      	noticeList();
         
       	//나에대한 follow,reply,like알림 구독
       	stompClient.subscribe('/notify/${login.id}', function(message){
@@ -215,11 +216,43 @@ display:none;
        	//나에대한 채팅방생성 및 메시지 수신 알림(roomid값 받음)
       	stompClient.subscribe('/chatWait/${login.nickname}', function(message){
             if(message.body!="FAIL" && message.body!=null && message.body!=""){
-            	var roomid = message.body;
-            	getChatList();
+            	var msg = message.body;
             	
-            	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
-            		getChat(roomid);
+            	//누군가 새로 채팅창을 만들었을 때
+            	if(msg[0]=="c"){
+            		
+            		var roomid = msg.substr(1,msg.length-1);
+                	if($(".list-chat").hasClass("shown") && $(".list-chat").data("rid")==undefined){
+                		$('.list-chat').data("rid", roomid);
+                		getChat(roomid);
+                	}
+                	getChatList();
+                	
+                //누군가 새로 읽었을 때
+            	}else if(msg[0]=="r"){
+            		
+            		var roomid = msg.substr(1,msg.indexOf("[")-1);
+                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                		var data = JSON.parse(msg.substr(msg.indexOf("["),msg.length-1));
+                		$(".list-chat > .scroll > ul").children("li").each(function(){
+                			var newValue=data[$(this).index()].readstatus;
+                			if($(this).children(".readStatus").html() != newValue){
+                				$(this).children(".readStatus").html(newValue);
+                				if(newValue==0){
+                					$(this).children(".readStatus").css("display", "none");
+                				}
+                			}
+                		})
+                	}
+                	
+               	//누군가 새로 메세지를 전송했을 때
+            	}else if(msg[0]=="n"){
+            		
+            		var roomid = msg.substr(1,msg.length-1);
+                	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
+                		getChat(roomid);
+                	}
+                	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
             	}
             	
             }else{
@@ -227,22 +260,22 @@ display:none;
             }
         });
     	  
-    	  
     });
 	
 	var date="";
     //알림 리스트 가져오기
 	function noticeList(){
   		$.getJSON("/getNotice/", function(data){
-  			console.log(data);
+			console.log(data);
   			var list="";
+  			var unreadCount=0;
   			$(data).each(function(){
-  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
   				
+  				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
                 // 프로필 사진이 있는경우 | 없는 경우
-   				if(this.profilephoto != null){
-   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilephoto+"' /></a></div></div>";
-               	}else if(this.profilephoto == null || this.profilephoto == ""){
+   				if(this.profilePhoto != ""){
+   					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
+               	}else if(this.profilePhoto == ""){
                		list += "src='/resources/img/emptyProfile.jpg' /></a></div></div>";
                	}
                 
@@ -288,12 +321,25 @@ display:none;
                 	list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.postPhoto+"' /></a></div></li>";
                 	
                 }
+                
+                //안 읽은 숫자 카운트
+                unreadCount+=this.unread;
   			})
+  			//안 읽은 알람 있을 경우
+  			if(unreadCount>0){
+  				$(".heart-svg").data("unread", unreadCount);
+  				$(".heart-svg").css("fill", "#e24040");
+  				$(".heart-svg").children("use").attr("xlink:href", "#full-heart");
+  			}else{
+  				$(".heart-svg").children("use").attr("xlink:href", "#heart");
+  				$(".heart-svg").css("fill", "#555");
+  			}
+  			
   			$("#follow-results").html(list);
   			
   			//알림 리스트가 없을 경우
   		   	if($("#follow-results").children().length==0) {
-				$("#follow-results").html("<div class='_oznku'><div class='noresult'>새로운 알림이 없습니다.</div></div>");
+				$("#follow-results").html("<div class='_oznku'><div class='noalarm'>새로운 알림이 없습니다.</div></div>");
 				$("#follow-header-modal").css("height", "62px");
 			}
   			
@@ -301,7 +347,7 @@ display:none;
   			follow();
   		});
 	}
-	
+	 
 	
 	//1. 팔로우 알림
 	function notifyFollow(userid){

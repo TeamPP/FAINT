@@ -8,6 +8,7 @@ public class NoticeDTO {
 	private int fromUserId;
 	private String targetid;
 	private String type;
+	private int unread;
 	
 	private int postid; //null가능
 	private int isFlw; //null가능
@@ -41,6 +42,12 @@ public class NoticeDTO {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public int getUnread() {
+		return unread;
+	}
+	public void setUnread(int unread) {
+		this.unread = unread;
 	}
 	public int getPostid() {
 		return postid;
@@ -82,7 +89,8 @@ public class NoticeDTO {
 	@Override
 	public String toString() {
 		return "NoticeDTO [fromid=" + fromid + ", fromUserId=" + fromUserId + ", targetid=" + targetid + ", type="
-				+ type + ", postid=" + postid + ", isFlw=" + isFlw + ", regdate=" + regdate + ", profilePhoto="
-				+ profilePhoto + ", postPhoto=" + postPhoto + ", filter=" + filter + "]";
+				+ type + ", unread=" + unread + ", postid=" + postid + ", isFlw=" + isFlw + ", regdate=" + regdate
+				+ ", profilePhoto=" + profilePhoto + ", postPhoto=" + postPhoto + ", filter=" + filter + "]";
 	}
+
 }

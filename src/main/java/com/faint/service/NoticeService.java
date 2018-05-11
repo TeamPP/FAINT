@@ -9,6 +9,8 @@ public interface NoticeService {
 	
 	public List<NoticeDTO> getNoticeList(int userid) throws Exception;
 	
+	public void noticeRead(int userid) throws Exception;
+	
 	public Integer createTaggingNotice(String fromid, String targetid, int postid) throws Exception;
 	
 }
