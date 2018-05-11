@@ -326,7 +326,7 @@ border-radius: 150px;  /* 프사 둥글게 */
 	<div class="_23gmb"></div>
 	<div class="_o0j5z" onclick="callRemoveDialog(event)">
 	<div class="_784q7" id="modalChangeProfilePhoto" onclick="callRemoveDialog(event)">
-	<ul class="_cepxb">
+	<ul class="_cepxb" style="list-style: none;">
 		<li class="_hql7s">프로필 사진 바꾸기</li>
 		<li class="_o2wxh"><button class="_h74gn" id="btnRemovePhoto" onclick="removePhoto(event)">현재 사진 삭제</button></li>
 		<li class="_hql7s"><button class="_h74gn" id="btnPhotoUpload" onclick="callFileUploader(event)">사진 업로드</button></li>
