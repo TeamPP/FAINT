@@ -41,7 +41,7 @@
 	</insert>
 	
 	<insert id="createTaggingNotice">
-		<selectKey resultType="string" keyProperty="targetid" order="BEFORE">
+		<selectKey resultType="java.lang.String" keyProperty="targetid" order="BEFORE">
 			select id from tbl_user where nickname=#{targetid}
 		</selectKey>
 		<if test="targetid != null">
