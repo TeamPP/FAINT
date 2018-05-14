@@ -21,8 +21,8 @@ public class S3Util {
 	//bucketName
 	private String bucketName = "faint1122";
 	
-	private String accessKey = "aaa"; // 엑세스 키
-    private String secretKey = "aaa"; // 보안 엑세스 키      
+	private String accessKey = "1234"; // 엑세스 키
+    private String secretKey = "1234"; // 보안 엑세스 키      
 
 	//bucketName getter  
 	public String getBucketName() {
@@ -31,7 +31,7 @@ public class S3Util {
 	
 	private AmazonS3 conn;
 	
-/*	public S3Util() {
+	/*public S3Util() {
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 	    ClientConfiguration clientConfig = new ClientConfiguration();
 	    clientConfig.setProtocol(Protocol.HTTP);
