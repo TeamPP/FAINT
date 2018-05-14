@@ -76,7 +76,7 @@
 	<ul id="likersContainer"></ul>
 </section>
 
-<style>
+<style id="modalLikerStyle">
 .section3{ width: 335px; height: 100%; display: inline-block; text-align: left; }
 .likersClose { width:20px; height:20px; cursor: pointer; float:left; }
 .likersTitle{ width: 100%; height: 7%; padding: 10px; font-size: 17px; text-align: center; border-bottom: 1.3px solid #efefef; }
@@ -716,7 +716,11 @@ function likerList(){
 	                //원래 내용
 	                $(".section2").hide();
 	                
-	            	//handlebar추가
+	            	//기존값 삭제
+	            	$(".section3").remove();
+	                $("#modalLikerStyle").remove();
+	                
+	              	//handlebar추가
 	                var source=$("#modalLiker").html();
 	                var post=Handlebars.compile(source);
 	                var postmodal=post(data);
