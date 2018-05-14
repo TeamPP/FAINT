@@ -62,7 +62,7 @@ select  distinct * from tbl_search
     on type=2
     
     order by rand()
-    limit 20;
+    limit 30;
     
 ]]>
 </select>

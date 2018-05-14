@@ -463,20 +463,27 @@ $(".search-form").submit(function(event) {
    
    return true;
    }); 
-// 검색 필터 적용하기 위한 value값
-$('.search-option input').click(function() {
-	$(".search-option input").attr("value", "0");
-	$(this).attr("value", "1");
-});
 
 function searchClick(thisTag){
 	  var customType=$(thisTag).data("search");
+	 
 	  if(customType=="search-all") {
 		  $("._ndl3t").show();
 	  } else{
 		 $("._ndl3t").not("a[data-search='" + customType +"']").hide();
 		 $("._ndl3t").filter("a[data-search='" + customType +"']").show();
 	  }
+	  
+	 var len = $("._ndl3t").filter("a[data-search='" + customType +"']").length;
+     var $div = $("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
+     
+	 if(len==0) {
+	      $div.prependTo($("#results"));
+	      $("#search-header-modal").css("height", "51px");
+	 } else {
+		 $("._oznku").remove();
+		 $("#search-header-modal").css("height", "196px");
+	 }
 }
 
 </script>
@@ -879,7 +886,7 @@ function searchKeyup(event){
 		         console.log("그럼여기구나");
 		      }
 		 }
-}
+} /* searchKeyup 끝 */
 
 //follow여부확인하여 팔로우/팔로우취소
 function follow(){
