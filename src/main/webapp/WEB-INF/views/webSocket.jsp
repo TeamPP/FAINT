@@ -7,8 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <meta name="_csrf" content="${_csrf.token}"/>
-   <meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <script type="text/javascript" src="../../resources/js/stomp.js"></script>
 
 <style>
@@ -181,11 +181,15 @@ display:none;
 	<sec:authentication property="principal.vo" var="login" />
 
 	<script type="text/javascript">
-		
+	var headerName = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	var headers = {};
+	headers[headerName] = token;
+	
 	//웸소켓을 '/hello' end point로 연결한다.
 	var socket = new SockJS('/hello');
 	var stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
+	stompClient.connect(headers, function(frame) {
         
       	//==========================================알림==========================================
         
@@ -272,6 +276,7 @@ display:none;
   			$(data).each(function(){
   				
   				list += "<li class='_75ljm  _3qhgf'><div class='_db0or'><div class='_3oz7p'><a class='_pg23k _jpwof _gvoze' style='width: 34px; height: 34px;' href='/member/"+this.fromid+"'><img class='_rewi8'";
+
                 // 프로필 사진이 있는경우 | 없는 경우
    				if(this.profilePhoto != ""){
    					list += "src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+this.profilePhoto+"' /></a></div></div>";
@@ -325,6 +330,7 @@ display:none;
                 //안 읽은 숫자 카운트
                 unreadCount+=this.unread;
   			})
+
   			//안 읽은 알람 있을 경우
   			if(unreadCount>0){
   				$(".heart-svg").data("unread", unreadCount);

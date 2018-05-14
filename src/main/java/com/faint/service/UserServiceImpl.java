@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 		dao.createAuthKey(vo.getEmail(),key); //인증키 db 저장
 		//메일 전송
 		MailHandler sendMail = new MailHandler(mailSender);
-		sendMail.setSubject("FAINT  서비스 이메일 인증]");
+		sendMail.setSubject("FAINT  서비스 이메일 인증");
 		sendMail.setText(
 		new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8181/user/emailConfirm?userEmail=").append(vo.getEmail()).append("&memberAuthKey=").append(key).append("' target='_blank'>이메일 인증 확인</a>").toString());
 		sendMail.setFrom("sososososo@gmail.com", "서어비스센터 ");
@@ -169,43 +169,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	//============================로그인============================
-	@Override
-	public UserVO login(LoginDTO dto)throws Exception{
-		System.out.println("service dto: "+dto);
-		System.out.println("멤버서비스 dto");
-		try {
-			String pw = dao.getUserPw(dto.getEmail()).getPassword();
-			String rawPw = dto.getPassword();
-			
-			System.out.println("pw====================="+pw);
-			System.out.println("raw===================="+rawPw);
-			//System.out.println("db pW  : "+pw);
-			//System.out.println("입렵Pw:"+rawPw);
-			//System.out.println(passwordEncoder.matches(rawPw, pw));
-			if(passwordEncoder.matches(rawPw, pw)) {
-				System.out.println("비밀번호 일치");
-				dto.setPassword(pw);
-				System.out.println("비밀번호 일치1");
-			}else {
-				//============System.out.println("비밀번호 불일치");=======================
-				//주석 해제 시 비 암호화 설정된 db Pw  값으로  로그인 되지 않음
-				
-				dto.setPassword(rawPw);
-				System.out.println("ㅁ");
-			}
-		}catch(NullPointerException npe){
-			System.out.println("ㅁ11");
-			UserVO vo=new UserVO();
-			vo=null;
-			System.out.println(vo);
-			return vo;
-		}catch (Exception e){
-			UserVO vo=new UserVO();
-			vo=null;
-			return vo;
-		}
-		return dao.login(dto);
-	}
 	
 	//이메일 인증 키 검증
 	@Override
@@ -236,7 +199,8 @@ public class UserServiceImpl implements UserService {
 				dao.successAuth(user);
 			}catch (Exception e) {
 				e.printStackTrace();
-			}}
+			}
+		}
 		return vo;
 	}
 	
@@ -303,9 +267,6 @@ public class UserServiceImpl implements UserService {
 			return "F";
 		}
 	}
-	
-	
-	
 
 	@Override
 	public UserVO find_by_id(UserVO vo) {
@@ -341,14 +302,6 @@ public class UserServiceImpl implements UserService {
 		//System.out.println("getEmail"+user.getUserEmail());
 		sendMail.setTo(user.getEmail());
 		sendMail.send();
-	}
-	
-	//로그인 유지
-	@Override
-	public void keepLogin(String email, String sessionId, Date next) throws Exception{
-		System.out.println("세션키 저장하러 오나요?service에  ");
-
-		dao.keepLogin(email, sessionId, next);
 	}
 
 	//세션키 확인

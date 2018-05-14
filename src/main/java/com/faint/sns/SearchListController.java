@@ -80,7 +80,7 @@ public class SearchListController {
 
 		} else {
 			System.out.println("통합검색..");
-			return "";
+			return "forward:/empty";
 		}
 
 	}
@@ -103,7 +103,7 @@ public class SearchListController {
 		JSONArray jsonArray=new JSONArray();
 		List<PostVO> taglist=postService.tagsAjax(cri);
 
-		
+		System.out.println("길이"+taglist.size());
 		if(taglist.size()>0){
 			model.addAttribute("tagList", taglist);
 			model.addAttribute("jsonList", jsonArray.fromObject(taglist));
@@ -174,7 +174,7 @@ public class SearchListController {
 	
 	// 키워드받는 태그 게시물목록 무한스크롤 (처음 10개 목록)
 		@RequestMapping(value = "/category", method = RequestMethod.GET)
-		public String cateSearch(@RequestParam("cateid") Integer cateid, Model model) throws Exception {
+		public String cateSearch(@RequestParam("cateid") Integer cateid, Model model, HttpServletRequest request) throws Exception {
 
 			JSONArray jsonArray=new JSONArray();
 			List<PostVO> catelist=postService.cateAjax(cateid);
@@ -182,7 +182,10 @@ public class SearchListController {
 			if(catelist.size()>0){
 				model.addAttribute("cateList", catelist);
 				model.addAttribute("jsonList", jsonArray.fromObject(catelist));
+				model.addAttribute("catename", "category."+cateid);
 				model.addAttribute("keyword", "category."+cateid);
+				model.addAttribute("reqURL", request.getRequestURI());
+				
 				return "/search/cateFilter";
 			}else{
 				return "forward:/empty";

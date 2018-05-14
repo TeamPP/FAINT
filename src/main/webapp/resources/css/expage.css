@@ -387,14 +387,21 @@ a:-webkit-any-link {
 /* 마우스 오버 */
 .realtime_keywd li .realtime_rank:hover {
 	background:
-		/* url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) */
 		url(/resources/image/realtimeon.png) no-repeat 0 0;
 		background-size: 278px 28px;
+	
+	
+}
+
+.realtime_keywd li .realtime_rank:hover .keywd .ellipsis {
+	color: black;
+	font-weight: bold;
+	letter-spacing: -1px;
+	font-size: 14px;
 }
 
 .realtime_keywd li.on .realtime_rank {
 	background:
-		/* url(http://cdnimg.melon.co.kr/resource/image/web/search/bg_realtime_bar.png) */
 		url(/resources/image/realtimeon.png) no-repeat 0 0;
 		background-size: 278px 28px;
 }

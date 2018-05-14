@@ -100,8 +100,16 @@ body {
 
             <div class="col-sm-4" id="search" style="height: 100%;">
                 <form class="search-form" action="/search/search" method="get">
-                    <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
-                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                  <c:choose>
+					<c:when test="${reqURL == '/search/category'}">
+	                    <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value=""
+	                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                     </c:when>
+                     <c:otherwise>
+		                 <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value="${keyword}"
+	                     list="results" data-toggle="modal" data-target="#searchModal" data-backdrop="true" autocomplete="off">
+                     </c:otherwise>
+                  </c:choose>
                  <button type="submit" class="search-button">
                      <img class="searchbtn" src="/resources/image/search_icon/search.png">
                  </button>
@@ -560,16 +568,25 @@ function searchAjax(){
 	                for(var i=0; i<result.length; i++) {
 	                    if(searchwords.length>0) {
 	                        for(var a=0; a<searchwords.length; a++) {
+	                        	
+	                        	/* 검색단어가 특수 문자로 시작할 때 */
+	                        	if(searchwords.charAt(0)=='#' || searchwords.charAt(0)=='@' || searchwords.charAt(0)=='%') {
+	                        		searchwords = searchwords.substring(1);
+	                        		console.log(searchwords);
+	                        	} 
+                        		
 	                            if(result[i].type==0 && result[i].tagname!=null){
 	                            	// 특수문자 자르고
 	                            	tagname=result[i].tagname.substring(1);
 	                            	
 	                               for(var b=a; b<tagname.length; b++) {
 	                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
-	                                     if(a==b && tagname.indexOf(searchwords)==0) {
-	                                        result[i].score += 3;
+	                                     if(a==b && tagname.indexOf(searchwords)==0 && searchwords.length==tagname.length) {
+	                                        result[i].score += 10;
 	                                     } else if(a==b) {
-	                                    	 result[i].score += 2;
+	                                    	 result[i].score += 3;
+	                                     } else if(a==b && tagname.indexOf(searchwords)==0) {
+	                                    	 result[i].score+= 5;
 	                                     }
 	                                    	 result[i].score += 1;
 	                                     }
@@ -586,11 +603,13 @@ function searchAjax(){
 	                            	name = result[i].name.substring(1);
 	                               for(var b=a; b<name.length; b++) {
 	                                  if(searchwords.charAt(a)==name.charAt(b)) {
-	                                      if(a==b && name.indexOf(searchwords)==0) {
-	                                    	  result[i].score += 3;
+	                                      if(a==b && name.indexOf(searchwords)==0  && searchwords.length==name.length) {
+	                                    	  result[i].score += 10;
 	                                       } else if(a==b) {
-	                                    	   result[i].score += 2;
-	                                      } 
+	                                    	   result[i].score += 3;
+	                                      } else if(a==b && name.indexOf(searchwords)==0) {
+	                                    	  result[i].score += 5;
+	                                      }
 	                                    	  result[i].score += 1;
 	                                     }
 	                               } /* name for문 끝 */
@@ -599,10 +618,12 @@ function searchAjax(){
 	                               // nickname O name X => nickname만 있을 경우
 	                               for(var b=a; b<nickname.length; b++) {
 	                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
-	                                      if(a==b && nickname.indexOf(searchwords)==0) {
-	                                    	  result[i].score += 3;
+	                                      if(a==b && nickname.indexOf(searchwords)==0 && searchwords.length==nickname.length) {
+	                                    	  result[i].score += 10;
 	                                       } else if(a==b) {
-	                                    	   result[i].score += 2;
+	                                    	   result[i].score += 3;
+	                                      } else if(a==b && nickname.indexOf(searchwords)==0) {
+	                                    	  result[i].score +=5;
 	                                      } else {
 	                                    	  result[i].score += 1;
 	                                         }
@@ -616,7 +637,7 @@ function searchAjax(){
 	                               for(var b=a; b<result[i].location.length; b++) {
 	                                  if(searchwords.charAt(a)==result[i].location.charAt(b)) {
 											if(a==b) {
-	                                        	result[i].score += 2;
+	                                        	result[i].score += 3;
 	                                       }
 	                                    	   result[i].score += 1;
 	                                     }
@@ -626,7 +647,7 @@ function searchAjax(){
 	                            else {
 	                               result[i].score=0;
 	                            }
-	                            
+
 	                        }/* for문 끝 */
 	                     }
 	                }/* for문 끝 */
@@ -712,7 +733,7 @@ function searchAjax(){
 	                          $("#results").html("");
 	                      	 }
 	                       
-	                       if(count>=3 && result.length==3) {
+	                       if(count>=3 && result.length<=3) {
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
 	                          $("#search-header-modal").css("height", "51px");
 	                       } else {
@@ -747,7 +768,7 @@ function searchAjax(){
 	                          }
 	                 	 }
 	                 		
-	                       if(count>=3 && result.length==3) {
+	                       if(count>=3 && result.length<=3) {
 	                    	   console.log(">>>"+result.length);
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
 	                          $("#search-header-modal").css("height", "51px");
@@ -793,7 +814,7 @@ function searchAjax(){
 	                         $("#results").html("");
 	                      }
 	                 }
-	                    if(count>=3 && result.length==3) {
+	                    if(count>=3 && result.length<=3) {
 	                 	   console.log(">>>"+result.length);
 	                       $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
 	                       $("#search-header-modal").css("height", "51px");
@@ -826,7 +847,7 @@ function searchAjax(){
 	                          }
 	                 	 }
 	                 		
-	                       if(count>=3) {
+	                       if(count>=3 && result.length<=3) {
 	                    	   console.log(">>>"+result.length);
 	                          $("#results").html("<div class='_oznku'><div class='noresult'>검색 결과가 없습니다.</div></div>");
 	                          $("#search-header-modal").css("height", "51px");

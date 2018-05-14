@@ -62,7 +62,11 @@ public class MemberController {
 			return "forward:/empty";
 		}
 		
-		
+	}
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String excep1(Authentication authentication) throws Exception{
+		return "forward:/empty";
 	}
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
@@ -186,22 +190,6 @@ public class MemberController {
 		}
 		return entity;
 	}
-		
-	//======================================로그인 관련 컨트롤러======================================
-/*	//로그인 페이지
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto){ 
-		
-	}
-	//로그인 페이지방향(세션의 LOGIN속성에 uservo값 추가) - login 인터셉터가 작동
-	@RequestMapping(value="/loginPost", method=RequestMethod.POST)
-	public void loginPOST(LoginDTO dto, HttpSession session, Model model) throws Exception{
-		UserVO vo=service.login(dto);
-		if(vo==null){
-			return;
-		}
-		model.addAttribute("userVO", vo);
-	}*/
 	
 	//======================================회원정보변경======================================
 	//프로필편집
