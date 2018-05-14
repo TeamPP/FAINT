@@ -389,7 +389,7 @@
             and topT.blockedid is null
 	        )
 	      
-	        order by likeCount desc, replyCount desc, id
+	        order by regdate desc, likeCount desc, replyCount desc
 	        limit 0,30 ;
             
 	    ]]>
@@ -478,7 +478,7 @@
             
             where location =#{keyword}
             
-            order by likeCount desc, replyCount desc
+            order by regdate desc, likeCount desc, replyCount desc
             
             limit 0,30;
 	    ]]>

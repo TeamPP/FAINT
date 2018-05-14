@@ -99,7 +99,7 @@ body {
             </div>
 
             <div class="col-sm-4" id="search" style="height: 100%;">
-                <form class="search-form" action="/search/search" method="get">
+                <form class="search-form" action="/search/search" method="get" onfocus="searchAjax()">
                   <c:choose>
 					<c:when test="${reqURL == '/search/category'}">
 	                    <input type="search" placeholder="Search" class="search-input" name='inputKeyword' id='keywordInput' value=""
@@ -493,7 +493,7 @@ function searchAjax(){
 	       //$(this).val( $(this).val().replace(/ /g, '') );      //공백삭제
 	       
 	      // 키워드 받아서 공백 제거하고 저장
-	      var chgwords = words;
+	      var chgworlds = words;
 	      var splitArray = chgwords.split(' ');
 	      var searchwords='';
 	      var bfsearchwords = '';
@@ -664,6 +664,7 @@ function searchAjax(){
 	               }
 	                
 	                console.log("결과값--- "+JSON.stringify(result));
+	                console.log("나오너라---"+searchwords);
 	                 
 	                // 검색 첫 글자가 문자일 때
 	                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
