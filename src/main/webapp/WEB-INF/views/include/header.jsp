@@ -115,42 +115,42 @@ body {
                  </button>
                                  <div class="search-option">
                      <div>
-                         <input class="type-all" name="type" type="radio" value="" id="type-all">
+                         <input class="type-all" name="type" type="radio" value="" id="type-all" data-search="search-all" tabindex="-1"  onclick="searchClick(this)">
                          <label for="type-all">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#all"></use>
                              </svg>
-                             <!-- <span>All</span> -->
+                             <span>All</span>
                          </label>
                      </div>
 
                      <div>
-                         <input class="type-users" name="type" type="radio" value="" id="type-users">
+                         <input class="type-users" name="type" type="radio" value="" id="type-users" data-search="user" tabindex="-1"  onclick="searchClick(this)">
                          <label for="type-users">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                              </svg>
-                             <!-- <span>Users</span> -->
+                             <span>User</span>
                          </label>
                      </div>
 
                      <div>
-                         <input class="type-hashtags" name="type" type="radio" value="" id="type-hashtags">
+                         <input class="type-hashtags" name="type" type="radio" value="" id="type-hashtags" data-search="hashtag" tabindex="-1"  onclick="searchClick(this)">
                          <label for="type-hashtags">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hashtag"></use>
                              </svg>
-                             <!-- <span>Hashtag</span> -->
+                             <span>Hashtag</span>
                          </label>
                      </div>
 
                      <div>
-                         <input class="type-locations" name="type" type="radio" value="" id="type-locations">
+                         <input class="type-locations" name="type" type="radio" value="" id="type-locations" data-search="location" tabindex="-1"  onclick="searchClick(this)">
                          <label for="type-locations">
                              <svg class="edit-pen-title">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#locations"></use>
                              </svg>
-                             <!-- <span>Locations</span> -->
+                             <span>Location</span>
                          </label>
                      </div>
 
@@ -311,7 +311,7 @@ body {
 		<div class="modal fade" id="searchModal" role="dialog" aria-hidden="false">
 		        <div class="modal-content" id="search-modal-content">
 		            <div class="modal-header" id="search-header-modal">
-		                <div id="results"></div>
+		                <div id="results" class="modal-results"></div>
 		            </div>
 		        </div>
 		</div>
@@ -380,6 +380,11 @@ body {
 	</c:choose>
 
 <script>
+
+$(document).ready(function() {
+	$(".type-all").attr("checked","");
+})
+
 // 로그아웃 버튼 클릭 이벤트
 $(".logout").click(function() {
 	$(".logoutForm").submit();
@@ -463,6 +468,17 @@ $('.search-option input').click(function() {
 	$(".search-option input").attr("value", "0");
 	$(this).attr("value", "1");
 });
+
+function searchClick(thisTag){
+	  var customType=$(thisTag).data("search");
+	  if(customType=="search-all") {
+		  $("._ndl3t").show();
+	  } else{
+		 $("._ndl3t").not("a[data-search='" + customType +"']").hide();
+		 $("._ndl3t").filter("a[data-search='" + customType +"']").show();
+	  }
+}
+
 </script>
 
 <script>
@@ -481,6 +497,7 @@ function searchAjax(){
    $("#keywordInput").keyup(function(event){
 	   searchKeyup(event);
    });
+   
 }/* searchAjax() 끝 */
 
 function searchKeyup(event){
@@ -514,48 +531,8 @@ function searchKeyup(event){
 		         if(chgwords.indexOf(" ")==0) {
 		            var chgwords = words.substring(chgwords.lastIndexOf(" "));
 		         }
-		         bfsearchwords += chgwords;
+		         searchwords += chgwords;
 		      }
-		      console.log("searchwords----------->" + bfsearchwords);
-		             if(bfsearchwords=="") {
-		    		if($("#type-all").attr("value")=="1") {
-		    			searchwords +='';
-		    		} else if($("#type-users").attr("value")=="1") {
-		    			searchwords +='@';
-		    		} else if($("#type-hashtags").attr("value")=="1") {
-		    			searchwords +='#';
-		    		} else if($("#type-locations").attr("value")=="1") {
-		    			searchwords += '%';
-		    		}
-		    		searchwords += bfsearchwords;
-		      } else {
-		    	  if(bfsearchwords.charAt(0)=="#" || bfsearchwords.charAt(0)=="@" || bfsearchwords.charAt(0)=="%") {
-		      		if($("#type-all").attr("value")=="1") {
-		      			bfsearchwords.charAt(0)='';
-		    		} else if($("#type-users").attr("value")=="1") {
-		    			bfsearchwords.charAt(0)='@';
-		    		} else if($("#type-hashtags").attr("value")=="1") {
-		    			bfsearchwords.charAt(0)='#';
-		    		} else if($("#type-locations").attr("value")=="1") {
-		    			bfsearchwords.charAt(0)='%';
-		    		}
-		      		searchwords=bfsearchwords;
-		      		
-		    	  } else {
-		      		if($("#type-all").attr("value")=="1") {
-		    			searchwords +='';
-		    		} else if($("#type-users").attr("value")=="1") {
-		    			searchwords +='@';
-		    		} else if($("#type-hashtags").attr("value")=="1") {
-		    			searchwords +='#';
-		    		} else if($("#type-locations").attr("value")=="1") {
-		    			searchwords += '%';
-		    		}
-		    		searchwords += bfsearchwords;
-		    	  }
-		      } 
-		      
-		      console.log("searchwords----------->>>" + searchwords);
 		      
 		      /* 검색 단어가 있으면 일치하는 것 출력 */
 		      if(searchwords!=''){
@@ -581,22 +558,24 @@ function searchKeyup(event){
 		                        for(var a=0; a<searchwords.length; a++) {
 		                        	
 		                        	/* 검색단어가 특수 문자로 시작할 때 */
-		                        	if(searchwords.charAt(0)=='#' || searchwords.charAt(0)=='@' || searchwords.charAt(0)=='%') {
-		                        		searchwords = searchwords.substring(1);
+		                        	if(searchwords.charAt(0)=='#' || searchwords.charAt(0)=='@' || searchwords.charAt(0)=='*') {
+		                        		subsearchwords = searchwords.substring(1);
 		                        		console.log(searchwords);
-		                        	} 
+		                        	}  else {
+		                        		subsearchwords = searchwords;
+		                        	}
 	                        		
 		                            if(result[i].type==0 && result[i].tagname!=null){
 		                            	// 특수문자 자르고
 		                            	tagname=result[i].tagname.substring(1);
 		                            	
 		                               for(var b=a; b<tagname.length; b++) {
-		                                  if(searchwords.charAt(a)==tagname.charAt(b)) {
-		                                     if(a==b && tagname.indexOf(searchwords)==0 && searchwords.length==tagname.length) {
+		                                  if(subsearchwords.charAt(a)==tagname.charAt(b)) {
+		                                     if(a==b && tagname.indexOf(subsearchwords)==0 && subsearchwords.length==tagname.length) {
 		                                        result[i].score += 10;
 		                                     } else if(a==b) {
 		                                    	 result[i].score += 3;
-		                                     } else if(a==b && tagname.indexOf(searchwords)==0) {
+		                                     } else if(a==b && tagname.indexOf(subsearchwords)==0) {
 		                                    	 result[i].score+= 5;
 		                                     }
 		                                    	 result[i].score += 1;
@@ -613,12 +592,12 @@ function searchKeyup(event){
 		                            	// 특수문자 자르고
 		                            	name = result[i].name.substring(1);
 		                               for(var b=a; b<name.length; b++) {
-		                                  if(searchwords.charAt(a)==name.charAt(b)) {
-		                                      if(a==b && name.indexOf(searchwords)==0  && searchwords.length==name.length) {
+		                                  if(subsearchwords.charAt(a)==name.charAt(b)) {
+		                                      if(a==b && name.indexOf(subsearchwords)==0  && subsearchwords.length==name.length) {
 		                                    	  result[i].score += 10;
 		                                       } else if(a==b) {
 		                                    	   result[i].score += 3;
-		                                      } else if(a==b && name.indexOf(searchwords)==0) {
+		                                      } else if(a==b && name.indexOf(subsearchwords)==0) {
 		                                    	  result[i].score += 5;
 		                                      }
 		                                    	  result[i].score += 1;
@@ -628,12 +607,12 @@ function searchKeyup(event){
 		                              
 		                               // nickname O name X => nickname만 있을 경우
 		                               for(var b=a; b<nickname.length; b++) {
-		                                  if(searchwords.charAt(a)==nickname.charAt(b)) {
-		                                      if(a==b && nickname.indexOf(searchwords)==0 && searchwords.length==nickname.length) {
+		                                  if(subsearchwords.charAt(a)==nickname.charAt(b)) {
+		                                      if(a==b && nickname.indexOf(subsearchwords)==0 && subsearchwords.length==nickname.length) {
 		                                    	  result[i].score += 10;
 		                                       } else if(a==b) {
 		                                    	   result[i].score += 3;
-		                                      } else if(a==b && nickname.indexOf(searchwords)==0) {
+		                                      } else if(a==b && nickname.indexOf(subsearchwords)==0) {
 		                                    	  result[i].score +=5;
 		                                      } else {
 		                                    	  result[i].score += 1;
@@ -646,7 +625,7 @@ function searchKeyup(event){
 		                            else if(result[i].type==2 && result[i].location!=null) {
 		                            	
 		                               for(var b=a; b<result[i].location.length; b++) {
-		                                  if(searchwords.charAt(a)==result[i].location.charAt(b)) {
+		                                  if(subsearchwords.charAt(a)==result[i].location.charAt(b)) {
 												if(a==b) {
 		                                        	result[i].score += 3;
 		                                       }
@@ -675,15 +654,17 @@ function searchKeyup(event){
 		               }
 		                
 		                console.log("결과값--- "+JSON.stringify(result));
+		                console.log(subsearchwords);
+		                console.log(searchwords);
 		                 
 		                // 검색 첫 글자가 문자일 때
-		                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='%') {
+		                if(result!="" && searchwords[0]!='#' && searchwords[0]!='@' && searchwords[0]!='*') {
 		                   var count = 0;
 		                   var str = ' ';
 		                   for(var i=0; i<result.length; i++) {
 		                       if(result[i].type==0 && result[i].tagname!=null) {
 		                          console.log("태그다");
-		                          str+="<a class='_ndl3t _4jr79 hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+		                          str+="<a class='_ndl3t _4jr79 hashtag' data-search='hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
 		                                +"<div class='_o92vn'>"
 		                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
 		                                +"<div class='_poxna'>"
@@ -698,7 +679,7 @@ function searchKeyup(event){
 		                       // 사람 검색
 		                       else if(result[i].type==1 && result[i].nickname!=null) {
 		                          console.log("이름이다");
-		                          str+="<a class='_ndl3t _4jr79 user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+		                          str+="<a class='_ndl3t _4jr79 user' data-search='user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
 		                                +"<div class='_o92vn'>";
 		                                
 		                                //프로필사진
@@ -725,7 +706,7 @@ function searchKeyup(event){
 		                        // 로케이션 검색
 		                       else if(result[i].type==2 && result[i].location!=null) {
 		                          console.log("지역이다");
-		                          str+="<a class='_ndl3t _4jr79 location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+		                          str+="<a class='_ndl3t _4jr79 location' data-search='location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
 		                                +"<div class='_o92vn'>"
 		                                +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
 		                                +"<div class='_poxna'>"
@@ -762,7 +743,7 @@ function searchKeyup(event){
 		                  for(i=0; i<result.length; i++) {
 		                        if(result[i].type==0 && result[i].tagname!=null) {
 		                            console.log("태그다");
-		                            str+="<a class='_ndl3t _4jr79 hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
+		                            str+="<a class='_ndl3t _4jr79 hashtag' data-search='hashtag' onclick='unloadCheck()'  href='/search/tags?name="+result[i].tagname.substring(1)+"'>"
 		                                  +"<div class='_o92vn'>"
 		                                  +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/hashtag.svg' style='height:23px; width:23px;'></span>"
 		                                  +"<div class='_poxna'>"
@@ -796,7 +777,7 @@ function searchKeyup(event){
 		                 for(var i=0; i<result.length; i++) {
 		                    if(result[i].type==1 && result[i].nickname!=null) {
 		                          console.log("이름이다");
-		                        str+="<a class='_ndl3t _4jr79 user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
+		                        str+="<a class='_ndl3t _4jr79 user' data-search='user' onclick='unloadCheck()' href='/member/"+result[i].nickname.substring(1)+"'>"
 		                                   +"<div class='_o92vn'>";
 		                                   
 		                             //프로필사진
@@ -835,14 +816,14 @@ function searchKeyup(event){
 		                  	  }
 		               } /* @ 검색 끝 */
 		               
-		               // 검색 문자 첫 글자가 %인 경우
-		               else if(searchwords[0]=="%") {
+		               // 검색 문자 첫 글자가 *인 경우
+		               else if(searchwords[0]=="*") {
 		                  var count = 0;
 		                  var str = '';
 		                  for(i=0; i<result.length; i++) {
 		                        if(result[i].type==2 && result[i].location!=null) {
 		                            console.log("지역이다");
-		                            str+="<a class='_ndl3t _4jr79 location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
+		                            str+="<a class='_ndl3t _4jr79 location' data-search='location' onclick='unloadCheck()'  href='/search/locations?location="+result[i].location.substring(1)+"'>"
 			                            +"<div class='_o92vn'>"
 			                            +"<span class='_po4xn coreSpriteHashtag'><img src='/resources/image/search_icon/location.svg' style='height:23px; width:23px;'></span>"
 			                            +"<div class='_poxna'>"

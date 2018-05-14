@@ -55,13 +55,14 @@ select  distinct * from tbl_search
     
     left outer join
     
-    (select concat('%', p.location) as location
+    (select concat('*', p.location) as location
    from    tbl_post as p
    where   p.location like CONCAT('%', #{keyword} ,'%') ) as locationT
    
     on type=2
     
-    order by rand();
+    order by rand()
+    limit 20;
     
 ]]>
 </select>
