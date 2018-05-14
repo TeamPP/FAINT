@@ -38,7 +38,7 @@
    <div class="_23gmb"></div>
    <div class="_o0j5z" onclick="callRemoveDialog(event)">
    <div class="_784q7" id="modalChangeProfilePhoto" onclick="callRemoveDialog(event)">
-   <ul class="_cepxb" sytle="list-style: none;">
+   <ul class="_cepxb" style="list-style:none">
    </ul>
    </div>
    </div>
@@ -63,7 +63,7 @@
 ._hql7s{color:#999;font-size:16px;font-weight:600;line-height:50px;text-align:center}
 @media (min-width:736px){._hql7s,._o2wxh{min-width:510px}}
 @media (min-width:414px) and (max-width:735px){._cepxb,._hql7s,._o2wxh{width:100%}}
-@media (min-width:414px){._cepxb{margin:0 auto}}
+@media (min-width:414px){._cepxb{margin:0 auto;}}
 </style>
 </script>
   <!-- 좋아요 list Modal -->

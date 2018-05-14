@@ -262,6 +262,9 @@ display:none;
                 	if($(".list-chat").hasClass("shown") && ($(".list-chat").data("rid")==roomid || $(".list-chat").data("rid")==undefined)){
                 		getChat(roomid);
                 	}
+                	
+                	getChatList();
+                	
                 	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
                 	
                 	//최소화인 경우에만 메세지 알람
@@ -364,8 +367,8 @@ display:none;
   			follow();
   		});
 	}
-	messageAlarm();
 	
+    //메신저 알람
 	var msgAlarm = null;
     function messageAlarm(flag){	
     	if(flag=="stop"){

@@ -73,7 +73,7 @@ public class SearchListController {
 			redirectAttributes.addAttribute("name", keyword);
 			return "redirect:/search/tags";
 
-		} else if (type.equals("%")) {
+		} else if (type.equals("*")) {
 			System.out.println("위치검색..");
 			redirectAttributes.addAttribute("location", keyword);
 			return "redirect:/search/locations";

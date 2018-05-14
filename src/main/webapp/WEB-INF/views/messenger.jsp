@@ -137,7 +137,7 @@ canvas {
   cursor: crosshair;
 }
 .newMsg {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 .center {
   text-align: center;
