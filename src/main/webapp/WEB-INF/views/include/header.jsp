@@ -898,6 +898,7 @@ function searchKeyup(event){
 		         console.log("그럼여기구나");
 		      }
 		 }
+
 }
 
 //follow여부확인하여 팔로우/팔로우취소

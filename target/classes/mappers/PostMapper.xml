@@ -390,7 +390,6 @@
 	        )
 	      
 	        order by likeCount desc, replyCount desc, id
-	        limit 0,30 ;
             
 	    ]]>
 	</select>
@@ -479,8 +478,6 @@
             where location =#{keyword}
             
             order by likeCount desc, replyCount desc
-            
-            limit 0,30;
 	    ]]>
 	</select> 
 	
@@ -555,8 +552,6 @@
             where cateid =#{cateid}
             
             order by likeCount desc, replyCount desc
-            
-            limit 0,30;
 		 ]]>
 	</select>
 	
