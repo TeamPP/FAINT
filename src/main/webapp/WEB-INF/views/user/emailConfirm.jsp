@@ -8,7 +8,6 @@
     <title>회원가입 완료</title>
 </head>
 <body>
-
 <script type="text/javascript">
     var userEmail = '${login.email}';
 
@@ -18,6 +17,5 @@
     /* window.close(); // 브라우저 창 닫기 */
     self.location = '/';
 </script>
-
 </body>
 </html>

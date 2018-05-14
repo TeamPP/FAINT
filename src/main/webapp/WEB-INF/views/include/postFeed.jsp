@@ -157,7 +157,9 @@ span{
 	      }
 	   }
 	   
-	   $("#keywordTitle").after("<h5>게시물 "+data.length+" 개</h5>");
+	   if($("#postCount").length==0){
+		   $("#keywordTitle").after("<h5 id='postCount'>게시물 "+data.length+" 개</h5>");   
+	   }
 	   
 	   //게시물이 있을 때
 	   if(data.length%3==0){

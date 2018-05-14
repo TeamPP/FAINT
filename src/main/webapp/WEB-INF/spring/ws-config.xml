@@ -12,7 +12,6 @@
 	
 	<!-- 웹소켓 메세지 인터셉터 -->
     <security:websocket-message-broker>
-	   	<!-- <intercept-message type="CONNECT" access="hasAnyRole('ROLE_USER')" /> -->
 	   	<security:intercept-message type="CONNECT" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 	   	<security:intercept-message type="SUBSCRIBE" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 	    <security:intercept-message type="UNSUBSCRIBE" access="hasAnyRole('ROLE_ADMIN')" />

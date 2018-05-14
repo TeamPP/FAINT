@@ -1,14 +1,14 @@
 package com.faint.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-
-import java.io.*;
-
-import java.util.List;
-
-
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -19,21 +19,21 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class S3Util {
 	
 	//bucketName
-    private String bucketName = "faint1122";
-	//bucketName getter    
-    public String getBucketName() {
+	private String bucketName = "faint1122";
+	
+	//bucketName getter  
+	public String getBucketName() {
 		return bucketName;
 	}
-
+	
 	private AmazonS3 conn;
 
     public S3Util() {
-
         this.conn = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.AP_NORTHEAST_2)
                 .build();
     }
-
+    
     // 버킷 리스트를 가져오는 메서드이다.
     public List<Bucket> getBucketList() {
         return conn.listBuckets();
@@ -65,6 +65,7 @@ public class S3Util {
 
     	System.out.println("fileName : " + fileName);
         String imgName = (fileName).replace(File.separatorChar, '/');
+        /*conn.deleteObject(this.getBucketName(), imgName);*/
         conn.deleteObject(this.getBucketName(), imgName);
         System.out.println("삭제성공");
     }
