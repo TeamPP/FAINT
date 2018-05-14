@@ -136,6 +136,9 @@
 canvas {
   cursor: crosshair;
 }
+.newMsg {
+  opacity: 0.7;
+}
 .center {
   text-align: center;
 }
@@ -1285,10 +1288,18 @@ body {
         $('#head .mdi-chevron-up').on('click', function() {
             if ($('#hangout').hasClass('collapsed')) {
                 $(this).removeClass('mdi-chevron-up').addClass('mdi-chevron-down');
-                $('#hangout').removeClass('collapsed');	
+                $('#hangout').removeClass('collapsed');
+                
+                //알림메세지 종료
+                messageAlarm("stop");
+                if($(".style-bg").hasClass("newMsg")){
+                	$(".style-bg").toggleClass("newMsg");
+                }
+                
             } else {
                 $(this).removeClass('mdi-chevron-down').addClass('mdi-chevron-up');
                 $('#hangout').addClass('collapsed');
+                
             }
 
         });

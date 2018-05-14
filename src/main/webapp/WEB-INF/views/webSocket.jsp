@@ -232,6 +232,12 @@ display:none;
                 	}
                 	getChatList();
                 	
+                	//최소화인 경우에만
+                	if($("#hangout").hasClass("collapsed")){
+                		messageAlarm();	
+                	}
+                	
+                	
                 //누군가 새로 읽었을 때
             	}else if(msg[0]=="r"){
             		
@@ -257,6 +263,11 @@ display:none;
                 		getChat(roomid);
                 	}
                 	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
+                	
+                	//최소화인 경우에만 메세지 알람
+                	if($("#hangout").hasClass("collapsed")){
+                		messageAlarm();	
+                	}
             	}
             	
             }else{
@@ -353,8 +364,21 @@ display:none;
   			follow();
   		});
 	}
-	 
+	messageAlarm();
 	
+	var msgAlarm = null;
+    function messageAlarm(flag){	
+    	if(flag=="stop"){
+	    	clearInterval(msgAlarm);
+	    	return;
+	    }
+    	
+		msgAlarm = setInterval(function(){
+			$(".style-bg").toggleClass("newMsg");
+	    },500); // 0.5초마다 실행
+    }
+    
+    
 	//1. 팔로우 알림
 	function notifyFollow(userid){
 		stompClient.send("/app/notify/" + userid + "/follow", {}, {});
