@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 		dao.createAuthKey(vo.getEmail(),key); //인증키 db 저장
 		//메일 전송
 		MailHandler sendMail = new MailHandler(mailSender);
-		sendMail.setSubject("FAINT  서비스 이메일 인증]");
+		sendMail.setSubject("FAINT  서비스 이메일 인증");
 		sendMail.setText(
 		new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8181/user/emailConfirm?userEmail=").append(vo.getEmail()).append("&memberAuthKey=").append(key).append("' target='_blank'>이메일 인증 확인</a>").toString());
 		sendMail.setFrom("sososososo@gmail.com", "서어비스센터 ");
