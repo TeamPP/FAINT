@@ -41,7 +41,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	
 	@Override
 	public Integer createTaggingNotice(NoticeDTO dto) throws Exception{
-		if(dto.getFromid()!=dto.getTargetid()){
+		if( !(dto.getFromid().equals(dto.getTargetid())) ){
 			dto.setType("T");
 			return session.insert(namespace+".createTaggingNotice", dto);
 		}

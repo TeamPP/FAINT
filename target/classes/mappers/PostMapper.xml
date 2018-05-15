@@ -389,7 +389,11 @@
             and topT.blockedid is null
 	        )
 	      
+<<<<<<< HEAD
 	        order by regdate desc, likeCount desc, replyCount desc;
+=======
+	        order by likeCount desc, replyCount desc, id
+>>>>>>> branch 'jh.yang' of https://github.com/TeamPP/FAINT.git
             
 	    ]]>
 	</select>
@@ -477,7 +481,11 @@
             
             where location =#{keyword}
             
+<<<<<<< HEAD
             order by regdate desc, likeCount desc, replyCount desc;
+=======
+            order by likeCount desc, replyCount desc
+>>>>>>> branch 'jh.yang' of https://github.com/TeamPP/FAINT.git
 	    ]]>
 	</select> 
 	
@@ -552,8 +560,6 @@
             where cateid =#{cateid}
             
             order by likeCount desc, replyCount desc
-            
-            limit 0,30;
 		 ]]>
 	</select>
 	

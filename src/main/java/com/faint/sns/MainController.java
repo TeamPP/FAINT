@@ -102,6 +102,7 @@ public class MainController {
 			//HttpSession session=request.getSession();
 			//session.setAttribute("login", user.getVo());
 			
+			model.addAttribute("listsize", list.size());			
 	
 			model.addAttribute("reqURL", request.getRequestURI());
 			System.out.println(">>>>>>>>"+request.getRequestURI());

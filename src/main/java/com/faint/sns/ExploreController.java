@@ -3,7 +3,6 @@ package com.faint.sns;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ import com.faint.service.ActivityService;
 import com.faint.service.PostService;
 import com.faint.service.SearchService;
 import com.faint.service.TagService;
-import com.faint.service.UserService;
 
 import net.sf.json.JSONArray;
 
