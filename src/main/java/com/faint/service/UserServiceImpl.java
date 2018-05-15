@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("FAINT  서비스 이메일 인증");
 		sendMail.setText(
-		new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8181/user/emailConfirm?userEmail=").append(vo.getEmail()).append("&memberAuthKey=").append(key).append("' target='_blank'>이메일 인증 확인</a>").toString());
+		new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://faintfaint.xyz/user/emailConfirm?userEmail=").append(vo.getEmail()).append("&memberAuthKey=").append(key).append("' target='_blank'>이메일 인증 확인</a>").toString());
 		sendMail.setFrom("sososososo@gmail.com", "서어비스센터 ");
 		//System.out.println("getEmail"+user.getUserEmail());
 		sendMail.setTo(vo.getEmail());
@@ -297,7 +297,7 @@ public class UserServiceImpl implements UserService {
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("[서어비스 센터 비밀번호 찾기 ]");
 		sendMail.setText(new StringBuffer().append("<h1>임시비밀번호</h1>[").append(key)
-				.append("]입니다. 로그인 후 비밀번호를 변경해주세요.</br>").append("<a href='http://localhost:8181/").append("' target='_blank'>Faint  tttt 바로가기</a>").toString());
+				.append("]입니다. 로그인 후 비밀번호를 변경해주세요.</br>").append("<a href='http://faintfaint.xyz/").append("' target='_blank'>Faint  tttt 바로가기</a>").toString());
 		sendMail.setFrom("somony9292@gmail.com", "fififias");
 		//System.out.println("getEmail"+user.getUserEmail());
 		sendMail.setTo(user.getEmail());

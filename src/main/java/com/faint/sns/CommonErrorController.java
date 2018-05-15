@@ -46,7 +46,7 @@ public class CommonErrorController {
         return "common/error";
     }
 
-    @RequestMapping(value = "/404")
+/*    @RequestMapping(value = "/404")
     public String pageError404(HttpServletRequest request, Model model){
         System.out.println("page error code 404");
         pageErrorLog(request);
@@ -55,7 +55,7 @@ public class CommonErrorController {
         model.addAttribute("msg","요청하신 페이지는 존재하지 않습니다.");
         return "common/error";
     }
-
+*/
 
     @RequestMapping(value = "/405")
     public String pageError405(HttpServletRequest request, Model model){
@@ -65,7 +65,7 @@ public class CommonErrorController {
         model.addAttribute("msg","요청된 메소드가 허용되지 않습니다.");
         return "common/error";
     }
-
+/*
     @RequestMapping(value = "/500")
     public String pageError500(HttpServletRequest request, Model model){
         logger.info("page error code 500");
@@ -74,7 +74,7 @@ public class CommonErrorController {
         model.addAttribute("msg","서버에 오류가 발생하였습니다.");
         return "common/error";
     }
-
+*/
     @RequestMapping(value = "/503")
     public String pageError503(HttpServletRequest request, Model model){
         logger.info("page error code 503");
