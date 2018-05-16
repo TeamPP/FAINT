@@ -799,7 +799,7 @@ body {
                		list += "src='/resources/img/emptyProfile.jpg' />";
                	}
    				
-   				list += "<div class='message' style='word-break: break-word; max-width: 235px;'>" + this.comment + "</div>";
+   				list += "<div class='message' style='word-break: break-word; max-width: 229px;'>" + this.comment + "</div>";
    				
    				//읽음 상태표시
    				if(this.readstatus!=0){
