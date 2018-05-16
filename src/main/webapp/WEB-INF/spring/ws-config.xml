@@ -10,8 +10,8 @@
 
 	<!-- <bean id="chatHandler" class="com.faint.util.ChatWebSocketHandler" /> -->
 	
-	<!-- 웹소켓 메세지 인터셉터 -->
-    <security:websocket-message-broker>
+ 	<!-- 웹소켓 메세지 인터셉터 -->
+ <!--   <security:websocket-message-broker>
 	   	<security:intercept-message type="CONNECT" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 	   	<security:intercept-message type="SUBSCRIBE" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 	    <security:intercept-message type="UNSUBSCRIBE" access="hasAnyRole('ROLE_ADMIN')" />
@@ -19,7 +19,7 @@
 	
 	    <security:intercept-message pattern="/app/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
     </security:websocket-message-broker>
-	
+	 -->
 	<websocket:message-broker
 		application-destination-prefix="/app"
 		user-destination-prefix="/user">

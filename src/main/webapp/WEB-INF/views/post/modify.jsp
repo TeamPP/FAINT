@@ -325,7 +325,6 @@
 	</div>
 	</section>
 	</main>
-	<jsp:include page="../common/footer.jsp" flush="false"></jsp:include>
 	</section>
 	</span>
 </body>
