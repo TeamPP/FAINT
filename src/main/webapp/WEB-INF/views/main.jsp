@@ -16,6 +16,7 @@
 
 <!-- 슬라이드 넘기기 버튼 부트스트랩  -->
  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="/resources/css/animation.css" type="text/css">
 
 
 </head>
@@ -78,6 +79,32 @@ body{
    position: absolute;
    z-index: 2;
 }
+
+@media screen and (max-width: 400px) {
+	#carousel .selected header {
+	    width: 70% !important;
+	}
+	
+	#carousel .selected .imgDiv {
+    height: 70% !important;
+    width: 70% !important;
+	}
+	
+	#carousel .selected {
+    width: 120% !important;
+    left: 70% !important;
+	}
+	
+	#carousel .prevLeftSecond, #carousel .prev, #carousel .hideLeft, #carousel .next, #carousel .nextRightSecond, #carousel .hideRight {
+    visibility: hidden !important;
+	}
+	
+	#carousel {
+    height: 460px !important;
+	}
+}
+
+
 /*id는 스타일 최우선으로 적용됨 그 다음에 class */
 #carousel {
 	position: relative;
@@ -275,8 +302,9 @@ height: 560px;
 /* 사진 넘기기 버튼 */
 .buttons {
    position: absolute;
-   left: 47%;
-   bottom: 30%;
+	left: 10%;
+   bottom: -3%;
+   z-index: 10;
 }
 .fa{
    font-size: 19px;
@@ -340,9 +368,27 @@ background-color:black;
 .glyphicon {
 	top: -1px;
 }
+.nofeedimg {
+    display: block;
+    width: 7%;
+    position: relative;
+    left: 11%;
+    opacity: 0.8;
+}
+.nofeedimg:hover {
+	opacity: 1;
+}
+.nofeed {
+	display: block;
+    position: relative;
+    font-size: 35px;
+}
+.nomainfeed {
+	position: relative;
+    left: 34%;
+    top: 30%;
+}
 </style>
-
-
 
 <body>
 
@@ -355,109 +401,133 @@ background-color:black;
 		</script>
 	</c:if>
 	<div class="row" id="carousel">
-		<c:forEach items="${list}" var="postDTO"  varStatus='status'>
-		<article  data-filter="${postDTO.cateid}"
-			<c:choose>
-				<c:when test="${status.index == 0 && fn:length(list) == 1}">
-					class="post selected"
-				</c:when>
-				<c:when test="${status.index == 0 && fn:length(list) ne 1}">
-					class="post prev"
-				</c:when>
-				<c:when test="${status.index ==	1}">
-					class="post selected"
-				</c:when>
-				<c:when test="${status.index ==	2}">
-					class="post next"
-				</c:when>
-				<c:when test="${status.index ==	3}">
-					class="post nextRightSecond"
-				</c:when>
-				<c:otherwise>
-					class="post hideRight"
-				</c:otherwise>
-			</c:choose>
-		>
-<!-- 프사, 닉네임 -->
-		<header class="_7b8eu _9dpug">
-			<div class="_82odm _i2o1o">
-				<a class="_pg23k _jpwof _gvoze" href="/member/${postDTO.usernickname}" style="width: 30px; height: 30px;">
-				<img class="_rewi8" 
-					<c:if test="${postDTO.profilephoto ne null && postDTO.profilephoto != '' }">
-						src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${postDTO.profilephoto}"
-					</c:if                                                     >
-					<c:if test="${postDTO.profilephoto eq null || postDTO.profilephoto == '' }">
-						src="../../resources/img/emptyProfile.jpg"
-					</c:if>/>
-				</a>
-			</div>
-			<div class="_j56ec">
-				<div class="">
-					<div class="_eeohz">
-						<a class="_2g7d5 notranslate _iadoq" href="/member/${postDTO.usernickname}">${postDTO.usernickname }</a>
+		<c:choose>
+		
+			<c:when test="${listsize==0}">
+				<div class='nomainfeed'>
+					<span class='nofeed'>둘러보기를 통해 친구를 만들어보세요</span>
+					</br></br>
+					<a href='/explore/expage'>
+					<img class='nofeedimg' src='/resources/image/header_icon/explore-icon.png'></a>
+				</div>
+			</c:when>
+			
+			<c:otherwise>
+				<c:forEach items="${list}" var="postDTO"  varStatus='status'>
+				<article  data-filter="${postDTO.cateid}"
+					<c:choose>
+						<c:when test="${status.index == 0 && fn:length(list) == 1}">
+							class="post selected"
+						</c:when>
+						<c:when test="${status.index == 0 && fn:length(list) ne 1}">
+							class="post prev"
+						</c:when>
+						<c:when test="${status.index ==	1}">
+							class="post selected"
+						</c:when>
+						<c:when test="${status.index ==	2}">
+							class="post next"
+						</c:when>
+						<c:when test="${status.index ==	3}">
+							class="post nextRightSecond"
+						</c:when>
+						<c:otherwise>
+							class="post hideRight"
+						</c:otherwise>
+					</c:choose>
+				>
+		<!-- 프사, 닉네임 -->
+				<header class="_7b8eu _9dpug">
+					<div class="_82odm _i2o1o">
+						<a class="_pg23k _jpwof _gvoze" href="/member/${postDTO.usernickname}" style="width: 30px; height: 30px;">
+						<img class="_rewi8" 
+							<c:if test="${postDTO.profilephoto ne null && postDTO.profilephoto != '' }">
+								src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${postDTO.profilephoto}"
+							</c:if                                                     >
+							<c:if test="${postDTO.profilephoto eq null || postDTO.profilephoto == '' }">
+								src="../../resources/img/emptyProfile.jpg"
+							</c:if>/>
+						</a>
 					</div>
-				</div>
-				<div class="_60iqg">
-					<a class="_q8ysx _6y8ij" id="address" title="" href="/search/locations?location=${postDTO.location }">${postDTO.location }</a>
-				</div>
-			</div>
-			<div style="display: inline-block;">
-		        <!-- 위치 추가 -->
-		        <a class="btn btn-default btn-circle" id="" href="/search/category?cateid=${postDTO.cateid}">
-		        <c:choose>
-		        <c:when test="${postDTO.cateid == 1 }">
-	       			<i class="glyphicon glyphicon-plane"></i>
-		        </c:when>
-		        <c:when test="${postDTO.cateid == 2 }">
-      	       			<i class="glyphicon glyphicon-film"></i>
-		        </c:when>
-		        <c:when test="${postDTO.cateid == 3 }">
-      	       			<i class="glyphicon glyphicon-music"></i>
-		        </c:when>
-		        <c:when test="${postDTO.cateid == 4 }">
-      	       			<i class="fa fa-cutlery"></i>
-		        </c:when>
-		        <c:when test="${postDTO.cateid == 5 }">
-     	       			<i class="fa fa-pencil"></i>
-		        </c:when>
-		        </c:choose>
-		        </a>
-	        </div>
-		</header>
-		<c:forEach items="${fileInfoList[status.index]}" var="fileInfo" varStatus='fileInfoListStatus'>
-						<c:if test="${fileInfoListStatus.index eq 0}">
-						<div class="imgDiv ${fileInfo.filter }" data-postid="${postDTO.postid}" >
-						<c:if test ="${fileInfo.fileType eq 'image'}" >
-							<img id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
-								data-postid="${postDTO.postid}" />
-								<c:if test = "${fn:length(fileInfoList[status.index]) > 1}">
-								<i class='multiFile'></i>
-								</c:if>
-								
-						</c:if>
-						<c:if test ="${fileInfo.fileType eq 'video'}" >
-							<video  id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
-								data-postid="${postDTO.postid}" loop="true" autoplay>
-								</video>
-							<c:if test = "${fn:length(fileInfoList[status.index]) > 1}">
-								<i class='multiFile'></i>
-							</c:if>
-							<script>
-							document.getElementById('${postDTO.postid}_file${fileInfoListStatus.index}').onloadeddata = function() { 
-								if(this.videoWidth <= this.videoHeight){
-		                			$(this).css("min-height", "100%");
-		    					}else if(this.videoWidth > this.videoHeight){
-		    						$(this).css("min-width", "100%");
-		    					}
-							}
-							</script>
-						</c:if>
+					<div class="_j56ec">
+						<div class="">
+							<div class="_eeohz">
+								<a class="_2g7d5 notranslate _iadoq" href="/member/${postDTO.usernickname}">${postDTO.usernickname }</a>
+							</div>
 						</div>
-						</c:if>
+						<div class="_60iqg">
+							<a class="_q8ysx _6y8ij" id="address" title="" href="/search/locations?location=${postDTO.location }">${postDTO.location }</a>
+						</div>
+					</div>
+					<div style="display: inline-block;">
+				        <!-- 위치 추가 -->
+				        <a class="btn btn-default btn-circle" id="" href="/search/category?cateid=${postDTO.cateid}">
+				        <c:choose>
+				        <c:when test="${postDTO.cateid == 1 }">
+			       			<i class="glyphicon glyphicon-plane"></i>
+				        </c:when>
+				        <c:when test="${postDTO.cateid == 2 }">
+		      	       			<i class="glyphicon glyphicon-film"></i>
+				        </c:when>
+				        <c:when test="${postDTO.cateid == 3 }">
+		      	       			<i class="glyphicon glyphicon-music"></i>
+				        </c:when>
+				        <c:when test="${postDTO.cateid == 4 }">
+		      	       			<i class="fa fa-cutlery"></i>
+				        </c:when>
+				        <c:when test="${postDTO.cateid == 5 }">
+		     	       			<i class="fa fa-pencil"></i>
+				        </c:when>
+				        </c:choose>
+				        </a>
+			        </div>
+				</header>
+				<c:forEach items="${fileInfoList[status.index]}" var="fileInfo" varStatus='fileInfoListStatus'>
+								<c:if test="${fileInfoListStatus.index eq 0}">
+								<div class="imgDiv ${fileInfo.filter }" data-postid="${postDTO.postid}" >
+								<c:if test ="${fileInfo.fileType eq 'image'}" >
+									<img id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
+										data-postid="${postDTO.postid}" />
+										<c:if test = "${fn:length(fileInfoList[status.index]) > 1}">
+										<i class='multiFile'></i>
+										</c:if>
+										
+								</c:if>
+								<c:if test ="${fileInfo.fileType eq 'video'}" >
+									<video  id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
+										data-postid="${postDTO.postid}" loop="true" autoplay>
+										</video>
+									<c:if test = "${fn:length(fileInfoList[status.index]) > 1}">
+										<i class='multiFile'></i>
+									</c:if>
+									<script>
+									document.getElementById('${postDTO.postid}_file${fileInfoListStatus.index}').onloadeddata = function() { 
+										if(this.videoWidth <= this.videoHeight){
+				                			$(this).css("min-height", "100%");
+				    					}else if(this.videoWidth > this.videoHeight){
+				    						$(this).css("min-width", "100%");
+				    					}
+									}
+									</script>
+								</c:if>
+								</div>
+								</c:if>
+						</c:forEach>
+			 	</article>
 				</c:forEach>
-	 	</article>
-		</c:forEach>
+			
+			</c:otherwise>
+		</c:choose>
+		
 	</div>
+	
+		<!--버튼  -->
+	    <div class="buttons">
+	    <i  id="prev" class="fa fa-arrow-left"></i>
+	    <span> </span>
+	    <i  id="next" class="fa fa-arrow-right"></i>
+    	</div>
+	</main> 
 	
 
 </body>
@@ -467,6 +537,16 @@ background-color:black;
 <script>
 //postid 가져와서 댓글달기
 $(document).ready(function(){
+	
+	console.log("메인피드길이나와라 "+$("#carousel").children().length);
+	if($("carousel").children().length==0) {
+		setTimeout(function() {
+			$(".nofeedimg").toggleClass("flip animated");
+			setTimeout(function() {
+				$(".nofeedimg").toggleClass("flip animated");
+			},1100);
+		}, 1200);
+	}
 	
 	//이미지 class명부여
 	postModal("main");
@@ -580,13 +660,6 @@ function moveToSelected(element) {
 		}
 	});
 	
-	/* prev, next 아이콘 클릭 사진이동  */
-	$('#prev').click(function() {
-	moveToSelected('prev');
-	});
-	$('#next').click(function() {
-	moveToSelected('next');
-	});
 }
 function prevPost(curObj){
 	curObj.prev().click();
@@ -596,6 +669,15 @@ function nextPost(curObj){
 	curObj.next().click();
 	$(".selected > div").children().click();
 }
+
+/* prev, next 아이콘 클릭 사진이동  */
+$('#prev').click(function() {
+moveToSelected('prev');
+});
+$('#next').click(function() {
+moveToSelected('next');
+});
+
 </script>
 
 </html>
