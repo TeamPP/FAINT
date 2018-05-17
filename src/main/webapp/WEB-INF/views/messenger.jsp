@@ -703,7 +703,7 @@ body {
 				
 				<!-- 채팅방 리스트 -->
 				<div class="list-text">
-					<div class="scroll">
+					<div class="scroll" style="height:530px;">
 					<ul class="list mat-ripple">
 					</ul>
 					</div>
