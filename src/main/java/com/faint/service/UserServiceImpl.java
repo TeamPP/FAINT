@@ -1,6 +1,5 @@
 package com.faint.service;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +8,8 @@ import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +32,7 @@ import common.MailHandler;
 import common.TempKey;
 
 
-
+@EnableAsync
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
 		return dao.readBlockedList(uid);
 	}
 	//=================회원가입 및 정보수정=================
+	@Async
 	@Override
 	public void regist(UserVO vo) throws Exception{
 		System.out.println("서비스레지스");

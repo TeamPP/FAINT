@@ -494,7 +494,7 @@ background-color:black;
 										
 								</c:if>
 								<c:if test ="${fileInfo.fileType eq 'video'}" >
-									<video  id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
+									<video muted="true" id="${postDTO.postid}_file${fileInfoListStatus.index}" src="http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122${fileInfo.fileUrl}"
 										data-postid="${postDTO.postid}" loop="true" autoplay>
 										</video>
 									<c:if test = "${fn:length(fileInfoList[status.index]) > 1}">
