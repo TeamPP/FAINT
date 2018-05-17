@@ -84,6 +84,7 @@ body {
 
 </head>
 <body>
+
 <div class="row" id="header" style="width:102%;">
     <div class="col-sm-12" style="height: 100px; background-color: white;">
         <div class="row" id="col2" style="width:100%;">
