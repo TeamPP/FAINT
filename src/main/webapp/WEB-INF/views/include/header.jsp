@@ -747,7 +747,7 @@ function searchKeyup(event){
                                if(result[i].profilephoto == null){
                                  str+="<span class='_po4xn coreSpriteHashtag'><img src='/resources/img/emptyProfile.jpg'; style='height:24px; width:24px; border-radius:50%;'></span>";
                                }else{
-                                 str+="<span class='_po4xn coreSpriteHashtag'><img src='/displayFile?fileName="+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
+                                 str+="<span class='_po4xn coreSpriteHashtag'><img src='http://faint1122.s3.ap-northeast-2.amazonaws.com/faint1122"+result[i].profilephoto+"'; style='height:24px; width:24px; border-radius:50%;'></span>";
                                }
                                
                          str+="<div class='_poxna'>"
