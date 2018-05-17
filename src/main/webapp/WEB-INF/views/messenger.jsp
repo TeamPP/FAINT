@@ -768,7 +768,6 @@ body {
 	    				}
 	    			}
 	    			$(".list-chat > .scroll > ul").append(list);
-	    			$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    		
 	    		//채팅방 접속 시
 	    		}else if( !($(".list-chat").hasClass("shown")) && $(".list-chat").data("rid")==roomid ){
@@ -777,7 +776,6 @@ body {
 	    			$(".list-chat > .scroll > ul").html(list);
 	    		}
 	    		
-	    		$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
 	    	})
 		}
 		
@@ -868,7 +866,10 @@ body {
 	    			})
 	    		}
 	    		$(".list-text > .scroll > .mat-ripple.list").html(list);
-	    		$(".scroll").scrollTop(cur_Scroll_Location);
+	    		
+	    		if(!$(".list-chat").hasClass("shown")){
+	    			$(".scroll:eq(1)").scrollTop(cur_Scroll_Location);
+	    		}
 	    	})
 		}
 

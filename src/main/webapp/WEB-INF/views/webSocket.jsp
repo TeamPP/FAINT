@@ -265,7 +265,7 @@ display:none;
                 	
                 	getChatList();
                 	
-                	$(".scroll").scrollTop($(".scroll")[2].scrollHeight);
+                	$(".scroll").animate({scrollTop:$(".scroll")[2].scrollHeight}, 300);
                 	
                 	//최소화인 경우에만 메세지 알람
                 	if($("#hangout").hasClass("collapsed")){
