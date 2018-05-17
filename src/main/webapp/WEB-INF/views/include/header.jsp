@@ -474,6 +474,20 @@ function searchClick(){
 
 var originalSearchList="";
 function searchTypeFilter(type){
+	 //#
+	 if($("#keywordInput").val()[0]=='#' && !(currentSearchType=="hashtag")){
+		 $("#type-hashtags").trigger("click");
+		 return;
+	 //@
+	 }else if($("#keywordInput").val()[0]=='@' && !(currentSearchType=="user")){
+		 $("#type-users").trigger("click");
+		 return;
+	 //*
+	 }else if($("#keywordInput").val()[0]=='*' && !(currentSearchType=="location")){
+		 $("#type-locations").trigger("click");
+		 return;
+	 }
+	 
 	  if(originalSearchList.length==0){
 		  noResult();
 	  }else{
@@ -524,7 +538,7 @@ function noResult(){
 }
 
 function searchKeyup(event){
-
+	 
 	 if (event.keyCode == '40' && $(".results").length!=null) {
 		 console.log("아래로눌럿다");
 		 return;
@@ -541,14 +555,18 @@ function searchKeyup(event){
 		 return;
 	 }
 	 
+	 if( $("#searchModal:visible").length==0 && $("#keywordInput").val().length>=1){
+		 $("#keywordInput").trigger("click");
+	 }
+	 
 	 //#
-	 if($("#keywordInput").val().length==1 && $("#keywordInput").val()=='#'){
+	 if($("#keywordInput").val().length>=1 && $("#keywordInput").val()[0]=='#'){
 		 $("#type-hashtags").trigger("click");
 	 //@
-	 }else if($("#keywordInput").val().length==1 && $("#keywordInput").val()=='@'){
+	 }else if($("#keywordInput").val().length>=1 && $("#keywordInput").val()[0]=='@'){
 		 $("#type-users").trigger("click");
 	 //*
-	 }else if($("#keywordInput").val().length==1 && $("#keywordInput").val()=='*'){
+	 }else if($("#keywordInput").val().length>=1 && $("#keywordInput").val()[0]=='*'){
 		 $("#type-locations").trigger("click");
 	 }
 	 
