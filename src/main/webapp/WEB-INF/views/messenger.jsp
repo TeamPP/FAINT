@@ -499,7 +499,7 @@ ul.list li .content-container{
 	word-break: break-all;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 75%;
+    width: 74%;
 }
 ul.list li .content-container .name {
   font-weight: bold;
