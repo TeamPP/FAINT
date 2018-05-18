@@ -537,6 +537,7 @@ $(document).ready(function(){
 	if($("carousel").children().length==0) {
 		$(".nofeedimg").hover(function(){
 			$(".nofeedimg").toggleClass("flip animated");
+			$(".nofeed").toggleClass("flip animated");
 		})
 	}
 	
