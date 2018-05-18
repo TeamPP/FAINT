@@ -398,9 +398,6 @@ background-color:black;
 		<c:choose>
 		
 			<c:when test="${listsize==0}">
-				<script>
-				
-				</script>
 				<div class='nomainfeed'>
 					<div class='nofeed'>둘러보기를 통해 친구를 만들어보세요</div>
 					<a href='/explore/expage'>
