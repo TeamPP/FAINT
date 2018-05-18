@@ -369,24 +369,18 @@ background-color:black;
 	top: -1px;
 }
 .nofeedimg {
-    display: block;
-    width: 7%;
-    position: relative;
-    left: 11%;
-    opacity: 0.8;
-}
-.nofeedimg:hover {
-	opacity: 1;
+	width: 20%;
+    margin-top: 45px;
 }
 .nofeed {
-	display: block;
-    position: relative;
-    font-size: 35px;
+    font-size: 3em;
 }
 .nomainfeed {
-	position: relative;
-    left: 34%;
-    top: 30%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	text-align: center;
 }
 </style>
 
@@ -405,8 +399,7 @@ background-color:black;
 		
 			<c:when test="${listsize==0}">
 				<div class='nomainfeed'>
-					<span class='nofeed'>둘러보기를 통해 친구를 만들어보세요</span>
-					</br></br>
+					<div class='nofeed'>둘러보기를 통해 친구를 만들어보세요</div>
 					<a href='/explore/expage'>
 					<img class='nofeedimg' src='/resources/image/header_icon/explore-icon.png'></a>
 				</div>
@@ -538,14 +531,10 @@ background-color:black;
 //postid 가져와서 댓글달기
 $(document).ready(function(){
 	
-	console.log("메인피드길이나와라 "+$("#carousel").children().length);
 	if($("carousel").children().length==0) {
-		setTimeout(function() {
+		$(".nofeedimg").hover(function(){
 			$(".nofeedimg").toggleClass("flip animated");
-			setTimeout(function() {
-				$(".nofeedimg").toggleClass("flip animated");
-			},1100);
-		}, 1200);
+		})
 	}
 	
 	//이미지 class명부여
