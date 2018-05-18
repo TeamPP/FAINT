@@ -218,10 +218,8 @@ body {
  
  <div class="col-sm-12">
          <div class="row" style="width:100%; height:70px;">
-             <div class="col-sm-4"></div>
-             <div class="col-sm-4">
              <c:choose>
-				<c:when test="${reqURL == '/main'}">
+				<c:when test="${reqURL == '/main' && listsize!=0}">
 	                <div class="row" style="width:100%; height:100%;">
 	                    <div class="col-sm-2"></div>
 	                    <div class="col-sm-8">
@@ -293,9 +291,6 @@ body {
                	</c:when>
 			<c:otherwise></c:otherwise>
 		</c:choose>
-		
-                	</div>
-                <div class="col-sm-4"></div>
             </div>
     </div>
 </div>
